@@ -1,0 +1,57 @@
+(require "/usr/lib/fuzuli/nfl/math.nfl")
+(require "/usr/lib/fuzuli/nfl/types.nfl")
+
+(let a (/ (* PI 3) 2.0))  # a=3*PI/2
+(let b (cos a))     # b=cos(a)
+
+
+(if (= b "1.01962e-06") (print "PASSED!\n") (print "ERROR\n"))
+
+
+
+
+
+(let a (/ PI 2.0))  # a=PI/2
+(let b (sin a))     # b=sin(a)
+
+
+(if (= b 1) (print "PASSED!\n") (print "ERROR\n"))
+
+
+
+# Exp
+(let b (exp 1.0))     # b=exp(1.0)
+(if (= b 2.71828) (print "PASSED!\n") (print "ERROR\n"))
+
+
+# Abs
+(let a -11.9)
+(let b (abs a))
+(if (= b 11.9) (print "PASSED!\n") (print "ERROR\n"))
+(if (= (abs -3) 3) (print "PASSED!\n") (print "ERROR\n"))
+
+# Atan2
+(let val (atan2 1 1))
+(if (= val 0.7853981634)
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+
+
+# isinf
+(let val (pow 10 10000))
+(if (= (isinf val) 1)
+    (print "PASSED!\n")
+    (print "ERROR\n")
+)
+(let val (pow 10 1))
+(if (= (isinf val) 0)
+    (print "PASSED!\n")
+    (print "ERROR\n")
+)
+(let val (pow -10 100001))
+(if (= (isinf val) -1)
+    (print "PASSED!\n")
+    (print "ERROR\n")
+)
+

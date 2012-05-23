@@ -1,0 +1,34 @@
+(require "/usr/lib/fuzuli/nfl/utils.nfl")
+(require "/usr/lib/fuzuli/nfl/io.nfl")
+
+(let a (list 3 5 4 3 2 1))
+(sorta a)
+
+(if (and
+		(= (nth a 0) 1)
+		(= (nth a 1) 2)
+		(= (nth a 2) 3)
+		(= (nth a 3) 3)
+		(= (nth a 4) 4)
+		(= (nth a 5) 5)
+	)
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+
+
+
+(sortd a)
+
+(if (and
+        (= (nth a 0) 5)
+        (= (nth a 1) 4)
+        (= (nth a 2) 3)
+        (= (nth a 3) 3)
+        (= (nth a 4) 2)
+        (= (nth a 5) 1)
+    )
+    (print "PASSED!\n")
+    (print "ERROR\n")
+)
+

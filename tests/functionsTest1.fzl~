@@ -1,0 +1,13 @@
+(function factorial (params x)
+    (block
+        (if (> x 1.0) 
+        	(return (* x (factorial (- x 1.0)))) 
+        	(return 1.0)
+        )
+    )
+)
+
+
+(let result (factorial 6))
+(if (= result 720) (print "PASSED!\n") (print "ERROR\n"))
+

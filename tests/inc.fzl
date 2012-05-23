@@ -1,0 +1,16 @@
+(let i 10)
+(inc i)
+
+(if (= i 11)
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+
+(-- i)
+(if (= i 10)
+        (print "PASSED!\n")
+        (print "ERROR\n")
+)
+
+
+

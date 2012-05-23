@@ -1,0 +1,11 @@
+(let x 4)
+
+(block
+	(let a 10)
+)
+
+(if (= (typeof a) NULL)
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+

@@ -1,0 +1,10 @@
+(let code "(+ 5 6)" )
+
+(let sonuc (eval code))
+
+(if (= sonuc 11)
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+
+

@@ -1,0 +1,7 @@
+(let text "Fuzuli Programming Language")
+(let parsed (explode text " "))
+(if (= (nth parsed 1) "Programming")
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+

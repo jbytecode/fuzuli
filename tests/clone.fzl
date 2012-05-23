@@ -1,0 +1,20 @@
+(let i 10)
+(let a (clone i))
+(inc i)
+
+(if (and  (= i 11) (= a 10))
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+
+
+(let myarr (list "elma" "armut"))
+(let otherarr (clone myarr))
+
+(if (and 
+	(= (nth otherarr 0) "elma")
+	(= (nth otherarr 1) "armut"))
+		(print "PASSED!\n")
+		(print "ERROR\n")
+)
+

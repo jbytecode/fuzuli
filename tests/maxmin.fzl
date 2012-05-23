@@ -1,0 +1,51 @@
+(function max (params a b)
+	(block
+		(if (> a b)
+			(return a)
+			(return b)
+		)
+	)
+)
+
+(function min (params a b)
+	(block
+		(if (< a b)
+			(return a)
+			(return b)
+		)
+	)
+)
+
+(function minmax (params a b c d) 
+	(block
+		(let min1 (min a b))
+		(let min2 (min c d))
+		(let result (max min1 min2))
+		(return result)
+	)
+)
+
+(function maxmin (params a b c d)
+	(block
+		(let max1 (max a b))
+		(let max2 (max c d))
+		(let result (min max1 max2))
+		(return result)
+	)
+)
+
+
+(let a 10)
+(let b 11)
+(let c 12)
+(let d 13)
+
+(if (and  (= (max a b) 11)
+	  (= (min a b) 10)
+     	  (= (max c d) 13)
+	  (= (min c d) 12)
+	  (= (minmax a b c d) 12)
+	  (= (maxmin a b c d) 11) )
+(print "PASSED!\n")
+(print "ERROR\n")
+)

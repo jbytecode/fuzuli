@@ -1,0 +1,12 @@
+(let i 1)
+(while (< 1 2)
+                (let i (+ i 1))
+                (if (= i 100) (break))
+)
+
+(if (= i 100)
+        (print "PASSED!\n")
+        (print "ERROR\n")
+)
+
+

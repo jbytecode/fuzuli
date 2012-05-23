@@ -1,0 +1,13 @@
+(let i 2)
+
+(switch i
+	(case 1
+		(print "ERROR\n")
+	)
+	(case 2
+		(print "PASSED!\n")
+	)
+	(case 3
+		(print "ERROR\n")
+	)
+)

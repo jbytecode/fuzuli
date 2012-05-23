@@ -1,0 +1,10 @@
+(include "/usr/lib/fuzuli/nfl/string.nfl")
+
+(let a "Fuzuli")
+(let b (strreverse a))
+(if (= b "iluzuF")
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+
+

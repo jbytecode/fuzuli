@@ -1,0 +1,91 @@
+#
+# fuzuli : A general purpose interpreter
+# Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+(let str_lib (dynload "FuzuliCore"))
+
+(function trim (params x)
+	(block
+		(return  (rtrim (ltrim x)) )
+	)
+)
+
+
+(function ltrim (params x)
+	(block
+		(return (C str_lib "ltrim" x))
+	)
+)
+
+(function rtrim (params x)
+	(block
+		(return (C str_lib "rtrim" x))
+	)
+)
+
+
+(function lcase (params x)
+	(block
+		(return (C str_lib "lcase" x))
+	)
+)
+
+(function ucase (params x)
+	(block
+		(return (C str_lib "ucase" x))
+	)
+)
+
+(function left (params x n)
+	(block
+		(return (C str_lib "left" x n))
+	)
+)
+
+
+(function right (params x n)
+	(block
+		(return (C str_lib "right" x n))
+	)
+)
+
+
+(function strcat (params alist)
+	(block
+		(return (C str_lib "strcatd" alist))
+	)
+)
+
+
+(function strlen (params x)
+	(block
+		(return (C str_lib "strlend" x)) 
+	)
+)
+
+(function substr (params x a b)
+	(block
+		(return (C str_lib "substrd" x a b))
+	)
+)
+
+(function strreverse (params x)
+	(block
+		(return (C str_lib "strreverse" x))
+	)
+)
+

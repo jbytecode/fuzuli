@@ -1,0 +1,19 @@
+(let a 5)
+(let b 10)
+(let numOkays 0)
+
+(block
+	(if (= a 5) (let numOkays (+ numOkays 1)))
+	(if (= b 10) (let numOkays (+ numOkays 1)))
+	(let c 3)
+)
+
+
+(if (= (typeof c) NULL) (let numOkays (+ numOkays 1)))
+
+
+(if (= numOkays 3) 
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+

@@ -1,0 +1,7 @@
+(let a 0xffff)
+
+(if (= a 65535)
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+

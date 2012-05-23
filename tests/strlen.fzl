@@ -1,0 +1,9 @@
+(require "/usr/lib/fuzuli/nfl/string.nfl")
+(let a "123456789")
+(let b (strlen a))
+
+(if (= b 9)
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+

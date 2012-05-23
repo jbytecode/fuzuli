@@ -1,0 +1,20 @@
+(if (= (< 1 4) 1)
+  (print "PASSED!\n")
+  (print "ERROR\n")
+)
+(if (= 100 100)
+  (print "PASSED!\n")
+  (print "ERROR\n")
+)
+
+
+
+
+(if (= (< 1 4) 1)
+  (print "PASSED!\n")
+  (print "ERROR\n")
+)
+
+
+
+

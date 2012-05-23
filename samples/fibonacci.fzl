@@ -1,0 +1,22 @@
+(function fibonacci (params x)
+	(block
+	(if (<= x 2) 
+		(return 1)
+		(return (+ (fibonacci (- x 1)) (fibonacci (- x 2))))
+	)
+	)
+)
+
+(function write (params)
+	(block
+		(for (let i 0) (< i 20) (inc i)
+			(block
+				(print (fibonacci i) "\n")
+			)
+		)
+	)
+)
+	
+(write)
+(dump)
+

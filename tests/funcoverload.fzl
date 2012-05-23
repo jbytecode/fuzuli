@@ -1,0 +1,40 @@
+(function f (params x)
+	(block
+		(return x)
+	)
+)
+
+(function f (params x y)
+	(block
+		
+		(return (+ x y))
+	)
+)
+
+(function f (params x y z)
+	(return (+ x y z ))
+)
+
+# Function f with single parameter
+(if (= (f 3) 3)
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+
+
+# Function f with two parameters
+(if (= (f 3 6) 9)
+    (print "PASSED!\n")
+    (print "ERROR\n")
+)
+
+
+# Function f with three parameters
+(if (= (f 3 6 12) 21)
+    (print "PASSED!\n")
+    (print "ERROR\n")
+)
+
+
+
+

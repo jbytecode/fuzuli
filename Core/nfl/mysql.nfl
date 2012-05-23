@@ -1,0 +1,100 @@
+#
+# fuzuli : A general purpose interpreter
+# Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+(let mysqllib (dynload "FuzuliCore"))
+
+(function mysql_connect (params host username password db port)
+	(block
+		(let con (C mysqllib "mysqlconnect" host username password db port))
+		(return con)
+	)
+)
+
+
+(function mysql_query (params connection sql)
+	(block
+		(let result_set (C mysqllib "mysqlquery" connection sql))
+		(return result_set)
+	)
+)
+
+
+(function mysql_fetch_array (params resultset)
+	(block
+		(let row (C mysqllib "mysqlfetcharray" resultset))
+		(return row)
+	)
+)
+
+(function mysql_result (params resultset row col)
+	(block
+		(def result INTEGER)
+		(let result (C mysqllib "mysqlresult" resultset row col))
+		(return result)
+	)
+)
+
+
+(function mysql_num_fields (params resultset)
+	(block
+		(def fields INTEGER)
+		(let fields (C mysqllib "mysqlnumfields" resultset))
+		(return fields)
+	)
+)
+
+(function mysql_num_rows (params resultset)
+	(block
+		(def numrows INTEGER)
+		(let numrows (C mysqllib "mysqlnumrows" resultset))
+		(return numrows)
+	)
+)
+
+(function mysql_affected_rows (params connection)
+	(block
+		(def numrows INTEGER)
+		(let numrows (C mysqllib "mysqlaffectedrows" connection))
+		(return numrows)
+	)
+)
+
+(function mysql_get_client_info (params)
+	(return (C mysqllib "mysqlgetclientinfo"))
+)
+
+(function mysql_close (params connection)
+	(return (C mysqllib "mysqlclose" connection))
+)
+
+
+(function mysql_character_set_name (params connection)
+	(return (C mysqllib "mysqlcharactersetname" connection))
+)
+
+(function mysql_select_db (params connection dbname)
+	(return (C mysqllib "mysqlselectdb" connection dbname))
+)
+
+(function mysql_stat (params connection)
+	(return (C mysqllib "mysqlstat" connection))
+)
+
+(function mysql_autocommit (params connection truefalse)
+	(return (C mysqllib "mysqlautocommit" connection truefalse))
+)

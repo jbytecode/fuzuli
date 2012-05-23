@@ -1,0 +1,21 @@
+(require "/usr/lib/fuzuli/nfl/types.nfl")
+(require "/usr/lib/fuzuli/nfl/math.nfl")
+
+(let a "3.14")
+(let b (cdbl a))
+
+(if (and (= b 3.14) (= (typeof b) FLOAT))
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+
+
+
+(let h PI)
+(let a (cint h))
+
+(if (and (= a 3) (= (typeof a) INTEGER))
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+
