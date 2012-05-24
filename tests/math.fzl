@@ -50,7 +50,7 @@
     (print "ERROR\n")
 )
 (let val (pow -10 100001))
-(if (= (isinf val) -1)
+(if (= (isinf val) 1)
     (print "PASSED!\n")
     (print "ERROR\n")
 )

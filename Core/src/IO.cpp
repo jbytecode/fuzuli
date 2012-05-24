@@ -19,8 +19,9 @@
 #include "FuzuliTypes.h"
 #include <iostream>
 #include <sstream>
-#include <cstdio>
+#include <stdio.h>
 #include <cstring>
+#include <cstdio>
 #include <sys/types.h>
 #include <dirent.h>
 #include <unistd.h>
@@ -163,18 +164,19 @@ Token *feofd(Token *p, Environment *env) {
 }
 
 void __readToken(FILE *file, Token *tok) {
+	size_t dummy_return = 0;
 	if (tok->getType() == INTEGER) {
 		int val;
-		fread(&val, sizeof(int), 1, file);
+		dummy_return = fread(&val, sizeof(int), 1, file);
 		tok->setIntValue(val);
 	} else if (tok->getType() == FLOAT) {
 		double val;
-		fread(&val, sizeof(double), 1, file);
+		dummy_return = fread(&val, sizeof(double), 1, file);
 		tok->setFloatValue(val);
 		tok->setType(FLOAT);
 	} else if (tok->getType() == STRING) {
 		char c[2];
-		fread(&c, sizeof(char), 1, file);
+		dummy_return = fread(&c, sizeof(char), 1, file);
 		c[1] = '\0';
 		tok->setContent((const char*) &c);
 	} else if (tok->getType() == LIST) {
@@ -188,8 +190,9 @@ void __readToken(FILE *file, Token *tok) {
 void __readLine(FILE *file, Token *tok) {
 	stringstream ss;
 	char c;
+	size_t dummy_return = 0;
 	while (1) {
-		fread(&c, 1, 1, file);
+		dummy_return = fread(&c, 1, 1, file);
 		if (c == 13 || c == 10) {
 			break;
 		}

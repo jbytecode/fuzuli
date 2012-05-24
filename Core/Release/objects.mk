@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -ldl -lmysqlclient -lcgicc
+LIBS := -lm -lsocket -ltk -lgd -lmysqlclient -ltcl
 

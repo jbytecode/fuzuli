@@ -4,67 +4,64 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../src/AndExpression.cpp \
+../src/AritmeticExpression.cpp \
 ../src/AstBuilder.cpp \
-../src/AsterixExpression.cpp \
 ../src/BlockExpression.cpp \
-../src/DivisionExpression.cpp \
+../src/CppEmitter.cpp \
+../src/DataTypeExpression.cpp \
+../src/DynLoadExpression.cpp \
 ../src/Environment.cpp \
-../src/EqualsExpression.cpp \
+../src/EvalExpression.cpp \
 ../src/Expression.cpp \
+../src/FunctionExpression.cpp \
+../src/IOExpression.cpp \
 ../src/IfExpression.cpp \
-../src/IntegerExpression.cpp \
-../src/NotExpression.cpp \
-../src/OrExpression.cpp \
-../src/PlusExpression.cpp \
-../src/PrintExpression.cpp \
+../src/LetExpression.cpp \
+../src/ListExpression.cpp \
+../src/LoopsExpression.cpp \
 ../src/SourceCode.cpp \
-../src/StringExpression.cpp \
-../src/SubtractionExpression.cpp \
 ../src/Token.cpp \
-../src/main.cpp 
+../src/WebExpression.cpp 
 
 OBJS += \
-./src/AndExpression.o \
+./src/AritmeticExpression.o \
 ./src/AstBuilder.o \
-./src/AsterixExpression.o \
 ./src/BlockExpression.o \
-./src/DivisionExpression.o \
+./src/CppEmitter.o \
+./src/DataTypeExpression.o \
+./src/DynLoadExpression.o \
 ./src/Environment.o \
-./src/EqualsExpression.o \
+./src/EvalExpression.o \
 ./src/Expression.o \
+./src/FunctionExpression.o \
+./src/IOExpression.o \
 ./src/IfExpression.o \
-./src/IntegerExpression.o \
-./src/NotExpression.o \
-./src/OrExpression.o \
-./src/PlusExpression.o \
-./src/PrintExpression.o \
+./src/LetExpression.o \
+./src/ListExpression.o \
+./src/LoopsExpression.o \
 ./src/SourceCode.o \
-./src/StringExpression.o \
-./src/SubtractionExpression.o \
 ./src/Token.o \
-./src/main.o 
+./src/WebExpression.o 
 
 CPP_DEPS += \
-./src/AndExpression.d \
+./src/AritmeticExpression.d \
 ./src/AstBuilder.d \
-./src/AsterixExpression.d \
 ./src/BlockExpression.d \
-./src/DivisionExpression.d \
+./src/CppEmitter.d \
+./src/DataTypeExpression.d \
+./src/DynLoadExpression.d \
 ./src/Environment.d \
-./src/EqualsExpression.d \
+./src/EvalExpression.d \
 ./src/Expression.d \
+./src/FunctionExpression.d \
+./src/IOExpression.d \
 ./src/IfExpression.d \
-./src/IntegerExpression.d \
-./src/NotExpression.d \
-./src/OrExpression.d \
-./src/PlusExpression.d \
-./src/PrintExpression.d \
+./src/LetExpression.d \
+./src/ListExpression.d \
+./src/LoopsExpression.d \
 ./src/SourceCode.d \
-./src/StringExpression.d \
-./src/SubtractionExpression.d \
 ./src/Token.d \
-./src/main.d 
+./src/WebExpression.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

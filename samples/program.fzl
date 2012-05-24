@@ -1,8 +1,21 @@
-(require "/usr/lib/fuzuli/nfl/net.nfl")
-(require "/usr/lib/fuzuli/nfl/string.nfl")
+(require "/usr/lib/fuzuli/nfl/math.nfl")
 
 
 
+(require "/usr/lib/fuzuli/nfl/io.nfl")
 
+(let f (fopen "/tmp/kek.txt" "w"))
+(let liste (list 1 2 3 4 5 6 7 8 9 10 11 12 13 14))
+(fwrite f liste)
+(fclose f)
+
+(let dd (fopen "/tmp/kek.txt"  "r"))
+(let a 0)
+(let mysum 0)
+(for (let i 0) (< i 5) (inc i)
+                (let mysum (+ mysum (fread dd a)))
+)
+
+(if (= mysum 15) (print "PASSED!\n") (print "ERROR\n"))
 
 

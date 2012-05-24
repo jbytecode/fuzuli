@@ -141,7 +141,7 @@ WhileExpression::~WhileExpression() {
 Token *WhileExpression::eval(Environment *env) {
 	Environment *whileEnvironment = env->createNext();
 	Token *condition;
-	Token *result;
+	Token *result = Token::NULL_TOKEN;
 	while (1) {
 		condition = this->expressions[0]->eval(whileEnvironment);
 		if (condition->getIntValue() == 0) {

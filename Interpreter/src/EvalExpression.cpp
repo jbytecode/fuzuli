@@ -42,7 +42,7 @@ Token *EvalExpression::eval(Environment *env) {
 	source.readFromText(s);
 	AstBuilder astBuilder(&source);
 	Expression *expr;
-	Token *res;
+	Token *res = Token::NULL_TOKEN;
 	source.reset();
 
 	while (1) {
