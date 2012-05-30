@@ -27,7 +27,6 @@ using namespace std;
 
 ForExpression::ForExpression(vector<Expression*> expr) {
 	this->expressions = expr;
-	this->resultToken = Token::NULL_TOKEN;
 }
 
 ForExpression::~ForExpression() {
@@ -43,7 +42,7 @@ Token *ForExpression::eval(Environment *env) {
 	}
 	this->expressions[0]->eval(forEnvironment); /* Starter */
 	Token *condition;
-	Token *result;
+	Token *result = Token::NULL_TOKEN;
 	while (1) {
 		condition = this->expressions[1]->eval(forEnvironment);
 		if (condition->getIntValue() == 0) {
@@ -59,7 +58,10 @@ Token *ForExpression::eval(Environment *env) {
 		}
 		this->expressions[2]->eval(forEnvironment);
 	}
-	return (this->resultToken);
+	if(!result) {
+		result = Token::NULL_TOKEN;
+	}
+	return (result);
 }
 
 ForEachExpression::ForEachExpression(vector<Expression*> expr) {

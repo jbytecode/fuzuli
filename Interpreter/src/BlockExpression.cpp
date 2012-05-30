@@ -26,7 +26,6 @@ using namespace std;
 
 BlockExpression::BlockExpression(vector<Expression*> expr) {
 	this->expressions = expr;
-	this->resultToken = Token::NULL_TOKEN;
 }
 
 BlockExpression::~BlockExpression() {
@@ -34,19 +33,19 @@ BlockExpression::~BlockExpression() {
 }
 
 Token *BlockExpression::eval(Environment *env) {
-	Token *result;
+	Token *result = Token::NULL_TOKEN;
 	Environment *blockEnvironment = env->createNext();
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
 		result = this->expressions[i]->eval(blockEnvironment);
 		if (result) {
 			if (result->breakFlag==1) {
-				return (result);
+				return (result->clone());
 			}else if (result->returnFlag==1){
-				return(result);
+				return(result->clone());
 			}
 		}
 	}
-	return (this->resultToken);
+	return (result);
 }
 
 void BlockExpression::emitCpp(stringstream *ss){
