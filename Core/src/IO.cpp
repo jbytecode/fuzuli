@@ -157,7 +157,7 @@ Token *fwrited(Token *p, Environment *env) {
 }
 
 Token *feofd(Token *p, Environment *env) {
-	Token *feofd_return = new Token("0", INTEGER);
+	Token *feofd_return = new Token(0.0, INTEGER);
 	FILE *file = (FILE*) p->tokens[0]->object;
 	feofd_return->setIntValue(feof(file));
 	return (feofd_return);

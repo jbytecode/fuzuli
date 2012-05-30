@@ -130,7 +130,7 @@ Token *NotExpression::eval(Environment *env) {
 	int intValue = tok->getIntValue();
 	if (intValue == 0) {
 		intValue = 1;
-	} else if (intValue == 1) {
+	} else  {
 		intValue = 0;
 	}
 	result->setIntValue(intValue);
