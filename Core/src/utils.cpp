@@ -22,41 +22,45 @@
 #include <cstring>
 #include <algorithm>
 
-
 using namespace std;
 using namespace fuzuli;
 
 extern "C" {
 Token *shuffle(Token *p, Environment *env);
-Token *sortd(Token *p,Environment *env);
-Token *sorta(Token *p,Environment *env);
+Token *sortd(Token *p, Environment *env);
+Token *sorta(Token *p, Environment *env);
 }
 
-
-
-bool TokenSorter_a (Token *i,Token *j){
+bool TokenSorter_a(Token *i, Token *j) {
 	return (i->getFloatValue() < j->getFloatValue());
 }
 
-bool TokenSorter_d (Token *i,Token *j){
+bool TokenSorter_d(Token *i, Token *j) {
 	return (i->getFloatValue() > j->getFloatValue());
 }
 
-
-Token *sorta (Token *p,Environment *env){
-	sort(p->tokens[0]->tokens.begin(), p->tokens[0]->tokens.end(),TokenSorter_a);
-	return(Token::NULL_TOKEN);
+Token *sorta(Token *p, Environment *env) {
+	sort(p->tokens[0]->tokens.begin(), p->tokens[0]->tokens.end(),
+			TokenSorter_a);
+	Token *result = env->newToken("@FUZULILIST", LIST);
+	for (unsigned int i = 0; i < p->tokens[0]->tokens.size(); i++) {
+		result->tokens.push_back(p->tokens[0]->tokens[i]);
+	}
+	return (result);
 }
 
-Token *sortd (Token *p,Environment *env){
-	sort(p->tokens[0]->tokens.begin(), p->tokens[0]->tokens.end(),TokenSorter_d);
-	return(Token::NULL_TOKEN);
+Token *sortd(Token *p, Environment *env) {
+	sort(p->tokens[0]->tokens.begin(), p->tokens[0]->tokens.end(),
+			TokenSorter_d);
+	Token *result = env->newToken("@FUZULILIST", LIST);
+	for (unsigned int i = 0; i < p->tokens[0]->tokens.size(); i++) {
+		result->tokens.push_back(p->tokens[0]->tokens[i]);
+	}
+	return (result);
 }
 
-Token *shuffle(Token *p,Environment *env){
+Token *shuffle(Token *p, Environment *env) {
 	random_shuffle(p->tokens[0]->tokens.begin(), p->tokens[0]->tokens.end());
-	return(Token::NULL_TOKEN);
+	return (Token::NULL_TOKEN);
 }
-
-
 

@@ -73,7 +73,7 @@ Token *FunctionCallExpression::eval(Environment *env){
 	for (unsigned int i=0;i<paramsExpr->paramNames.size();i++){
 		Token *param = paramsExpr->paramNames[i];
 		Token *value = this->expressions[i+1]->eval(env);
-		funcEnvironment->setVariableForFunctionParams(param->getContent(), value);
+		funcEnvironment->setVariableForFunctionParams(param->getContent(), value->clone());
 	}
 	result = func->body->eval(funcEnvironment);
 	result->returnFlag = 0;
