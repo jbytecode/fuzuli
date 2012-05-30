@@ -1,0 +1,65 @@
+(let x (list 1 2 3 4 5 6 7 8 9 10))
+(let y (list 10 20 30 40 50 60 70 80 90 100))
+
+(function sum (params a)
+	(block
+		(def s FLOAT)
+		(def i INTEGER)
+		(let s 0.0)
+		(for (let i 0) (< i (length a)) (inc i)
+			(let s (+ s (nth a i)))
+		)
+		(return s)
+	)
+)
+
+(function mean (params a)
+	(block	
+		(def total FLOAT)
+		(def result FLOAT)
+
+		(let total (sum a))
+		(let result (/ total (length a)))
+			
+		(return result)
+	)
+)
+
+
+(function covariance (params c d)
+	(block
+		(def meana FLOAT)
+		(def meanb FLOAT)
+		(def xy FLOAT)
+		(def i INTEGER)
+		(let meana (mean c)) 
+		(let meanb (mean d))
+		(let xy 0.0)
+		(for (let i 0) (< i (length a)) (inc i)
+			(block
+				(let xy (+ xy (* (- (nth c i) meana) (- (nth d i) meanb ))))
+			)
+		) 
+		(return xy)
+	)
+
+)
+
+
+(let beta1 (/ (covariance x y) (covariance x x)))
+(let beta0 (- (mean y) (* beta1 (mean x))))
+#(print "beta0 " beta0  "\n") 
+#(print "beta1 " beta1  "\n")
+
+(if (= beta0 0.0)
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+
+(if (= beta1 10.0)
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+
+
+
