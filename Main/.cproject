@@ -96,7 +96,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1484318836" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.167639124" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
 								<option id="gnu.cpp.link.option.userobjs.1612571043" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Interpreter/Release/libfuzuli.so}&quot;"/>
+									<listOptionValue builtIn="false" value="../../Interpreter/Release/libfuzuli.so"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.1011435308" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="readline"/>
