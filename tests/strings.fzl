@@ -89,3 +89,9 @@
 	(print error)
 )
 
+(let result12 (instr "Fuzuli" "uzu"))
+(if (= result12 1)
+	(print passed)
+	(print error)
+)
+

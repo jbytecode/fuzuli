@@ -89,3 +89,10 @@
 	)
 )
 
+
+(function instr (params text part)
+	(block
+		(return (C str_lib "instr" text part))
+	)
+)
+

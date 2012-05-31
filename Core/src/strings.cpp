@@ -36,6 +36,17 @@ Token *right(Token *p,Environment *env);
 Token *strlend(Token *p,Environment *env);
 Token *substrd(Token *p,Environment *env);
 Token *strreverse(Token *p,Environment *env);
+Token *instr(Token *p, Environment *env);
+}
+
+TwoParameters
+Token *instr(Token *p, Environment *env){
+	string first = string(p->tokens[0]->getContent());
+	string second = string(p->tokens[1]->getContent());
+	int pos = first.find(second);
+	stringstream ss; ss<<pos;
+	Token *result = env->newToken(ss.str().c_str(),INTEGER);
+	return(result);
 }
 
 OneParameters

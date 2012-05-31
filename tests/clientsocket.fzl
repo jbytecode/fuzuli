@@ -1,0 +1,25 @@
+(require "/usr/lib/fuzuli/nfl/net.nfl")
+(require "/usr/lib/fuzuli/nfl/string.nfl")
+(require "/usr/lib/fuzuli/nfl/io.nfl")
+
+(let con (fsockopen "fuzuliproject.org" 80))
+(fsockwrite con "GET http://www.fuzuliproject.org/index.php\n\n")
+
+(def html STRING)
+(def content LIST)
+
+(let content (list "."))
+(while 1
+   (block
+      (let html (fsockread con 1)) #read 1 bytes
+      (if (= (typeof html) NULL) (break))	
+      (append content html)
+   )
+)
+(fsockclose con) 
+(let strcontent (strcat content))
+(if (> (instr strcontent "Practical") 0)
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+

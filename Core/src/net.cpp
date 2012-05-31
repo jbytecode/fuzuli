@@ -42,7 +42,7 @@ Token *fsocklisten(Token *p, Environment *env){
 
 	clientsocket = serversocket->accept();
 
-	Token *result = env->newToken("@FuzuliSocket",COBJECT);
+	Token *result = new Token("@FuzuliSocket",COBJECT);
 	result->object = (void*) clientsocket;
 	return(result);
 }
@@ -56,7 +56,7 @@ Token *fsockclose(Token *p, Environment *env) {
 
 TwoParameters
 Token *fsockwrite(Token *p, Environment *env) {
-	TcpSocket *socket = (TcpSocket*) p->tokens[0]->object;
+	TcpSocket *socket = (TcpSocket*)(p->tokens[0]->object);
 	Token *subject = p->tokens[1];
 	const string str_subject = string(subject->getContent());
 	socket->write(str_subject);
@@ -72,7 +72,7 @@ Token *fsockread(Token *p, Environment *env) {
 	Token *n = p->tokens[1];
 	try {
 		string str_read = socket->readn((unsigned int) n->getIntValue());
-		Token *result = env->newToken(str_read.c_str(), STRING);
+		Token *result = new Token(str_read.c_str(), STRING);
 		return (result);
 	} catch (Exception e) {
 		return (Token::NULL_TOKEN);
@@ -88,8 +88,8 @@ Token *fsockopen(Token *p, Environment *env) {
 	const string str_host = string(host->getContent());
 	socket->connect(str_host, port->getIntValue());
 
-	Token *result = env->newToken("@FuzuliClientSocket", COBJECT);
-	result->object = dynamic_cast<void*>(socket);
+	Token *result = new Token("@FuzuliClientSocket", COBJECT);
+	result->object = (void*)(socket);
 	return (result);
 }
 
