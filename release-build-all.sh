@@ -1,10 +1,24 @@
 #!/bin/bash
 
-./release-build-interpreter.sh
+cd Interpreter/Release
+make
+cd ..
+cd ..
 sleep 1
 
-./release-build-libs.sh
+cd Core/Release
+make
+cd ..
+cd ..
 sleep 1
+
+
+cd Main/Release
+make
+cd ..
+cd ..
+sleep 1
+
 
 cd tests
 ./tester.sh
