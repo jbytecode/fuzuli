@@ -1,8 +1,10 @@
 #!/bin/bash
 
+cd ..
+cd ..
+
 cd Interpreter
 cd Release
-make
 cp libfuzuli.so /usr/lib/fuzuli/
 cd ..
 cd ..
@@ -10,9 +12,14 @@ cd ..
 
 cd Main
 cd Release
-make
 cp fuzuli /usr/lib/fuzuli/
 cd ..
 cd ..
 
+cd Core
+cp -R nfl /usr/lib/fuzuli/
+cd Release
+cp *.so /usr/lib/fuzuli/
+cd ..
+cd ..
 

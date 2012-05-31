@@ -19,4 +19,4 @@ cd ..
 cd ..
 
 
-sudo rm -Rf /usr/lib/fuzuli/*
+rm -Rf /usr/lib/fuzuli/*

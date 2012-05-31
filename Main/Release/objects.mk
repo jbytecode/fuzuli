@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-USER_OBJS := /usr/lib/fuzuli/libfuzuli.so
+USER_OBJS := /home/hako/workspace/fuzuli/Interpreter/Release/libfuzuli.so
 
 LIBS := -lreadline
 

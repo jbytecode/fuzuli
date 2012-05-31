@@ -17,6 +17,7 @@
  */
 
 #include <iostream>
+#include <sstream>
 #include <stdlib.h>
 #include <cstring>
 #include <readline/readline.h>
@@ -29,6 +30,19 @@ using namespace fuzuli;
 static int a_argc;
 static char **a_argv;
 
+int calculateNumberOfParanthesis(const char *c){
+	int num = 0;
+	int len = strlen(c);
+	for (int i=0;i<len;i++){
+		if(c[i] == '(') {
+			num++;
+		}else if (c[i]==')'){
+			num--;
+		}
+	}
+	return(num);
+}
+
 void doRepl() {
 	SourceCode *source = new SourceCode();
 	Environment *env = new Environment();
@@ -40,6 +54,7 @@ void doRepl() {
 	env->setArgcArgv(a_argc, a_argv);
 
 	char* input;
+	stringstream ss;
 
 	while (1) {
 		rl_bind_key('\t', rl_complete);
@@ -52,19 +67,24 @@ void doRepl() {
 		}
 
 		add_history(input);
-		string code = string(input) + "\r\n";
-		source->readFromText(&code);
-		source->reset();
-		ast = new AstBuilder(source);
-		expr = ast->getNextExpression();
-		if (!expr) {
-			break;
-		}
-		tok = expr->eval(env);
-		cout << tok->getContent() << endl;
-		//Environment::GCEnvironment->GC();
 
-		free(input);
+		ss << string(input) << " ";
+
+		if(calculateNumberOfParanthesis(ss.str().c_str())==0){
+			string code = ss.str() + "\r\n";
+			source->readFromText(&code);
+			source->reset();
+			ast = new AstBuilder(source);
+			expr = ast->getNextExpression();
+			if (!expr) {
+				ss.str("");
+				break;
+			}
+			tok = expr->eval(env);
+			cout << tok->getContent() << endl;
+			free(input);
+			ss.str("");
+		}
 	}
 
 }
