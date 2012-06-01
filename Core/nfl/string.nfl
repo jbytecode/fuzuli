@@ -90,6 +90,7 @@
 )
 
 
+
 (function instr (params text part)
 	(block
 		(return (C str_lib "instr" text part))
@@ -100,5 +101,11 @@
 (function chr (params byte)
 	(block
 		(return (C str_lib "chr" byte))
+	)
+)
+
+(function ord (params character)
+	(block
+		(return (C str_lib "ord" character))
 	)
 )

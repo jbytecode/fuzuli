@@ -38,6 +38,15 @@ Token *substrd(Token *p,Environment *env);
 Token *strreverse(Token *p,Environment *env);
 Token *instr(Token *p, Environment *env);
 Token *chr (Token *p, Environment *env);
+Token *ord (Token *p, Environment *env);
+}
+
+OneParameters
+Token *ord(Token *p, Environment *env){
+	char c = p->tokens[0]->getContent()[0];
+	stringstream ss; ss << (unsigned int) c;
+	Token *result = new Token (ss.str().c_str(), STRING);
+	return(result);
 }
 
 OneParameters

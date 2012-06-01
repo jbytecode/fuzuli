@@ -101,3 +101,11 @@
 	(print error)
 )
 
+
+(let result14 (ord "A"))
+(if (= result14 65)
+	(print passed)
+	(print error)
+)
+
+
