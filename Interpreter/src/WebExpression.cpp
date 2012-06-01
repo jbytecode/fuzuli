@@ -16,9 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "../include/FuzuliTypes.h"
 #include <cstring>
+#include <sstream>
+#include <algorithm>
 #include <cgicc/Cgicc.h>  			/* Woow we have CGI! */
 #include <cgicc/HTTPHTMLHeader.h>
 #include <cgicc/CgiEnvironment.h>
@@ -30,9 +31,14 @@ using namespace cgicc;
 
 Cgicc *FuzuliCgi = NULL;
 
+void clean_white_spaces(string &s) {
+	stringstream tss;
+	tss << s;
+	tss >> s;
+}
+
 WebExpression::WebExpression(const char *html) {
 	this->html = html;
-	this->resultToken = new Token(html, STRING);
 }
 
 WebExpression::~WebExpression() {
@@ -41,7 +47,7 @@ WebExpression::~WebExpression() {
 
 Token *WebExpression::eval(Environment *env) {
 	cout << this->html;
-	return (this->resultToken);
+	return (Token::NULL_TOKEN);
 }
 
 RequestExpression::RequestExpression(vector<Expression*> expr) {
@@ -58,9 +64,9 @@ RequestExpression::~RequestExpression() {
 Token *RequestExpression::eval(Environment *env) {
 	Token *varname = this->expressions[0]->eval(env);
 	const_form_iterator iterator = FuzuliCgi->getElement(varname->getContent());
-	if(iterator == FuzuliCgi->getElements().end()) {
-	   resultToken = Token::NULL_TOKEN;
-	   return(resultToken);
+	if (iterator == FuzuliCgi->getElements().end()) {
+		resultToken = Token::NULL_TOKEN;
+		return (resultToken);
 	}
 	this->resultToken->setContent(iterator[0].getStrippedValue().c_str());
 	this->resultToken->setType(STRING);
@@ -70,9 +76,6 @@ Token *RequestExpression::eval(Environment *env) {
 SetCookieExpression::SetCookieExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 	this->resultToken = Token::NULL_TOKEN;
-	if (!FuzuliCgi) {
-		FuzuliCgi = new Cgicc();
-	}
 }
 
 SetCookieExpression::~SetCookieExpression() {
@@ -82,7 +85,6 @@ SetCookieExpression::~SetCookieExpression() {
 Token *SetCookieExpression::eval(Environment *env) {
 	Token *var = ((IdentifierExpression*) this->expressions[0])->stringToken;
 	Token *val = this->expressions[1]->eval(env);
-	//cout << HTTPCookie(var->getContent(), val->getContent()) << endl;
 	cout << "Set-Cookie: " << var->getContent() << "=" << val->getContent()
 			<< "\n";
 	return (this->resultToken);
@@ -90,7 +92,6 @@ Token *SetCookieExpression::eval(Environment *env) {
 
 GetCookieExpression::GetCookieExpression(vector<Expression*> expr) {
 	this->expressions = expr;
-	this->resultToken = Token::NULL_TOKEN;
 	if (!FuzuliCgi) {
 		FuzuliCgi = new Cgicc();
 	}
@@ -102,16 +103,24 @@ GetCookieExpression::~GetCookieExpression() {
 
 Token *GetCookieExpression::eval(Environment *env) {
 	Token *var = ((IdentifierExpression*) this->expressions[0])->stringToken;
-	CgiEnvironment cgienv = FuzuliCgi->getEnvironment();
-	const cookie_iterator iter;
-	for (unsigned int i = 0; i < cgienv.getCookieList().size(); i++) {
-		HTTPCookie c = cgienv.getCookieList()[i];
-		if (c.getName() == string(var->getContent())) {
-			resultToken->setType(STRING);
-			resultToken->setContent((c.getValue()).c_str());
+	string allcookies = string(getenv("HTTP_COOKIE"));
+	stringstream ss(allcookies);
+	string empty;
+	string result;
+	while (std::getline(ss, empty, ';')) {
+		stringstream iss(empty);
+		string key;
+		if (std::getline(iss, key, '=')) {
+			clean_white_spaces(key);
+			if (strcmp(key.c_str(), var->getContent()) == 0) {
+				string value;
+				std::getline(iss, value, '=');
+				result = string(value);
+				break;
+			}
 		}
 	}
-	return (this->resultToken);
+	return (env->newToken(result.c_str(), STRING));
 }
 
 IncludeExpression::IncludeExpression(vector<Expression*> expr) {
@@ -140,23 +149,23 @@ Token *IncludeExpression::eval(Environment *env) {
 	return (this->resultToken);
 }
 
-IssetExpression::IssetExpression(vector<Expression*>expr){
+IssetExpression::IssetExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 	this->resultToken = new Token(0.0, INTEGER);
 }
 
-IssetExpression::~IssetExpression(){
+IssetExpression::~IssetExpression() {
 
 }
 
-Token *IssetExpression::eval(Environment *env){
+Token *IssetExpression::eval(Environment *env) {
 	Token *varname = this->expressions[0]->eval(env);
-	if(varname->getType() != NULLTOKEN){
+	if (varname->getType() != NULLTOKEN) {
 		this->resultToken->setIntValue(1);
-	}else{
+	} else {
 		this->resultToken->setIntValue(0);
 	}
-	return(this->resultToken);
+	return (this->resultToken);
 }
 
 }
