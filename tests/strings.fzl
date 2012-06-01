@@ -95,3 +95,9 @@
 	(print error)
 )
 
+(let result13 (chr 65))
+(if (= result13 "A")
+	(print passed)
+	(print error)
+)
+

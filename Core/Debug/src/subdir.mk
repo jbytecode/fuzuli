@@ -9,7 +9,6 @@ CPP_SRCS += \
 ../src/MySql.cpp \
 ../src/TclTk.cpp \
 ../src/gd.cpp \
-../src/net.cpp \
 ../src/strings.cpp \
 ../src/utils.cpp 
 
@@ -19,7 +18,6 @@ OBJS += \
 ./src/MySql.o \
 ./src/TclTk.o \
 ./src/gd.o \
-./src/net.o \
 ./src/strings.o \
 ./src/utils.o 
 
@@ -29,7 +27,6 @@ CPP_DEPS += \
 ./src/MySql.d \
 ./src/TclTk.d \
 ./src/gd.d \
-./src/net.d \
 ./src/strings.d \
 ./src/utils.d 
 

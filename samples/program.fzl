@@ -1,4 +1,4 @@
-(require "/usr/lib/fuzuli/nfl/math.nfl")
+(require "/usr/lib/fuzuli/nfl/string.nfl")
 
-(print (cos 0))
+(print (chr 65))
 

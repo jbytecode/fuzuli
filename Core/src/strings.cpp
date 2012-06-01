@@ -37,7 +37,17 @@ Token *strlend(Token *p,Environment *env);
 Token *substrd(Token *p,Environment *env);
 Token *strreverse(Token *p,Environment *env);
 Token *instr(Token *p, Environment *env);
+Token *chr (Token *p, Environment *env);
 }
+
+OneParameters
+Token *chr(Token *p, Environment *env){
+	int value = p->tokens[0]->getIntValue();
+	stringstream ss; ss << (char)value;
+	Token *result = new Token(ss.str().c_str(), STRING);
+	return(result);
+}
+
 
 TwoParameters
 Token *instr(Token *p, Environment *env){

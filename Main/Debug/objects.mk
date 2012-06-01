@@ -4,5 +4,5 @@
 
 USER_OBJS := /usr/lib/fuzuli/libfuzuli.so
 
-LIBS :=
+LIBS := -lreadline
 
