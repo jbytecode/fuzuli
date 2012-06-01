@@ -19,17 +19,15 @@
 #include "../include/FuzuliTypes.h"
 #include <cstring>
 #include <sstream>
+#include <cstdlib>
+#include <cstdio>
 #include <algorithm>
-#include <cgicc/Cgicc.h>  			/* Woow we have CGI! */
-#include <cgicc/HTTPHTMLHeader.h>
-#include <cgicc/CgiEnvironment.h>
-#include <cgicc/HTTPCookie.h>
 
 namespace fuzuli {
 
-using namespace cgicc;
+using namespace std;
 
-Cgicc *FuzuliCgi = NULL;
+stringstream cgi_post_content;
 
 void clean_white_spaces(string &s) {
 	stringstream tss;
@@ -53,24 +51,69 @@ Token *WebExpression::eval(Environment *env) {
 RequestExpression::RequestExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 	this->resultToken = Token::NULL_TOKEN;
-	if (!FuzuliCgi) {
-		FuzuliCgi = new Cgicc();
-	}
 }
 
 RequestExpression::~RequestExpression() {
 }
 
 Token *RequestExpression::eval(Environment *env) {
-	Token *varname = this->expressions[0]->eval(env);
-	const_form_iterator iterator = FuzuliCgi->getElement(varname->getContent());
-	if (iterator == FuzuliCgi->getElements().end()) {
-		resultToken = Token::NULL_TOKEN;
-		return (resultToken);
+	Token *var = this->expressions[0]->eval(env);
+	string allcookies = string(getenv("QUERY_STRING"));
+	stringstream ss(allcookies);
+	string empty = "";
+	string result = "";
+	int keyfound = 0;
+	const int bufsize = 10;
+	while (std::getline(ss, empty, '&')) {
+		stringstream iss(empty);
+		string key;
+		if (std::getline(iss, key, '=')) {
+			clean_white_spaces(key);
+			if (strcmp(key.c_str(), var->getContent()) == 0) {
+				keyfound = 1;
+				string value;
+				std::getline(iss, value, '=');
+				result = value;
+				return (env->newToken(result.c_str(), STRING));
+			}
+		}
 	}
-	this->resultToken->setContent(iterator[0].getStrippedValue().c_str());
-	this->resultToken->setType(STRING);
-	return (this->resultToken);
+	ss.clear();
+
+	if (cgi_post_content.str().size() == 0) {
+		char c[bufsize];
+		while (1) {
+			cin.read(c, bufsize);
+			if(c[0]=='\0'){
+				break;
+			}
+			cgi_post_content << c;
+			for(int j=0;j<bufsize;j++){
+				c[j]='\0';
+			}
+		}
+	}
+
+	while (std::getline(cgi_post_content, empty, '&')) {
+		stringstream iss(empty);
+		string key;
+		if (std::getline(iss, key, '=')) {
+			clean_white_spaces(key);
+			if (strcmp(key.c_str(), var->getContent()) == 0) {
+				keyfound = 1;
+				string value;
+				std::getline(iss, value, '=');
+				result = value;
+				return (env->newToken(result.c_str(), STRING));
+			}
+		}
+	}
+
+	if (keyfound != 0) {
+		return (env->newToken("", STRING));
+	}
+
+	return (Token::NULL_TOKEN);
 }
 
 SetCookieExpression::SetCookieExpression(vector<Expression*> expr) {
@@ -92,9 +135,6 @@ Token *SetCookieExpression::eval(Environment *env) {
 
 GetCookieExpression::GetCookieExpression(vector<Expression*> expr) {
 	this->expressions = expr;
-	if (!FuzuliCgi) {
-		FuzuliCgi = new Cgicc();
-	}
 }
 
 GetCookieExpression::~GetCookieExpression() {
