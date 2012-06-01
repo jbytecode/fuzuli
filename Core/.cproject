@@ -143,15 +143,19 @@
 								<option defaultValue="true" id="gnu.cpp.link.option.shared.2141312865" name="Shared (-shared)" superClass="gnu.cpp.link.option.shared" valueType="boolean"/>
 								<option id="gnu.cpp.link.option.paths.1642152709" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="/usr/lib/happycoders"/>
+									<listOptionValue builtIn="false" value="/usr/lib/i386-linux-gnu"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.336608579" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="m"/>
+									<listOptionValue builtIn="false" value="ssl"/>
+									<listOptionValue builtIn="false" value="crypto"/>
 									<listOptionValue builtIn="false" value="socket"/>
 									<listOptionValue builtIn="false" value="tk"/>
 									<listOptionValue builtIn="false" value="gd"/>
 									<listOptionValue builtIn="false" value="mysqlclient"/>
 									<listOptionValue builtIn="false" value="tcl"/>
 								</option>
+								<option id="gnu.cpp.link.option.userobjs.2102600690" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1844647046" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

@@ -108,4 +108,9 @@
 	(print error)
 )
 
+(let result15 (md5 "fuzuli"))
+(if (= result15 "ac7f77c9a8a84e110342dd8117b54af1")
+	(print passed)
+	(print error)
+)
 

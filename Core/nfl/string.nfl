@@ -109,3 +109,10 @@
 		(return (C str_lib "ord" character))
 	)
 )
+
+(function md5 (params text)
+	(block
+		(return (C str_lib "md5" text))
+	)
+)
+

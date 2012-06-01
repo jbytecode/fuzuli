@@ -21,6 +21,7 @@
 #include <sstream>
 #include <cstring>
 #include <algorithm>
+#include <openssl/md5.h>
 
 using namespace std;
 using namespace fuzuli;
@@ -39,7 +40,27 @@ Token *strreverse(Token *p,Environment *env);
 Token *instr(Token *p, Environment *env);
 Token *chr (Token *p, Environment *env);
 Token *ord (Token *p, Environment *env);
+Token *md5(Token *p, Environment *env);
 }
+
+OneParameters
+Token *md5(Token *p, Environment *env){
+	const char *source = p->tokens[0]->getContent();
+	unsigned char* md5char = MD5((const unsigned char*)source, strlen(p->tokens[0]->getContent()), NULL);
+	stringstream ss;
+	int len = strlen((const char*)md5char);
+	for (int i=0;i<len;i++){
+		int num = (unsigned int)md5char[i];
+		if(num<10){
+			ss<< std::hex << "0" << num;
+		}else{
+			ss<< std::hex <<  num;
+		}
+	}
+	Token *result = new Token(ss.str().c_str(), STRING);
+	return(result);
+}
+
 
 OneParameters
 Token *ord(Token *p, Environment *env){

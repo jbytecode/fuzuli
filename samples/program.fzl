@@ -1,4 +1,4 @@
 (require "/usr/lib/fuzuli/nfl/string.nfl")
 
-(print (chr 65))
+(print (md5 "hako"))
 
