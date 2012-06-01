@@ -27,79 +27,107 @@ using namespace std;
 using namespace fuzuli;
 
 extern "C" {
-Token *ltrim(Token *p,Environment *env);
-Token *rtrim(Token *p,Environment *env);
-Token *strcatd(Token *p,Environment *env);
-Token *lcase(Token *p,Environment *env);
-Token *ucase(Token *p,Environment *env);
-Token *left(Token *p,Environment *env);
-Token *right(Token *p,Environment *env);
-Token *strlend(Token *p,Environment *env);
-Token *substrd(Token *p,Environment *env);
-Token *strreverse(Token *p,Environment *env);
+Token *ltrim(Token *p, Environment *env);
+Token *rtrim(Token *p, Environment *env);
+Token *strcatd(Token *p, Environment *env);
+Token *lcase(Token *p, Environment *env);
+Token *ucase(Token *p, Environment *env);
+Token *left(Token *p, Environment *env);
+Token *right(Token *p, Environment *env);
+Token *strlend(Token *p, Environment *env);
+Token *substrd(Token *p, Environment *env);
+Token *strreverse(Token *p, Environment *env);
 Token *instr(Token *p, Environment *env);
-Token *chr (Token *p, Environment *env);
-Token *ord (Token *p, Environment *env);
+Token *chr(Token *p, Environment *env);
+Token *ord(Token *p, Environment *env);
 Token *md5(Token *p, Environment *env);
+Token *urldecode(Token *p, Environment *env);
 }
 
 OneParameters
-Token *md5(Token *p, Environment *env){
+Token *urldecode(Token *p, Environment *env) {
 	const char *source = p->tokens[0]->getContent();
-	unsigned char* md5char = MD5((const unsigned char*)source, strlen(p->tokens[0]->getContent()), NULL);
+	int len = strlen(source);
 	stringstream ss;
-	int len = strlen((const char*)md5char);
-	for (int i=0;i<len;i++){
-		int num = (unsigned int)md5char[i];
-		if(num<10){
-			ss<< std::hex << "0" << num;
-		}else{
-			ss<< std::hex <<  num;
+	char *nexts = (char*)malloc(sizeof(char)*3);
+	for (int i = 0; i < len; i++) {
+		char c = source[i];
+			if	(c == '%') {
+				unsigned int value = 0;
+				stringstream xcode;
+				xcode<<"0x"<<source[i+1]<<source[i+2];
+				sscanf(xcode.str().c_str(), "%x", &value);
+				ss << (char)value;
+				i+=2;
+			} else if (c == '+') {
+				ss << " ";
+			} else {
+				ss << c;
+			}
+	}
+	Token *result = new Token(ss.str().c_str(), STRING);
+	return (result);
+}
+
+OneParameters
+Token *md5(Token *p, Environment *env) {
+	const char *source = p->tokens[0]->getContent();
+	unsigned char* md5char = MD5((const unsigned char*) source,
+			strlen(p->tokens[0]->getContent()), NULL);
+	stringstream ss;
+	int len = strlen((const char*) md5char);
+	for (int i = 0; i < len; i++) {
+		int num = (unsigned int) md5char[i];
+		if (num < 10) {
+			ss << std::hex << "0" << num;
+		} else {
+			ss << std::hex << num;
 		}
 	}
 	Token *result = new Token(ss.str().c_str(), STRING);
-	return(result);
+	return (result);
 }
 
-
 OneParameters
-Token *ord(Token *p, Environment *env){
+Token *ord(Token *p, Environment *env) {
 	char c = p->tokens[0]->getContent()[0];
-	stringstream ss; ss << (unsigned int) c;
-	Token *result = new Token (ss.str().c_str(), STRING);
-	return(result);
+	stringstream ss;
+	ss << (unsigned int) c;
+	Token *result = new Token(ss.str().c_str(), STRING);
+	return (result);
 }
 
 OneParameters
-Token *chr(Token *p, Environment *env){
+Token *chr(Token *p, Environment *env) {
 	int value = p->tokens[0]->getIntValue();
-	stringstream ss; ss << (char)value;
+	stringstream ss;
+	ss << (char) value;
 	Token *result = new Token(ss.str().c_str(), STRING);
-	return(result);
+	return (result);
 }
-
 
 TwoParameters
-Token *instr(Token *p, Environment *env){
+Token *instr(Token *p, Environment *env) {
 	string first = string(p->tokens[0]->getContent());
 	string second = string(p->tokens[1]->getContent());
 	int pos = first.find(second);
-	stringstream ss; ss<<pos;
-	Token *result = env->newToken(ss.str().c_str(),INTEGER);
-	return(result);
+	stringstream ss;
+	ss << pos;
+	Token *result = env->newToken(ss.str().c_str(), INTEGER);
+	return (result);
 }
 
 OneParameters
-Token *strreverse(Token *p,Environment *env){
+Token *strreverse(Token *p, Environment *env) {
 	string s = string(p->tokens[0]->getContent());
 	std::reverse(s.begin(), s.end());
-	Token *result = new Token(s.c_str(),STRING);
-	return(result);
+	Token *result = new Token(s.c_str(), STRING);
+	return (result);
 }
 
 ThreeParameters
-Token *substrd(Token *p,Environment *env) {
-	Token *result = new Token("",STRING);
+Token *substrd(Token *p, Environment *env) {
+	Token *result = new Token("", STRING);
 	Token *param = p->tokens[0];
 	Token *start = p->tokens[1];
 	Token *stop = p->tokens[2];
@@ -110,16 +138,15 @@ Token *substrd(Token *p,Environment *env) {
 	return (result);
 }
 
-
 OneParameters
-Token *strlend(Token *p,Environment *env) {
+Token *strlend(Token *p, Environment *env) {
 	Token *str = p->tokens[0];
 	Token *result = new Token(strlen(str->getContent()), INTEGER);
 	return (result);
 }
 
 TwoParameters
-Token *right(Token *p,Environment *env) {
+Token *right(Token *p, Environment *env) {
 	Token *str = p->tokens[0];
 	Token *n = p->tokens[1];
 	Token *result = new Token("", STRING);
@@ -131,7 +158,7 @@ Token *right(Token *p,Environment *env) {
 }
 
 TwoParameters
-Token *left(Token *p,Environment *env) {
+Token *left(Token *p, Environment *env) {
 	Token *str = p->tokens[0];
 	Token *n = p->tokens[1];
 	Token *result = new Token("", STRING);
@@ -141,7 +168,7 @@ Token *left(Token *p,Environment *env) {
 }
 
 OneParameters
-Token *ucase(Token *p,Environment *env) {
+Token *ucase(Token *p, Environment *env) {
 	const char *content = p->tokens[0]->getContent();
 	char *newcontent = (char*) malloc(strlen(content) * sizeof(char));
 	Token *result = new Token(content, STRING);
@@ -153,7 +180,7 @@ Token *ucase(Token *p,Environment *env) {
 }
 
 OneParameters
-Token *lcase(Token *p,Environment *env) {
+Token *lcase(Token *p, Environment *env) {
 	const char *content = p->tokens[0]->getContent();
 	char *newcontent = (char*) malloc(strlen(content) * sizeof(char));
 	Token *result = new Token(content, STRING);
@@ -165,7 +192,7 @@ Token *lcase(Token *p,Environment *env) {
 }
 
 MoreThanThreeParameters
-Token *strcatd(Token *p,Environment *env) {
+Token *strcatd(Token *p, Environment *env) {
 	Token *result = new Token("", STRING);
 	stringstream ss;
 	for (unsigned int i = 0; i < p->tokens[0]->tokens.size(); i++) {
@@ -176,7 +203,7 @@ Token *strcatd(Token *p,Environment *env) {
 }
 
 OneParameters
-Token *ltrim(Token *p,Environment *env) {
+Token *ltrim(Token *p, Environment *env) {
 	Token *result = new Token("", STRING);
 	const char *content = p->tokens[0]->getContent();
 	char *pointer = (char*) content;
@@ -194,7 +221,7 @@ Token *ltrim(Token *p,Environment *env) {
 }
 
 OneParameters
-Token *rtrim(Token *p,Environment *env) {
+Token *rtrim(Token *p, Environment *env) {
 	Token *result = new Token("", STRING);
 	const char *content = p->tokens[0]->getContent();
 	char *pointer = (char*) content;

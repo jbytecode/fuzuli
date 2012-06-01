@@ -1,4 +1,4 @@
 (require "/usr/lib/fuzuli/nfl/string.nfl")
 
-(print (md5 "hako"))
+(print (urldecode "/?name=a%20b+c"))
 

@@ -114,3 +114,10 @@
 	(print error)
 )
 
+
+(let result16 (urldecode "/?name=a%20b+c"))
+(if (= result16 "/?name=a b c")
+	(print passed)
+	(print error)
+)
+
