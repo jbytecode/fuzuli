@@ -1,4 +1,6 @@
 (require "/usr/lib/fuzuli/nfl/string.nfl")
 
-(print (urldecode "/?name=a%20b+c"))
+(let result17 (levenshtein "fuzuli" "the fuzuli project"))
+(print result17)
+
 

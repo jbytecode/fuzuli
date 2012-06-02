@@ -20,6 +20,8 @@
 #include <iostream>
 #include <sstream>
 #include <cstring>
+#include <cstdlib>
+#include <cmath>
 #include <algorithm>
 #include <openssl/md5.h>
 
@@ -42,6 +44,42 @@ Token *chr(Token *p, Environment *env);
 Token *ord(Token *p, Environment *env);
 Token *md5(Token *p, Environment *env);
 Token *urldecode(Token *p, Environment *env);
+Token *levenshtein(Token *p, Environment *env);
+}
+
+int min3(int p1, int p2, int p3){
+	int m = (int)(fmin(fmin(p1,p2), p3));
+	return(m);
+}
+
+TwoParameters
+Token *levenshtein(Token *p, Environment *env){
+	const char *str1 = p->tokens[0]->getContent();
+	const char *str2 = p->tokens[1]->getContent();
+	const int m = strlen(str1);
+	const int n = strlen(str2);
+	int **d = new int*[m];
+	for (int i=0;i<m;i++){
+		d[i]= new int[n];
+	}
+
+	for (int i=0; i<m;i++){
+	    d[i][0] = i;
+	}
+	for (int j=0;j<n;j++){
+	    d[0][j] = j;
+	}
+	for (int j=1;j<n;j++){
+	    for (int i=1;i< m; i++){
+	      if (str1[i] == str2[j]) {
+	        d[i][j] = d[(i-1)][(j-1)];
+	      }else{
+	        d[i][j] = min3(d[(i-1)][j] + 1,  d[i][(j-1)] + 1,  d[(i-1)][(j-1)] + 1);
+	      }
+	    }
+	}
+	Token *result = new Token(d[m-1][n-1] , INTEGER);
+	return(result);
 }
 
 OneParameters
@@ -49,7 +87,6 @@ Token *urldecode(Token *p, Environment *env) {
 	const char *source = p->tokens[0]->getContent();
 	int len = strlen(source);
 	stringstream ss;
-	char *nexts = (char*)malloc(sizeof(char)*3);
 	for (int i = 0; i < len; i++) {
 		char c = source[i];
 			if	(c == '%') {

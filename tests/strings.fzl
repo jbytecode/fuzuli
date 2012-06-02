@@ -121,3 +121,9 @@
 	(print error)
 )
 
+(let result17 (levenshtein "fuzuli" "the fuzuli project"))
+(if (= result17 12)
+	(print passed)
+	(print error)
+)
+

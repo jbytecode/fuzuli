@@ -121,3 +121,9 @@
 		(return (C str_lib "urldecode" url))
 	)
 )
+
+(function levenshtein (params text1 text2)
+	(block
+		(return (C str_lib "levenshtein" text1 text2))
+	)
+)
