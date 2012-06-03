@@ -127,3 +127,10 @@
 		(return (C str_lib "levenshtein" text1 text2))
 	)
 )
+
+
+(function str_replace (params mainstr what to)
+	(block
+		(return (C str_lib "str_replace" mainstr what to))
+	)
+)

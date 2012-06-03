@@ -1,8 +1,10 @@
-<?html <Outer html> ?>
+(require "/usr/lib/fuzuli/nfl/string.nfl")
 
-(block
-      (print "\n-------------------\n")
-      <?html <h1> ?>
-      (print "\n-------------------\n")
-)
- 
+(let str "Writing with Fuzuli is fun!")
+(let newstr (str_replace str "Fuzuli" "Fuzuli Programming Language"))
+(print newstr "\n")
+
+
+(let str "Hello hello hello world!")
+(let newstr (str_replace str "hello " ""))
+(print newstr "\n")

@@ -45,41 +45,65 @@ Token *ord(Token *p, Environment *env);
 Token *md5(Token *p, Environment *env);
 Token *urldecode(Token *p, Environment *env);
 Token *levenshtein(Token *p, Environment *env);
+Token *str_replace(Token *p, Environment *env);
 }
 
-int min3(int p1, int p2, int p3){
-	int m = (int)(fmin(fmin(p1,p2), p3));
-	return(m);
+int min3(int p1, int p2, int p3) {
+	int m = (int) (fmin(fmin(p1, p2), p3));
+	return (m);
+}
+
+ThreeParameters
+Token *str_replace(Token *p, Environment *env) {
+	Token *mainstr = p->tokens[0];
+	Token *find = p->tokens[1];
+	Token *to = p->tokens[2];
+	string s_mainstr = string(mainstr->getContent());
+	string s_find = string(find->getContent());
+	string s_to = string(to->getContent());
+	stringstream ss;
+	for (int i=0;i<s_mainstr.length();i++){
+		string part = s_mainstr.substr(i, s_find.length());
+		if(part == s_find){
+			ss<<s_to;
+			i+=s_find.length()-1;
+		}else{
+			ss<<s_mainstr.substr(i,1);
+		}
+	}
+	Token *result = new Token(ss.str().c_str(), STRING);
+	return (result);
 }
 
 TwoParameters
-Token *levenshtein(Token *p, Environment *env){
+Token *levenshtein(Token *p, Environment *env) {
 	const char *str1 = p->tokens[0]->getContent();
 	const char *str2 = p->tokens[1]->getContent();
 	const int m = strlen(str1);
 	const int n = strlen(str2);
 	int **d = new int*[m];
-	for (int i=0;i<m;i++){
-		d[i]= new int[n];
+	for (int i = 0; i < m; i++) {
+		d[i] = new int[n];
 	}
 
-	for (int i=0; i<m;i++){
-	    d[i][0] = i;
+	for (int i = 0; i < m; i++) {
+		d[i][0] = i;
 	}
-	for (int j=0;j<n;j++){
-	    d[0][j] = j;
+	for (int j = 0; j < n; j++) {
+		d[0][j] = j;
 	}
-	for (int j=1;j<n;j++){
-	    for (int i=1;i< m; i++){
-	      if (str1[i] == str2[j]) {
-	        d[i][j] = d[(i-1)][(j-1)];
-	      }else{
-	        d[i][j] = min3(d[(i-1)][j] + 1,  d[i][(j-1)] + 1,  d[(i-1)][(j-1)] + 1);
-	      }
-	    }
+	for (int j = 1; j < n; j++) {
+		for (int i = 1; i < m; i++) {
+			if (str1[i] == str2[j]) {
+				d[i][j] = d[(i - 1)][(j - 1)];
+			} else {
+				d[i][j] = min3(d[(i - 1)][j] + 1, d[i][(j - 1)] + 1,
+						d[(i - 1)][(j - 1)] + 1);
+			}
+		}
 	}
-	Token *result = new Token(d[m-1][n-1] , INTEGER);
-	return(result);
+	Token *result = new Token(d[m - 1][n - 1], INTEGER);
+	return (result);
 }
 
 OneParameters
@@ -89,18 +113,18 @@ Token *urldecode(Token *p, Environment *env) {
 	stringstream ss;
 	for (int i = 0; i < len; i++) {
 		char c = source[i];
-			if	(c == '%') {
-				unsigned int value = 0;
-				stringstream xcode;
-				xcode<<"0x"<<source[i+1]<<source[i+2];
-				sscanf(xcode.str().c_str(), "%x", &value);
-				ss << (char)value;
-				i+=2;
-			} else if (c == '+') {
-				ss << " ";
-			} else {
-				ss << c;
-			}
+		if (c == '%') {
+			unsigned int value = 0;
+			stringstream xcode;
+			xcode << "0x" << source[i + 1] << source[i + 2];
+			sscanf(xcode.str().c_str(), "%x", &value);
+			ss << (char) value;
+			i += 2;
+		} else if (c == '+') {
+			ss << " ";
+		} else {
+			ss << c;
+		}
 	}
 	Token *result = new Token(ss.str().c_str(), STRING);
 	return (result);

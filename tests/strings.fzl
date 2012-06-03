@@ -127,3 +127,9 @@
 	(print error)
 )
 
+(let result18 (str_replace "Programming with fuzuli is fun!" "fuzuli" "Fuzuli Programming Language"))
+(if (= result18 "Programming with Fuzuli Programming Language is fun!")
+	(print passed)
+	(print error)
+)
+
