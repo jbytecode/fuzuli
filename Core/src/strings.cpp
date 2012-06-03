@@ -118,6 +118,7 @@ Token *levenshtein(Token *p, Environment *env) {
 		}
 	}
 	Token *result = new Token(d[m - 1][n - 1], INTEGER);
+	delete[] d;
 	return (result);
 }
 
