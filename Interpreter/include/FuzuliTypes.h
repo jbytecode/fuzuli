@@ -662,6 +662,8 @@ public:
 	char look();
 	void putback();
 	unsigned int getCurrentLine();
+	void setCounter(unsigned int val);
+	unsigned int getCounter();
 
 private:
 	string *code;

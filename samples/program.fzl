@@ -1,6 +1,8 @@
-(require "/usr/lib/fuzuli/nfl/string.nfl")
+<?html <Outer html> ?>
 
-(let result17 (levenshtein "fuzuli" "the fuzuli project"))
-(print result17)
-
-
+(block
+      (print "\n-------------------\n")
+      <?html <Inner HTML> ?>
+      (print "\n-------------------\n")
+)
+ 

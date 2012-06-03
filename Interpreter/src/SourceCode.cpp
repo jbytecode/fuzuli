@@ -99,6 +99,15 @@ unsigned int SourceCode::getCurrentLine() {
 	return (this->currentLine);
 }
 
+void SourceCode::setCounter(unsigned int val){
+	this->oldcounter = this->counter;
+	this->counter = val;
+}
+
+unsigned int SourceCode::getCounter(){
+	return(this->counter);
+}
+
 Token *SourceCode::getNextToken() {
 	this->oldcounter = this->counter;
 	stringstream tokenvalue;
