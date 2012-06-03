@@ -1,10 +1,6 @@
 (require "/usr/lib/fuzuli/nfl/string.nfl")
 
-(let str "Writing with Fuzuli is fun!")
-(let newstr (str_replace str "Fuzuli" "Fuzuli Programming Language"))
+(let str "fuzuli")
+(let newstr (str_shuffle str))
 (print newstr "\n")
 
-
-(let str "Hello hello hello world!")
-(let newstr (str_replace str "hello " ""))
-(print newstr "\n")

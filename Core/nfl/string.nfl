@@ -134,3 +134,9 @@
 		(return (C str_lib "str_replace" mainstr what to))
 	)
 )
+
+(function str_shuffle (params str)
+	(block
+		(return (C str_lib "str_shuffle" str))
+	)
+)

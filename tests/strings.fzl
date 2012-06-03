@@ -133,3 +133,10 @@
 	(print error)
 )
 
+
+(let result19 (str_shuffle "fuzuli"))
+(if (= result19 "uzlifu")
+	(print passed)
+	(print error)
+)
+

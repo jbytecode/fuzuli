@@ -46,11 +46,26 @@ Token *md5(Token *p, Environment *env);
 Token *urldecode(Token *p, Environment *env);
 Token *levenshtein(Token *p, Environment *env);
 Token *str_replace(Token *p, Environment *env);
+Token *str_shuffle(Token *p, Environment *env);
 }
 
 int min3(int p1, int p2, int p3) {
 	int m = (int) (fmin(fmin(p1, p2), p3));
 	return (m);
+}
+
+OneParameters
+Token *str_shuffle(Token *p, Environment *env){
+	string str = string(p->tokens[0]->getContent());
+	for (unsigned int i=0;i<str.length();i++){
+		int index1 = rand() % str.length();
+		int index2 = rand() % str.length();
+		char c = str[index1];
+		str[index1] = str[index2];
+		str[index2] = c;
+	}
+	Token *result = new Token(str.c_str(), STRING);
+	return(result);
 }
 
 ThreeParameters
@@ -62,7 +77,7 @@ Token *str_replace(Token *p, Environment *env) {
 	string s_find = string(find->getContent());
 	string s_to = string(to->getContent());
 	stringstream ss;
-	for (int i=0;i<s_mainstr.length();i++){
+	for (unsigned int i=0;i<s_mainstr.length();i++){
 		string part = s_mainstr.substr(i, s_find.length());
 		if(part == s_find){
 			ss<<s_to;
