@@ -1,6 +1,10 @@
-(require "/usr/lib/fuzuli/nfl/string.nfl")
+(require "/usr/lib/fuzuli/nfl/io.nfl")
 
-(let str "fuzuli")
-(let newstr (str_shuffle str))
-(print newstr "\n")
+(let result (is_dir "/home"))
+(print result)
+
+
+(let result (is_dir "release-clean-all.sh"))
+(print result)
+
 

@@ -157,3 +157,9 @@
 		(return (C io_lib "exitd" code))
 	)
 )
+
+(function is_dir (params dir)
+	(block
+		(return (C io_lib "is_dir" dir))
+	)
+)

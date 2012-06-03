@@ -23,6 +23,7 @@
 #include <cstring>
 #include <cstdio>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <dirent.h>
 #include <unistd.h>
 
@@ -58,8 +59,24 @@ Token *print_r(Token *p, Environment *env);
 Token *popend(Token *p, Environment *env);
 Token *pclosed(Token *p, Environment *env);
 Token *exitd(Token *p, Environment *env);
+Token *is_dir (Token *p, Environment *env);
 }
 
+
+OneParameters
+Token *is_dir (Token *p, Environment *env){
+	struct stat st;
+	int code = stat(p->tokens[0]->getContent(), &st);
+	if(code == -1){
+		cout << "Can not define whether "<<p->tokens[0]->getContent()<<" is dir"<<endl;
+	}
+	int int_result = 0;
+	if(S_ISDIR(st.st_mode)){
+		int_result = 1;
+	}
+	Token *result = new Token (int_result, INTEGER);
+	return(result);
+}
 
 
 OneParameters
