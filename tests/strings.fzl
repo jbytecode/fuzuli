@@ -140,3 +140,65 @@
 	(print error)
 )
 
+(let result20 (isdigit "1"))
+(if (= result20 1)
+	(print passed)
+	(print error)
+)
+
+(let result21 (isalpha "A"))
+(if (= result21 1)
+    (print passed)
+    (print error)
+)
+
+(let result22 (isalnum "="))
+(if (= result22 0)
+    (print passed)
+    (print error)
+)
+
+(let result23 (isupper "A"))
+(if (= result23 1)
+    (print passed)
+    (print error)
+)
+
+(let result24 (islower "a"))
+(if (= result24 1)
+    (print passed)
+    (print error)
+)
+
+(let result25 (iscntrl "a"))
+(if (= result25 0)
+    (print passed)
+    (print error)
+)
+
+
+(let result26 (isgraph "a"))
+(if (= result26 1)
+    (print passed)
+    (print error)
+)
+
+(let result27 (isprint "a"))
+(if (= result27 1)
+    (print passed)
+    (print error)
+)
+
+(let result28 (ispunct ":"))
+(if (= result28 1)
+    (print passed)
+    (print error)
+)
+
+(let result29 (isspace "k"))
+(if (= result29 0)
+    (print passed)
+    (print error)
+)
+
+

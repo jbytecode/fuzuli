@@ -140,3 +140,68 @@
 		(return (C str_lib "str_shuffle" str))
 	)
 )
+
+(function isdigit (params str)
+	(block
+		(return (C str_lib "isdigitd" str))
+	)
+)
+
+(function isalpha (params str)
+	(block
+		(return (C str_lib "isalphad" str))
+	)
+)
+
+(function isalnum (params str)
+	(block
+		(return (C str_lib "isalnumd" str))
+	)
+)
+
+(function isupper (params str)
+	(block
+		(return (C str_lib "isupperd" str))
+	)
+)
+
+(function islower (params str)
+	(block
+		(return (C str_lib "islowerd" str))
+	)
+)
+
+(function iscntrl (params str)
+	(block
+		(return (C str_lib "iscntrld" str))
+	)
+)
+
+
+(function isgraph (params str)
+	(block
+		(return (C str_lib "isgraphd" str))
+	)
+)
+
+
+(function isprint (params str)
+	(block
+		(return (C str_lib "isprintd" str))
+	)
+)
+
+
+(function ispunct (params str)
+	(block
+		(return (C str_lib "ispunctd" str))
+	)
+)
+
+(function isspace (params str)
+	(block
+		(return (C str_lib "isspaced" str))
+	)
+)
+
+

@@ -47,6 +47,16 @@ Token *urldecode(Token *p, Environment *env);
 Token *levenshtein(Token *p, Environment *env);
 Token *str_replace(Token *p, Environment *env);
 Token *str_shuffle(Token *p, Environment *env);
+Token *isdigitd(Token *p, Environment *env);
+Token *isalphad(Token *p, Environment *env);
+Token *isalnumd(Token *p, Environment *env);
+Token *islowerd(Token *p, Environment *env);
+Token *isupperd(Token *p, Environment *env);
+Token *iscntrld(Token *p, Environment *env);
+Token *isgraphd(Token *p, Environment *env);
+Token *isprintd(Token *p, Environment *env);
+Token *ispunctd(Token *p, Environment *env);
+Token *isspaced(Token *p, Environment *env);
 }
 
 int min3(int p1, int p2, int p3) {
@@ -55,9 +65,108 @@ int min3(int p1, int p2, int p3) {
 }
 
 OneParameters
-Token *str_shuffle(Token *p, Environment *env){
+Token *isspaced(Token *p, Environment *env) {
+	int int_result = std::isspace((int) p->tokens[0]->getContent()[0]);
+	if (int_result != 0) {
+		int_result = 1;
+	}
+	Token *result = new Token(int_result, INTEGER);
+	return (result);
+}
+
+
+OneParameters
+Token *ispunctd(Token *p, Environment *env) {
+	int int_result = std::ispunct((int) p->tokens[0]->getContent()[0]);
+	if (int_result != 0) {
+		int_result = 1;
+	}
+	Token *result = new Token(int_result, INTEGER);
+	return (result);
+}
+
+OneParameters
+Token *isprintd(Token *p, Environment *env) {
+	int int_result = std::isprint((int) p->tokens[0]->getContent()[0]);
+	if (int_result != 0) {
+		int_result = 1;
+	}
+	Token *result = new Token(int_result, INTEGER);
+	return (result);
+}
+
+
+OneParameters
+Token *isgraphd(Token *p, Environment *env) {
+	int int_result = std::isgraph((int) p->tokens[0]->getContent()[0]);
+	if (int_result != 0) {
+		int_result = 1;
+	}
+	Token *result = new Token(int_result, INTEGER);
+	return (result);
+}
+
+OneParameters
+Token *iscntrld(Token *p, Environment *env) {
+	int int_result = std::iscntrl((int) p->tokens[0]->getContent()[0]);
+	if (int_result != 0) {
+		int_result = 1;
+	}
+	Token *result = new Token(int_result, INTEGER);
+	return (result);
+}
+
+OneParameters
+Token *islowerd(Token *p, Environment *env) {
+	int int_result = std::islower((int) p->tokens[0]->getContent()[0]);
+	if (int_result != 0) {
+		int_result = 1;
+	}
+	Token *result = new Token(int_result, INTEGER);
+	return (result);
+}
+
+OneParameters
+Token *isupperd(Token *p, Environment *env) {
+	int int_result = std::isupper((int) p->tokens[0]->getContent()[0]);
+	if (int_result != 0) {
+		int_result = 1;
+	}
+	Token *result = new Token(int_result, INTEGER);
+	return (result);
+}
+
+OneParameters
+Token *isalnumd(Token *p, Environment *env) {
+	int int_result = std::isalnum((int) p->tokens[0]->getContent()[0]);
+	if (int_result != 0) {
+		int_result = 1;
+	}
+	Token *result = new Token(int_result, INTEGER);
+	return (result);
+}
+
+OneParameters
+Token *isalphad(Token *p, Environment *env) {
+	int int_result = std::isalpha((int) p->tokens[0]->getContent()[0]);
+	if (int_result != 0) {
+		int_result = 1;
+	}
+	Token *result = new Token(int_result, INTEGER);
+	return (result);
+}
+
+OneParameters
+Token *isdigitd(Token *p, Environment *env) {
+	int int_result = std::isdigit((int) p->tokens[0]->getContent()[0]);
+	Token *result = new Token(int_result, INTEGER);
+	return (result);
+}
+
+OneParameters
+Token *str_shuffle(Token *p, Environment *env) {
 	string str = string(p->tokens[0]->getContent());
-	for (unsigned int i=0;i<str.length();i++){
+	for (unsigned int i = 0; i < str.length(); i++) {
 		int index1 = rand() % str.length();
 		int index2 = rand() % str.length();
 		char c = str[index1];
@@ -65,7 +174,7 @@ Token *str_shuffle(Token *p, Environment *env){
 		str[index2] = c;
 	}
 	Token *result = new Token(str.c_str(), STRING);
-	return(result);
+	return (result);
 }
 
 ThreeParameters
@@ -77,13 +186,13 @@ Token *str_replace(Token *p, Environment *env) {
 	string s_find = string(find->getContent());
 	string s_to = string(to->getContent());
 	stringstream ss;
-	for (unsigned int i=0;i<s_mainstr.length();i++){
+	for (unsigned int i = 0; i < s_mainstr.length(); i++) {
 		string part = s_mainstr.substr(i, s_find.length());
-		if(part == s_find){
-			ss<<s_to;
-			i+=s_find.length()-1;
-		}else{
-			ss<<s_mainstr.substr(i,1);
+		if (part == s_find) {
+			ss << s_to;
+			i += s_find.length() - 1;
+		} else {
+			ss << s_mainstr.substr(i, 1);
 		}
 	}
 	Token *result = new Token(ss.str().c_str(), STRING);
