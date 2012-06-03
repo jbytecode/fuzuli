@@ -2,7 +2,7 @@
 
 (block
       (print "\n-------------------\n")
-      <?html <Inner HTML> ?>
+      <?html <h1> ?>
       (print "\n-------------------\n")
 )
  

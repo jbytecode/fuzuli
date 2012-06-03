@@ -76,9 +76,7 @@ Expression* AstBuilder::getNextExpression() {
 				IdentifierExpression *ie = new IdentifierExpression(tok);
 				exprlist.push_back(ie);
 			} else if (tok->getType() == HTML) {
-				WebExpression *webexp = (WebExpression*) getNextExpression();
-				//this->code->pushBackToken();
-				//cout << "Next token after html: "<<this->code->getNextToken()->getContent()<<endl;
+				WebExpression *webexp = new WebExpression(tok->getContent());
 				exprlist.push_back(webexp);
 			}
 		}
