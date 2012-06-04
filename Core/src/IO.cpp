@@ -44,7 +44,7 @@ Token *chdird(Token* p, Environment *env);
 Token *unlinkd(Token* p, Environment *env);
 Token *renamed(Token* p, Environment *env);
 Token *tmpfiled(Token* p, Environment *env);
-Token *tmpnamd(Token* p, Environment *env);
+Token *tmpnamed(Token* p, Environment *env);
 Token *datetime(Token* p, Environment *env);
 Token *asctimed(Token* p, Environment *env);
 Token *sleepd(Token* p, Environment *env);

@@ -77,7 +77,7 @@
 )
 
 (function tanh (params x)
-	(return (C mathlib "tahd" x) )
+	(return (C mathlib "tanhd" x) )
 )
 
 (function asin (params x)
@@ -102,4 +102,16 @@
 
 (function isinf (params x )
 	(return (C mathlib "isinfd" x))
+)
+
+(function ceil (params x )
+	(return (C mathlib "ceild" x))
+)
+
+(function round (params x )
+	(return (C mathlib "roundd" x))
+)
+
+(function floor (params x )
+	(return (C mathlib "floord" x))
 )

@@ -1,17 +1,5 @@
-(require "/usr/lib/fuzuli/nfl/io.nfl")
+(require "/usr/lib/fuzuli/nfl/math.nfl")
 
-(let file (fopen "/tmp/hellofromfuzuli.txt" "w"))
-(fputs file "Hello world!")
-(fclose file)
-
-
-(let file (fopen "/tmp/hellofromfuzuli.txt" "r"))
-(while (not (feof file))
-	(print (fgetc file) "[" (ftell file) "]\n")
-)
-(fclose file)
-
-
-
+(print (floor 2.9))
 
 

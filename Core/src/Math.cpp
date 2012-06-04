@@ -52,7 +52,33 @@ extern "C" {
 	Token *tanhd(Token *params,Environment *env);
 	Token *powd(Token *params,Environment *env);
 	Token *isinfd(Token *params,Environment *env);
+	Token *ceild(Token *params, Environment *env);
+	Token *roundd(Token *params, Environment *env);
+	Token *floord(Token *params, Environment *env);
 }
+
+OneParameters
+Token *floord(Token *params, Environment *env){
+	double f_result = floor(params->tokens[0]->getFloatValue());
+	Token *result = new Token(f_result, FLOAT);
+	return(result);
+}
+
+
+OneParameters
+Token *roundd(Token *params, Environment *env){
+	double f_result = round(params->tokens[0]->getFloatValue());
+	Token *result = new Token(f_result, FLOAT);
+	return(result);
+}
+
+OneParameters
+Token *ceild (Token *params, Environment *env){
+	double f_result = ceil(params->tokens[0]->getFloatValue());
+	Token *result = new Token(f_result, FLOAT);
+	return(result);
+}
+
 
 Token *powd(Token *params,Environment *env){
 	Token *result = new Token(0.0, FLOAT);
