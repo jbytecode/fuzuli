@@ -46,8 +46,6 @@
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.487047228" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
 								<option id="gnu.cpp.link.option.libs.2059311675" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="dl"/>
-									<listOptionValue builtIn="false" value="mysqlclient"/>
-									<listOptionValue builtIn="false" value="cgicc"/>
 								</option>
 								<option defaultValue="true" id="gnu.cpp.link.option.shared.1587627156" name="Shared (-shared)" superClass="gnu.cpp.link.option.shared" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1950661826" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
