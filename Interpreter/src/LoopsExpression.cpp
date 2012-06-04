@@ -153,6 +153,7 @@ Token *WhileExpression::eval(Environment *env) {
 		for (unsigned int ui = 1; ui < this->expressions.size(); ui++) {
 			result = this->expressions[ui]->eval(whileEnvironment);
 			if (result->breakFlag == 1) {
+				result->breakFlag = 0;
 				return (result);
 			}
 
