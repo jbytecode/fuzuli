@@ -34,8 +34,12 @@
 		(let mysum (+ mysum (fread dd a)))
 )
 
-(if (= mysum 15) (print "PASSED!\n") (print "ERROR\n"))
-
+(let result1 mysum)
+(if (= result1 15) 
+	 (print passed)
+	 (print error)
+)
+(unlink "/tmp/kek.txt")
 
 
 
@@ -50,9 +54,19 @@
 )
 
 
-(let result (factorial 6))
-(if (= result 720) (print "PASSED!\n") (print "ERROR\n"))
+(let result2 (factorial 6))
+(if (= result2 720) 
+	(print "PASSED!\n") 
+	(print "ERROR\n")
+)
 
 
+
+(randomize 12345)
+(let result3 (rnd))
+(if (= result3 0.178395)
+	(print passed)
+	(print error ":" result3 ":" 0.178395)
+)
 
 

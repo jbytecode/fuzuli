@@ -163,3 +163,18 @@
 		(return (C io_lib "is_dir" dir))
 	)
 )
+
+
+(function time (params)
+	(block
+		(return (C io_lib "timed"))
+	)
+)
+
+(function randomize (params seed)
+	(block
+		(return (C io_lib "randomize" seed))
+	)
+)
+
+

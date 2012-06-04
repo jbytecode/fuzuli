@@ -1,32 +1,10 @@
-(require "/usr/lib/fuzuli/nfl/string.nfl")
+(require "/usr/lib/fuzuli/nfl/io.nfl")
+(require "/usr/lib/fuzuli/nfl/math.nfl")
 
-(print "1 is digit: " (isdigit "1") "\n")
-(print "A is digit: " (isdigit "A") "\n")
+(randomize 12345)
+(let rr (rnd))
+(print rr)
 
-(print "1 is alpha: " (isalpha "1") "\n")
-(print "A is alpha: " (isalpha "A") "\n")
 
-(print "A is alphanumeric: " (isalnum "A") "\n")
-(print "1 is alphanumeric: " (isalnum "1") "\n")
-(print "= is alphanumeric: " (isalnum "=") "\n")
 
-(print "A is upper: " (isupper "A") "\n")
-(print "a is upper: " (isupper "a") "\n")
 
-(print "A is lower: " (islower "A") "\n")
-(print "a is lower: " (islower "a") "\n")
-
-(print "Enter is cntrl: " (iscntrl "\n") "\n")
-(print "a is cntrl: " (iscntrl "a") "\n")
-
-(print "chr(255) is showable: " (isgraph (chr 255)) "\n")
-(print "a is showable: " (isgraph "a") "\n")
-
-(print "chr(255) is printable: " (isprint (chr 255)) "\n")
-(print "a is printable: " (isprint "a") "\n")
-
-(print "! is punct: " (ispunct "!") "\n")
-(print "a is punct: " (ispunct "a") "\n")
-
-(print "  is space: " (isspace " ") "\n")
-(print "a is space: " (isspace "a") "\n")

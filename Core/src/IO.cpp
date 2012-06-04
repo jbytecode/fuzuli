@@ -20,8 +20,9 @@
 #include <iostream>
 #include <sstream>
 #include <stdio.h>
-#include <cstring>
-#include <cstdio>
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
@@ -60,8 +61,23 @@ Token *popend(Token *p, Environment *env);
 Token *pclosed(Token *p, Environment *env);
 Token *exitd(Token *p, Environment *env);
 Token *is_dir (Token *p, Environment *env);
+Token *timed (Token *p, Environment *env);
+Token *randomize(Token *p, Environment *env);
 }
 
+
+OneParameters
+Token *randomize(Token *p, Environment *env){
+	srand((unsigned int) p->tokens[0]->getFloatValue());
+	return(Token::NULL_TOKEN);
+}
+
+
+NoParameters
+Token *timed (Token *p, Environment *env){
+	Token *result = new Token(((double)time(NULL)) * 1.0, FLOAT);
+	return(result);
+}
 
 OneParameters
 Token *is_dir (Token *p, Environment *env){

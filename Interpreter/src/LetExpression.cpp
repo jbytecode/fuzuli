@@ -20,6 +20,7 @@
 #include "../include/FuzuliTypes.h"
 #include <vector>
 #include <sstream>
+#include <stdlib.h>
 
 namespace fuzuli {
 

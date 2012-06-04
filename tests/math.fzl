@@ -24,7 +24,7 @@
 (let b (cos a))     # b=cos(a)
 
 
-(if (= b "1.01962e-06") (print "PASSED!\n") (print "ERROR\n"))
+(if (< (abs (- b 0)) 0.0001) (print "PASSED!\n") (print "ERROR\n"))
 
 
 
@@ -34,13 +34,13 @@
 (let b (sin a))     # b=sin(a)
 
 
-(if (= b 1) (print "PASSED!\n") (print "ERROR\n"))
+(if (< (abs (- b 1)) 0.0001) (print "PASSED!\n") (print "ERROR\n"))
 
 
 
 # Exp
 (let b (exp 1.0))     # b=exp(1.0)
-(if (= b 2.71828) (print "PASSED!\n") (print "ERROR\n"))
+(if (< (abs (- b 2.71828)) 0.0001) (print "PASSED!\n") (print "ERROR\n"))
 
 
 # Abs
@@ -51,7 +51,7 @@
 
 # Atan2
 (let val (atan2 1 1))
-(if (= val 0.7853981634)
+(if (<  (abs (- val 0.7853981634)) 0.0001)
 	(print "PASSED!\n")
 	(print "ERROR\n")
 )

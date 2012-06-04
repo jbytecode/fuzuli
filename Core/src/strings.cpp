@@ -19,8 +19,9 @@
 #include "FuzuliTypes.h"
 #include <iostream>
 #include <sstream>
-#include <cstring>
-#include <cstdlib>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <cmath>
 #include <algorithm>
 #include <openssl/md5.h>
