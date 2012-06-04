@@ -212,18 +212,21 @@ Token *fopend(Token*p, Environment *env) {
 	return (newfile);
 }
 
+TwoParameters
 Token *freadd(Token* p, Environment *env) {
 	FILE *file = (FILE*) p->tokens[0]->object;
 	__readToken(file, p->tokens[1]);
 	return (p->tokens[1]);
 }
 
+TwoParameters
 Token *fwrited(Token *p, Environment *env) {
 	FILE *file = (FILE*) p->tokens[0]->object;
 	__writeToken(file, p->tokens[1]);
 	return (p->tokens[1]);
 }
 
+OneParameters
 Token *feofd(Token *p, Environment *env) {
 	Token *feofd_return = new Token(0.0, INTEGER);
 	FILE *file = (FILE*) p->tokens[0]->object;
@@ -292,6 +295,7 @@ Token *chdird(Token *p, Environment *env) {
 	return (result);
 }
 
+NoParameters
 Token *getpwd(Token* p, Environment *env) {
 	char *ppath = NULL;
 	int len = 0;
@@ -300,6 +304,7 @@ Token *getpwd(Token* p, Environment *env) {
 	return (result);
 }
 
+OneParameters
 Token *dir(Token* path, Environment *env) {
 	Token *result = new Token("@FuzuliList", LIST);
 	DIR *dr;
@@ -316,12 +321,14 @@ Token *dir(Token* path, Environment *env) {
 	return (result);
 }
 
+OneParameters
 Token *unlinkd(Token *file, Environment *env) {
 	int res = unlink(file->tokens[0]->getContent());
 	Token *result = new Token(res, INTEGER);
 	return (result);
 }
 
+TwoParameters
 Token *renamed(Token *files, Environment *env) {
 	int res = rename(files->tokens[0]->getContent(),
 			files->tokens[1]->getContent());
