@@ -7,7 +7,7 @@
 
 (let file (fopen "/tmp/hellofromfuzuli.txt" "r"))
 (while (not (feof file))
-  (print (fgetc file))
+	(print (fgetc file) "[" (ftell file) "]\n")
 )
 (fclose file)
 

@@ -196,3 +196,9 @@
 	)
 )
 
+(function ftell (params file)
+	(block
+		(return (C io_lib "ftelld" file))
+	)
+)
+

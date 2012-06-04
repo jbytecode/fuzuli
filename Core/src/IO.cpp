@@ -66,6 +66,16 @@ Token *randomize(Token *p, Environment *env);
 Token *putsd(Token *p, Environment *env);
 Token *fputsd(Token *p, Environment *env);
 Token *fgetcd(Token *p, Environment *env);
+Token *ftelld(Token *p, Environment *env);
+}
+
+OneParameters
+Token *ftelld(Token *p, Environment *env){
+	FILE *file = (FILE*)p->tokens[0]->object;
+	long int lint_result = ftell(file);
+	stringstream ss; ss << ((double) lint_result);
+	Token *result = new Token(ss.str().c_str(), FLOAT);
+	return(result);
 }
 
 TwoParameters
