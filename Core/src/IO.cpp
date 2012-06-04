@@ -63,8 +63,33 @@ Token *exitd(Token *p, Environment *env);
 Token *is_dir (Token *p, Environment *env);
 Token *timed (Token *p, Environment *env);
 Token *randomize(Token *p, Environment *env);
+Token *putsd(Token *p, Environment *env);
+Token *fputsd(Token *p, Environment *env);
+Token *fgetcd(Token *p, Environment *env);
 }
 
+TwoParameters
+Token *fgetcd(Token *p, Environment *env){
+	FILE *file = (FILE*)p->tokens[0]->object;
+	int int_result = fgetc(file);
+	stringstream ss; ss<< ( (char) int_result);
+	Token *result = new Token(ss.str().c_str(), STRING);
+	return(result);
+}
+
+TwoParameters
+Token *fputsd(Token *p, Environment *env){
+	FILE *f = (FILE*) (p->tokens[0]->object);
+	Token *par = p->tokens[1];
+	fputs(par->getContent(), f);
+	return(Token::NULL_TOKEN);
+}
+
+OneParameters
+Token *putsd(Token *p, Environment *env){
+	puts(p->tokens[0]->getContent());
+	return(Token::NULL_TOKEN);
+}
 
 OneParameters
 Token *randomize(Token *p, Environment *env){

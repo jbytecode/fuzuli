@@ -134,7 +134,7 @@ Token *NotExpression::eval(Environment *env) {
 		intValue = 0;
 	}
 	result->setIntValue(intValue);
-	return (resultToken);
+	return (result);
 }
 
 void NotExpression::emitCpp(stringstream *ss) {

@@ -178,3 +178,21 @@
 )
 
 
+(function puts (params text)
+	(block
+		(return (C io_lib "putsd" text))
+	)
+)
+
+(function fputs (params file text)
+	(block
+		(return (C io_lib "fputsd" file text))
+	)
+)
+
+(function fgetc (params file)
+	(block
+		(return (C io_lib "fgetcd" file))
+	)
+)
+
