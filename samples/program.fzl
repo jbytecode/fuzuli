@@ -1,5 +1,9 @@
-(require "/usr/lib/fuzuli/nfl/math.nfl")
+(require "/usr/lib/fuzuli/nfl/java.nfl")
 
-(print (floor 2.9))
+(let jvm (java_init))
+(print jvm)
+
+(print (java_static jvm "java.lang.Math" "cos" (list 0)))
+
 
 

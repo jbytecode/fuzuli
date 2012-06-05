@@ -44,7 +44,7 @@ all: libFuzuliCore.so
 libFuzuliCore.so: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross G++ Linker'
-	g++ -L/usr/lib/happycoders -L/usr/lib/i386-linux-gnu -shared -o "libFuzuliCore.so" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L/usr/lib/happycoders -L/usr/lib/jvm/java-6-openjdk-i386/jre/lib/i386/client -L/usr/lib/i386-linux-gnu -shared -o "libFuzuliCore.so" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
