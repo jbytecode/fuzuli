@@ -1,9 +1,19 @@
 (require "/usr/lib/fuzuli/nfl/java.nfl")
 
 (let jvm (java_init))
-(print jvm)
+(print "Java init: " jvm "\n")
 
-(print (java_static jvm "java.lang.Math" "cos" (list 0)))
+(let clz (java_FindClass jvm "java/lang/String"))
+(print clz "\n")
+
+(let m (java_GetMethodID jvm  clz "<init>" "(V)Ljava/lang/String;"))
+(print m "\n")
+
+(let o (java_NewObject jvm clz m "Test"))
+(print o "\n")
+
+
+
 
 
 

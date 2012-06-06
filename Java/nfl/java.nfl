@@ -22,3 +22,22 @@
 		(return (C javalib "java_init"))
 	)
 )
+
+(function java_GetMethodID (params jvm clazz name sig)
+	(block
+		(return (C javalib "java_GetMethodID" jvm clazz name sig))
+	)
+)
+
+(function java_FindClass (params jvm clsname)
+	(block
+		(return (C javalib "java_FindClass" jvm clsname))
+	)
+)
+
+(function java_NewObject (params jvm clazz methodid valuelist)
+	(block
+		(return (C javalib "java_NewObject" jvm clazz methodid valuelist))
+	)
+)
+

@@ -21,32 +21,69 @@
 #include <stdlib.h>
 #include <jni.h>
 
-
 using namespace std;
 using namespace fuzuli;
 
 extern "C" {
 Token *java_init(Token *p, Environment *env);
-Token *java_static(Token *p, Environment *env);
+Token *java_FindClass(Token *p, Environment *env);
+Token *java_GetMethodID(Token *p, Environment *env);
+Token *java_NewObject(Token *p, Environment *env);
 }
 
+/*
+ * (C javalib "java_NewObject" jvm clazz methodid valuelist)
+ */
+Token *java_NewObject(Token *p, Environment *env) {
+	JNIEnv *javaenv = (JNIEnv*) p->tokens[0]->object;
+	jclass clazz = (jclass) p->tokens[1]->object;
+	jmethodID methodid = (jmethodID) p->tokens[2]->object;
+	cout << "New Obj:" << endl;
+	jobject obj = javaenv->NewObject(clazz, methodid);
 
-// (java_static jvmenv "class" "method" (list parameters) (
-ThreeParameters
-Token *java_static(Token *p, Environment *env){
+	Token *result = new Token("@JavaObject", COBJECT);
+	result->object = (void*)obj;
+	return (result);
+}
+
+/*
+ * (C javalib "java_getMethodID" jvm clazz name sig)
+ */
+Token *java_GetMethodID(Token *p, Environment *env) {
+	JNIEnv *javaenv = (JNIEnv*) p->tokens[0]->object;
+	jclass clazz = (jclass) p->tokens[1]->object;
+	const char *name = p->tokens[2]->getContent();
+	const char *sig = p->tokens[3]->getContent();
+	jmethodID methodid = javaenv->GetMethodID(clazz, name, sig);
+	Token *result = new Token("@JavaMethodId", COBJECT);
+	result->object = (void*)methodid;
+	return (result);
+}
+
+/*
+ * (C javalib "java_FindClass jvm clazz)
+ */
+TwoParameters
+Token *java_FindClass(Token *p, Environment *env) {
 	JNIEnv *javaenv = (JNIEnv*) p->tokens[0]->object;
 	jclass clazz = javaenv->FindClass(p->tokens[1]->getContent());
-	jmethodID methodid = javaenv->GetMethodID(clazz, p->tokens[2]->getContent(), "");
-	Token *params = p->tokens[3];
-	jvalue* jv = (jvalue*)malloc (sizeof(jvalue)* params->tokens.size());
-	for (int i=0;i<params->tokens.size();i++){
-		jv[i].l = javaenv->NewStringUTF(params->tokens[i]->getContent());
-	}
-    jobject jresult = javaenv->CallStaticObjectMethodA(clazz, methodid, jv);
+	Token *result = new Token("@JavaClass", COBJECT);
+	result->object = (void*)clazz;
+	return (result);
+}
 
-    Token *result = new Token("",COBJECT);
-    result->object = (void*) &jresult;
-    return(result);
+ThreeParameters
+Token *java_new(Token *p, Environment *env) {
+	JNIEnv *javaenv = (JNIEnv*) p->tokens[0]->object;
+	jclass clazz = javaenv->FindClass("java/lang/String");
+	jstring str = javaenv->NewStringUTF("Hey!!!!!!");
+	jmethodID methodid = javaenv->GetMethodID(clazz, "<init>",
+			"(Ljava/lang/String;)V");
+	jobject obj = javaenv->NewObject(clazz, methodid, str);
+	jboolean jb = JNI_TRUE;
+	const char *c = javaenv->GetStringUTFChars((jstring) obj, &jb);
+	cout << "obj:" << c << endl;
+	return (Token::NULL_TOKEN);
 }
 
 //to-do
@@ -60,11 +97,11 @@ Token *java_init(Token *p, Environment *env) {
 	args.version = 0x00010002;
 	//args.version = JNI_VERSION_1_6;
 	args.nOptions = 1;
-	options[0].optionString="-Djava.class.path=.";
+	options[0].optionString = "-Djava.class.path=.";
 	args.options = options;
 	args.ignoreUnrecognized = JNI_TRUE;
 
-	jint res = JNI_CreateJavaVM(&vm, (void **)&jenv, &args);
+	jint res = JNI_CreateJavaVM(&vm, (void **) &jenv, &args);
 
 	Token *result = new Token("@FuzuliJVM", COBJECT);
 	result->object = (void *) jenv;
