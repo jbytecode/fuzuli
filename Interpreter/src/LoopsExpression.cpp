@@ -58,7 +58,7 @@ Token *ForExpression::eval(Environment *env) {
 		}
 		this->expressions[2]->eval(forEnvironment);
 	}
-	if(!result) {
+	if (!result) {
 		result = Token::NULL_TOKEN;
 	}
 	return (result);
@@ -84,53 +84,58 @@ Token *ForEachExpression::eval(Environment *env) {
 	for (unsigned int i = 0; i < list->tokens.size(); i++) {
 		foreachenv->setVariable(iden->getContent(), list->tokens[i]);
 		for (unsigned int u = 3; u < this->expressions.size(); u++) {
-			this->expressions[u]->eval(foreachenv);
+			Token *result = this->expressions[u]->eval(foreachenv);
+			if (result->breakFlag) {
+				result->breakFlag = 0;
+				return (result);
+				break;
+			}
 		}
 	}
 	return (Token::NULL_TOKEN);
 }
 
-DoTimesExpression::DoTimesExpression(vector<Expression*> expr){
+DoTimesExpression::DoTimesExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 }
 
-DoTimesExpression::~DoTimesExpression(){
+DoTimesExpression::~DoTimesExpression() {
 
 }
 
-Token *DoTimesExpression::eval(Environment *env){
+Token *DoTimesExpression::eval(Environment *env) {
 	Environment *dotimesEnvironment;
-		if (!env->next) {
-			dotimesEnvironment = env->createNext();
-		} else {
-			dotimesEnvironment = env->next;
-		}
+	if (!env->next) {
+		dotimesEnvironment = env->createNext();
+	} else {
+		dotimesEnvironment = env->next;
+	}
 
-		Token *condition;
-		Token *result;
-		Token *iden = (dynamic_cast<IdentifierExpression*>(this->expressions[0]))->stringToken;
-		Token *max = this->expressions[1]->eval(env);
-		condition = dotimesEnvironment->newToken(0.0, INTEGER);
-		dotimesEnvironment->setVariableInThisScope(iden->getContent(), condition);
+	Token *condition;
+	Token *result;
+	Token *iden =
+			(dynamic_cast<IdentifierExpression*>(this->expressions[0]))->stringToken;
+	Token *max = this->expressions[1]->eval(env);
+	condition = dotimesEnvironment->newToken(0.0, INTEGER);
+	dotimesEnvironment->setVariableInThisScope(iden->getContent(), condition);
 
-		while (1) {
-			for (unsigned int i = 2; i < this->expressions.size(); i++) {
-				result = this->expressions[i]->eval(dotimesEnvironment);
-				if (result->breakFlag) {
-					result->breakFlag = 0;
-					return (result);
-					break;
-				}
-			}
-			result = dotimesEnvironment->getVariableInThisScope(iden->getContent());
-			result->setIntValue( result->getIntValue() + 1);
-			if(result->getIntValue() >= max->getIntValue()){
+	while (1) {
+		for (unsigned int i = 2; i < this->expressions.size(); i++) {
+			result = this->expressions[i]->eval(dotimesEnvironment);
+			if (result->breakFlag) {
+				result->breakFlag = 0;
+				return (result);
 				break;
 			}
 		}
-		return (this->resultToken);
+		result = dotimesEnvironment->getVariableInThisScope(iden->getContent());
+		result->setIntValue(result->getIntValue() + 1);
+		if (result->getIntValue() >= max->getIntValue()) {
+			break;
+		}
+	}
+	return (this->resultToken);
 }
-
 
 WhileExpression::WhileExpression(vector<Expression*> expr) {
 	this->expressions = expr;
