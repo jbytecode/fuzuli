@@ -57,8 +57,8 @@ Token *java_init(Token *p, Environment *env) {
 	JavaVM *vm;
 	JavaVMInitArgs args;
 	JavaVMOption options[1];
-	//args.version = 0x00010002;
-	args.version = JNI_VERSION_1_6;
+	args.version = 0x00010002;
+	//args.version = JNI_VERSION_1_6;
 	args.nOptions = 1;
 	options[0].optionString="-Djava.class.path=.";
 	args.options = options;
