@@ -18,5 +18,11 @@ make clean
 cd ..
 cd ..
 
+cd Java
+cd Release
+make clean
+cd ..
+cd ..
 
 rm -Rf /usr/lib/fuzuli/*
+

@@ -38,20 +38,23 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: libFuzuliCore.so
+all: libFuzuliJava.so
+
+dependents:
+	-cd /home/hako/workspace/fuzuli/Interpreter/Release && $(MAKE) clean all
 
 # Tool invocations
-libFuzuliCore.so: $(OBJS) $(USER_OBJS)
+libFuzuliJava.so: $(OBJS) $(USER_OBJS) /home/hako/workspace/fuzuli/Interpreter/Release/libfuzuli.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross G++ Linker'
-	g++ -L/usr/lib/happycoders -L/usr/lib/i386-linux-gnu -shared -o "libFuzuliCore.so" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L/usr/lib/jvm/java-6-openjdk-i386/jre/lib/i386/client -shared -o "libFuzuliJava.so" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
 
 # Other Targets
 clean:
-	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(CC_DEPS)$(LIBRARIES)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS) libFuzuliCore.so
+	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(CC_DEPS)$(LIBRARIES)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS) libFuzuliJava.so
 	-@echo ' '
 
 post-build:
@@ -60,5 +63,6 @@ post-build:
 
 .PHONY: all clean dependents
 .SECONDARY: post-build
+/home/hako/workspace/fuzuli/Interpreter/Release/libfuzuli.so:
 
 -include ../makefile.targets

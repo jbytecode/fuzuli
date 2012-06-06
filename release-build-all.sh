@@ -20,7 +20,13 @@ cd ..
 sleep 1
 
 
-cd tests
-./tester.sh
+cd Java/Release
+make
 cd ..
+cd ..
+sleep 1
+
+#cd tests
+#./tester.sh
+#cd ..
 
