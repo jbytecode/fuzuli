@@ -389,6 +389,8 @@ Token *SourceCode::getNextToken() {
 					tokenvalue << endl;
 				} else if (nextone == '"') {
 					tokenvalue << "\"";
+				} else if (nextone == 't'){
+					tokenvalue << "\t";
 				}
 				eat();
 			} else {
