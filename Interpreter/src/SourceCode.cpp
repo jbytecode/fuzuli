@@ -386,11 +386,15 @@ Token *SourceCode::getNextToken() {
 			if (currentChar == '\\') { /* Escape Character */
 				char nextone = look();
 				if (nextone == 'n') {
-					tokenvalue << endl;
-				} else if (nextone == '"') {
+					tokenvalue << "\n";
+				} else if (nextone == 'r'){
+					tokenvalue << "\r";
+				}else if (nextone == '"') {
 					tokenvalue << "\"";
 				} else if (nextone == 't'){
 					tokenvalue << "\t";
+				} else if (nextone == '\''){
+					tokenvalue << "'";
 				}
 				eat();
 			} else {
