@@ -606,4 +606,34 @@ void BitShiftRightExpression::emitCpp(stringstream *ss) {
 	emitter->emitCpp(ss);
 }
 
+
+SetPrecisionExpression::SetPrecisionExpression(vector<Expression*> expr){
+	this->expressions = expr;
+}
+
+SetPrecisionExpression::~SetPrecisionExpression(){
+
+}
+
+Token *SetPrecisionExpression::eval(Environment *env){
+	Token *param = this->expressions[0]->eval(env);
+	Token::doubleprecision = param->getIntValue();
+	return(Token::NULL_TOKEN);
+}
+
+
+SetEpsilonExpression::SetEpsilonExpression(vector<Expression*> expr){
+	this->expressions = expr;
+}
+
+SetEpsilonExpression::~SetEpsilonExpression(){
+
+}
+
+Token *SetEpsilonExpression::eval(Environment *env){
+	Token *param = this->expressions[0]->eval(env);
+	Token::epsilon = atof(param->getContent());
+	return(Token::NULL_TOKEN);
+}
+
 } /* namespace fuzuli */

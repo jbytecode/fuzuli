@@ -1,19 +1,2 @@
-(require "/usr/lib/fuzuli/nfl/java.nfl")
-
-(let jvm (java_init))
-(print "Java init: " jvm "\n")
-
-(let clz (java_FindClass jvm "java/lang/String"))
-(print clz "\n")
-
-(let m (java_GetMethodID jvm  clz "<init>" "(V)Ljava/lang/String;"))
-(print m "\n")
-
-(let o (java_NewObject jvm clz m "Test"))
-(print o "\n")
-
-
-
-
-
+(setprecision 10)
 

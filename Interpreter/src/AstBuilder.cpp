@@ -317,6 +317,14 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> expr) {
 			&& strcmp(tok->getContent(), "gc") == 0) {
 		GCExpression *pe = new GCExpression(expr);
 		return (pe);
+	} else if (tok->getType() == IDENTIFIER
+			&& strcmp(tok->getContent(), "setprecision") == 0) {
+		SetPrecisionExpression *pe = new SetPrecisionExpression(expr);
+		return (pe);
+	}else if (tok->getType() == IDENTIFIER
+			&& strcmp(tok->getContent(), "setepsilon") == 0) {
+		SetEpsilonExpression *pe = new SetEpsilonExpression(expr);
+		return (pe);
 	} else {
 		/* It may be a FuzuliFunction */
 		expr.insert(expr.begin(), new IdentifierExpression(tok));

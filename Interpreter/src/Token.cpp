@@ -28,7 +28,8 @@ using namespace std;
 
 static int count = 0;
 Token *Token::NULL_TOKEN = new Token("NULL", NULLTOKEN);
-int Token::doubleprecision = 20;
+int Token::doubleprecision = 10;
+double Token::epsilon = 0.00001;
 
 Token::Token() {
 	count++;
@@ -57,10 +58,11 @@ Token::Token(const char *content, enum TokenType type) {
 }
 
 Token::Token(double num, enum TokenType type) {
-	stringstream ss; ss.precision(Token::doubleprecision);
+	stringstream ss;
 	if (type == INTEGER) {
 		ss << (int) num;
 	} else if (type == FLOAT) {
+		ss.precision(Token::doubleprecision);
 		ss << (double) num;
 	} else {
 		ss << num;
@@ -73,7 +75,7 @@ Token::Token(double num, enum TokenType type) {
 }
 
 const char* Token::toString() {
-	stringstream ss;ss.precision(Token::doubleprecision);
+	stringstream ss;
 	ss << "Content:" << *this->content << " Type:" << this->type;
 	cout << "Tokens "<< count<<endl;
 	string result = ss.str();
@@ -120,7 +122,7 @@ double Token::getFloatValue() {
 }
 
 void Token::setIntValue(int i) {
-	stringstream ss;ss.precision(Token::doubleprecision);
+	stringstream ss;
 	this->content->clear();
 	ss << i;
 	this->content->append(ss.str());
@@ -128,7 +130,8 @@ void Token::setIntValue(int i) {
 }
 
 void Token::setFloatValue(double d) {
-	stringstream ss;ss.precision(Token::doubleprecision);
+	stringstream ss;
+	ss.precision(Token::doubleprecision);
 	this->content->clear();
 	ss << d;
 	this->content->append(ss.str());
@@ -136,12 +139,11 @@ void Token::setFloatValue(double d) {
 }
 
 int Token::Equal(Token *tok) {
-	const double epsilon = 0.00001;
 	if (this->type == tok->type) {
 		if (this->type == INTEGER) {
-			return ( std::fabs(this->getIntValue() - tok->getIntValue()) <=epsilon);
+			return ( std::fabs(this->getIntValue() - tok->getIntValue()) <= Token::epsilon);
 		} else if (this->type == FLOAT) {
-			return (std::fabs(this->getFloatValue() - tok->getFloatValue()) <=epsilon);
+			return (std::fabs(this->getFloatValue() - tok->getFloatValue()) <= Token::epsilon);
 		} else {
 			if (strcmp(this->getContent(), tok->getContent()) == 0) {
 				return (1);

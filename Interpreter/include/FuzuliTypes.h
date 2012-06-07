@@ -703,6 +703,8 @@ public:
 	bool getKillable();
 	Token *clone();
 	static Token *NULL_TOKEN;
+	static int doubleprecision;
+	static double epsilon;
 	vector<Token*> tokens;
 	Expression *expr;
 	Token *returnToken;
@@ -714,7 +716,6 @@ private:
 	enum TokenType type;
 	int line;
 	bool killable;
-	static int doubleprecision;
 };
 
 class VariableExpression: public fuzuli::Expression {
@@ -830,6 +831,22 @@ class GCExpression : public Expression{
 public:
 	GCExpression(vector<Expression*> expr);
 	virtual ~GCExpression();
+	Token *eval(Environment *env);
+};
+
+
+class SetPrecisionExpression : public Expression {
+public:
+	SetPrecisionExpression(vector<Expression*> expr);
+	virtual ~SetPrecisionExpression();
+	Token *eval(Environment *env);
+};
+
+
+class SetEpsilonExpression : public Expression {
+public:
+	SetEpsilonExpression(vector<Expression*> expr);
+	virtual ~SetEpsilonExpression();
 	Token *eval(Environment *env);
 };
 
