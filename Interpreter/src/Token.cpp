@@ -20,6 +20,7 @@
 #include <sstream>
 #include <cstdlib>
 #include <cstring>
+#include <cmath>
 
 namespace fuzuli {
 using namespace std;
@@ -27,6 +28,7 @@ using namespace std;
 
 static int count = 0;
 Token *Token::NULL_TOKEN = new Token("NULL", NULLTOKEN);
+int Token::doubleprecision = 20;
 
 Token::Token() {
 	count++;
@@ -55,7 +57,7 @@ Token::Token(const char *content, enum TokenType type) {
 }
 
 Token::Token(double num, enum TokenType type) {
-	stringstream ss;
+	stringstream ss; ss.precision(Token::doubleprecision);
 	if (type == INTEGER) {
 		ss << (int) num;
 	} else if (type == FLOAT) {
@@ -71,7 +73,7 @@ Token::Token(double num, enum TokenType type) {
 }
 
 const char* Token::toString() {
-	stringstream ss;
+	stringstream ss;ss.precision(Token::doubleprecision);
 	ss << "Content:" << *this->content << " Type:" << this->type;
 	cout << "Tokens "<< count<<endl;
 	string result = ss.str();
@@ -118,7 +120,7 @@ double Token::getFloatValue() {
 }
 
 void Token::setIntValue(int i) {
-	stringstream ss;
+	stringstream ss;ss.precision(Token::doubleprecision);
 	this->content->clear();
 	ss << i;
 	this->content->append(ss.str());
@@ -126,7 +128,7 @@ void Token::setIntValue(int i) {
 }
 
 void Token::setFloatValue(double d) {
-	stringstream ss;
+	stringstream ss;ss.precision(Token::doubleprecision);
 	this->content->clear();
 	ss << d;
 	this->content->append(ss.str());
@@ -134,11 +136,12 @@ void Token::setFloatValue(double d) {
 }
 
 int Token::Equal(Token *tok) {
+	const double epsilon = 0.00001;
 	if (this->type == tok->type) {
 		if (this->type == INTEGER) {
-			return (this->getIntValue() == tok->getIntValue());
+			return ( std::fabs(this->getIntValue() - tok->getIntValue()) <=epsilon);
 		} else if (this->type == FLOAT) {
-			return (this->getFloatValue() == tok->getFloatValue());
+			return (std::fabs(this->getFloatValue() - tok->getFloatValue()) <=epsilon);
 		} else {
 			if (strcmp(this->getContent(), tok->getContent()) == 0) {
 				return (1);

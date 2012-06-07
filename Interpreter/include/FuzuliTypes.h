@@ -714,6 +714,7 @@ private:
 	enum TokenType type;
 	int line;
 	bool killable;
+	static int doubleprecision;
 };
 
 class VariableExpression: public fuzuli::Expression {
