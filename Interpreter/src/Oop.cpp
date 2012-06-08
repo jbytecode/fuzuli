@@ -56,6 +56,9 @@ Token *ClassExpression::eval(Environment *env) {
 	Token *extented_class =
 			reinterpret_cast<IdentifierExpression*>(this->expressions[2])->stringToken;
 
+	if(strcmp(extented_class->getContent(), "Object") !=0){
+		cout << "Extending from classes rather than Object is not supported yet"<<endl;
+	}
 	FuzuliClass *cls = new FuzuliClass();
 	cls->extends = string(extented_class->getContent());
 	cls->name = string(name->getContent());
