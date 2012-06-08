@@ -82,10 +82,9 @@ Token *NewExpression::eval(Environment *env) {
 		return (Token::NULL_TOKEN);
 	}
 	Environment *cls_env = env->createNext();
-	Token *obj = cls->body->eval(cls_env);
+	cls->body->eval(cls_env);
+	Token *obj = new Token("@FuzuliObject", FUZULIFUNCTION);
 	obj->object = (void*)cls_env;
-	obj->setType(FUZULIOBJECT);
-	obj->setContent("@FuzuliObject");
 	return (obj);
 }
 

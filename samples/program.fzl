@@ -1,2 +1,30 @@
-(setprecision 10)
+(class Person extends Object
+    (block
 
+        (def name STRING)
+
+        (function setName (params x)
+            (let name x)
+        )
+
+        (function getName (params)
+            (return name)
+        )
+        
+        (function print (params)
+        	(block
+        		(print "This is object with name " name "\n")
+        	)
+        )
+    )
+)
+
+
+(let hako (new Person))
+(hako.setName "Hako")
+
+(let fuzuli (new Person))
+(fuzuli.setName "FUZZY")
+
+(hako.print)
+(fuzuli.print)

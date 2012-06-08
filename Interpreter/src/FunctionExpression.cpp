@@ -56,6 +56,52 @@ FunctionCallExpression::~FunctionCallExpression() {
 
 }
 
+Token *FunctionCallExpression::evalForClass(Environment* env) {
+	int paramscount = this->expressions.size() - 1;
+	Environment *object_env;
+	Token *result;
+	Token *fname = ((IdentifierExpression*) this->expressions[0])->stringToken;
+	FuzuliFunction *func;
+
+	string fullname = string(fname->getContent());
+	string _object = fullname.substr(0, fullname.find('.', 0));
+	string _fun = fullname.substr(fullname.find('.', 0) + 1,
+			fullname.length() - 1);
+	Token *obj = env->getVariable(_object.c_str());
+	object_env = ((Environment*) (obj->object))->next;
+
+	stringstream str_func_name;
+	str_func_name.clear();
+	str_func_name << _fun.c_str();
+	str_func_name << paramscount;
+	func = object_env->fuzuliFunctions[(str_func_name.str())];
+	map<string, FuzuliFunction*>::iterator it;
+	if (func == NULL) {
+		cout << "*** " << str_func_name.str().c_str() << endl;
+		cout << "Fuzuli Function " << _fun.c_str() << "("
+				<< str_func_name.str().c_str() << ")" << " is not defined in "
+				<< _object.c_str() << endl;
+		exit(-1);
+	}
+
+
+	ParamsExpression *paramsExpr = (ParamsExpression*) func->params;
+	paramsExpr->eval(env);
+	for (unsigned int i = 0; i < paramsExpr->paramNames.size(); i++) {
+		Token *param = paramsExpr->paramNames[i];
+		Token *value = this->expressions[i + 1]->eval(env);
+		object_env->setVariableForFunctionParams(param->getContent(),
+				value->clone());
+	}
+	result = func->body->eval(object_env);
+	result->returnFlag = 0;
+
+	//Token *t = result->clone();
+	//t->setKillable(false);
+	return (result);
+
+}
+
 Token *FunctionCallExpression::eval(Environment *env) {
 	int paramscount = this->expressions.size() - 1;
 	Environment *funcEnvironment = env->createNext();
@@ -67,35 +113,14 @@ Token *FunctionCallExpression::eval(Environment *env) {
 	FuzuliFunction *func = env->getFunction(str_func_name.str().c_str());
 	if (func == NULL) {
 		if (strchr(fname->getContent(), '.') != 0) {
-			cout << "** Dot found" << endl;
-			string fullname = string(fname->getContent());
-			string _object = fullname.substr(0, fullname.find('.', 0));
-			string _fun = fullname.substr(fullname.find('.', 0) + 1,
-					fullname.length() - 1);
-			Token *obj = env->getVariable(_object.c_str());
-			cout << "** " << _object.c_str() << ":" << _fun.c_str() << ":"
-					<< obj->getContent() << endl;
-			Environment *object_env =
-					reinterpret_cast<Environment*>(obj->object);
-
-			stringstream str_func_name;
-			str_func_name.clear();
-			str_func_name << _fun.c_str();
-			str_func_name << paramscount;
-			func = object_env->fuzuliFunctions[(str_func_name.str().c_str())];
-			if (func == NULL) {
-				cout << "*** " << str_func_name.str().c_str() << endl;
-				cout << "Fuzuli Function " << _fun.c_str() << "("<< str_func_name.str().c_str()<<")"
-						<< " is not defined in " << _object.c_str() << endl;
-				exit(-1);
-			}
+			return (this->evalForClass(env));
+		} else {
+			cout << "Fuzuli Function " << fname->getContent()
+					<< " is not defined." << endl;
+			exit(-1);
 		}
 	}
-	if (func == NULL) {
-		cout << "Fuzuli Function " << fname->getContent() << " is not defined."
-				<< endl;
-		exit(-1);
-	}
+
 	ParamsExpression *paramsExpr = (ParamsExpression*) func->params;
 	paramsExpr->eval(env);
 	for (unsigned int i = 0; i < paramsExpr->paramNames.size(); i++) {
@@ -104,6 +129,7 @@ Token *FunctionCallExpression::eval(Environment *env) {
 		funcEnvironment->setVariableForFunctionParams(param->getContent(),
 				value->clone());
 	}
+
 	result = func->body->eval(funcEnvironment);
 	result->returnFlag = 0;
 

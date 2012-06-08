@@ -374,6 +374,7 @@ public:
 	FunctionCallExpression(vector<Expression*> expr);
 	virtual ~FunctionCallExpression();
 	Token *eval(Environment *env);
+	Token *evalForClass(Environment *env);
 };
 
 class ForkExpression : public Expression {
