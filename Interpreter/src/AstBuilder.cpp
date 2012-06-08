@@ -325,7 +325,15 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> expr) {
 			&& strcmp(tok->getContent(), "setepsilon") == 0) {
 		SetEpsilonExpression *pe = new SetEpsilonExpression(expr);
 		return (pe);
-	} else {
+	}else if (tok->getType() == IDENTIFIER
+			&& strcmp(tok->getContent(), "class") == 0) {
+		ClassExpression *pe = new ClassExpression(expr);
+		return (pe);
+	}else if (tok->getType() == IDENTIFIER
+			&& strcmp(tok->getContent(), "new") == 0) {
+		NewExpression *pe = new NewExpression(expr);
+		return (pe);
+	}  else {
 		/* It may be a FuzuliFunction */
 		expr.insert(expr.begin(), new IdentifierExpression(tok));
 		FunctionCallExpression *pe = new FunctionCallExpression(expr);

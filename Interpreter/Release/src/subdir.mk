@@ -19,6 +19,7 @@ CPP_SRCS += \
 ../src/LetExpression.cpp \
 ../src/ListExpression.cpp \
 ../src/LoopsExpression.cpp \
+../src/Oop.cpp \
 ../src/SourceCode.cpp \
 ../src/Token.cpp \
 ../src/WebExpression.cpp 
@@ -39,6 +40,7 @@ OBJS += \
 ./src/LetExpression.o \
 ./src/ListExpression.o \
 ./src/LoopsExpression.o \
+./src/Oop.o \
 ./src/SourceCode.o \
 ./src/Token.o \
 ./src/WebExpression.o 
@@ -59,6 +61,7 @@ CPP_DEPS += \
 ./src/LetExpression.d \
 ./src/ListExpression.d \
 ./src/LoopsExpression.d \
+./src/Oop.d \
 ./src/SourceCode.d \
 ./src/Token.d \
 ./src/WebExpression.d 

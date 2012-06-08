@@ -104,6 +104,7 @@ enum TokenType {
 	PACKAGE, /* 41 */
 	HTML, /* 42 */
 	COBJECT,
+	FUZULIOBJECT,
 
 	EXCLAMATION,
 	NOTEQUALS
@@ -848,6 +849,32 @@ public:
 	SetEpsilonExpression(vector<Expression*> expr);
 	virtual ~SetEpsilonExpression();
 	Token *eval(Environment *env);
+};
+
+
+class FuzuliClass {
+public:
+	FuzuliClass();
+	virtual ~FuzuliClass();
+	static map<string,FuzuliClass*> all_classes;
+	Expression *body;
+	string extends;
+	string name;
+};
+
+
+class ClassExpression: public Expression {
+public:
+	ClassExpression(vector<Expression*> expr);
+	virtual ~ClassExpression();
+	Token *eval(Environment *env);
+};
+
+class NewExpression: public Expression {
+public:
+	NewExpression (vector<Expression*> expr);
+	virtual ~NewExpression();
+	Token *eval (Environment *env);
 };
 
 
