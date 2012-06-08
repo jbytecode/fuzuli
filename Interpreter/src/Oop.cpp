@@ -44,7 +44,8 @@ ClassExpression::~ClassExpression() {
 }
 
 Token *ClassExpression::eval(Environment *env) {
-	Token *name = this->expressions[0]->eval(env);
+	Token *name =
+			reinterpret_cast<IdentifierExpression*>(this->expressions[0])->stringToken;
 	Token *extends_keyword =
 			reinterpret_cast<IdentifierExpression*>(this->expressions[1])->stringToken;
 	if (strcmp(extends_keyword->getContent(), "extends") != 0) {
@@ -63,32 +64,30 @@ Token *ClassExpression::eval(Environment *env) {
 	return (Token::NULL_TOKEN);
 }
 
-
-NewExpression::NewExpression(vector<Expression*> expr){
+NewExpression::NewExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 }
 
-NewExpression::~NewExpression(){
+NewExpression::~NewExpression() {
 
 }
 
-Token *NewExpression::eval(Environment *env){
-	Token *className = reinterpret_cast<IdentifierExpression*>(this->expressions[0])->stringToken;
-	cout << "** Creating new "<<className->getContent()<<endl;
-	cout << "Number of registered classes: "<<FuzuliClass::all_classes.size()<<endl;
-	FuzuliClass *cls = FuzuliClass::all_classes[string(className->getContent())];
-	if(cls == NULL){
-		cout << "Can not create an object from class "<<className->getContent() << endl;
-		return(Token::NULL_TOKEN);
+Token *NewExpression::eval(Environment *env) {
+	Token *className =
+			reinterpret_cast<IdentifierExpression*>(this->expressions[0])->stringToken;
+	FuzuliClass *cls = FuzuliClass::all_classes[className->getContent()];
+	if (cls == NULL) {
+		cout << "Can not create an object from class "
+				<< className->getContent() << endl;
+		return (Token::NULL_TOKEN);
 	}
 	Environment *cls_env = env->createNext();
 	Token *obj = cls->body->eval(cls_env);
-	obj->object = (void*) cls_env;
+	obj->object = (void*)cls_env;
 	obj->setType(FUZULIOBJECT);
 	obj->setContent("@FuzuliObject");
-	return(obj);
+	return (obj);
 }
 
-}
-;
+};
 

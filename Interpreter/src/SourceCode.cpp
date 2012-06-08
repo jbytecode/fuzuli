@@ -367,7 +367,7 @@ Token *SourceCode::getNextToken() {
 		tokenvalue << currentChar;
 		currentChar = look();
 		while (isdigit(currentChar) || isalnum(currentChar)
-				|| currentChar == '_') {
+				|| currentChar == '_' || currentChar == '.') {
 			currentChar = eat();
 			tokenvalue << currentChar;
 			currentChar = look();
