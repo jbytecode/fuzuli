@@ -1,22 +1,49 @@
-(class Person extends Object
-   (block
-      (def name STRING)
-      (def age INTEGER)
+(require "/usr/lib/fuzuli/nfl/gui.nfl")
+(tcltk_init)
 
-      (function setName (params n)
-            (block
-                (let name n)
-            )
-       )
 
-       (function getName (params)
-         (block
-            (return name)
-         )
-      )
-   )
+
+
+
+(tk_button 
+	(list
+		(tk_name "savebutton")
+		(tk_text "Save")
+		(tk_padx 150)
+		(tk_pady 25)
+		(tk_command "Save")
+	)
 )
 
-(let fuzuli (new Person))
-(fuzuli.setName "FUZULI")
-(print (fuzuli.getName))
+(tk_button 
+	(list
+		(tk_name "loadbutton")
+		(tk_text "Load")
+		(tk_padx 150)
+		(tk_pady 25)
+		(tk_command "Load")
+	)
+)
+
+(function Save (params)
+	(block
+		(print "Hello from Save!\n")
+		(return ":)")
+	)
+)
+(function Load (params)
+	(block
+		(print "Hello from Load!\n")
+		(return ":)")
+	)
+)
+
+
+
+
+(tk_pack "loadbutton")
+(tk_pack "savebutton")
+	
+
+(tcltk_mainloop)
+

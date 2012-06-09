@@ -14,18 +14,75 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+(require "/usr/lib/fuzuli/nfl/string.nfl")
 
 (let lib (dynload "FuzuliCore"))
 
-(C lib "tcltk_init")
 
-(C lib "tcltk_run" "label .hw  -text \"Hello Fuzuli!\nFuzuli Rocks!!!!!!!!!!\"")
-(C lib "tcltk_run" "button .btn  -text \"Click here to close\"")
-(C lib "tcltk_run" "grid .hw")
-(C lib "tcltk_run" "grid .btn")
-(C lib "tcltk_run" "tcltk_run" s)
+(function tcltk_init (params)
+	(return (C lib "tcltk_init"))
+)
 
-(while 1
-	(C lib "tcltk_doevents")
+(function tcltk_doevents (params)
+	(return (C lib "tcltk_doevents"))
+)
+
+(function tcltk_mainloop (params)
+	(return (C lib "tcltk_mainloop"))
+)
+
+(function tcltk_run (params command)
+	(return (C lib "tcltk_run" command))
+)
+
+(function tk_button (params lst)
+(block
+	(def cmd STRING)
+	(let cmd (strcat (list "button " (strcat lst) "\n")))
+	(return (C lib "tcltk_run" cmd))
+)	
+)
+
+(function tk_entry (params lst)
+(block
+	(def cmd STRING)
+	(let cmd (strcat (list "entry " (strcat lst) "\n")))
+	(return (C lib "tcltk_run" cmd))
+)	
+)
+
+(function tk_label (params lst)
+(block
+	(def cmd STRING)
+	(let cmd (strcat (list "label " (strcat lst) "\n")))
+	(return (C lib "tcltk_run" cmd))
+)	
+)
+
+(function tk_name (params name)
+	(return (strcat (list " ." name " ")))	
+)
+
+
+(function tk_text (params text)
+	(return (strcat (list "-text \"" text "\" " )))	
+)
+
+(function tk_padx (params x)
+	(return (strcat (list "-padx " x " ")))	
+)
+
+(function tk_pady (params y)
+	(return (strcat (list "-pady " y " ")))	
+)
+
+(function tk_command (params cmd)
+	(block
+		(C lib "tcltk_create_command" cmd)
+		(return (strcat (list "-command " cmd " ")))
+	)	
+)
+
+(function tk_pack (params obj)
+	(return (C lib "tcltk_run" (strcat (list "pack ." obj "\n"))))	
 )
