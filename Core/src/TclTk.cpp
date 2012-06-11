@@ -23,9 +23,13 @@
 #include <stdlib.h>
 #include <sstream>
 #include <vector>
+#ifdef __linux
 #include <tcl/tcl.h>
 #include <tk/tk.h>
-
+#else
+#include <tcl.h>
+#include <tk.h>
+#endif
 
 namespace fuzuli {
 
