@@ -49,7 +49,7 @@ Token *DynLoadExpression::eval(Environment *env) {
 #ifdef __linux
 	ss << "lib" << dllName->getContent() << ".so";
 #else
-	ss<<dllName->getcontext()<<".dll";
+	ss<<dllName->getContent()<<".dll";
 #endif
 	libraryHandle = dlopen(ss.str().c_str(), RTLD_LAZY);
 	if (!libraryHandle) {
