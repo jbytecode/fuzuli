@@ -27,9 +27,10 @@
 #include <list>
 #include <string>
 
-#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__CYGWIN__)
-# define LIBSOCKET_WIN
-#endif
+//These three lines are commented for Fuzuli build in CYGWIN
+//#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__CYGWIN__)
+//# define LIBSOCKET_WIN
+//#endif
 
 #ifdef LIBSOCKET_WIN
 # include <winsock.h>
