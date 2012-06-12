@@ -67,6 +67,15 @@ Token *putsd(Token *p, Environment *env);
 Token *fputsd(Token *p, Environment *env);
 Token *fgetcd(Token *p, Environment *env);
 Token *ftelld(Token *p, Environment *env);
+Token *readlined(Token *p, Environment *env);
+}
+
+NoParameters
+Token *readlined(Token *p, Environment *env){
+	string str;
+	std::getline(cin, str);
+	Token *result = new Token(str.c_str(), STRING);
+	return(result);
 }
 
 OneParameters
