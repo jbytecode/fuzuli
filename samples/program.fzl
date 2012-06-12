@@ -3,7 +3,7 @@
 
 	(refresh)		
 	(let mywin (newwin 5 20 5 5))
-	(box mywin 0 0)
+	(wborder mywin 65 66 67 68 70 71 72 73)
 	(wrefresh mywin)
 		
 	(getch)		

@@ -61,6 +61,12 @@
 	(return (C ncurses_lib "wrefreshd" window))
 )
 
+(function delwin (params window)
+	(return (C ncurses_lib "delwind" window))
+)
 
+(function wborder (params window c1 c2 c3 c4 c5 c6 c7 c8)
+	(return (C ncurses_lib "wborderd" window c1 c2 c3 c4 c5 c6 c7 c8))
+)
 
 

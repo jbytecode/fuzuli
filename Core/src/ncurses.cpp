@@ -40,6 +40,30 @@ Token *setcolorpair(Token *p, Environment *env);
 Token *newwinp(Token *p, Environment *env);
 Token *boxp(Token *p, Environment *env);
 Token *wrefreshd(Token *p, Environment *env);
+Token *delwind(Token *p, Environment *env);
+Token *wborderd(Token *p, Environment *env);
+}
+
+MoreThanThreeParameters
+Token *wborderd(Token *p, Environment *env){
+	WINDOW *win = (WINDOW*)p->tokens[0]->object;
+	unsigned int c1 = (unsigned int) p->tokens[1]->getIntValue();
+	unsigned int c2 = (unsigned int) p->tokens[2]->getIntValue();
+	unsigned int c3 = (unsigned int) p->tokens[3]->getIntValue();
+	unsigned int c4 = (unsigned int) p->tokens[4]->getIntValue();
+	unsigned int c5 = (unsigned int) p->tokens[5]->getIntValue();
+	unsigned int c6 = (unsigned int) p->tokens[6]->getIntValue();
+	unsigned int c7 = (unsigned int) p->tokens[7]->getIntValue();
+	unsigned int c8 = (unsigned int) p->tokens[8]->getIntValue();
+	wborder(win,c1,c2,c3,c4,c5,c6,c7,c8);
+	return(Token::NULL_TOKEN);
+}
+
+OneParameters
+Token *delwind(Token *p, Environment *env){
+	WINDOW *win = (WINDOW*)p->tokens[0]->object;
+	Token *result = new Token(delwin(win), INTEGER);
+	return(result);
 }
 
 OneParameters
