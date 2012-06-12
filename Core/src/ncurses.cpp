@@ -29,30 +29,59 @@ using namespace std;
 using namespace fuzuli;
 
 extern "C" {
-Token *ncinitscrd (Token *p, Environment *env);
-Token *ncprintwd (Token *p, Environment *env);
-Token *ncrefreshd(Token *p, Environment *env);
-Token *ncgetchd(Token *p, Environment *env);
-Token *ncendwind(Token *p, Environment *env);
-Token *ncinitpaird(Token *p, Environment *env);
-Token *ncstartcolord(Token *p, Environment *env);
-Token *ncsetcolorpair(Token *p, Environment *env);
+Token *initscrd (Token *p, Environment *env);
+Token *printwd (Token *p, Environment *env);
+Token *refreshd(Token *p, Environment *env);
+Token *getchd(Token *p, Environment *env);
+Token *endwind(Token *p, Environment *env);
+Token *initpaird(Token *p, Environment *env);
+Token *startcolord(Token *p, Environment *env);
+Token *setcolorpair(Token *p, Environment *env);
+Token *newwinp(Token *p, Environment *env);
+Token *boxp(Token *p, Environment *env);
+Token *wrefreshd(Token *p, Environment *env);
 }
 
 OneParameters
-Token *ncsetcolorpair(Token *p, Environment *env){
+Token *wrefreshd(Token *p, Environment *env){
+	WINDOW *win = (WINDOW*) p->tokens[0]->object;
+	return(new Token(wrefresh(win), INTEGER));
+}
+
+ThreeParameters
+Token *boxp (Token *p , Environment *env){
+	WINDOW *win = (WINDOW*) p->tokens[0]->object;
+	unsigned int param1 = (unsigned int)p->tokens[1]->getIntValue();
+	unsigned int param2 = (unsigned int)p->tokens[2]->getIntValue();
+	return(new Token(box(win, param1, param2), INTEGER));
+}
+
+MoreThanThreeParameters
+Token *newwinp(Token *p, Environment *env){
+	int height = p->tokens[0]->getIntValue();
+	int width = p->tokens[1]->getIntValue();
+	int starty = p->tokens[2]->getIntValue();
+	int startx = p->tokens[3]->getIntValue();
+	WINDOW *window = newwin(height, width, starty, startx);
+	Token *result = new Token("@WINDOW", COBJECT);
+	result->object = window;
+	return(result);
+}
+
+OneParameters
+Token *setcolorpair(Token *p, Environment *env){
 	attron(COLOR_PAIR(p->tokens[0]->getIntValue()));
 	return(Token::NULL_TOKEN);
 }
 
 NoParameters
-Token *ncstartcolord(Token *p, Environment *env){
+Token *startcolord(Token *p, Environment *env){
 	start_color();
 	return(Token::NULL_TOKEN);
 }
 
 ThreeParameters
-Token *ncinitpaird(Token *p, Environment *env){
+Token *initpaird(Token *p, Environment *env){
 	short num = (short) p->tokens[0]->getIntValue();
 	short col1 = (short) p->tokens[1]->getIntValue();
 	short col2 = (short) p->tokens[2]->getIntValue();
@@ -61,28 +90,28 @@ Token *ncinitpaird(Token *p, Environment *env){
 	return(result);
 }
 
-Token *ncendwind(Token *p, Environment *env){
+Token *endwind(Token *p, Environment *env){
 	Token *result = new Token (endwin(), INTEGER);
 	return(result);
 }
 
-Token *ncgetchd(Token *p, Environment *env){
+Token *getchd(Token *p, Environment *env){
 	getch();
 	return(Token::NULL_TOKEN);
 }
 
-Token *ncrefreshd(Token *p, Environment *env){
+Token *refreshd(Token *p, Environment *env){
 	Token *result = new Token(refresh(), INTEGER);
 	return(result);
 }
 
 
-Token *ncprintwd (Token *p, Environment *env){
+Token *printwd (Token *p, Environment *env){
 	printw(p->tokens[0]->getContent());
 	return(Token::NULL_TOKEN);
 }
 
-Token *ncinitscrd (Token *p, Environment *env){
+Token *initscrd (Token *p, Environment *env){
 	WINDOW *win = initscr();
 	Token *result = new Token("@NCursesWindow", COBJECT);
 	result->object = (void*)win;

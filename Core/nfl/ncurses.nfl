@@ -17,36 +17,50 @@
 
 (let ncurses_lib (dynload "FuzuliCore"))
 
-(function nc_initscr (params)
-	(return (C ncurses_lib "ncinitscrd"))
+(function initscr (params)
+	(return (C ncurses_lib "initscrd"))
 )
 
-(function nc_printw (params x)
-	(return (C ncurses_lib "ncprintwd" x))
+(function printw (params x)
+	(return (C ncurses_lib "printwd" x))
 )
 
-(function nc_refresh (params)
-	(return (C ncurses_lib "ncrefreshd"))
+(function refresh (params)
+	(return (C ncurses_lib "refreshd"))
 )
 
-(function nc_getch (params)
-	(return (C ncurses_lib "ncgetchd"))
+(function getch (params)
+	(return (C ncurses_lib "getchd"))
 )
 
-(function nc_endwin (params)
-	(return (C ncurses_lib "ncendwind"))
+(function endwin (params)
+	(return (C ncurses_lib "endwind"))
 )
 
-(function nc_init_pair (params num col1 col2)
-	(return (C ncurses_lib "ncinitpaird" num col1 col2))
+(function init_pair (params num col1 col2)
+	(return (C ncurses_lib "initpaird" num col1 col2))
 )
 
-(function nc_start_color (params)
-	(return (C ncurses_lib "ncstartcolord"))
+(function start_color (params)
+	(return (C ncurses_lib "startcolord"))
 )
 
-(function nc_set_color_pair (params num)
-	(return (C ncurses_lib "ncsetcolorpair" num))
+(function set_color_pair (params num)
+	(return (C ncurses_lib "setcolorpair" num))
 )
+
+(function newwin (params height weight starty startx)
+	(return (C ncurses_lib "newwinp" height weight starty startx))
+)
+
+(function box (params window p1 p2)
+	(return (C ncurses_lib "boxp" window p1 p2))
+)
+
+(function wrefresh (params window)
+	(return (C ncurses_lib "wrefreshd" window))
+)
+
+
 
 
