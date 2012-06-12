@@ -62,7 +62,9 @@
 									<listOptionValue builtIn="false" value="mysqlclient"/>
 									<listOptionValue builtIn="false" value="tcl"/>
 								</option>
-								<option id="gnu.cpp.link.option.userobjs.2102600690" name="Other objects" superClass="gnu.cpp.link.option.userobjs"/>
+								<option id="gnu.cpp.link.option.userobjs.2102600690" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value="/usr/lib/fuzuli/libfuzuli.so"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1844647046" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
