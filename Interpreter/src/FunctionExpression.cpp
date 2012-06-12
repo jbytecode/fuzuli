@@ -91,7 +91,7 @@ Token *FunctionCallExpression::evalForClass(Environment* env) {
 		Token *param = paramsExpr->paramNames[i];
 		Token *value = this->expressions[i + 1]->eval(env);
 		object_env->setVariableForFunctionParams(param->getContent(),
-				value->clone());
+				value);
 	}
 	result = func->body->eval(object_env);
 	result->returnFlag = 0;
@@ -127,7 +127,7 @@ Token *FunctionCallExpression::eval(Environment *env) {
 		Token *param = paramsExpr->paramNames[i];
 		Token *value = this->expressions[i + 1]->eval(env);
 		funcEnvironment->setVariableForFunctionParams(param->getContent(),
-				value->clone());
+				value);
 	}
 
 	result = func->body->eval(funcEnvironment);
