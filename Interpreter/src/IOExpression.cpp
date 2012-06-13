@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "../include/FuzuliTypes.h"
 #include <iostream>
 #include <sstream>
@@ -32,6 +31,27 @@ using namespace std;
 
 vector<string> RequireExpression::installedPackages;
 
+void __PrintToken(stringstream *ss, Token *tok) {
+	if (tok->getType() == INTEGER) {
+		*ss << tok->getIntValue();
+	} else if (tok->getType() == FLOAT) {
+		*ss << tok->getFloatValue();
+	} else if (tok->getType() == COBJECT) {
+		*ss << "@FuzuliNativeObject";
+	} else if (tok->getType() == LIST) {
+		*ss << "[";
+		for (unsigned int i = 0; i < tok->tokens.size(); i++) {
+			__PrintToken(ss, tok->tokens[i]);
+			if (i != tok->tokens.size() - 1) {
+				*ss << ", ";
+			}
+		}
+		*ss << "]";
+	} else {
+		*ss << tok->getContent();
+	}
+}
+
 PrintExpression::PrintExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 }
@@ -44,15 +64,7 @@ Token *PrintExpression::eval(Environment *env) {
 	stringstream ss;
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
 		Token *tok = this->expressions[i]->eval(env);
-		if (tok->getType() == INTEGER) {
-			ss << tok->getIntValue();
-		} else if (tok->getType() == FLOAT) {
-			ss << tok->getFloatValue();
-		} else if (tok->getType() == COBJECT) {
-			ss << "@FuzuliNativeObject";
-		} else {
-			ss << tok->getContent();
-		}
+		__PrintToken(&ss, tok);
 	}
 	cout << ss.str().c_str();
 	return (Token::NULL_TOKEN);
@@ -106,7 +118,7 @@ ForkExpression::ForkExpression(vector<Expression*> expr) {
 }
 
 ForkExpression::~ForkExpression() {
-	cout << "Called fork destructor"<<endl;
+	cout << "Called fork destructor" << endl;
 }
 
 Token *ForkExpression::eval(Environment *env) {
@@ -123,18 +135,18 @@ Token *ForkExpression::eval(Environment *env) {
 	return (env->newToken(pid, INTEGER));
 }
 
-WaitExpression::WaitExpression(vector<Expression*> expr){
+WaitExpression::WaitExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 }
 
-WaitExpression::~WaitExpression(){
+WaitExpression::~WaitExpression() {
 
 }
 
-Token *WaitExpression::eval(Environment *env){
+Token *WaitExpression::eval(Environment *env) {
 	Token* pid = this->expressions[0]->eval(env);
 	int result = waitpid(pid->getIntValue(), 0, 0);
-	return(env->newToken(result, INTEGER));
+	return (env->newToken(result, INTEGER));
 }
 
 }

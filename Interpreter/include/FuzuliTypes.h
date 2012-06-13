@@ -552,7 +552,19 @@ public:
 	Token *eval(Environment *env);
 };
 
+class RemoveExpression: public Expression {
+public:
+	RemoveExpression(vector<Expression*>expr);
+	virtual ~RemoveExpression();
+	Token *eval(Environment *env);
+};
 
+class FindExpression: public Expression {
+public:
+	FindExpression(vector<Expression*>expr);
+	virtual ~FindExpression();
+	Token *eval(Environment *env);
+};
 
 class NotExpression: public fuzuli::Expression, public CppEmitter {
 public:

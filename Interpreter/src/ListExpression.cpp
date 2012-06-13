@@ -208,6 +208,40 @@ Token *PrependExpression::eval(Environment *env){
 	return(list);
 }
 
+RemoveExpression::RemoveExpression(vector<Expression*> expr){
+	this->expressions = expr;
+}
+
+RemoveExpression::~RemoveExpression(){
+
+}
+
+Token *RemoveExpression::eval(Environment *env){
+	Token *arr = this->expressions[0]->eval(env);
+	Token *n = this->expressions[1]->eval(env);
+	arr->tokens.erase( arr->tokens.begin() + n->getIntValue());
+	return(arr);
+}
+
+
+FindExpression::FindExpression(vector<Expression*> expr){
+	this->expressions = expr;
+}
+
+FindExpression::~FindExpression(){
+
+}
+
+Token *FindExpression::eval(Environment *env){
+	Token *arr = this->expressions[0]->eval(env);
+	Token *what = this->expressions[1]->eval(env);
+	for (unsigned int i=0;i<arr->tokens.size();i++){
+		if(arr->tokens[i]->Equal(what)){
+			return(new Token(i, INTEGER));
+		}
+	}
+	return(Token::NULL_TOKEN);
+}
 
 
 } /* namespace fuzuli */
