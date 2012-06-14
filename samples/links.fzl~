@@ -7,23 +7,18 @@
 (puts "Please give a domain (for default just type enter):")
 (let word (readline))
 
-# If user did not type anything
-# set the default page to amazon.com
 (if (< (strlen word) 3)
    (let word "amazon.com")
 )
 (print "Doing " word "\n")
 
 
-# Open a socket connection to host
 (print "Connecting " word "\n")
 (let socket (fsockopen word 80))
 
-# Sending HTTP Request
 (print "Sending request\n")
 (fsockwrite socket (strcat (list "GET /\n\n")))
 
-# Reading html content
 (print "Retrieving result\n")
 (def htmllist LIST)
 (while 1
@@ -31,7 +26,6 @@
    (if (= (typeof c) NULL) (break))
    (append htmllist c)
 )
-# Closing socket
 (fsockclose socket)
 
 (print "Constucting string\n")
@@ -43,7 +37,6 @@
 (def part STRING)
 (def i INTEGER)
 
-# Parsing loaded content
 (for (let i 0) (< i len) (inc i)
    (let part (substr html i (+ i 7)))
    (if (= part "<a href")

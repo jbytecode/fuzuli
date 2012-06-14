@@ -40,6 +40,7 @@ Token *tcltk_add(Token* params, Environment *env);
 Token *tcltk_doevents(Token* params, Environment *env);
 Token *tcltk_mainloop(Token* params, Environment *env);
 Token *tcltk_create_command(Token *params, Environment *env);
+Token *tcltk_get_string_result (Token *params, Environment *env);
 }
 
 using namespace std;
@@ -65,6 +66,7 @@ int DefaultCommand(ClientData clientdata, Tcl_Interp *interpreter,
 	Token *result = fce->eval(env);
     return 0;
 }
+
 
 Token *tcltk_create_command(Token *params, Environment *env){
 	const char *commandname = params->tokens[0]->getContent();
@@ -105,6 +107,12 @@ Token *tcltk_run(Token* params, Environment *env) {
 			<< params->tokens[0]->getContent() << endl;
 	ss.clear();
 	return (result);
+}
+
+NoParameters
+Token *tcltk_get_string_result (Token *params, Environment *env){
+	Token *result = new Token(Tcl_GetStringResult(interpreter),STRING);
+	return(result);
 }
 
 Token *tcltk_doevents(Token* params, Environment *env) {

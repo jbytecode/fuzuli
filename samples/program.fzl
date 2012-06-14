@@ -1,3 +1,5 @@
-(let matrix (list (list 1 2 3) (list 4 5 6) (list 7 8 9)))
-(print matrix)
+(require "/usr/lib/fuzuli/nfl/gui.nfl")
+(tcltk_init)
 
+(let file (tk_chooseColor))
+(print file)

@@ -48,6 +48,7 @@ Token *WebExpression::eval(Environment *env) {
 	return (Token::NULL_TOKEN);
 }
 
+
 RequestExpression::RequestExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 	this->resultToken = Token::NULL_TOKEN;

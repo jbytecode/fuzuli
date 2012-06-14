@@ -86,3 +86,40 @@
 (function tk_pack (params obj)
 	(return (C lib "tcltk_run" (strcat (list "pack ." obj "\n"))))	
 )
+
+
+(function tk_messagebox (params lst)
+(block
+	(def cmd STRING)
+	(let cmd (strcat (list "tk_messageBox " (strcat lst) "\n")))
+	(print cmd )
+	(return (C lib "tcltk_run" cmd))
+)	
+)
+
+(function tk_message (params msg)
+		(return (strcat (list "-message \"" msg "\" " )))	
+)
+
+(function tk_type (params type)
+		(return (strcat (list "-type " type)))	
+)
+
+
+(function tk_getOpenFile (params)
+(block
+	(def cmd STRING)
+	(let cmd (strcat (list "tk_getOpenFile "  "\n")))
+	(C lib "tcltk_run" cmd)
+	(return (C lib "tcltk_get_string_result"))
+)	
+)
+
+(function tk_chooseColor (params)
+(block
+	(def cmd STRING)
+	(let cmd (strcat (list "tk_chooseColor "  "\n")))
+	(C lib "tcltk_run" cmd)
+	(return (C lib "tcltk_get_string_result"))
+)	
+)

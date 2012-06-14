@@ -1,0 +1,49 @@
+(require "/usr/lib/fuzuli/nfl/gui.nfl")
+(tcltk_init)
+
+
+
+
+
+(tk_button 
+	(list
+		(tk_name "savebutton")
+		(tk_text "Save")
+		(tk_padx 150)
+		(tk_pady 25)
+		(tk_command "Save")
+	)
+)
+
+(tk_button 
+	(list
+		(tk_name "loadbutton")
+		(tk_text "Load")
+		(tk_padx 150)
+		(tk_pady 25)
+		(tk_command "Load")
+	)
+)
+
+(function Save (params)
+	(block
+		(print "Hello from Save!\n")
+		(return ":)")
+	)
+)
+(function Load (params)
+	(block
+		(print "Hello from Load!\n")
+		(return ":)")
+	)
+)
+
+
+
+
+(tk_pack "loadbutton")
+(tk_pack "savebutton")
+	
+
+(tcltk_mainloop)
+

@@ -103,6 +103,7 @@ enum TokenType {
 	FILETOKEN,/* 40 */
 	PACKAGE, /* 41 */
 	HTML, /* 42 */
+	JAVASCRIPT,
 	COBJECT,
 	FUZULIOBJECT,
 
@@ -764,6 +765,16 @@ public:
 	Token *eval(Environment *env);
 	const char *html;
 };
+
+
+class JavaScriptExpression: public Expression {
+public:
+	JavaScriptExpression(const char *html);
+	~JavaScriptExpression();
+	Token *eval(Environment *env);
+	const char *javascript;
+};
+
 
 class SetCookieExpression: public Expression {
 public:

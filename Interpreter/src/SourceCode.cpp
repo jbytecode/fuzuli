@@ -221,11 +221,13 @@ Token *SourceCode::getNextToken() {
 			tokentype = BITSHIFTLEFT;
 			eat();
 		} else if (nextChar == '?') {
+			int byteshift = 0;
 			tokenvalue << '?';
 			currentChar = eat();
 			Token *scriptType = getNextToken();
 			if (strcmp(scriptType->getContent(), "html") == 0) {
 				tokentype = HTML;
+				byteshift = 6;
 			} else {
 				cout << "Script type " << scriptType->getContent()
 						<< " is not supported" << endl;
@@ -245,7 +247,7 @@ Token *SourceCode::getNextToken() {
 			}
 
 			string temps = tokenvalue.str();
-			temps = temps.substr(6, temps.size() - 6);
+			temps = temps.substr(byteshift, temps.size() - byteshift);
 			tokenvalue.str(temps);
 		}
 		break;
