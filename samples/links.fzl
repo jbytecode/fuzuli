@@ -35,7 +35,6 @@
 (fsockclose socket)
 
 (print "Constucting string\n")
-
 (let html (strcat htmllist))
 (let len (strlen html))
 (print len " bytes read.\n")
@@ -58,4 +57,6 @@
       )
    )
 )
-
+(let html NULL)
+(let htmllist NULL)
+(let part NULL)

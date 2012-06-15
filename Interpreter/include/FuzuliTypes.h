@@ -809,7 +809,7 @@ public:
 	virtual ~Environment();
 	map<string, Token*> variables;
 	map<string, FuzuliFunction*> fuzuliFunctions;
-	vector<Token*> garbage;
+	static vector<Token*> garbage;
 	Environment *previous;
 	Environment *next;
 

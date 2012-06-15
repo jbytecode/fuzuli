@@ -46,7 +46,7 @@ Token *mysqlautocommit(Token *p, Environment *env);
 
 Token* mysqlconnect(Token *p, Environment *env) {
 	MYSQL *mysql;
-	Token *result = new Token("", STRING);
+	Token *result = env->newToken("", STRING);
 	mysql = mysql_init(NULL);
 	//p[0]=host, p[1]=user, p[2]=password, p[3]=db, p[4]=port
 	//cout << "Connecting " << p->tokens[0]->getContent() << endl;
@@ -66,7 +66,7 @@ Token* mysqlconnect(Token *p, Environment *env) {
 }
 
 Token* mysqlquery(Token *p, Environment *env) {
-	Token *result = new Token("@MysqlQueryObject", STRING);
+	Token *result = env->newToken("@MysqlQueryObject", STRING);
 	MYSQL *mysql = (MYSQL*) p->tokens[0]->object;
 	//cout << "Running: " << p->tokens[1]->getContent() << endl;
 	int qresult = mysql_query(mysql, p->tokens[1]->getContent());
@@ -83,7 +83,7 @@ Token* mysqlquery(Token *p, Environment *env) {
 Token *mysqlfetcharray(Token *p, Environment *env) {
 	//cout << "Fetching" << endl;
 	MYSQL_ROW row;
-	Token *result = new Token("@FuzuliList", fuzuli::LIST);
+	Token *result = env->newToken("@FuzuliList", fuzuli::LIST);
 	MYSQL_RES *query_result = (MYSQL_RES*) p->tokens[0]->object;
 	row = mysql_fetch_row(query_result);
 	if (row == NULL) {
@@ -97,7 +97,7 @@ Token *mysqlfetcharray(Token *p, Environment *env) {
 		if (row[i] == NULL) {
 			break;
 		}
-		result->tokens.push_back(new Token((char*) row[i], fuzuli::STRING));
+		result->tokens.push_back(env->newToken((char*) row[i], fuzuli::STRING));
 	}
 	//cout << "Returing rows with num elemnts " << result->tokens.size() << endl;
 	return (result);
@@ -130,26 +130,26 @@ Token *mysqlresult(Token *p, Environment *env) {
 Token *mysqlnumfields(Token *p, Environment *env) {
 	MYSQL_RES *query_result = (MYSQL_RES*) p->tokens[0]->object;
 	int num = mysql_num_fields(query_result);
-	Token *result = new Token(num, INTEGER);
+	Token *result = env->newToken(num, INTEGER);
 	return (result);
 }
 
 Token *mysqlnumrows(Token *p, Environment *env) {
 	MYSQL_RES *query_result = (MYSQL_RES*) p->tokens[0]->object;
 	int num = mysql_num_rows(query_result);
-	Token *result = new Token(num, INTEGER);
+	Token *result = env->newToken(num, INTEGER);
 	return (result);
 }
 
 Token *mysqlaffectedrows(Token *p, Environment *env) {
 	MYSQL *mysql = (MYSQL*) p->tokens[0]->object;
 	int num = mysql_affected_rows(mysql);
-	Token *result = new Token(num, INTEGER);
+	Token *result = env->newToken(num, INTEGER);
 	return (result);
 }
 
 Token *mysqlgetclientinfo(Token *p, Environment *env) {
-	Token *tok = new Token(mysql_get_client_info(), STRING);
+	Token *tok = env->newToken(mysql_get_client_info(), STRING);
 	return (tok);
 }
 

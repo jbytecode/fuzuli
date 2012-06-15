@@ -36,7 +36,7 @@ Token *gd_createImage (Token *p, Environment *env){
 	int x = p->tokens[0]->getIntValue();
 	int y = p->tokens[1]->getIntValue();
 	gdImage *image = gdImageCreate(x,y);
-	Token *result = new Token("@GdImage",COBJECT);
+	Token *result = env->newToken("@GdImage",COBJECT);
 	result->object = (void*) image;
 	return(result);
 }
@@ -48,7 +48,7 @@ Token *gd_allocateColor (Token *p, Environment *env){
 	int green = p->tokens[2]->getIntValue();
 	int blue = p->tokens[3]->getIntValue();
 	int allocColor = gdImageColorAllocate(image,red,green,blue);
-	Token *result = new Token(allocColor, INTEGER);
+	Token *result = env->newToken(allocColor, INTEGER);
 	return(result);
 }
 

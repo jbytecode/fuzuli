@@ -119,7 +119,6 @@ int main(int argc, char** argv) {
 		if (!ex)
 			break;
 		ex->eval(globalEnvironment);
-		//Environment::GCEnvironment->GC();
 	}
 
 	//Token *t = new Token("...",STRING);

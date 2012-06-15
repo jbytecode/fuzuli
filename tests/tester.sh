@@ -1,8 +1,8 @@
 #
-# fuzuli test framework 
+# fuzuli test framework
 # Copyright (C) 2012 Ismail Dogan <ismail@ismaildogan.com.tr>
 # This file is a part of fuzuli project.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -18,7 +18,7 @@
 
 
 #!/bin/bash
-# changes; 
+# changes;
 # changed variable names to easy understanding
 
 echo "--------------------------------------------"
@@ -30,6 +30,7 @@ fzlList=`ls *.fzl`  # fzlList -> list of fzl files only in the test director
 no=0                # no -> number of files
 pass=0              # pass -> number of passed files
 fail=0              # fail -> number of failed files
+unknown=0           # unknown -> number of undefined statements
 
 for cFzl in $fzlList; do        # cFzl -> current fzl for each loop circle
 cResult=`fuzuli $cFzl`          # cResult -> current result for each loop circle
@@ -40,11 +41,17 @@ for parca in $cResult; do
 
 if `echo "$parca" | grep "PASSED!" 1>/dev/null 2>&1`
 then
-	(( pass += 1 ))
-	echo "$i: PASS"
+        (( pass += 1 ))
+        echo "$i: PASS"
 else
-	(( fail += 1 ))
-	echo "$i: FAIL"
+        if `echo "$parca" | grep "ERROR" 1>/dev/null 2>&1`
+        then
+                (( fail += 1 ))
+                echo "$i: FAIL"
+        else
+                (( unknown += 1 ))
+                echo "$i: UNKNOWN";
+        fi
 fi
 (( i += 1 ))
 done
@@ -59,4 +66,5 @@ echo "--------------------------------------------"
 echo "|  $no files has been tested."
 echo "|  $pass statements has been passed."
 echo "|  $fail statements has been failed."
+echo "|  $unknown statements has been undefined."
 echo "--------------------------------------------"

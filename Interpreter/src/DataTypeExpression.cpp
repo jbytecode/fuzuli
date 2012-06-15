@@ -45,8 +45,9 @@ IntegerExpression::~IntegerExpression() {
 
 Token *IntegerExpression::eval(Environment *env){
 	//this->token->setIntValue(this->integerValue);
-	Token *tok = env->newToken(this->integerValue, INTEGER);
+	Token *tok = new Token(this->integerValue, INTEGER);
 	tok->setKillable(true);
+	Environment::garbage.push_back(tok);
 	return(tok);
 }
 
@@ -73,8 +74,9 @@ FloatExpression::~FloatExpression() {
 
 Token *FloatExpression::eval(Environment *env){
 	//this->token->setFloatValue(this->floatValue);
-	Token *tok = env->newToken(this->floatValue, FLOAT);
+	Token *tok = new Token(this->floatValue, FLOAT);
 	tok->setKillable(true);
+	Environment::garbage.push_back(tok);
 	return(tok);
 }
 
@@ -94,8 +96,9 @@ StringExpression::~StringExpression() {
 
 Token *StringExpression::eval(Environment *env){
 	//this->stringToken->setContent(this->stringValue.c_str());
-	Token *tok = env->newToken(this->stringValue.c_str(), STRING);
+	Token *tok = new Token(this->stringValue.c_str(), STRING);
 	tok->setKillable(true);
+	Environment::garbage.push_back(tok);
 	return(tok);
 }
 
@@ -107,6 +110,7 @@ void StringExpression::emitCpp(stringstream *ss){
 
 IdentifierExpression::IdentifierExpression(Token *tok) {
 	this->stringToken = tok;
+	tok->setKillable(false);
 }
 
 IdentifierExpression::~IdentifierExpression() {
@@ -142,7 +146,6 @@ Token *VariableExpression::eval(Environment *env){
 
 TypeofExpression::TypeofExpression(vector<Expression*> expr){
 	this->expressions = expr;
-	this->resultToken = new Token(0.0,INTEGER);
 }
 
 TypeofExpression::~TypeofExpression(){
@@ -151,8 +154,8 @@ TypeofExpression::~TypeofExpression(){
 
 Token *TypeofExpression::eval(Environment *env){
 	Token *tok = this->expressions[0]->eval(env);
-	this->resultToken->setIntValue(tok->getType());
-	return(resultToken);
+	Token *result = new Token (tok->getType(), INTEGER);
+	return(result);
 }
 
 
@@ -165,19 +168,12 @@ TypeExpression::~TypeExpression(){
 }
 
 Token *TypeExpression::eval(Environment *env){
-	Token *var = this->expressions[0]->eval(env);
+	Token *name = ((IdentifierExpression*)this->expressions[0])->stringToken;
+	Token *val = env->getVariable(name->getContent());
 	Token *type = this->expressions[1]->eval(env);
 	int index = type->getIntValue();
-	enum TokenType selectedType = static_cast<TokenType>(index);
-	if(selectedType==INTEGER){
-		int a = var->getIntValue();
-		var->setIntValue(a);
-	}else if(selectedType==FLOAT){
-		double a = var->getFloatValue();
-		var->setFloatValue(a);
-	}
-	var->setType(selectedType);
-	return(var);
+	val->setType((enum TokenType)index);
+	return(Token::NULL_TOKEN);
 }
 
 

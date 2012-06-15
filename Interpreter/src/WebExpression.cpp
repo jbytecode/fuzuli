@@ -75,7 +75,7 @@ Token *RequestExpression::eval(Environment *env) {
 				string value;
 				std::getline(iss, value, '=');
 				result = value;
-				return (env->newToken(result.c_str(), STRING));
+				return (new Token(result.c_str(), STRING));
 			}
 		}
 	}
@@ -105,13 +105,13 @@ Token *RequestExpression::eval(Environment *env) {
 				string value;
 				std::getline(iss, value, '=');
 				result = value;
-				return (env->newToken(result.c_str(), STRING));
+				return (new Token(result.c_str(), STRING));
 			}
 		}
 	}
 
 	if (keyfound != 0) {
-		return (env->newToken("", STRING));
+		return (new Token("", STRING));
 	}
 
 	return (Token::NULL_TOKEN);
@@ -161,7 +161,7 @@ Token *GetCookieExpression::eval(Environment *env) {
 			}
 		}
 	}
-	return (env->newToken(result.c_str(), STRING));
+	return (new Token(result.c_str(), STRING));
 }
 
 IncludeExpression::IncludeExpression(vector<Expression*> expr) {

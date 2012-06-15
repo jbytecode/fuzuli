@@ -33,6 +33,7 @@
 
 (function cint (params x)
 	(block
+		(def result INTEGER)
 		(let result (/ x 1))
 		(type result INTEGER)
 		(return result)

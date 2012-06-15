@@ -71,7 +71,7 @@ Token *isspaced(Token *p, Environment *env) {
 	if (int_result != 0) {
 		int_result = 1;
 	}
-	Token *result = new Token(int_result, INTEGER);
+	Token *result = env->newToken(int_result, INTEGER);
 	return (result);
 }
 
@@ -82,7 +82,7 @@ Token *ispunctd(Token *p, Environment *env) {
 	if (int_result != 0) {
 		int_result = 1;
 	}
-	Token *result = new Token(int_result, INTEGER);
+	Token *result = env->newToken(int_result, INTEGER);
 	return (result);
 }
 
@@ -92,7 +92,7 @@ Token *isprintd(Token *p, Environment *env) {
 	if (int_result != 0) {
 		int_result = 1;
 	}
-	Token *result = new Token(int_result, INTEGER);
+	Token *result = env->newToken(int_result, INTEGER);
 	return (result);
 }
 
@@ -103,7 +103,7 @@ Token *isgraphd(Token *p, Environment *env) {
 	if (int_result != 0) {
 		int_result = 1;
 	}
-	Token *result = new Token(int_result, INTEGER);
+	Token *result = env->newToken(int_result, INTEGER);
 	return (result);
 }
 
@@ -113,7 +113,7 @@ Token *iscntrld(Token *p, Environment *env) {
 	if (int_result != 0) {
 		int_result = 1;
 	}
-	Token *result = new Token(int_result, INTEGER);
+	Token *result = env->newToken(int_result, INTEGER);
 	return (result);
 }
 
@@ -123,7 +123,7 @@ Token *islowerd(Token *p, Environment *env) {
 	if (int_result != 0) {
 		int_result = 1;
 	}
-	Token *result = new Token(int_result, INTEGER);
+	Token *result = env->newToken(int_result, INTEGER);
 	return (result);
 }
 
@@ -133,7 +133,7 @@ Token *isupperd(Token *p, Environment *env) {
 	if (int_result != 0) {
 		int_result = 1;
 	}
-	Token *result = new Token(int_result, INTEGER);
+	Token *result = env->newToken(int_result, INTEGER);
 	return (result);
 }
 
@@ -143,7 +143,7 @@ Token *isalnumd(Token *p, Environment *env) {
 	if (int_result != 0) {
 		int_result = 1;
 	}
-	Token *result = new Token(int_result, INTEGER);
+	Token *result = env->newToken(int_result, INTEGER);
 	return (result);
 }
 
@@ -153,14 +153,14 @@ Token *isalphad(Token *p, Environment *env) {
 	if (int_result != 0) {
 		int_result = 1;
 	}
-	Token *result = new Token(int_result, INTEGER);
+	Token *result = env->newToken(int_result, INTEGER);
 	return (result);
 }
 
 OneParameters
 Token *isdigitd(Token *p, Environment *env) {
 	int int_result = std::isdigit((int) p->tokens[0]->getContent()[0]);
-	Token *result = new Token(int_result, INTEGER);
+	Token *result = env->newToken(int_result, INTEGER);
 	return (result);
 }
 
@@ -174,7 +174,7 @@ Token *str_shuffle(Token *p, Environment *env) {
 		str[index1] = str[index2];
 		str[index2] = c;
 	}
-	Token *result = new Token(str.c_str(), STRING);
+	Token *result = env->newToken(str.c_str(), STRING);
 	return (result);
 }
 
@@ -196,7 +196,7 @@ Token *str_replace(Token *p, Environment *env) {
 			ss << s_mainstr.substr(i, 1);
 		}
 	}
-	Token *result = new Token(ss.str().c_str(), STRING);
+	Token *result = env->newToken(ss.str().c_str(), STRING);
 	return (result);
 }
 
@@ -227,7 +227,7 @@ Token *levenshtein(Token *p, Environment *env) {
 			}
 		}
 	}
-	Token *result = new Token(d[m - 1][n - 1], INTEGER);
+	Token *result = env->newToken(d[m - 1][n - 1], INTEGER);
 	delete[] d;
 	return (result);
 }
@@ -252,7 +252,7 @@ Token *urldecode(Token *p, Environment *env) {
 			ss << c;
 		}
 	}
-	Token *result = new Token(ss.str().c_str(), STRING);
+	Token *result = env->newToken(ss.str().c_str(), STRING);
 	return (result);
 }
 
@@ -272,7 +272,7 @@ Token *md5(Token *p, Environment *env) {
 			ss << std::hex << num;
 		}
 	}
-	Token *result = new Token(ss.str().c_str(), STRING);
+	Token *result = env->newToken(ss.str().c_str(), STRING);
 	return (result);
 }
 
@@ -281,7 +281,7 @@ Token *ord(Token *p, Environment *env) {
 	char c = p->tokens[0]->getContent()[0];
 	stringstream ss;
 	ss << (unsigned int) c;
-	Token *result = new Token(ss.str().c_str(), STRING);
+	Token *result = env->newToken(ss.str().c_str(), STRING);
 	return (result);
 }
 
@@ -290,7 +290,7 @@ Token *chr(Token *p, Environment *env) {
 	int value = p->tokens[0]->getIntValue();
 	stringstream ss;
 	ss << (char) value;
-	Token *result = new Token(ss.str().c_str(), STRING);
+	Token *result = env->newToken(ss.str().c_str(), STRING);
 	return (result);
 }
 
@@ -309,13 +309,13 @@ OneParameters
 Token *strreverse(Token *p, Environment *env) {
 	string s = string(p->tokens[0]->getContent());
 	std::reverse(s.begin(), s.end());
-	Token *result = new Token(s.c_str(), STRING);
+	Token *result = env->newToken(s.c_str(), STRING);
 	return (result);
 }
 
 ThreeParameters
 Token *substrd(Token *p, Environment *env) {
-	Token *result = new Token("", STRING);
+	Token *result = env->newToken("", STRING);
 	Token *param = p->tokens[0];
 	Token *start = p->tokens[1];
 	Token *stop = p->tokens[2];
@@ -329,7 +329,7 @@ Token *substrd(Token *p, Environment *env) {
 OneParameters
 Token *strlend(Token *p, Environment *env) {
 	Token *str = p->tokens[0];
-	Token *result = new Token(strlen(str->getContent()), INTEGER);
+	Token *result = env->newToken(strlen(str->getContent()), INTEGER);
 	return (result);
 }
 
@@ -337,7 +337,7 @@ TwoParameters
 Token *right(Token *p, Environment *env) {
 	Token *str = p->tokens[0];
 	Token *n = p->tokens[1];
-	Token *result = new Token("", STRING);
+	Token *result = env->newToken("", STRING);
 	string s = string(str->getContent());
 	string s1 = s.substr(strlen(str->getContent()) - n->getIntValue(),
 			n->getIntValue());
@@ -349,7 +349,7 @@ TwoParameters
 Token *left(Token *p, Environment *env) {
 	Token *str = p->tokens[0];
 	Token *n = p->tokens[1];
-	Token *result = new Token("", STRING);
+	Token *result = env->newToken("  ", STRING);
 	result->setContent(
 			string(str->getContent()).substr(0, n->getIntValue()).c_str());
 	return (result);
@@ -359,7 +359,7 @@ OneParameters
 Token *ucase(Token *p, Environment *env) {
 	const char *content = p->tokens[0]->getContent();
 	char *newcontent = (char*) malloc(strlen(content) * sizeof(char));
-	Token *result = new Token(content, STRING);
+	Token *result = env->newToken(content, STRING);
 	for (unsigned int i = 0; i < strlen(content); i++) {
 		newcontent[i] = toupper(content[i]);
 	}
@@ -371,7 +371,7 @@ OneParameters
 Token *lcase(Token *p, Environment *env) {
 	const char *content = p->tokens[0]->getContent();
 	char *newcontent = (char*) malloc(strlen(content) * sizeof(char));
-	Token *result = new Token(content, STRING);
+	Token *result = env->newToken(content, STRING);
 	for (unsigned int i = 0; i < strlen(content); i++) {
 		newcontent[i] = tolower(content[i]);
 	}
@@ -381,7 +381,7 @@ Token *lcase(Token *p, Environment *env) {
 
 MoreThanThreeParameters
 Token *strcatd(Token *p, Environment *env) {
-	Token *result = new Token("", STRING);
+	Token *result = env->newToken("", STRING);
 	stringstream ss;
 	for (unsigned int i = 0; i < p->tokens[0]->tokens.size(); i++) {
 		ss << p->tokens[0]->tokens[i]->getContent();
@@ -392,7 +392,7 @@ Token *strcatd(Token *p, Environment *env) {
 
 OneParameters
 Token *ltrim(Token *p, Environment *env) {
-	Token *result = new Token("", STRING);
+	Token *result = env->newToken("", STRING);
 	const char *content = p->tokens[0]->getContent();
 	char *pointer = (char*) content;
 	unsigned int index = 0;
@@ -410,7 +410,7 @@ Token *ltrim(Token *p, Environment *env) {
 
 OneParameters
 Token *rtrim(Token *p, Environment *env) {
-	Token *result = new Token("", STRING);
+	Token *result = env->newToken("", STRING);
 	const char *content = p->tokens[0]->getContent();
 	char *pointer = (char*) content;
 	pointer += strlen(content) - 1;

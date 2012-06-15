@@ -441,7 +441,9 @@ Token *SourceCode::getNextToken() {
 		exit(0);
 	}
 
-	return (new Token(tokenvalue.str().c_str(), tokentype));
+	Token *source_token = new Token(tokenvalue.str().c_str(), tokentype);
+	source_token->setKillable(false);
+	return (source_token);
 }
 
 } /* namespace fuzuli */

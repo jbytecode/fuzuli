@@ -178,7 +178,7 @@ BreakExpression::~BreakExpression() {
 }
 
 Token *BreakExpression::eval(Environment *env) {
-	Token *result = env->newToken("@BREAK", BREAKTOKEN);
+	Token *result = new Token("@BREAK", BREAKTOKEN);
 	result->breakFlag = 1;
 	return (result);
 }

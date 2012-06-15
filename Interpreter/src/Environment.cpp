@@ -24,6 +24,7 @@
 namespace fuzuli {
 
 using namespace std;
+extern vector<Token*> Environment::garbage;
 
 Environment::Environment() {
 	this->previous = NULL;
@@ -65,34 +66,38 @@ void Environment::registerGlobals() {
 
 Token *Environment::newToken(const char *val, enum TokenType type) {
 	Token *tok = new Token(val, type);
-	this->garbage.push_back(tok);
+	Environment::garbage.push_back(tok);
 	return (tok);
 }
 
 Token *Environment::newToken(double val, enum TokenType type) {
 	Token *tok = new Token(val, type);
-	this->garbage.push_back(tok);
+	Environment::garbage.push_back(tok);
 	return (tok);
 }
 
 int Environment::GC() {
-	if (this->next) {
-		this->next->GC();
-	}
-	int n = 0;
 	int numdeleted = 0;
+	int n=0;
 	start:
-	for (unsigned int i=0; i < this->garbage.size(); i++) {
-		Token *tok = this->garbage[i];
-		if(tok != NULL){
-		if (tok->links == 0 && tok->getKillable() && tok->getType()!=NULLTOKEN) {
-			//cout << "Deleting "<< tok->getContent()<<endl;
-			delete tok;
-			this->garbage.assign(i, NULL);
-			numdeleted++;
-			goto start;
+	n=0;
+	for (unsigned int i = 0; i < Environment::garbage.size(); i++) {
+		Token *tok = Environment::garbage[i];
+		//if (tok != NULL) {
+			if (tok->links <= 0 && tok->getKillable()==true) {
+				Environment::garbage.erase(Environment::garbage.begin()+ i);
+				delete tok;
+				numdeleted++;
+				n++;
+			}
 		}
-		n++;
+	//}
+	if (n>0) {
+		goto start;
+	}
+	for (unsigned int i=0;i<Environment::garbage.size(); i++){
+		if(Environment::garbage[i] == NULL){
+			garbage.assign(i,new Token("Silindi.",STRING));
 		}
 	}
 	return (numdeleted);
@@ -150,9 +155,6 @@ Token *Environment::getVariable(const char *name) {
 }
 
 Environment *Environment::createNext() {
-	if (this->next) {
-		this->next->GC();
-	}
 	this->next = new Environment(this);
 	this->next->deep = this->deep + 1;
 	return (this->next);
@@ -213,11 +215,11 @@ void Environment::dump() {
 			}
 			cout << endl;
 		}
-		cout << "Other objects:"<<endl;
-		for (unsigned int i=0;i<this->garbage.size();i++){
-			cout << this->garbage[i]->getContent() << " Kll:";
-			cout << this->garbage[i]->getKillable() << " Links: ";
-			cout << this->garbage[i]->links << endl;
+		cout << "Other objects:" << endl;
+		for (unsigned int i = 0; i < Environment::garbage.size(); i++) {
+			cout << Environment::garbage[i]->getContent() << " Kll:";
+			cout << Environment::garbage[i]->getKillable() << " Links: ";
+			cout << Environment::garbage[i]->links << endl;
 		}
 
 		env = env->previous;
@@ -259,7 +261,8 @@ GCExpression::~GCExpression() {
 
 Token *GCExpression::eval(Environment *env) {
 	int num = env->GC();
-	Token *result = env->newToken(num, FLOAT);
+	Token *result = new Token(num, FLOAT);
+	Environment::garbage.push_back(result);
 	return (result);
 }
 

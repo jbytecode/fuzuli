@@ -34,7 +34,7 @@ ListExpression::~ListExpression() {
 }
 
 Token *ListExpression::eval(Environment *env){
-	Token *result = env->newToken("@FuzuliList",LIST);
+	Token *result = new Token("@FuzuliList",LIST);
 	for (unsigned int i=0;i<this->expressions.size();i++){
 		Token *temp = this->expressions[i]->eval(env);
 		if(temp->getType() == BREAKTOKEN) {
@@ -66,7 +66,7 @@ LengthExpression::~LengthExpression() {
 
 Token *LengthExpression::eval(Environment *env){
 	Token *tok = this->expressions[0]->eval(env);
-	Token *result = env->newToken(0.0, INTEGER);
+	Token *result = new Token(0.0, INTEGER);
 	result->setIntValue(tok->tokens.size());
 	return(result);
 }
@@ -168,11 +168,11 @@ ColonExpression::~ColonExpression(){
 Token *ColonExpression::eval(Environment *env){
 	Token *num1 = this->expressions[0]->eval(env);
 	Token *num2 = this->expressions[1]->eval(env);
-	Token *result = env->newToken("@FuzuliList", LIST);
+	Token *result = new Token("@FuzuliList", LIST);
 	for (int i=num1->getIntValue(); i<=num2->getIntValue(); i++){
 		Token *tok = new Token(i, FLOAT);
-		tok->setKillable(true);
 		result->tokens.push_back(tok);
+		Environment::garbage.push_back(tok);
 	}
 	return(result);
 }

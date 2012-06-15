@@ -1,12 +1,30 @@
+(require "/usr/lib/fuzuli/nfl/string.nfl")
 
-(let a (list 1 2 3 4 5 6 7 8 9 10))
-(let a "dfdf")
+(let str " Fuzuli ")
+(let passed "PASSED!\n")
+(let error "ERROR\n")
 
+(let result1 (ltrim str))
+(if (= result1 "Fuzuli ")
+    (print passed)
+    (print error)
+)
 
+(let result2 (rtrim str))
+(if (= result2 " Fuzuli")
+    (print passed)
+    (print error)
+)
 
-(dump)
-(gc)
-(dump)
-(print a)
-
-
+(let result3 (trim str))
+(if (= result3 "Fuzuli")
+    (print passed)
+    (print error)
+)
+     
+(let result4 (left str 4))
+(if (= result4 " Fuz")
+    (print passed)
+    (print error)
+)
+(print "*" result4 "*\n")                       

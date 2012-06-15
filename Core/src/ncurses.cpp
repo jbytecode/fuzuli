@@ -74,7 +74,7 @@ Token *COLOR_PAIRd(Token *p, Environment *env);
 
 Token *COLOR_PAIRd(Token *p, Environment *env){
 	int num = p->tokens[0]->getIntValue();
-	return ( new Token(COLOR_PAIR(num), INTEGER));
+	return ( env->newToken(COLOR_PAIR(num), INTEGER));
 }
 
 TwoParameters
@@ -172,7 +172,7 @@ Token *moved(Token *p, Environment *env){
 OneParameters
 Token *wgetchd(Token *p, Environment *env) {
 	WINDOW *win = (WINDOW*) p->tokens[0]->object;
-	return (new Token(wgetch(win), INTEGER));
+	return (env->newToken(wgetch(win), INTEGER));
 }
 
 NoParameters
@@ -188,12 +188,12 @@ Token *getmoused(Token *p, Environment *env) {
 	 * "z" : currently not supported
 	 * "mmask" : Mouse action
 	 */
-	Token *result = new Token("@FuzuliList", LIST);
-	result->tokens.push_back(new Token(mouse_event.id, INTEGER));
-	result->tokens.push_back(new Token(mouse_event.x, INTEGER));
-	result->tokens.push_back(new Token(mouse_event.y, INTEGER));
-	result->tokens.push_back(new Token(mouse_event.z, INTEGER));
-	result->tokens.push_back(new Token(mouse_event.bstate, INTEGER));
+	Token *result = env->newToken("@FuzuliList", LIST);
+	result->tokens.push_back(env->newToken(mouse_event.id, INTEGER));
+	result->tokens.push_back(env->newToken(mouse_event.x, INTEGER));
+	result->tokens.push_back(env->newToken(mouse_event.y, INTEGER));
+	result->tokens.push_back(env->newToken(mouse_event.z, INTEGER));
+	result->tokens.push_back(env->newToken(mouse_event.bstate, INTEGER));
 	return (result);
 }
 
@@ -272,9 +272,9 @@ Token *addchd(Token *p, Environment *env) {
 OneParameters
 Token *getyxd(Token *p, Environment *env) {
 	WINDOW *win = (WINDOW*) p->tokens[0]->object;
-	Token *result = new Token("@FuzuliList", LIST);
-	result->tokens.push_back(new Token(getcury(win), INTEGER));
-	result->tokens.push_back(new Token(getcurx(win), INTEGER));
+	Token *result = env->newToken("@FuzuliList", LIST);
+	result->tokens.push_back(env->newToken(getcury(win), INTEGER));
+	result->tokens.push_back(env->newToken(getcurx(win), INTEGER));
 	return (result);
 }
 
@@ -296,14 +296,14 @@ Token *wborderd(Token *p, Environment *env) {
 OneParameters
 Token *delwind(Token *p, Environment *env) {
 	WINDOW *win = (WINDOW*) p->tokens[0]->object;
-	Token *result = new Token(delwin(win), INTEGER);
+	Token *result = env->newToken(delwin(win), INTEGER);
 	return (result);
 }
 
 OneParameters
 Token *wrefreshd(Token *p, Environment *env) {
 	WINDOW *win = (WINDOW*) p->tokens[0]->object;
-	return (new Token(wrefresh(win), INTEGER));
+	return (env->newToken(wrefresh(win), INTEGER));
 }
 
 ThreeParameters
@@ -311,7 +311,7 @@ Token *boxp(Token *p, Environment *env) {
 	WINDOW *win = (WINDOW*) p->tokens[0]->object;
 	unsigned int param1 = (unsigned int) p->tokens[1]->getIntValue();
 	unsigned int param2 = (unsigned int) p->tokens[2]->getIntValue();
-	return (new Token(box(win, param1, param2), INTEGER));
+	return (env->newToken(box(win, param1, param2), INTEGER));
 }
 
 MoreThanThreeParameters
@@ -321,7 +321,7 @@ Token *newwinp(Token *p, Environment *env) {
 	int starty = p->tokens[2]->getIntValue();
 	int startx = p->tokens[3]->getIntValue();
 	WINDOW *window = newwin(height, width, starty, startx);
-	Token *result = new Token("@WINDOW", COBJECT);
+	Token *result = env->newToken("@WINDOW", COBJECT);
 	result->object = window;
 	return (result);
 }
@@ -344,12 +344,12 @@ Token *initpaird(Token *p, Environment *env) {
 	short col1 = (short) p->tokens[1]->getIntValue();
 	short col2 = (short) p->tokens[2]->getIntValue();
 	int int_res = init_pair(num, col1, col2);
-	Token *result = new Token(int_res, INTEGER);
+	Token *result = env->newToken(int_res, INTEGER);
 	return (result);
 }
 
 Token *endwind(Token *p, Environment *env) {
-	Token *result = new Token(endwin(), INTEGER);
+	Token *result = env->newToken(endwin(), INTEGER);
 	return (result);
 }
 
@@ -359,7 +359,7 @@ Token *getchd(Token *p, Environment *env) {
 }
 
 Token *refreshd(Token *p, Environment *env) {
-	Token *result = new Token(refresh(), INTEGER);
+	Token *result = env->newToken(refresh(), INTEGER);
 	return (result);
 }
 
@@ -370,7 +370,7 @@ Token *printwd(Token *p, Environment *env) {
 
 Token *initscrd(Token *p, Environment *env) {
 	WINDOW *win = initscr();
-	Token *result = new Token("@NCursesWindow", COBJECT);
+	Token *result = env->newToken("@NCursesWindow", COBJECT);
 	result->object = (void*) win;
 	return (result);
 }

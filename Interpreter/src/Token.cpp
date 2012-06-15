@@ -39,14 +39,6 @@ Token::Token() {
 
 Token::~Token() {
 	count--;
-	//cout << "*T* Deleting "<<this->getContent()<<endl;
-	for (unsigned int i = 0; i < this->tokens.size(); i++) {
-		if (this->tokens[i]) {
-			if (this->tokens[i]->links == 0 && this->tokens[i]->getKillable()) {
-				delete this->tokens[i];
-			}
-		}
-	}
 }
 
 Token::Token(string *content, enum TokenType type) {
@@ -84,7 +76,7 @@ Token::Token(double num, enum TokenType type) {
 	count++;
 	returnFlag = 0;
 	breakFlag = 0;
-	killable = false;
+	killable = true;
 	links = 0;
 }
 
@@ -209,7 +201,7 @@ void Token::IncreaseReferences(){
 	this->links++;
 	for (unsigned int i=0;i<this->tokens.size();i++){
 		if(this->tokens[i]->getType()!=NULLTOKEN){
-			this->tokens[i]->ReduceReferences();
+			this->tokens[i]->IncreaseReferences();
 		}
 	}
 }

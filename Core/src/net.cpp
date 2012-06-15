@@ -42,7 +42,7 @@ Token *fsocklisten(Token *p, Environment *env){
 
 	clientsocket = serversocket->accept();
 
-	Token *result = new Token("@FuzuliSocket",COBJECT);
+	Token *result = env->newToken("@FuzuliSocket",COBJECT);
 	result->object = (void*) clientsocket;
 	return(result);
 }
@@ -72,7 +72,7 @@ Token *fsockread(Token *p, Environment *env) {
 	Token *n = p->tokens[1];
 	try {
 		string str_read = socket->readn((unsigned int) n->getIntValue());
-		Token *result = new Token(str_read.c_str(), STRING);
+		Token *result = env->newToken(str_read.c_str(), STRING);
 		return (result);
 	} catch (Exception e) {
 		return (Token::NULL_TOKEN);
@@ -88,7 +88,7 @@ Token *fsockopen(Token *p, Environment *env) {
 	const string str_host = string(host->getContent());
 	socket->connect(str_host, port->getIntValue());
 
-	Token *result = new Token("@FuzuliClientSocket", COBJECT);
+	Token *result = env->newToken("@FuzuliClientSocket", COBJECT);
 	result->object = (void*)(socket);
 	return (result);
 }

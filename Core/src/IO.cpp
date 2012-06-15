@@ -74,7 +74,7 @@ NoParameters
 Token *readlined(Token *p, Environment *env){
 	string str;
 	std::getline(cin, str);
-	Token *result = new Token(str.c_str(), STRING);
+	Token *result = env->newToken(str.c_str(), STRING);
 	return(result);
 }
 
@@ -83,7 +83,7 @@ Token *ftelld(Token *p, Environment *env){
 	FILE *file = (FILE*)p->tokens[0]->object;
 	long int lint_result = ftell(file);
 	stringstream ss; ss << ((double) lint_result);
-	Token *result = new Token(ss.str().c_str(), FLOAT);
+	Token *result = env->newToken(ss.str().c_str(), FLOAT);
 	return(result);
 }
 
@@ -92,7 +92,7 @@ Token *fgetcd(Token *p, Environment *env){
 	FILE *file = (FILE*)p->tokens[0]->object;
 	int int_result = fgetc(file);
 	stringstream ss; ss<< ( (char) int_result);
-	Token *result = new Token(ss.str().c_str(), STRING);
+	Token *result = env->newToken(ss.str().c_str(), STRING);
 	return(result);
 }
 
@@ -119,7 +119,7 @@ Token *randomize(Token *p, Environment *env){
 
 NoParameters
 Token *timed (Token *p, Environment *env){
-	Token *result = new Token(((double)time(NULL)) * 1.0, FLOAT);
+	Token *result = env->newToken(((double)time(NULL)) * 1.0, FLOAT);
 	return(result);
 }
 
@@ -134,14 +134,14 @@ Token *is_dir (Token *p, Environment *env){
 	if(S_ISDIR(st.st_mode)){
 		int_result = 1;
 	}
-	Token *result = new Token (int_result, INTEGER);
+	Token *result = env->newToken (int_result, INTEGER);
 	return(result);
 }
 
 
 OneParameters
 Token *pclosed(Token *p, Environment *env){
-	Token *pclose_result = new Token(-1, INTEGER);
+	Token *pclose_result = env->newToken(-1, INTEGER);
 	FILE *process = (FILE*)p->tokens[0]->object;
 	int res = pclose(process);
 	pclose_result->setIntValue(res);
@@ -152,7 +152,7 @@ TwoParameters
 Token *popend(Token *p, Environment *env) {
 	Token *processname = p->tokens[0];
 	Token *mode = p->tokens[1];
-	Token *newfile = new Token("@FuzuliProcess", COBJECT);
+	Token *newfile = env->newToken("@FuzuliProcess", COBJECT);
 	FILE *file = popen(processname->getContent(), mode->getContent());
 	if (!file) {
 		cout << "Cannot open process " << processname->getContent() << endl;
@@ -178,7 +178,7 @@ Token *print_r(Token *p, Environment *env) {
 
 OneParameters
 Token *fflushd(Token *p, Environment *env) {
-	Token *flush_result = new Token(-1, INTEGER);
+	Token *flush_result = env->newToken(-1, INTEGER);
 	FILE *file = (FILE*) p->tokens[0]->object;
 	flush_result->setIntValue(fflush(file));
 	return (flush_result);
@@ -209,7 +209,7 @@ TwoParameters
 Token *fopend(Token*p, Environment *env) {
 	Token *filename = p->tokens[0];
 	Token *mode = p->tokens[1];
-	Token *newfile = new Token("@FuzuliFile", COBJECT);
+	Token *newfile = env->newToken("@FuzuliFile", COBJECT);
 	FILE *file = __determine_File(filename->getContent(), mode->getContent());
 
 	if (!file) {
@@ -237,7 +237,7 @@ Token *fwrited(Token *p, Environment *env) {
 
 OneParameters
 Token *feofd(Token *p, Environment *env) {
-	Token *feofd_return = new Token(0.0, INTEGER);
+	Token *feofd_return = env->newToken(0.0, INTEGER);
 	FILE *file = (FILE*) p->tokens[0]->object;
 	feofd_return->setIntValue(feof(file));
 	return (feofd_return);
@@ -300,7 +300,7 @@ void __writeToken(FILE *file, Token *tok) {
 OneParameters
 Token *chdird(Token *p, Environment *env) {
 	int ret = chdir(p->tokens[0]->getContent());
-	Token * result = new Token(ret,INTEGER);
+	Token * result = env->newToken(ret,INTEGER);
 	return (result);
 }
 
@@ -309,19 +309,19 @@ Token *getpwd(Token* p, Environment *env) {
 	char *ppath = NULL;
 	int len = 0;
 	ppath = getcwd(ppath, len);
-	Token *result = new Token (ppath, STRING);
+	Token *result = env->newToken (ppath, STRING);
 	return (result);
 }
 
 OneParameters
 Token *dir(Token* path, Environment *env) {
-	Token *result = new Token("@FuzuliList", LIST);
+	Token *result = env->newToken("@FuzuliList", LIST);
 	DIR *dr;
 	struct dirent *dt;
 	dr = opendir(path->tokens[0]->getContent());
 	if (dr != NULL) {
 		while ((dt = readdir(dr))) {
-			result->tokens.push_back(new Token(dt->d_name, STRING));
+			result->tokens.push_back(env->newToken(dt->d_name, STRING));
 		}
 	} else {
 		cout << "Can not list directory " << path->getContent() << endl;
@@ -333,7 +333,7 @@ Token *dir(Token* path, Environment *env) {
 OneParameters
 Token *unlinkd(Token *file, Environment *env) {
 	int res = unlink(file->tokens[0]->getContent());
-	Token *result = new Token(res, INTEGER);
+	Token *result = env->newToken(res, INTEGER);
 	return (result);
 }
 
@@ -341,41 +341,41 @@ TwoParameters
 Token *renamed(Token *files, Environment *env) {
 	int res = rename(files->tokens[0]->getContent(),
 			files->tokens[1]->getContent());
-	Token *result = new Token(res, INTEGER);
+	Token *result = env->newToken(res, INTEGER);
 	return (result);
 }
 
 NoParameters
 Token *tmpfiled(Token* p, Environment *env) {
-	Token *tok = new Token("@FuzuliNativeObject", COBJECT);
+	Token *tok = env->newToken("@FuzuliNativeObject", COBJECT);
 	tok->tokens[0]->object = tmpfile();
 	return (tok);
 }
 
 NoParameters
 Token *tmpnamed(Token* p, Environment *env) {
-	Token *result = new Token(tmpnam(NULL), STRING);
+	Token *result = env->newToken(tmpnam(NULL), STRING);
 	return (result);
 }
 
 NoParameters
 Token *datetime(Token* p, Environment *env) {
-	Token *returnToken = new Token("@ListToken", LIST);
+	Token *returnToken = env->newToken("@ListToken", LIST);
 	time_t aTime;
 	time(&aTime);
 	tm *pTime = gmtime(&aTime);
-	returnToken->tokens.push_back(new Token(pTime->tm_year, INTEGER));
-	returnToken->tokens.push_back(new Token(pTime->tm_mon, INTEGER));
-	returnToken->tokens.push_back(new Token(pTime->tm_mday, INTEGER));
-	returnToken->tokens.push_back(new Token(pTime->tm_hour, INTEGER));
-	returnToken->tokens.push_back(new Token(pTime->tm_min, INTEGER));
-	returnToken->tokens.push_back(new Token(pTime->tm_sec, INTEGER));
+	returnToken->tokens.push_back(env->newToken(pTime->tm_year, INTEGER));
+	returnToken->tokens.push_back(env->newToken(pTime->tm_mon, INTEGER));
+	returnToken->tokens.push_back(env->newToken(pTime->tm_mday, INTEGER));
+	returnToken->tokens.push_back(env->newToken(pTime->tm_hour, INTEGER));
+	returnToken->tokens.push_back(env->newToken(pTime->tm_min, INTEGER));
+	returnToken->tokens.push_back(env->newToken(pTime->tm_sec, INTEGER));
 	return (returnToken);
 }
 
 NoParameters
 Token *asctimed(Token *p, Environment *env) {
-	Token *result = new Token("", STRING);
+	Token *result = env->newToken("", STRING);
 	time_t aTime;
 	time(&aTime);
 	tm *pTime = gmtime(&aTime);
@@ -387,19 +387,19 @@ Token *asctimed(Token *p, Environment *env) {
 OneParameters
 Token *sleepd(Token *p, Environment *env) {
 	int res = usleep(p->tokens[0]->getIntValue());
-	Token *result = new Token(res, INTEGER);
+	Token *result = env->newToken(res, INTEGER);
 	return (result);
 }
 
 OneParameters
 Token *getenvd(Token *p, Environment *env) {
-	Token *result = new Token(getenv(p->tokens[0]->getContent()), STRING);
+	Token *result = env->newToken(getenv(p->tokens[0]->getContent()), STRING);
 	return (result);
 }
 
 NoParameters
 Token *rnd(Token *p, Environment *env) {
-	Token *result = new Token(((double) rand()) / RAND_MAX, FLOAT);
+	Token *result = env->newToken(((double) rand()) / RAND_MAX, FLOAT);
 	return (result);
 }
 

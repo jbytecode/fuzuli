@@ -28,7 +28,7 @@ using namespace std;
 
 LetExpression::LetExpression(vector<Expression*> expr) {
 	this->expressions = expr;
-	this->resultToken = Token::NULL_TOKEN;
+	//this->resultToken = Token::NULL_TOKEN;
 }
 
 LetExpression::~LetExpression() {
@@ -37,15 +37,14 @@ LetExpression::~LetExpression() {
 
 Token *LetExpression::eval(Environment *env){
 	Token *varname = ((IdentifierExpression*)this->expressions[0])->stringToken;
-	resultToken = this->expressions[1]->eval(env);
+	Token *result = this->expressions[1]->eval(env);
 	Token *oldvariable = env->getVariable(varname->getContent());
 	if(oldvariable->getType()!=NULLTOKEN){
 		oldvariable->ReduceReferences();
-		env->garbage.push_back(oldvariable);
 	}
-	env->setVariable(varname->getContent(), resultToken);
-	resultToken->IncreaseReferences();
-	return(this->resultToken);
+	env->setVariable(varname->getContent(), result);
+	result->IncreaseReferences();
+	return(result);
 }
 
 void LetExpression::emitCpp(stringstream *ss){

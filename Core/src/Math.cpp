@@ -60,7 +60,7 @@ extern "C" {
 OneParameters
 Token *floord(Token *params, Environment *env){
 	double f_result = floor(params->tokens[0]->getFloatValue());
-	Token *result = new Token(f_result, FLOAT);
+	Token *result = env->newToken(f_result, FLOAT);
 	return(result);
 }
 
@@ -68,20 +68,20 @@ Token *floord(Token *params, Environment *env){
 OneParameters
 Token *roundd(Token *params, Environment *env){
 	double f_result = round(params->tokens[0]->getFloatValue());
-	Token *result = new Token(f_result, FLOAT);
+	Token *result = env->newToken(f_result, FLOAT);
 	return(result);
 }
 
 OneParameters
 Token *ceild (Token *params, Environment *env){
 	double f_result = ceil(params->tokens[0]->getFloatValue());
-	Token *result = new Token(f_result, FLOAT);
+	Token *result = env->newToken(f_result, FLOAT);
 	return(result);
 }
 
 
 Token *powd(Token *params,Environment *env){
-	Token *result = new Token(0.0, FLOAT);
+	Token *result = env->newToken(0.0, FLOAT);
 	double num1 = params->tokens[0]->getFloatValue();
 	double num2 = params->tokens[1]->getFloatValue();
 	result->setFloatValue(pow(num1, num2));
@@ -89,104 +89,104 @@ Token *powd(Token *params,Environment *env){
 }
 
 Token *tanhd(Token *params,Environment *env){
-	Token *resultToken = new Token(0.0, FLOAT);
+	Token *resultToken = env->newToken(0.0, FLOAT);
 	resultToken->setFloatValue(tanh(params->tokens[0]->getFloatValue()));
 	return(resultToken);
 }
 
 Token *sinhd(Token *params, Environment *env){
-	Token *resultToken = new Token(0.0, FLOAT);
+	Token *resultToken = env->newToken(0.0, FLOAT);
 	resultToken->setFloatValue(sinh(params->tokens[0]->getFloatValue()));
 	return(resultToken);
 }
 
 Token *coshd(Token *params, Environment *env){
-	Token *resultToken = new Token(0.0, FLOAT);
+	Token *resultToken = env->newToken(0.0, FLOAT);
 	resultToken->setFloatValue(cosh(params->tokens[0]->getFloatValue()));
 	return(resultToken);
 }
 
 Token *asind(Token *params, Environment *env){
-	Token *resultToken = new Token(0.0, FLOAT);
+	Token *resultToken = env->newToken(0.0, FLOAT);
 	resultToken->setFloatValue(asin(params->tokens[0]->getFloatValue()));
 	return(resultToken);
 }
 
 Token *acosd(Token *params, Environment *env){
-	Token *resultToken = new Token(0.0, FLOAT);
+	Token *resultToken = env->newToken(0.0, FLOAT);
 	resultToken->setFloatValue(acos(params->tokens[0]->getFloatValue()));
 	return(resultToken);
 }
 
 Token *atand(Token *params, Environment *env){
-	Token *resultToken = new Token(0.0, FLOAT);
+	Token *resultToken = env->newToken(0.0, FLOAT);
 	resultToken->setFloatValue(atan(params->tokens[0]->getFloatValue()));
 	return(resultToken);
 }
 
 Token *atan2d(Token *params, Environment *env){
-	Token *resultToken = new Token(0.0, FLOAT);
+	Token *resultToken = env->newToken(0.0, FLOAT);
 	double val = atan2(params->tokens[0]->getFloatValue(),params->tokens[1]->getFloatValue());
 	resultToken->setFloatValue(val);
 	return(resultToken);
 }
 
 Token *tand(Token *params, Environment *env){
-	Token *resultToken = new Token(0.0, FLOAT);
+	Token *resultToken = env->newToken(0.0, FLOAT);
 	resultToken->setFloatValue(tan(params->tokens[0]->getFloatValue()));
 	return(resultToken);
 }
 
 Token *sind(Token *params, Environment *env){
-	Token *resultToken = new Token(0.0, FLOAT);
+	Token *resultToken = env->newToken(0.0, FLOAT);
 	resultToken->setFloatValue(sin(params->tokens[0]->getFloatValue()));
 	return(resultToken);
 }
 
 Token *cosd(Token *params, Environment *env){
-	Token *resultToken = new Token(0.0, FLOAT);
+	Token *resultToken = env->newToken(0.0, FLOAT);
 	resultToken->setFloatValue(cos(params->tokens[0]->getFloatValue()));
 	return(resultToken);
 }
 
 Token *sqrtd(Token *params, Environment *env){
-	Token *resultToken = new Token(0.0, FLOAT);
+	Token *resultToken = env->newToken(0.0, FLOAT);
 	resultToken->setFloatValue(sqrt(params->tokens[0]->getFloatValue()));
 	return(resultToken);
 }
 
 Token *absd(Token *params, Environment *env){
-	Token *resultToken = new Token(0.0, FLOAT);
+	Token *resultToken = env->newToken(0.0, FLOAT);
 	resultToken->setFloatValue(fabs(params->tokens[0]->getFloatValue()));
 	return(resultToken);
 }
 
 Token *logd(Token *params, Environment *env){
-	Token *resultToken = new Token(0.0, FLOAT);
+	Token *resultToken = env->newToken(0.0, FLOAT);
 	resultToken->setFloatValue(log(params->tokens[0]->getFloatValue()));
 	return(resultToken);
 }
 
 Token *log10d(Token *params, Environment *env){
-	Token *resultToken = new Token(0.0, FLOAT);
+	Token *resultToken = env->newToken(0.0, FLOAT);
 	resultToken->setFloatValue(log10(params->tokens[0]->getFloatValue()));
 	return(resultToken);
 }
 
 Token *log2d(Token *params, Environment *env){
-	Token *resultToken = new Token(0.0, FLOAT);
+	Token *resultToken = env->newToken(0.0, FLOAT);
 	resultToken->setFloatValue(log2(params->tokens[0]->getFloatValue()));
 	return(resultToken);
 }
 
 Token *expd(Token *params, Environment *env){
-	Token *resultToken = new Token(0.0, FLOAT);
+	Token *resultToken = env->newToken(0.0, FLOAT);
 	resultToken->setFloatValue(exp(params->tokens[0]->getFloatValue()));
 	return(resultToken);
 }
 
 Token *isinfd(Token *params, Environment *env){
-	Token *resultToken = new Token(0.0, INTEGER);
+	Token *resultToken = env->newToken(0.0, INTEGER);
 	int res = isinf(params->tokens[0]->getFloatValue());
 	resultToken->setIntValue(res);
 	return(resultToken);

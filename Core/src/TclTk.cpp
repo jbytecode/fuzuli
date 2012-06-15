@@ -61,7 +61,7 @@ int DefaultCommand(ClientData clientdata, Tcl_Interp *interpreter,
 	Environment *env = ci->env;
 
 	vector<Expression*> funcvec;
-	funcvec.push_back(new IdentifierExpression(new Token(ci->command,STRING)));
+	funcvec.push_back(new IdentifierExpression(env->newToken(ci->command,STRING)));
 	FunctionCallExpression *fce = new FunctionCallExpression(funcvec);
 	Token *result = fce->eval(env);
     return 0;
@@ -111,7 +111,7 @@ Token *tcltk_run(Token* params, Environment *env) {
 
 NoParameters
 Token *tcltk_get_string_result (Token *params, Environment *env){
-	Token *result = new Token(Tcl_GetStringResult(interpreter),STRING);
+	Token *result = env->newToken(Tcl_GetStringResult(interpreter),STRING);
 	return(result);
 }
 

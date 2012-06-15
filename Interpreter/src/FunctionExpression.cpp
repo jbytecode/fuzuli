@@ -97,7 +97,7 @@ Token *FunctionCallExpression::evalForClass(Environment* env) {
 	result->returnFlag = 0;
 
 	//Token *t = result->clone();
-	//t->setKillable(false);
+	//result->setKillable(false);
 	return (result);
 
 }
@@ -169,6 +169,7 @@ ReturnExpression::~ReturnExpression() {
 Token *ReturnExpression::eval(Environment *env) {
 	Token *tok = this->expressions[0]->eval(env);
 	tok->returnFlag = 1;
+	//tok->IncreaseReferences();
 	return (tok);
 }
 

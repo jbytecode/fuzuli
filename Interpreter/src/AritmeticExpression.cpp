@@ -35,7 +35,7 @@ AndExpression::~AndExpression() {
 }
 
 Token *AndExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, INTEGER);
+	Token *result = new Token(0.0, INTEGER);
 	int allTrue = 1;
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
 		Token *tok = this->expressions[i]->eval(env);
@@ -68,7 +68,7 @@ AsterixExpression::~AsterixExpression() {
 }
 
 Token * AsterixExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, FLOAT);
+	Token *result = new Token(0.0, FLOAT);
 	double product = 1.0;
 	double val = 0.0;
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
@@ -101,7 +101,7 @@ DivisionExpression::~DivisionExpression() {
 }
 
 Token *DivisionExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, FLOAT);
+	Token *result = new Token(0.0, FLOAT);
 	Token *tok1 = this->expressions[0]->eval(env);
 	Token *tok2 = this->expressions[1]->eval(env);
 	result->setFloatValue(tok1->getFloatValue() / tok2->getFloatValue());
@@ -125,7 +125,7 @@ NotExpression::~NotExpression() {
 }
 
 Token *NotExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, INTEGER);
+	Token *result = new Token(0.0, INTEGER);
 	Token *tok = this->expressions[0]->eval(env);
 	int intValue = tok->getIntValue();
 	if (intValue == 0) {
@@ -152,7 +152,7 @@ OrExpression::~OrExpression() {
 }
 
 Token *OrExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, INTEGER);
+	Token *result = new Token(0.0, INTEGER);
 	int atLeastOneTrue = 0;
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
 		Token *tok = this->expressions[i]->eval(env);
@@ -186,7 +186,7 @@ PlusExpression::~PlusExpression() {
 }
 
 Token *PlusExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, FLOAT);
+	Token *result = new Token(0.0, FLOAT);
 	double sum = 0.0;
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
 		Token *t = expressions[i]->eval(env);
@@ -216,9 +216,12 @@ IncExpression::~IncExpression() {
 }
 
 Token *IncExpression::eval(Environment *env) {
-	Token *t = expressions[0]->eval(env);
-	t->setFloatValue(t->getFloatValue() + 1.0);
-	return (t);
+	Token *name = ((IdentifierExpression*) this->expressions[0])->stringToken;
+	Environment *varenv = env->searchBackEnvironments(name->getContent());
+	Token *val = this->expressions[0]->eval(env);
+	Token *result = new Token (val->getFloatValue()+1, FLOAT);
+	varenv->setVariable(name->getContent(), result);
+	return(result);
 }
 
 void IncExpression::emitCpp(stringstream *ss) {
@@ -237,9 +240,12 @@ DecExpression::~DecExpression() {
 }
 
 Token *DecExpression::eval(Environment *env) {
-	Token *t = expressions[0]->eval(env);
-	t->setFloatValue(t->getFloatValue() - 1.0);
-	return (t);
+	Token *name = ((IdentifierExpression*) this->expressions[0])->stringToken;
+	Environment *varenv = env->searchBackEnvironments(name->getContent());
+	Token *val = this->expressions[0]->eval(env);
+	Token *result = new Token (val->getFloatValue()-1, FLOAT);
+	varenv->setVariable(name->getContent(), result);
+	return(result);
 }
 
 void DecExpression::emitCpp(stringstream *ss) {
@@ -257,7 +263,7 @@ SubtractionExpression::~SubtractionExpression() {
 }
 
 Token *SubtractionExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, FLOAT);
+	Token *result = new Token(0.0, FLOAT);
 	if (this->expressions.size() != 2) {
 		cout << "Subtraction - takes only two parameters but "
 				<< this->expressions.size() << " parameters found" << endl;
@@ -287,7 +293,7 @@ EqualsExpression::~EqualsExpression() {
 }
 
 Token *EqualsExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, FLOAT);
+	Token *result = new Token(0.0, FLOAT);
 	this->resultToken->setIntValue(0);
 	Token *tok1 = this->expressions[0]->eval(env);
 	Token *tok2 = this->expressions[1]->eval(env);
@@ -315,7 +321,7 @@ NotEqualsExpression::~NotEqualsExpression() {
 }
 
 Token *NotEqualsExpression::eval(Environment *env) {
-	Token *result = env->newToken(1.0, FLOAT);
+	Token *result = new Token(1.0, FLOAT);
 	this->resultToken->setIntValue(0);
 	Token *tok1 = this->expressions[0]->eval(env);
 	Token *tok2 = this->expressions[1]->eval(env);
@@ -342,7 +348,7 @@ LessExpression::~LessExpression() {
 }
 
 Token *LessExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, INTEGER);
+	Token *result = new Token(0.0, INTEGER);
 	Token *first = this->expressions[0]->eval(env);
 	Token *second = this->expressions[1]->eval(env);
 	if (first->getFloatValue() < second->getFloatValue()) {
@@ -370,7 +376,7 @@ LessOrEqualExpression::~LessOrEqualExpression() {
 }
 
 Token *LessOrEqualExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, INTEGER);
+	Token *result = new Token(0.0, INTEGER);
 	Token *first = this->expressions[0]->eval(env);
 	Token *second = this->expressions[1]->eval(env);
 	if (first->getFloatValue() <= second->getFloatValue()) {
@@ -398,7 +404,7 @@ BiggerExpression::~BiggerExpression() {
 }
 
 Token *BiggerExpression::eval(Environment *env) {
-	Token *result = env->newToken(-1, INTEGER);
+	Token *result = new Token(-1, INTEGER);
 	Token *first = this->expressions[0]->eval(env);
 	Token *second = this->expressions[1]->eval(env);
 	if (first->getFloatValue() > second->getFloatValue()) {
@@ -426,7 +432,7 @@ BigOrEqualExpression::~BigOrEqualExpression() {
 }
 
 Token *BigOrEqualExpression::eval(Environment *env) {
-	Token *result = env->newToken(-1, INTEGER);
+	Token *result = new Token(-1, INTEGER);
 	Token *first = this->expressions[0]->eval(env);
 	Token *second = this->expressions[1]->eval(env);
 	if (first->getFloatValue() >= second->getFloatValue()) {
@@ -454,7 +460,7 @@ ModulaExpression::~ModulaExpression() {
 }
 
 Token *ModulaExpression::eval(Environment *env) {
-	Token *result = env->newToken(-1, FLOAT);
+	Token *result = new Token(-1, FLOAT);
 	Token *first = this->expressions[0]->eval(env);
 	Token *second = this->expressions[1]->eval(env);
 	result->setFloatValue(
@@ -477,7 +483,7 @@ BitAndExpression::~BitAndExpression() {
 Token *BitAndExpression::eval(Environment *env) {
 	Token *val1 = this->expressions[0]->eval(env);
 	Token *val2 = this->expressions[1]->eval(env);
-	Token *result = env->newToken(val1->getIntValue() & val2->getIntValue(),
+	Token *result = new Token(val1->getIntValue() & val2->getIntValue(),
 			INTEGER);
 	return (result);
 }
@@ -500,7 +506,7 @@ BitNotExpression::~BitNotExpression() {
 
 Token *BitNotExpression::eval(Environment *env) {
 	Token *val1 = this->expressions[0]->eval(env);
-	Token *result = env->newToken(~val1->getIntValue(), INTEGER);
+	Token *result = new Token(~val1->getIntValue(), INTEGER);
 	return (result);
 }
 
@@ -521,7 +527,7 @@ BitOrExpression::~BitOrExpression() {
 Token *BitOrExpression::eval(Environment *env) {
 	Token *val1 = this->expressions[0]->eval(env);
 	Token *val2 = this->expressions[1]->eval(env);
-	Token *result = env->newToken(val1->getIntValue() | val2->getIntValue(),
+	Token *result = new Token(val1->getIntValue() | val2->getIntValue(),
 			INTEGER);
 	return (result);
 }
@@ -545,7 +551,7 @@ BitXORExpression::~BitXORExpression() {
 Token *BitXORExpression::eval(Environment *env) {
 	Token *val1 = this->expressions[0]->eval(env);
 	Token *val2 = this->expressions[1]->eval(env);
-	Token *result = env->newToken(val1->getIntValue() ^ val2->getIntValue(),
+	Token *result = new Token(val1->getIntValue() ^ val2->getIntValue(),
 			INTEGER);
 	return (result);
 }
@@ -569,7 +575,7 @@ BitShiftLeftExpression::~BitShiftLeftExpression() {
 Token *BitShiftLeftExpression::eval(Environment *env) {
 	Token *val1 = this->expressions[0]->eval(env);
 	Token *val2 = this->expressions[1]->eval(env);
-	Token *result = env->newToken(val1->getIntValue() << val2->getIntValue(),
+	Token *result = new Token(val1->getIntValue() << val2->getIntValue(),
 			INTEGER);
 	return (result);
 }
@@ -593,7 +599,7 @@ BitShiftRightExpression::~BitShiftRightExpression() {
 Token *BitShiftRightExpression::eval(Environment *env) {
 	Token *val1 = this->expressions[0]->eval(env);
 	Token *val2 = this->expressions[1]->eval(env);
-	Token *result = env->newToken(val1->getIntValue() >> val2->getIntValue(),
+	Token *result = new Token(val1->getIntValue() >> val2->getIntValue(),
 			INTEGER);
 	return (result);
 }
