@@ -203,9 +203,14 @@ void Environment::dump() {
 			cout << env->deep << " - " << it->first << " ";
 			if (it->second) {
 				cout << it->second->getContent() << " Kll:";
-				cout << it->second->getKillable();
+				cout << it->second->getKillable() << " Links:";
+				cout << it->second->links;
 			}
 			cout << endl;
+		}
+		cout << "Other objects:"<<endl;
+		for (int i=0;i<this->garbage.size();i++){
+			cout << this->gar
 		}
 
 		env = env->previous;

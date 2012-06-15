@@ -726,6 +726,7 @@ public:
 	void *object;
 	int returnFlag;
 	int breakFlag;
+	int links;
 private:
 	string *content;
 	enum TokenType type;
@@ -806,7 +807,7 @@ public:
 	virtual ~Environment();
 	map<string, Token*> variables;
 	map<string, FuzuliFunction*> fuzuliFunctions;
-	list<Token*> garbage;
+	vector<Token*> garbage;
 	Environment *previous;
 	Environment *next;
 

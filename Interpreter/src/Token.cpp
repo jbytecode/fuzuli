@@ -34,6 +34,7 @@ double Token::epsilon = 0.00001;
 Token::Token() {
 	count++;
 	returnFlag = 0;breakFlag = 0;
+	links = 0;
 }
 
 Token::~Token() {
@@ -50,6 +51,7 @@ Token::Token(string *content, enum TokenType type) {
 	count++;
 	returnFlag = 0;breakFlag = 0;
 	killable = true;
+	links = 0;
 }
 
 Token::Token(const char *content, enum TokenType type) {
@@ -58,6 +60,7 @@ Token::Token(const char *content, enum TokenType type) {
 	count++;
 	returnFlag = 0;breakFlag = 0;
 	killable = true;
+	links = 0;
 }
 
 Token::Token(double num, enum TokenType type) {
@@ -75,6 +78,7 @@ Token::Token(double num, enum TokenType type) {
 	count++;
 	returnFlag = 0;breakFlag = 0;
 	killable = false;
+	links = 0;
 }
 
 const char* Token::toString() {

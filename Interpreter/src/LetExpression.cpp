@@ -37,8 +37,14 @@ LetExpression::~LetExpression() {
 
 Token *LetExpression::eval(Environment *env){
 	Token *varname = ((IdentifierExpression*)this->expressions[0])->stringToken;
-	this->resultToken = this->expressions[1]->eval(env);
+	resultToken = this->expressions[1]->eval(env);
+	Token *oldvariable = env->getVariable(varname->getContent());
+	if(oldvariable->getType()!=NULLTOKEN){
+		oldvariable->links--;
+		env->garbage.push_back(oldvariable);
+	}
 	env->setVariable(varname->getContent(), resultToken);
+	resultToken->links++;
 	return(this->resultToken);
 }
 

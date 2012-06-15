@@ -1,10 +1,7 @@
 
-(let mylist (:1 10000))
-(dump)
-
-(delete mylist)
-
-
+(let name "hako")
+(let name "fuzuli")
+(let name "ttt")
 (dump)
 
 
