@@ -21,7 +21,8 @@
 (require "/usr/lib/fuzuli/nfl/math.nfl")
 
 (let a "3.14")
-(let b (cdbl a))
+(let b a)
+(type b FLOAT)
 
 (if (and (= b 3.14) (= (typeof b) FLOAT))
 	(print "PASSED!\n")
@@ -31,9 +32,9 @@
 
 
 (let h PI)
-(let a (cint h))
+(type h INTEGER)
 
-(if (and (= a 3) (= (typeof a) INTEGER))
+(if (and (= h 3) (= (typeof h) INTEGER))
 	(print "PASSED!\n")
 	(print "ERROR\n")
 )

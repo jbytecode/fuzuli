@@ -26,7 +26,6 @@ using namespace std;
 
 IfExpression::IfExpression(vector<Expression*> expr) {
 	this->expressions = expr;
-	this->resultToken = new Token("NULL",NULLTOKEN);
 }
 
 IfExpression::~IfExpression() {
@@ -35,22 +34,23 @@ IfExpression::~IfExpression() {
 
 Token *IfExpression::eval(Environment *env) {
 	Token *condition;
+	Token *result = Token::NULL_TOKEN;
 	if (this->expressions.size() == 2) { /* if then form*/
 		condition = this->expressions[0]->eval(env);
 		if (condition->getIntValue() == 1) {
-			resultToken = this->expressions[1]->eval(env);
+			result = this->expressions[1]->eval(env);
 		}
 	} else if (this->expressions.size() == 3) { /* if then form */
 		condition = this->expressions[0]->eval(env);
 		if (condition->getIntValue() == 1) {
-			resultToken = this->expressions[1]->eval(env);
+			result = this->expressions[1]->eval(env);
 		} else {
-			resultToken = this->expressions[2]->eval(env);
+			result = this->expressions[2]->eval(env);
 		}
 	} else {
 		cout << "Bad If Statement." << endl;
 	}
-	return (resultToken);
+	return (result);
 }
 
 

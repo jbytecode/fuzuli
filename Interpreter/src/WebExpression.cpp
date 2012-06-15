@@ -75,7 +75,7 @@ Token *RequestExpression::eval(Environment *env) {
 				string value;
 				std::getline(iss, value, '=');
 				result = value;
-				return (new Token(result.c_str(), STRING));
+				return (env->newToken(result.c_str(), STRING));
 			}
 		}
 	}
@@ -105,13 +105,13 @@ Token *RequestExpression::eval(Environment *env) {
 				string value;
 				std::getline(iss, value, '=');
 				result = value;
-				return (new Token(result.c_str(), STRING));
+				return (env->newToken(result.c_str(), STRING));
 			}
 		}
 	}
 
 	if (keyfound != 0) {
-		return (new Token("", STRING));
+		return (env->newToken("", STRING));
 	}
 
 	return (Token::NULL_TOKEN);
@@ -161,7 +161,7 @@ Token *GetCookieExpression::eval(Environment *env) {
 			}
 		}
 	}
-	return (new Token(result.c_str(), STRING));
+	return (env->newToken(result.c_str(), STRING));
 }
 
 IncludeExpression::IncludeExpression(vector<Expression*> expr) {
@@ -192,7 +192,6 @@ Token *IncludeExpression::eval(Environment *env) {
 
 IssetExpression::IssetExpression(vector<Expression*> expr) {
 	this->expressions = expr;
-	this->resultToken = new Token(0.0, INTEGER);
 }
 
 IssetExpression::~IssetExpression() {
@@ -201,12 +200,13 @@ IssetExpression::~IssetExpression() {
 
 Token *IssetExpression::eval(Environment *env) {
 	Token *varname = this->expressions[0]->eval(env);
+	Token *result = env->newToken(0.0, INTEGER);
 	if (varname->getType() != NULLTOKEN) {
-		this->resultToken->setIntValue(1);
+		result->setIntValue(1);
 	} else {
-		this->resultToken->setIntValue(0);
+		result->setIntValue(0);
 	}
-	return (this->resultToken);
+	return (result);
 }
 
 }

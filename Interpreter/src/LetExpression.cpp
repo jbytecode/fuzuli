@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "../include/FuzuliTypes.h"
 #include <vector>
 #include <sstream>
@@ -35,19 +34,19 @@ LetExpression::~LetExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *LetExpression::eval(Environment *env){
-	Token *varname = ((IdentifierExpression*)this->expressions[0])->stringToken;
+Token *LetExpression::eval(Environment *env) {
+	Token *varname = ((IdentifierExpression*) this->expressions[0])->stringToken;
 	Token *result = this->expressions[1]->eval(env);
 	Token *oldvariable = env->getVariable(varname->getContent());
-	if(oldvariable->getType()!=NULLTOKEN){
+	if (oldvariable->getType() != NULLTOKEN) {
 		oldvariable->ReduceReferences();
 	}
 	env->setVariable(varname->getContent(), result);
 	result->IncreaseReferences();
-	return(result);
+	return (result);
 }
 
-void LetExpression::emitCpp(stringstream *ss){
+void LetExpression::emitCpp(stringstream *ss) {
 	dynamic_cast<CppEmitter*>(this->expressions[0])->emitCpp(ss);
 	(*ss) << "=";
 	dynamic_cast<CppEmitter*>(this->expressions[1])->emitCpp(ss);
@@ -55,50 +54,49 @@ void LetExpression::emitCpp(stringstream *ss){
 	(*ss) << endl;
 }
 
-DefExpression::DefExpression(vector<Expression*>expr){
+DefExpression::DefExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 }
 
-DefExpression::~DefExpression(){
+DefExpression::~DefExpression() {
 
 }
 
-Token *DefExpression::eval(Environment *env){
-	Token *var = dynamic_cast<IdentifierExpression*>(this->expressions[0])->stringToken;
+Token *DefExpression::eval(Environment *env) {
+	Token *var =
+			dynamic_cast<IdentifierExpression*>(this->expressions[0])->stringToken;
 	Token *typeint = this->expressions[1]->eval(env);
 	Token *allready = env->getVariableInThisScope(var->getContent());
 
-	if(allready){
-		cout << var->getContent() << " is already defined"<<endl;
+	if (allready) {
+		cout << var->getContent() << " is already defined" << endl;
 		exit(-1);
 	}
 	env->setVariableInThisScope(var->getContent(), typeint);
-	return(var);
+	return (var);
 }
 
-void DefExpression::emitCpp(stringstream *ss){
-	(*ss) <<"[TYPE] ";
+void DefExpression::emitCpp(stringstream *ss) {
+	(*ss) << "[TYPE] ";
 	dynamic_cast<CppEmitter*>(this->expressions[0])->emitCpp(ss);
 	(*ss) << ";" << endl;
 }
 
-CloneExpression::CloneExpression(vector<Expression* >expr){
+CloneExpression::CloneExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 }
 
-CloneExpression::~CloneExpression(){
+CloneExpression::~CloneExpression() {
 
 }
 
-Token *CloneExpression::eval(Environment *env){
+Token *CloneExpression::eval(Environment *env) {
 	Token *tok = this->expressions[0]->eval(env);
-	return(tok->clone());
+	return (tok->clone());
 }
 
-void CloneExpression::emitCpp(stringstream *ss){
+void CloneExpression::emitCpp(stringstream *ss) {
 
 }
-
-
 
 } /* namespace fuzuli */

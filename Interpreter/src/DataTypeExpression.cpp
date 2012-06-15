@@ -45,9 +45,8 @@ IntegerExpression::~IntegerExpression() {
 
 Token *IntegerExpression::eval(Environment *env){
 	//this->token->setIntValue(this->integerValue);
-	Token *tok = new Token(this->integerValue, INTEGER);
+	Token *tok = env->newToken(this->integerValue, INTEGER);
 	tok->setKillable(true);
-	Environment::garbage.push_back(tok);
 	return(tok);
 }
 
@@ -74,9 +73,8 @@ FloatExpression::~FloatExpression() {
 
 Token *FloatExpression::eval(Environment *env){
 	//this->token->setFloatValue(this->floatValue);
-	Token *tok = new Token(this->floatValue, FLOAT);
+	Token *tok = env->newToken(this->floatValue, FLOAT);
 	tok->setKillable(true);
-	Environment::garbage.push_back(tok);
 	return(tok);
 }
 
@@ -96,9 +94,8 @@ StringExpression::~StringExpression() {
 
 Token *StringExpression::eval(Environment *env){
 	//this->stringToken->setContent(this->stringValue.c_str());
-	Token *tok = new Token(this->stringValue.c_str(), STRING);
+	Token *tok = env->newToken(this->stringValue.c_str(), STRING);
 	tok->setKillable(true);
-	Environment::garbage.push_back(tok);
 	return(tok);
 }
 
@@ -154,7 +151,7 @@ TypeofExpression::~TypeofExpression(){
 
 Token *TypeofExpression::eval(Environment *env){
 	Token *tok = this->expressions[0]->eval(env);
-	Token *result = new Token (tok->getType(), INTEGER);
+	Token *result = env->newToken (tok->getType(), INTEGER);
 	return(result);
 }
 

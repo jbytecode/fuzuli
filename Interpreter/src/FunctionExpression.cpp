@@ -39,13 +39,13 @@ Token *FunctionExpression::eval(Environment *env) {
 	str_func_name << this->expressions[1]->expressions.size();
 
 	func->name = new StringExpression(
-			new Token(str_func_name.str().c_str(), STRING));
+			env->newToken(str_func_name.str().c_str(), STRING));
 	func->params = this->expressions[1];
 	func->body = this->expressions[2];
 	func->environment = env;
 
 	env->setFunction(str_func_name.str().c_str(), func);
-	return (new Token("@FuzuliFunction", FUZULIFUNCTION));
+	return (env->newToken("@FuzuliFunction", FUZULIFUNCTION));
 }
 
 FunctionCallExpression::FunctionCallExpression(vector<Expression*> expr) {
@@ -97,7 +97,6 @@ Token *FunctionCallExpression::evalForClass(Environment* env) {
 	result->returnFlag = 0;
 
 	//Token *t = result->clone();
-	//result->setKillable(false);
 	return (result);
 
 }

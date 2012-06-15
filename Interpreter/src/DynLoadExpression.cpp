@@ -76,7 +76,7 @@ Token *CExpression::eval(Environment *env) {
 	DynLoadExpression *dynExpr =
 			dynamic_cast<DynLoadExpression*>(this->expressions[0]->eval(env)->expr);
 	Token *funcName = this->expressions[1]->eval(env);
-	Token *params = new Token("@LIST", LIST);
+	Token *params = env->newToken("@LIST", LIST);
 	for (unsigned int i = 0; i < this->expressions.size() - 2; i++) {
 		Token *p = this->expressions[i + 2]->eval(env);
 		params->tokens.push_back(p);

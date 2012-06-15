@@ -132,7 +132,7 @@ Token *ForkExpression::eval(Environment *env) {
 	if (pid < 0) {
 		cout << "Error occoured in creating thread" << endl;
 	}
-	return (new Token(pid, INTEGER));
+	return (env->newToken(pid, INTEGER));
 }
 
 WaitExpression::WaitExpression(vector<Expression*> expr) {
@@ -146,7 +146,7 @@ WaitExpression::~WaitExpression() {
 Token *WaitExpression::eval(Environment *env) {
 	Token* pid = this->expressions[0]->eval(env);
 	int result = waitpid(pid->getIntValue(), 0, 0);
-	return (new Token(result, INTEGER));
+	return (env->newToken(result, INTEGER));
 }
 
 }

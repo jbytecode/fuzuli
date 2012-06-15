@@ -170,7 +170,6 @@ Token *WhileExpression::eval(Environment *env) {
 
 BreakExpression::BreakExpression(vector<Expression*> expr) {
 	this->expressions = expr;
-	this->resultToken = new Token("@BREAK", BREAKTOKEN);
 }
 
 BreakExpression::~BreakExpression() {
@@ -178,7 +177,7 @@ BreakExpression::~BreakExpression() {
 }
 
 Token *BreakExpression::eval(Environment *env) {
-	Token *result = new Token("@BREAK", BREAKTOKEN);
+	Token *result = env->newToken("@BREAK", BREAKTOKEN);
 	result->breakFlag = 1;
 	return (result);
 }

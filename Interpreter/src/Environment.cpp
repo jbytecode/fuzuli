@@ -261,8 +261,7 @@ GCExpression::~GCExpression() {
 
 Token *GCExpression::eval(Environment *env) {
 	int num = env->GC();
-	Token *result = new Token(num, FLOAT);
-	Environment::garbage.push_back(result);
+	Token *result = env->newToken(num, FLOAT);
 	return (result);
 }
 

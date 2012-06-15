@@ -70,3 +70,21 @@
 	(print error)
 )
 
+# test 7 - append
+(let mylist (list "A" "B"))
+(append mylist "C")
+(if (= (nth mylist 2) "C")
+	(print passed)
+	(print error)
+)
+
+# test 8 - prepend
+(let mylist (list "B" "C"))
+(prepend mylist "A")
+(if (= (nth mylist 0) "A")
+    (print passed)
+    (print error)
+)
+
+
+

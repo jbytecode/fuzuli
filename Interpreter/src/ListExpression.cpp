@@ -34,7 +34,7 @@ ListExpression::~ListExpression() {
 }
 
 Token *ListExpression::eval(Environment *env){
-	Token *result = new Token("@FuzuliList",LIST);
+	Token *result = env->newToken("@FuzuliList",LIST);
 	for (unsigned int i=0;i<this->expressions.size();i++){
 		Token *temp = this->expressions[i]->eval(env);
 		if(temp->getType() == BREAKTOKEN) {
@@ -66,7 +66,7 @@ LengthExpression::~LengthExpression() {
 
 Token *LengthExpression::eval(Environment *env){
 	Token *tok = this->expressions[0]->eval(env);
-	Token *result = new Token(0.0, INTEGER);
+	Token *result = env->newToken(0.0, INTEGER);
 	result->setIntValue(tok->tokens.size());
 	return(result);
 }
@@ -117,10 +117,14 @@ SetExpression::~SetExpression() {
 }
 
 Token *SetExpression::eval(Environment *env){
-	Token *list = this->expressions[0]->eval(env);  /* list name*/
+	Token *name = dynamic_cast<IdentifierExpression*>(this->expressions[0])->stringToken;  /* list name*/
 	Token *n = this->expressions[1]->eval(env);		/* n */
-	list->tokens[n->getIntValue()] = this->expressions[2]->eval(env);
-	return(list->tokens[n->getIntValue()]);
+	Token *var = env->getVariable(name->getContent());
+	Token *newvalue =  this->expressions[2]->eval(env);
+	var->tokens[n->getIntValue()]->ReduceReferences();
+	var->tokens[n->getIntValue()] = newvalue;
+	newvalue->IncreaseReferences();
+	return(var->tokens[n->getIntValue()]);
 }
 
 
@@ -129,7 +133,6 @@ Token *SetExpression::eval(Environment *env){
 /************************/
 ExplodeExpression::ExplodeExpression(vector<Expression*> expr){
 	this->expressions = expr;
-	this->resultToken = new Token("@FuzuliList", LIST);
 }
 
 ExplodeExpression::~ExplodeExpression(){
@@ -139,20 +142,20 @@ ExplodeExpression::~ExplodeExpression(){
 Token *ExplodeExpression::eval(Environment *env){
 	Token *source_str = this->expressions[0]->eval(env);
 	Token *delim = this->expressions[1]->eval(env);
-	this->resultToken->tokens.clear();
+	Token *result = env->newToken("@FuzuliList", LIST);
 
 	char *temp = (char*)malloc(strlen(source_str->getContent()));
 	strcpy(temp, source_str->getContent());
 
 	char *p = strtok(temp, delim->getContent());
 	while(p){
-		Token *tok = new Token(p, STRING);
-		this->resultToken->tokens.push_back(tok);
+		Token *tok = env->newToken(p, STRING);
+		result->tokens.push_back(tok);
 		p = strtok (NULL, delim->getContent());
 	}
 
 	free(temp);
-	return(this->resultToken);
+	return(result);
 }
 
 
@@ -168,11 +171,12 @@ ColonExpression::~ColonExpression(){
 Token *ColonExpression::eval(Environment *env){
 	Token *num1 = this->expressions[0]->eval(env);
 	Token *num2 = this->expressions[1]->eval(env);
-	Token *result = new Token("@FuzuliList", LIST);
-	for (int i=num1->getIntValue(); i<=num2->getIntValue(); i++){
-		Token *tok = new Token(i, FLOAT);
+	Token *result = env->newToken("@FuzuliList", LIST);
+	int start = num1->getIntValue();
+	int stop =  num2->getIntValue();
+	for (int i=start; i<=stop; i++){
+		Token *tok = env->newToken(i, FLOAT);
 		result->tokens.push_back(tok);
-		Environment::garbage.push_back(tok);
 	}
 	return(result);
 }
@@ -191,6 +195,7 @@ Token *AppendExpression::eval(Environment *env){
 	Token *list = this->expressions[0]->eval(env);  /* list name*/
 	Token *element = this->expressions[1]->eval(env);
 	list->tokens.push_back(element);
+	element->IncreaseReferences();
 	return(list);
 }
 
@@ -207,6 +212,7 @@ Token *PrependExpression::eval(Environment *env){
 	Token *list = this->expressions[0]->eval(env);  /* list name*/
 	Token *element = this->expressions[1]->eval(env);
 	list->tokens.insert(list->tokens.begin(), element);
+	element->IncreaseReferences();
 	return(list);
 }
 
@@ -221,6 +227,7 @@ RemoveExpression::~RemoveExpression(){
 Token *RemoveExpression::eval(Environment *env){
 	Token *arr = this->expressions[0]->eval(env);
 	Token *n = this->expressions[1]->eval(env);
+	arr->tokens[n->getIntValue()]->ReduceReferences();
 	arr->tokens.erase( arr->tokens.begin() + n->getIntValue());
 	return(arr);
 }
@@ -239,7 +246,7 @@ Token *FindExpression::eval(Environment *env){
 	Token *what = this->expressions[1]->eval(env);
 	for (unsigned int i=0;i<arr->tokens.size();i++){
 		if(arr->tokens[i]->Equal(what)){
-			return(new Token(i, INTEGER));
+			return(env->newToken(i, INTEGER));
 		}
 	}
 	return(Token::NULL_TOKEN);

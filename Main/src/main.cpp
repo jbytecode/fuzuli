@@ -81,6 +81,7 @@ void doRepl() {
 				break;
 			}
 			tok = expr->eval(env);
+			env->GC();
 			cout << tok->getContent() << endl;
 			free(input);
 			ss.str("");
@@ -116,9 +117,11 @@ int main(int argc, char** argv) {
 
 	while (1) {
 		ex = b->getNextExpression();
-		if (!ex)
+		if (!ex){
 			break;
+		}
 		ex->eval(globalEnvironment);
+		globalEnvironment->GC();
 	}
 
 	//Token *t = new Token("...",STRING);
