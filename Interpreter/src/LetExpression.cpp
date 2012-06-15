@@ -40,11 +40,11 @@ Token *LetExpression::eval(Environment *env){
 	resultToken = this->expressions[1]->eval(env);
 	Token *oldvariable = env->getVariable(varname->getContent());
 	if(oldvariable->getType()!=NULLTOKEN){
-		oldvariable->links--;
+		oldvariable->ReduceReferences();
 		env->garbage.push_back(oldvariable);
 	}
 	env->setVariable(varname->getContent(), resultToken);
-	resultToken->links++;
+	resultToken->IncreaseReferences();
 	return(this->resultToken);
 }
 

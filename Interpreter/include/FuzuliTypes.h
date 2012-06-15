@@ -716,6 +716,8 @@ public:
 	void incLineNumber();
 	void setKillable(bool killableState);
 	bool getKillable();
+	void ReduceReferences();
+	void IncreaseReferences();
 	Token *clone();
 	static Token *NULL_TOKEN;
 	static int doubleprecision;

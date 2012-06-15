@@ -25,7 +25,6 @@
 namespace fuzuli {
 using namespace std;
 
-
 static int count = 0;
 Token *Token::NULL_TOKEN = new Token("NULL", NULLTOKEN);
 int Token::doubleprecision = 10;
@@ -33,23 +32,29 @@ double Token::epsilon = 0.00001;
 
 Token::Token() {
 	count++;
-	returnFlag = 0;breakFlag = 0;
+	returnFlag = 0;
+	breakFlag = 0;
 	links = 0;
 }
 
 Token::~Token() {
 	count--;
-	for (int i=0;i<this->tokens.size();i++){
-		delete this->tokens[i];
+	//cout << "*T* Deleting "<<this->getContent()<<endl;
+	for (unsigned int i = 0; i < this->tokens.size(); i++) {
+		if (this->tokens[i]) {
+			if (this->tokens[i]->links == 0 && this->tokens[i]->getKillable()) {
+				delete this->tokens[i];
+			}
+		}
 	}
-	returnFlag = 0;breakFlag = 0;
 }
 
 Token::Token(string *content, enum TokenType type) {
 	this->content = content;
 	this->type = type;
 	count++;
-	returnFlag = 0;breakFlag = 0;
+	returnFlag = 0;
+	breakFlag = 0;
 	killable = true;
 	links = 0;
 }
@@ -58,7 +63,8 @@ Token::Token(const char *content, enum TokenType type) {
 	this->content = new string(content);
 	this->type = type;
 	count++;
-	returnFlag = 0;breakFlag = 0;
+	returnFlag = 0;
+	breakFlag = 0;
 	killable = true;
 	links = 0;
 }
@@ -76,7 +82,8 @@ Token::Token(double num, enum TokenType type) {
 	this->content = new string(ss.str());
 	this->type = type;
 	count++;
-	returnFlag = 0;breakFlag = 0;
+	returnFlag = 0;
+	breakFlag = 0;
 	killable = false;
 	links = 0;
 }
@@ -84,21 +91,21 @@ Token::Token(double num, enum TokenType type) {
 const char* Token::toString() {
 	stringstream ss;
 	ss << "Content:" << *this->content << " Type:" << this->type;
-	cout << "Tokens "<< count<<endl;
+	cout << "Tokens " << count << endl;
 	string result = ss.str();
 	return (result.c_str());
 }
 
-Token *Token::clone(){
+Token *Token::clone() {
 	Token *tok = new Token(this->getContent(), this->getType());
-	for (unsigned int i=0;i<this->tokens.size();i++){
+	for (unsigned int i = 0; i < this->tokens.size(); i++) {
 		tok->tokens.push_back(this->tokens[i]->clone());
 	}
 	tok->breakFlag = this->breakFlag;
 	tok->returnFlag = this->returnFlag;
 	tok->object = this->object;
 	tok->returnToken = this->returnToken;
-	return(tok);
+	return (tok);
 }
 
 enum TokenType Token::getType() {
@@ -148,9 +155,11 @@ void Token::setFloatValue(double d) {
 int Token::Equal(Token *tok) {
 	if (this->type == tok->type) {
 		if (this->type == INTEGER) {
-			return ( std::fabs(this->getIntValue() - tok->getIntValue()) <= Token::epsilon);
+			return (std::fabs(this->getIntValue() - tok->getIntValue())
+					<= Token::epsilon);
 		} else if (this->type == FLOAT) {
-			return (std::fabs(this->getFloatValue() - tok->getFloatValue()) <= Token::epsilon);
+			return (std::fabs(this->getFloatValue() - tok->getFloatValue())
+					<= Token::epsilon);
 		} else {
 			if (strcmp(this->getContent(), tok->getContent()) == 0) {
 				return (1);
@@ -179,12 +188,30 @@ void Token::incLineNumber() {
 	this->line++;
 }
 
-void Token::setKillable(bool killableState){
+void Token::setKillable(bool killableState) {
 	this->killable = killableState;
 }
 
-bool Token::getKillable(){
-	return(this->killable);
+bool Token::getKillable() {
+	return (this->killable);
+}
+
+void Token::ReduceReferences(){
+	this->links--;
+	for (unsigned int i=0;i<this->tokens.size();i++){
+		if(this->tokens[i]->getType()!=NULLTOKEN){
+			this->tokens[i]->ReduceReferences();
+		}
+	}
+}
+
+void Token::IncreaseReferences(){
+	this->links++;
+	for (unsigned int i=0;i<this->tokens.size();i++){
+		if(this->tokens[i]->getType()!=NULLTOKEN){
+			this->tokens[i]->ReduceReferences();
+		}
+	}
 }
 
 } /* namespace fuzuli */

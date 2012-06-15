@@ -170,7 +170,9 @@ Token *ColonExpression::eval(Environment *env){
 	Token *num2 = this->expressions[1]->eval(env);
 	Token *result = env->newToken("@FuzuliList", LIST);
 	for (int i=num1->getIntValue(); i<=num2->getIntValue(); i++){
-		result->tokens.push_back(new Token(i, FLOAT));
+		Token *tok = new Token(i, FLOAT);
+		tok->setKillable(true);
+		result->tokens.push_back(tok);
 	}
 	return(result);
 }

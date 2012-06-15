@@ -1,7 +1,12 @@
 
-(let name "hako")
-(let name "fuzuli")
-(let name "ttt")
+(let a (list 1 2 3 4 5 6 7 8 9 10))
+(let a "dfdf")
+
+
+
 (dump)
+(gc)
+(dump)
+(print a)
 
 

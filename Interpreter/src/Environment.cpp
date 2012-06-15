@@ -19,7 +19,7 @@
 #include "../include/FuzuliTypes.h"
 #include <cstdlib>
 #include <sstream>
-#include <list>
+#include <vector>
 
 namespace fuzuli {
 
@@ -80,15 +80,20 @@ int Environment::GC() {
 		this->next->GC();
 	}
 	int n = 0;
-	list<Token*>::iterator it;
 	int numdeleted = 0;
-	for (it = this->garbage.begin(); it != this->garbage.end(); it++) {
-		Token *tok = *it;
-		if (tok) {
+	start:
+	for (unsigned int i=0; i < this->garbage.size(); i++) {
+		Token *tok = this->garbage[i];
+		if(tok != NULL){
+		if (tok->links == 0 && tok->getKillable() && tok->getType()!=NULLTOKEN) {
+			//cout << "Deleting "<< tok->getContent()<<endl;
 			delete tok;
+			this->garbage.assign(i, NULL);
 			numdeleted++;
+			goto start;
 		}
 		n++;
+		}
 	}
 	return (numdeleted);
 }
@@ -209,8 +214,10 @@ void Environment::dump() {
 			cout << endl;
 		}
 		cout << "Other objects:"<<endl;
-		for (int i=0;i<this->garbage.size();i++){
-			cout << this->gar
+		for (unsigned int i=0;i<this->garbage.size();i++){
+			cout << this->garbage[i]->getContent() << " Kll:";
+			cout << this->garbage[i]->getKillable() << " Links: ";
+			cout << this->garbage[i]->links << endl;
 		}
 
 		env = env->previous;
