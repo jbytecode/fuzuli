@@ -69,4 +69,118 @@
 	(return (C ncurses_lib "wborderd" window c1 c2 c3 c4 c5 c6 c7 c8))
 )
 
+(function getyx (params window)
+	(return (C ncurses_lib "getyxd" window))
+)
+
+(function addch (params ch)
+	(return (C ncurses_lib "addchd" ch))
+)
+
+(function clear (params)
+	(return (C ncurses_lib "cleard"))
+)
+
+(function cbreak (params)
+	(return (C ncurses_lib "cbreakd"))
+)
+
+(function nocbreak (params)
+	(return (C ncurses_lib "nocbreakd"))
+)
+
+(function delch (params)
+	(return (C ncurses_lib "delchd"))
+)
+
+(function deleteln (params)
+	(return (C ncurses_lib "deletelnd"))
+)
+
+(function doupdate (params)
+	(return (C ncurses_lib "doupdated"))
+)
+
+(function echo (params)
+	(return (C ncurses_lib "echod"))
+)
+
+(function echochar (params ch)
+	(return (C ncurses_lib "echochard" ch))
+)
+
+(function erase (params)
+	(return (C ncurses_lib "erased"))
+)
+
+(function erasechar (params)
+	(return (C ncurses_lib "erasechard"))
+)
+
+(function flushinp (params)
+	(return (C ncurses_lib "flushinpd"))
+)
+
+(function getmouse (params)
+	(return (C ncurses_lib "getmoused"))
+)
+
+(function wgetch (params win)
+	(return (C ncurses_lib "wgetchd" win))
+)
+
+(function move (params y x)
+	(return (C ncurses_lib "moved" y x))
+)
+
+(function mvaddch (params y x c)
+	(return (C ncurses_lib "mvaddchd" y x c))
+)
+
+(function mvaddstr (params y x str)
+	(return (C ncurses_lib "mvaddstrd" y x str))
+)
+
+(function waddch (params win c)
+	(return (C ncurses_lib "waddchd" win c))
+)
+
+(function waddstr (params win c)
+	(return (C ncurses_lib "waddstrd" win c))
+)
+
+
+(function wclear (params win)
+	(return (C ncurses_lib "wcleard" win))
+)
+
+(function wcolor_set (params win num)
+	(return (C ncurses_lib "wcleard" win num))
+)
+
+
+(function werase (params win)
+	(return (C ncurses_lib "werased" win))
+)
+
+(function wbkgd (params win num)
+	(return (C ncurses_lib "wbkgdd" win num))
+)
+
+(function mvwaddstr (params win y x str)
+	(return (C ncurses_lib "mvwaddstrd" win y x str))
+)
+
+
+(function wattron (params win num)
+	(return (C ncurses_lib "wattrond" win num))
+)
+
+(function wattroff (params win num)
+	(return (C ncurses_lib "wattroffd" win num))
+)
+
+(function COLOR_PAIR (params num)
+	(return (C ncurses_lib "COLOR_PAIRd"  num))
+)
 

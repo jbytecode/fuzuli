@@ -116,7 +116,7 @@ Token *FunctionCallExpression::eval(Environment *env) {
 			return (this->evalForClass(env));
 		} else {
 			cout << "Fuzuli Function " << fname->getContent()
-					<< " is not defined." << endl;
+					<< " with "<<paramscount<<" parameters is not defined." << endl;
 			exit(-1);
 		}
 	}
