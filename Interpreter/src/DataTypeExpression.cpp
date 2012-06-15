@@ -178,5 +178,5 @@ Token *TypeExpression::eval(Environment *env){
 }
 
 
-} /*
- namespace fuzuli */
+}
+/*namespace fuzuli */

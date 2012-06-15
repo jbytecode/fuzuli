@@ -902,6 +902,14 @@ public:
 };
 
 
+class DeleteExpression: public Expression {
+public:
+	DeleteExpression (vector<Expression*> expr);
+	virtual ~DeleteExpression();
+	Token *eval (Environment *env);
+};
+
+
 }
 
 

@@ -38,6 +38,9 @@ Token::Token() {
 
 Token::~Token() {
 	count--;
+	for (int i=0;i<this->tokens.size();i++){
+		delete this->tokens[i];
+	}
 	returnFlag = 0;breakFlag = 0;
 }
 
@@ -46,7 +49,7 @@ Token::Token(string *content, enum TokenType type) {
 	this->type = type;
 	count++;
 	returnFlag = 0;breakFlag = 0;
-	killable = false;
+	killable = true;
 }
 
 Token::Token(const char *content, enum TokenType type) {
@@ -54,7 +57,7 @@ Token::Token(const char *content, enum TokenType type) {
 	this->type = type;
 	count++;
 	returnFlag = 0;breakFlag = 0;
-	killable = false;
+	killable = true;
 }
 
 Token::Token(double num, enum TokenType type) {

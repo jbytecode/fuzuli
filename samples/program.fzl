@@ -1,29 +1,10 @@
-(require "/usr/lib/fuzuli/nfl/ncurses.nfl")
-(require "/usr/lib/fuzuli/nfl/string.nfl")
 
-(initscr)
-(start_color)
-(init_pair 1 2 0)
-(init_pair 2 1 0)
+(let mylist (:1 10000))
+(dump)
 
-(refresh)
-(let win1 (newwin 10 20 10 10))
-
-(wbkgd win 1)
-(wattron win1 (COLOR_PAIR 1))
-(box win1 0 0)
-(wattroff win1 (COLOR_PAIR 1))
-
-(wattron win1 (COLOR_PAIR 2))
-(mvwaddstr win1 1 1 "Hello from Fuzuli Programming Language")
-(wrefresh win1)
-
-(refresh)
+(delete mylist)
 
 
-(wrefresh win1)
-(getch)
+(dump)
 
 
-
-(endwin)

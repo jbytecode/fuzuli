@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "../include/FuzuliTypes.h"
 #include <cstdlib>
 #include <sstream>
@@ -64,53 +63,50 @@ void Environment::registerGlobals() {
 	this->setVariable("NULL", new Token(5.0, NULLTOKEN));
 }
 
-
-Token *Environment::newToken(const char *val, enum TokenType type){
+Token *Environment::newToken(const char *val, enum TokenType type) {
 	Token *tok = new Token(val, type);
 	this->garbage.push_back(tok);
-	return(tok);
+	return (tok);
 }
 
-Token *Environment::newToken(double val, enum TokenType type){
+Token *Environment::newToken(double val, enum TokenType type) {
 	Token *tok = new Token(val, type);
 	this->garbage.push_back(tok);
-	return(tok);
+	return (tok);
 }
 
-
-int  Environment::GC() {
-	if(this->next){
+int Environment::GC() {
+	if (this->next) {
 		this->next->GC();
 	}
-	int n =0;
+	int n = 0;
 	list<Token*>::iterator it;
 	int numdeleted = 0;
 	for (it = this->garbage.begin(); it != this->garbage.end(); it++) {
 		Token *tok = *it;
-		if (tok){
+		if (tok) {
 			delete tok;
 			numdeleted++;
 		}
 		n++;
 	}
-	return(numdeleted);
+	return (numdeleted);
 }
 
-void Environment::setVariableInThisScope(const char*name, Token*value){
-	if(this->variableExists(name)){
+void Environment::setVariableInThisScope(const char*name, Token*value) {
+	if (this->variableExists(name)) {
 		delete this->variables[string(name)];
 	}
 	this->variables[string(name)] = value;
 }
 
-Token *Environment::getVariableInThisScope(const char *name){
-	if(this->variableExists(name)){
-		return(this->variables[string(name)]);
-	}else{
-		return(NULL);
+Token *Environment::getVariableInThisScope(const char *name) {
+	if (this->variableExists(name)) {
+		return (this->variables[string(name)]);
+	} else {
+		return (NULL);
 	}
 }
-
 
 Environment *Environment::searchBackEnvironments(const char *name) {
 	Environment *env = this;
@@ -127,10 +123,10 @@ Environment* Environment::setVariable(const char *name, Token *value) {
 	Environment *env = searchBackEnvironments(name);
 	if (env) {
 		env->variables[string(name)] = value;
-		return(env);
+		return (env);
 	} else {
 		this->variables[string(name)] = value;
-		return(this);
+		return (this);
 	}
 }
 
@@ -149,7 +145,7 @@ Token *Environment::getVariable(const char *name) {
 }
 
 Environment *Environment::createNext() {
-	if(this->next){
+	if (this->next) {
 		this->next->GC();
 	}
 	this->next = new Environment(this);
@@ -168,7 +164,6 @@ FuzuliFunction *Environment::searchFuncBackEnvironments(const char *name) {
 	}
 	return (func);
 }
-
 
 void Environment::setFunction(const char *name, FuzuliFunction *value) {
 	FuzuliFunction *existing = searchFuncBackEnvironments(name);
@@ -219,14 +214,14 @@ void Environment::dump() {
 	tok->toString();
 }
 
-bool Environment::variableExists(const char *name){
-	map<string,Token*>::iterator it;
-	for (it=this->variables.begin(); it!=this->variables.end();it++){
-		if(it->first == string(name)){
-			return(true);
+bool Environment::variableExists(const char *name) {
+	map<string, Token*>::iterator it;
+	for (it = this->variables.begin(); it != this->variables.end(); it++) {
+		if (it->first == string(name)) {
+			return (true);
 		}
 	}
-	return(false);
+	return (false);
 }
 
 DumpExpression::DumpExpression(vector<Expression*> expr) {
@@ -242,18 +237,41 @@ Token* DumpExpression::eval(Environment *env) {
 	return (Token::NULL_TOKEN);
 }
 
-GCExpression::GCExpression(vector<Expression*> expr){
+GCExpression::GCExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 }
 
-GCExpression::~GCExpression(){
+GCExpression::~GCExpression() {
 
 }
 
-Token *GCExpression::eval(Environment *env){
+Token *GCExpression::eval(Environment *env) {
 	int num = env->GC();
 	Token *result = env->newToken(num, FLOAT);
-	return(result);
+	return (result);
+}
+
+DeleteExpression::DeleteExpression(vector<Expression*> expr) {
+	this->expressions = expr;
+}
+
+DeleteExpression::~DeleteExpression() {
+
+}
+
+Token *DeleteExpression::eval(Environment *env) {
+	Token *obj =
+			(dynamic_cast<IdentifierExpression*>(this->expressions[0]))->stringToken;
+	cout << "Investigating :" << obj->getContent() << endl;
+	if (env->getVariable(obj->getContent())) {
+		//cout << obj->getContent() << " is variable. killing..." << endl;
+		delete env->getVariable(obj->getContent());
+		Environment *tokenv = env->searchBackEnvironments(obj->getContent());
+		tokenv->variables.erase(string(obj->getContent()));
+	} else if (env->getFunction(obj->getContent())) {
+		cout << obj->getContent() << " is a function. Nothing to do..." << endl;
+	}
+	return (Token::NULL_TOKEN);
 }
 
 } /* namespace fuzuli */
