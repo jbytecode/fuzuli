@@ -17,7 +17,6 @@
 
 
 
-(require "/usr/lib/fuzuli/nfl/types.nfl")
 (require "/usr/lib/fuzuli/nfl/math.nfl")
 
 (let a "3.14")

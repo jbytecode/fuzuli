@@ -18,7 +18,6 @@
 
 
 (require "/usr/lib/fuzuli/nfl/math.nfl")
-(require "/usr/lib/fuzuli/nfl/types.nfl")
 
 (let a (/ (* PI 3) 2.0))  # a=3*PI/2
 (let b (cos a))     # b=cos(a)
