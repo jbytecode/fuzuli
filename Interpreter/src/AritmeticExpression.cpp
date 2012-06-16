@@ -245,7 +245,9 @@ Token *DecExpression::eval(Environment *env) {
 	Token *name = ((IdentifierExpression*) this->expressions[0])->stringToken;
 	Environment *varenv = env->searchBackEnvironments(name->getContent());
 	Token *val = this->expressions[0]->eval(env);
-	Token *result = env->newToken (val->getFloatValue()-1.0, FLOAT);
+	Token *result = env->newToken (val->getFloatValue() - 1.0, FLOAT);
+	val->ReduceReferences();
+	result->IncreaseReferences();
 	varenv->setVariable(name->getContent(), result);
 	return(result);
 }
