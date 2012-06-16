@@ -80,10 +80,10 @@ Token *Environment::newToken(double val, enum TokenType type) {
 
 int Environment::GC() {
 	int numdeleted = 0;
-	if(this->next){
-		numdeleted+=this->next->GC();
+	for (unsigned int i=0;i<this->subenvironments.size();i++){
+		numdeleted += this->subenvironments[i]->GC();
 	}
-	//cout << "Deleting "<<this->garbage.size()<< " garbages"<<endl;
+	//cout << "Deleting "<<this->garbage.size()<< " garbages "<<endl;
 	for (unsigned int i = 0; i < garbage.size(); i++) {
 		Token *tok = this->garbage[i];
 		if (tok->links <= 0 && tok->getKillable() == true) {
@@ -157,6 +157,7 @@ Environment *Environment::createNext() {
 	}
 	this->next = new Environment(this);
 	this->next->deep = this->deep + 1;
+	this->subenvironments.push_back(this->next);
 	return (this->next);
 }
 
@@ -203,27 +204,10 @@ void Environment::setArgcArgv(int argc, char **argv) {
 }
 
 void Environment::dump() {
-	Environment *env = this;
-	while (env) {
-		map<string, Token*>::iterator it;
-		for (it = env->variables.begin(); it != env->variables.end(); it++) {
-			cout << env->deep << " - " << it->first << " ";
-			if (it->second) {
-				cout << it->second->getContent() << " Kll:";
-				cout << it->second->getKillable() << " Links:";
-				cout << it->second->links;
-			}
-			cout << endl;
-		}
-		cout << "Other objects:" << endl;
-		for (unsigned int i = 0; i < garbage.size(); i++) {
-			cout << garbage[i]->getContent() << " Kll:";
-			cout << garbage[i]->getKillable() << " Links: ";
-			cout << garbage[i]->links << endl;
-		}
-
-		env = env->previous;
-	}
+	cout << "Environment"<< endl;
+	cout << "Deep: "<<this->deep << endl;
+	cout << "# Sub Environments: "<<this->subenvironments.size()<<endl;
+	cout << "# ";
 	Token *tok = Token::NULL_TOKEN;
 	tok->toString();
 }

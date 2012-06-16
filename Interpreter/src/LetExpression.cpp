@@ -43,7 +43,6 @@ Token *LetExpression::eval(Environment *env) {
 	}
 	env->setVariable(varname->getContent(), result);
 	result->IncreaseReferences();
-	env->GC();
 	return (result);
 }
 

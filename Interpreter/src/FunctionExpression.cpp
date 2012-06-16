@@ -99,8 +99,10 @@ Token *FunctionCallExpression::evalForClass(Environment* env) {
 	result->returnFlag = 0;
 
 	//Token *t = result->clone();
+	result->IncreaseReferences();
+	object_env->GC();
+	result->ReduceReferences();
 	return (result);
-
 }
 
 Token *FunctionCallExpression::eval(Environment *env) {

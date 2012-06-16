@@ -56,3 +56,4 @@
 (quicksort mylist 0 (- (length mylist) 1))
 (print "After sorting:\n")
 (print mylist "\n")
+(dump)

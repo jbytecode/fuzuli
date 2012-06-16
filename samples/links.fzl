@@ -27,7 +27,7 @@
 (print "Retrieving result\n")
 (def htmllist LIST)
 (while 1
-   (let c (fsockread socket 1024))
+   (let c (fsockread socket 4096))
    (if (= (typeof c) NULL) (break))
    (append htmllist c)
 	(print ".\n")

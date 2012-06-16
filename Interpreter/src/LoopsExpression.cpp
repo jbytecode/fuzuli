@@ -61,6 +61,9 @@ Token *ForExpression::eval(Environment *env) {
 	if (!result) {
 		result = Token::NULL_TOKEN;
 	}
+	result->IncreaseReferences();
+	forEnvironment->GC();
+	result->ReduceReferences();
 	return (result);
 }
 
@@ -74,6 +77,7 @@ ForEachExpression::~ForEachExpression() {
 
 Token *ForEachExpression::eval(Environment *env) {
 	Environment *foreachenv = env->createNext();
+	Token *result = Token::NULL_TOKEN;
 	Token *iden = ((IdentifierExpression*) this->expressions[0])->stringToken;
 	Token *in = ((IdentifierExpression*) this->expressions[1])->stringToken;
 	if (strcmp(in->getContent(), "in") != 0) {
@@ -84,15 +88,21 @@ Token *ForEachExpression::eval(Environment *env) {
 	for (unsigned int i = 0; i < list->tokens.size(); i++) {
 		foreachenv->setVariable(iden->getContent(), list->tokens[i]);
 		for (unsigned int u = 3; u < this->expressions.size(); u++) {
-			Token *result = this->expressions[u]->eval(foreachenv);
+			result = this->expressions[u]->eval(foreachenv);
 			if (result->breakFlag) {
 				result->breakFlag = 0;
+				result->IncreaseReferences();
+				foreachenv->GC();
+				result->ReduceReferences();
 				return (result);
 				break;
 			}
 		}
 	}
-	return (Token::NULL_TOKEN);
+	result->IncreaseReferences();
+	foreachenv->GC();
+	result->ReduceReferences();
+	return (result);
 }
 
 DoTimesExpression::DoTimesExpression(vector<Expression*> expr) {
@@ -118,6 +128,9 @@ Token *DoTimesExpression::eval(Environment *env) {
 			result = this->expressions[i]->eval(dotimesEnvironment);
 			if (result->breakFlag) {
 				result->breakFlag = 0;
+				result->IncreaseReferences();
+				dotimesEnvironment->GC();
+				result->ReduceReferences();
 				return (result);
 				break;
 			}
@@ -128,7 +141,12 @@ Token *DoTimesExpression::eval(Environment *env) {
 			break;
 		}
 	}
-	return (this->resultToken);
+	result->IncreaseReferences();
+	dotimesEnvironment->GC();
+	result->ReduceReferences();
+	return (result);
+
+	return (result);
 }
 
 WhileExpression::WhileExpression(vector<Expression*> expr) {
@@ -140,6 +158,7 @@ WhileExpression::~WhileExpression() {
 }
 
 Token *WhileExpression::eval(Environment *env) {
+	env->GC();
 	Environment *whileEnvironment = env->createNext();
 	Token *condition;
 	Token *result = Token::NULL_TOKEN;
@@ -153,12 +172,18 @@ Token *WhileExpression::eval(Environment *env) {
 			result = this->expressions[ui]->eval(whileEnvironment);
 			if (result->breakFlag == 1) {
 				result->breakFlag = 0;
+				result->IncreaseReferences();
+				whileEnvironment->GC();
+				result->ReduceReferences();
 				return (result);
 			}
 
 		}
 
 	}
+	result->IncreaseReferences();
+	whileEnvironment->GC();
+	result->ReduceReferences();
 	return (result);
 }
 

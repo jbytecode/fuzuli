@@ -811,6 +811,7 @@ public:
 	map<string, Token*> variables;
 	map<string, FuzuliFunction*> fuzuliFunctions;
 	vector<Token*> garbage;
+	vector<Environment*> subenvironments;
 	Environment *previous;
 	Environment *next;
 

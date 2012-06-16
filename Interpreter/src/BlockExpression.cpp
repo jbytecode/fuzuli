@@ -33,25 +33,35 @@ BlockExpression::~BlockExpression() {
 }
 
 Token *BlockExpression::eval(Environment *env) {
+	env->GC();
 	Token *result = Token::NULL_TOKEN;
 	Environment *blockEnvironment = env->createNext();
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
 		result = this->expressions[i]->eval(blockEnvironment);
 		if (result) {
-			if (result->breakFlag==1) {
-				return (result->clone());
-			}else if (result->returnFlag==1){
-				return(result->clone());
+			if (result->breakFlag == 1) {
+				result->IncreaseReferences();
+				blockEnvironment->GC();
+				result->ReduceReferences();
+				return (result);
+			} else if (result->returnFlag == 1) {
+				result->IncreaseReferences();
+				blockEnvironment->GC();
+				result->ReduceReferences();
+				return (result);
 			}
 		}
 	}
+	result->IncreaseReferences();
+	blockEnvironment->GC();
+	result->ReduceReferences();
 	return (result);
 }
 
-void BlockExpression::emitCpp(stringstream *ss){
-	(*ss)<<"{"<<endl;
+void BlockExpression::emitCpp(stringstream *ss) {
+	(*ss) << "{" << endl;
 	dynamic_cast<CppEmitter*>(this->expressions[0])->emitCpp(ss);
-	(*ss)<<"}"<<endl;
+	(*ss) << "}" << endl;
 }
 
 } /* namespace fuzuli */
