@@ -86,7 +86,7 @@ int Environment::GC() {
 	//cout << "Deleting "<<this->garbage.size()<< " garbages"<<endl;
 	for (unsigned int i = 0; i < garbage.size(); i++) {
 		Token *tok = this->garbage[i];
-		if (tok->links <= 0 && tok->getKillable() == true && tok->environment == this) {
+		if (tok->links <= 0 && tok->getKillable() == true) {
 			//cout << "Deleting "<<tok->getContent()<<endl;
 			this->garbage.erase(this->garbage.begin() + i);
 			delete tok;

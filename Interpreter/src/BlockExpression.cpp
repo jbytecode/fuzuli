@@ -39,15 +39,12 @@ Token *BlockExpression::eval(Environment *env) {
 		result = this->expressions[i]->eval(blockEnvironment);
 		if (result) {
 			if (result->breakFlag==1) {
-				blockEnvironment->GC();
 				return (result->clone());
 			}else if (result->returnFlag==1){
-				blockEnvironment->GC();
 				return(result->clone());
 			}
 		}
 	}
-	blockEnvironment->GC();
 	return (result);
 }
 

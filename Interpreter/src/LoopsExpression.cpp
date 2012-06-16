@@ -61,7 +61,6 @@ Token *ForExpression::eval(Environment *env) {
 	if (!result) {
 		result = Token::NULL_TOKEN;
 	}
-	forEnvironment->GC();
 	return (result);
 }
 
@@ -93,7 +92,6 @@ Token *ForEachExpression::eval(Environment *env) {
 			}
 		}
 	}
-	foreachenv->GC();
 	return (Token::NULL_TOKEN);
 }
 
@@ -155,14 +153,12 @@ Token *WhileExpression::eval(Environment *env) {
 			result = this->expressions[ui]->eval(whileEnvironment);
 			if (result->breakFlag == 1) {
 				result->breakFlag = 0;
-				whileEnvironment->GC();
 				return (result);
 			}
 
 		}
 
 	}
-	whileEnvironment->GC();
 	return (result);
 }
 
