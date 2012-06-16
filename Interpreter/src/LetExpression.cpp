@@ -38,11 +38,12 @@ Token *LetExpression::eval(Environment *env) {
 	Token *varname = ((IdentifierExpression*) this->expressions[0])->stringToken;
 	Token *result = this->expressions[1]->eval(env);
 	Token *oldvariable = env->getVariable(varname->getContent());
-	if (oldvariable->getType() != NULLTOKEN) {
+	if (oldvariable->getKillable()) {
 		oldvariable->ReduceReferences();
 	}
 	env->setVariable(varname->getContent(), result);
 	result->IncreaseReferences();
+	env->GC();
 	return (result);
 }
 

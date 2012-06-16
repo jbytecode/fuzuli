@@ -18,9 +18,8 @@
 (def summ INTEGER)
 (let summ 0)
 (dotimes i 10
-	(let summ (+ summ i))  
+	(let summ (+ summ i)) 
 )
-
 
 
 (if (= summ (/ (* 9 10) 2))

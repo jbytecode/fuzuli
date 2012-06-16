@@ -61,6 +61,7 @@ Token *ForExpression::eval(Environment *env) {
 	if (!result) {
 		result = Token::NULL_TOKEN;
 	}
+	forEnvironment->GC();
 	return (result);
 }
 
@@ -92,6 +93,7 @@ Token *ForEachExpression::eval(Environment *env) {
 			}
 		}
 	}
+	foreachenv->GC();
 	return (Token::NULL_TOKEN);
 }
 
@@ -104,13 +106,7 @@ DoTimesExpression::~DoTimesExpression() {
 }
 
 Token *DoTimesExpression::eval(Environment *env) {
-	Environment *dotimesEnvironment;
-	if (!env->next) {
-		dotimesEnvironment = env->createNext();
-	} else {
-		dotimesEnvironment = env->next;
-	}
-
+	Environment *dotimesEnvironment = env->createNext();
 	Token *condition;
 	Token *result;
 	Token *iden =
@@ -118,7 +114,7 @@ Token *DoTimesExpression::eval(Environment *env) {
 	Token *max = this->expressions[1]->eval(env);
 	condition = dotimesEnvironment->newToken(0.0, INTEGER);
 	dotimesEnvironment->setVariableInThisScope(iden->getContent(), condition);
-
+	condition->IncreaseReferences();
 	while (1) {
 		for (unsigned int i = 2; i < this->expressions.size(); i++) {
 			result = this->expressions[i]->eval(dotimesEnvironment);
@@ -159,12 +155,14 @@ Token *WhileExpression::eval(Environment *env) {
 			result = this->expressions[ui]->eval(whileEnvironment);
 			if (result->breakFlag == 1) {
 				result->breakFlag = 0;
+				whileEnvironment->GC();
 				return (result);
 			}
 
 		}
 
 	}
+	whileEnvironment->GC();
 	return (result);
 }
 

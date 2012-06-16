@@ -67,6 +67,7 @@ Token *PrintExpression::eval(Environment *env) {
 		__PrintToken(&ss, tok);
 	}
 	cout << ss.str().c_str();
+	env->GC();
 	return (Token::NULL_TOKEN);
 }
 

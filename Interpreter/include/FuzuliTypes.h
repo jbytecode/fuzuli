@@ -725,6 +725,7 @@ public:
 	vector<Token*> tokens;
 	Expression *expr;
 	Token *returnToken;
+	Environment *environment;
 	void *object;
 	int returnFlag;
 	int breakFlag;
@@ -809,7 +810,7 @@ public:
 	virtual ~Environment();
 	map<string, Token*> variables;
 	map<string, FuzuliFunction*> fuzuliFunctions;
-	static vector<Token*> garbage;
+	vector<Token*> garbage;
 	Environment *previous;
 	Environment *next;
 

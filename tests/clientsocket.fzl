@@ -11,7 +11,7 @@
 (let content (list "."))
 (while 1
    (block
-      (let html (fsockread con 1)) #read 1 bytes
+      (let html (fsockread con 512)) #read 1 bytes
       (if (= (typeof html) NULL) (break))	
       (append content html)
    )

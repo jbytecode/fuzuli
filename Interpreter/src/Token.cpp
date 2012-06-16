@@ -97,6 +97,8 @@ Token *Token::clone() {
 	tok->returnFlag = this->returnFlag;
 	tok->object = this->object;
 	tok->returnToken = this->returnToken;
+	tok->links = this->links;
+
 	return (tok);
 }
 

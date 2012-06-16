@@ -56,7 +56,12 @@ void doRepl() {
 	char* input;
 	stringstream ss;
 
+	add_history("(require");
+	add_history("(print");
+	add_history("(let");
+
 	while (1) {
+
 		rl_bind_key('\t', rl_complete);
 
 
@@ -81,7 +86,6 @@ void doRepl() {
 				break;
 			}
 			tok = expr->eval(env);
-			env->GC();
 			cout << tok->getContent() << endl;
 			free(input);
 			ss.str("");
@@ -116,12 +120,12 @@ int main(int argc, char** argv) {
 	Expression *ex;
 
 	while (1) {
+		globalEnvironment->GC();
 		ex = b->getNextExpression();
 		if (!ex){
 			break;
 		}
 		ex->eval(globalEnvironment);
-		globalEnvironment->GC();
 	}
 
 	//Token *t = new Token("...",STRING);

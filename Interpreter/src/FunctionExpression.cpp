@@ -45,7 +45,9 @@ Token *FunctionExpression::eval(Environment *env) {
 	func->environment = env;
 
 	env->setFunction(str_func_name.str().c_str(), func);
-	return (env->newToken("@FuzuliFunction", FUZULIFUNCTION));
+	Token *willReturn = env->newToken("@FuzuliFunction", FUZULIFUNCTION);
+	willReturn->setKillable(false);
+	return (willReturn);
 }
 
 FunctionCallExpression::FunctionCallExpression(vector<Expression*> expr) {
@@ -134,6 +136,9 @@ Token *FunctionCallExpression::eval(Environment *env) {
 
 	//Token *t = result->clone();
 	//t->setKillable(false);
+	result->IncreaseReferences();
+	funcEnvironment->GC();
+	result->ReduceReferences();
 	return (result);
 }
 

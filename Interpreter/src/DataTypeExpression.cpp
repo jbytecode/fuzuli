@@ -37,6 +37,7 @@ IntegerExpression::IntegerExpression(Token *tok) {
 		tok->setIntValue( x );
 	}
 	this->integerValue = this->token->getIntValue();
+	this->token->setKillable(false);
 }
 
 IntegerExpression::~IntegerExpression() {
@@ -45,9 +46,11 @@ IntegerExpression::~IntegerExpression() {
 
 Token *IntegerExpression::eval(Environment *env){
 	//this->token->setIntValue(this->integerValue);
-	Token *tok = env->newToken(this->integerValue, INTEGER);
-	tok->setKillable(true);
-	return(tok);
+	//this->token->IncreaseReferences();
+	return this->token;
+	//Token *tok = env->newToken(this->integerValue, INTEGER);
+	//tok->setKillable(true);
+	//return(tok);
 }
 
 
@@ -65,6 +68,7 @@ FloatExpression::FloatExpression() {
 FloatExpression::FloatExpression(Token *tok) {
 	this->token = tok;
 	this->floatValue = tok->getFloatValue();
+	this->token->setKillable(false);
 }
 
 FloatExpression::~FloatExpression() {
@@ -73,9 +77,11 @@ FloatExpression::~FloatExpression() {
 
 Token *FloatExpression::eval(Environment *env){
 	//this->token->setFloatValue(this->floatValue);
-	Token *tok = env->newToken(this->floatValue, FLOAT);
-	tok->setKillable(true);
-	return(tok);
+	//this->token->IncreaseReferences();
+	return(this->token);
+	//Token *tok = env->newToken(this->floatValue, FLOAT);
+	//tok->setKillable(true);
+	//return(tok);
 }
 
 void FloatExpression::emitCpp(stringstream *ss){
@@ -86,6 +92,7 @@ void FloatExpression::emitCpp(stringstream *ss){
 StringExpression::StringExpression(Token *tok) {
 	this->stringValue = string(tok->getContent());
 	this->stringToken = tok;
+	this->stringToken->setKillable(false);
 }
 
 StringExpression::~StringExpression() {
@@ -94,9 +101,11 @@ StringExpression::~StringExpression() {
 
 Token *StringExpression::eval(Environment *env){
 	//this->stringToken->setContent(this->stringValue.c_str());
-	Token *tok = env->newToken(this->stringValue.c_str(), STRING);
-	tok->setKillable(true);
-	return(tok);
+	//this->stringToken->IncreaseReferences();
+	return this->stringToken;
+	//Token *tok = env->newToken(this->stringValue.c_str(), STRING);
+	//tok->setKillable(true);
+	//return(tok);
 }
 
 

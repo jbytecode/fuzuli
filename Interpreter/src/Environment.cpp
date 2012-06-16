@@ -24,7 +24,6 @@
 namespace fuzuli {
 
 using namespace std;
-extern vector<Token*> Environment::garbage;
 
 Environment::Environment() {
 	this->previous = NULL;
@@ -39,6 +38,7 @@ Environment::Environment(Environment *base) {
 }
 
 Environment::~Environment() {
+	//cout << "Destruct envir"<<endl;
 	this->variables.clear();
 	this->fuzuliFunctions.clear();
 	this->previous->next = NULL;
@@ -62,42 +62,36 @@ void Environment::registerGlobals() {
 	this->setVariable("STRING", new Token(3.0, INTEGER));
 	this->setVariable("LIST", new Token(4.0, LIST));
 	this->setVariable("NULL", new Token(5.0, NULLTOKEN));
+	Token::NULL_TOKEN->setKillable(false);
 }
 
 Token *Environment::newToken(const char *val, enum TokenType type) {
 	Token *tok = new Token(val, type);
-	Environment::garbage.push_back(tok);
+	this->garbage.push_back(tok);
 	return (tok);
 }
 
 Token *Environment::newToken(double val, enum TokenType type) {
 	Token *tok = new Token(val, type);
-	Environment::garbage.push_back(tok);
+	this->garbage.push_back(tok);
+	tok->environment = this;
 	return (tok);
 }
 
 int Environment::GC() {
 	int numdeleted = 0;
-	int n=0;
-	start:
-	n=0;
-	for (unsigned int i = 0; i < Environment::garbage.size(); i++) {
-		Token *tok = Environment::garbage[i];
-		//if (tok != NULL) {
-			if (tok->links <= 0 && tok->getKillable()==true) {
-				Environment::garbage.erase(Environment::garbage.begin()+ i);
-				delete tok;
-				numdeleted++;
-				n++;
-			}
-		}
-	//}
-	if (n>0) {
-		goto start;
+	if(this->next){
+		numdeleted+=this->next->GC();
 	}
-	for (unsigned int i=0;i<Environment::garbage.size(); i++){
-		if(Environment::garbage[i] == NULL){
-			garbage.assign(i,new Token("Silindi.",STRING));
+	//cout << "Deleting "<<this->garbage.size()<< " garbages"<<endl;
+	for (unsigned int i = 0; i < garbage.size(); i++) {
+		Token *tok = this->garbage[i];
+		if (tok->links <= 0 && tok->getKillable() == true && tok->environment == this) {
+			//cout << "Deleting "<<tok->getContent()<<endl;
+			this->garbage.erase(this->garbage.begin() + i);
+			delete tok;
+			numdeleted++;
+			i--;
 		}
 	}
 	return (numdeleted);
@@ -155,6 +149,12 @@ Token *Environment::getVariable(const char *name) {
 }
 
 Environment *Environment::createNext() {
+	if(this->next){
+		this->next->GC();
+		//deleting this->next causes oop to be demaged.
+		//look at here soon.
+		//delete this->next;
+	}
 	this->next = new Environment(this);
 	this->next->deep = this->deep + 1;
 	return (this->next);
@@ -216,10 +216,10 @@ void Environment::dump() {
 			cout << endl;
 		}
 		cout << "Other objects:" << endl;
-		for (unsigned int i = 0; i < Environment::garbage.size(); i++) {
-			cout << Environment::garbage[i]->getContent() << " Kll:";
-			cout << Environment::garbage[i]->getKillable() << " Links: ";
-			cout << Environment::garbage[i]->links << endl;
+		for (unsigned int i = 0; i < garbage.size(); i++) {
+			cout << garbage[i]->getContent() << " Kll:";
+			cout << garbage[i]->getKillable() << " Links: ";
+			cout << garbage[i]->links << endl;
 		}
 
 		env = env->previous;
