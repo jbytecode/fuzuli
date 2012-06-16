@@ -1,0 +1,20 @@
+(def mylist LIST)
+(let mylist (list 5 6 4 2 3 9 1 10 5))
+
+(print "Original List:\n")
+(print mylist "\n")
+
+(for (let i 0) (< i (length mylist)) (inc i)
+	(for (let j i) (< j (length mylist)) (inc j)
+		(if (> (nth mylist i) (nth mylist j))
+			(block
+			(let temp (nth mylist i))
+			(set mylist i (nth mylist j))
+			(set mylist j temp)
+			)
+		)
+	)
+)
+
+(print "After sorting:\n")
+(print mylist "\n")
