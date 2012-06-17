@@ -112,6 +112,13 @@ enum TokenType {
 
 };
 
+enum ExpressionType {
+	IDENTIFIER_EXPRESSION,
+	STRING_EXPRESSION,
+	INTEGER_EXPRESSION,
+	FLOAT_EXPRESSION
+};
+
 
 /* CLASSES */
 
@@ -134,6 +141,7 @@ public:
 class Expression {
 public:
 	Expression();
+	Expression(unsigned int count, ...);
 	virtual ~Expression();
 	void setExpressions(vector<Expression*> expressions);
 	virtual Token *eval(Environment *env);
@@ -141,6 +149,7 @@ public:
 	void addExpression(Expression *exp);
 	vector<Expression*> expressions;
 	Token *resultToken;
+	enum ExpressionType type;
 private:
 
 };

@@ -38,6 +38,7 @@ IntegerExpression::IntegerExpression(Token *tok) {
 	}
 	this->integerValue = this->token->getIntValue();
 	this->token->setKillable(false);
+	this->type = INTEGER_EXPRESSION;
 }
 
 IntegerExpression::~IntegerExpression() {
@@ -45,17 +46,14 @@ IntegerExpression::~IntegerExpression() {
 }
 
 Token *IntegerExpression::eval(Environment *env){
-	//this->token->setIntValue(this->integerValue);
-	//this->token->IncreaseReferences();
 	return this->token;
-	//Token *tok = env->newToken(this->integerValue, INTEGER);
-	//tok->setKillable(true);
-	//return(tok);
 }
 
 
 void IntegerExpression::emitCpp(stringstream *ss){
+	(*ss)<<  "(new IntegerExpression(new Token(";
 	(*ss)<< this->integerValue;
+	(*ss)<< ", INTEGER)))";
 }
 
 
@@ -69,6 +67,7 @@ FloatExpression::FloatExpression(Token *tok) {
 	this->token = tok;
 	this->floatValue = tok->getFloatValue();
 	this->token->setKillable(false);
+	this->type = FLOAT_EXPRESSION;
 }
 
 FloatExpression::~FloatExpression() {
@@ -76,16 +75,13 @@ FloatExpression::~FloatExpression() {
 }
 
 Token *FloatExpression::eval(Environment *env){
-	//this->token->setFloatValue(this->floatValue);
-	//this->token->IncreaseReferences();
 	return(this->token);
-	//Token *tok = env->newToken(this->floatValue, FLOAT);
-	//tok->setKillable(true);
-	//return(tok);
 }
 
 void FloatExpression::emitCpp(stringstream *ss){
+	(*ss)<<  "(new FloatExpression(new Token(";
 	(*ss)<< this->floatValue;
+	(*ss)<< ", FLOAT)))";
 }
 
 
@@ -93,6 +89,7 @@ StringExpression::StringExpression(Token *tok) {
 	this->stringValue = string(tok->getContent());
 	this->stringToken = tok;
 	this->stringToken->setKillable(false);
+	this->type = STRING_EXPRESSION;
 }
 
 StringExpression::~StringExpression() {
@@ -110,13 +107,16 @@ Token *StringExpression::eval(Environment *env){
 
 
 void StringExpression::emitCpp(stringstream *ss){
-	(*ss) << "\"" << this->stringToken->getContent() << "\"";
+	(*ss)<<  "(new FloatExpression(new Token(";
+	(*ss)<< "\"" << this->stringToken->getContent() << "\"";
+	(*ss)<< ", STRING)))";
 }
 
 
 IdentifierExpression::IdentifierExpression(Token *tok) {
 	this->stringToken = tok;
 	tok->setKillable(false);
+	this->type = IDENTIFIER_EXPRESSION;
 }
 
 IdentifierExpression::~IdentifierExpression() {

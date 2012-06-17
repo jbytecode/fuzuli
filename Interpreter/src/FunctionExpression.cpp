@@ -70,6 +70,7 @@ Token *FunctionCallExpression::evalForClass(Environment* env) {
 	string _fun = fullname.substr(fullname.find('.', 0) + 1,
 			fullname.length() - 1);
 	Token *obj = env->getVariable(_object.c_str());
+
 	object_env = ((Environment*) (obj->object))->next;
 
 	stringstream str_func_name;
@@ -107,7 +108,6 @@ Token *FunctionCallExpression::evalForClass(Environment* env) {
 
 Token *FunctionCallExpression::eval(Environment *env) {
 	int paramscount = this->expressions.size() - 1;
-	Environment *funcEnvironment = env->createNext();
 	Token *result;
 	Token *fname = ((IdentifierExpression*) this->expressions[0])->stringToken;
 	stringstream str_func_name;
@@ -123,7 +123,7 @@ Token *FunctionCallExpression::eval(Environment *env) {
 			exit(-1);
 		}
 	}
-
+	Environment *funcEnvironment = env->createNext();
 	ParamsExpression *paramsExpr = (ParamsExpression*) func->params;
 	paramsExpr->eval(env);
 	for (unsigned int i = 0; i < paramsExpr->paramNames.size(); i++) {

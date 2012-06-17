@@ -48,9 +48,9 @@ Token *LetExpression::eval(Environment *env) {
 
 void LetExpression::emitCpp(stringstream *ss) {
 	dynamic_cast<CppEmitter*>(this->expressions[0])->emitCpp(ss);
-	(*ss) << "=";
+	(*ss) << " = ";
 	dynamic_cast<CppEmitter*>(this->expressions[1])->emitCpp(ss);
-	(*ss) << ";";
+	(*ss) << "->eval(env)";
 	(*ss) << endl;
 }
 
@@ -77,9 +77,9 @@ Token *DefExpression::eval(Environment *env) {
 }
 
 void DefExpression::emitCpp(stringstream *ss) {
-	(*ss) << "[TYPE] ";
+	(*ss) << "Token* ";
 	dynamic_cast<CppEmitter*>(this->expressions[0])->emitCpp(ss);
-	(*ss) << ";" << endl;
+	(*ss) << " = NULL;" << endl;
 }
 
 CloneExpression::CloneExpression(vector<Expression*> expr) {

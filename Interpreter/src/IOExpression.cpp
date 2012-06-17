@@ -71,9 +71,12 @@ Token *PrintExpression::eval(Environment *env) {
 }
 
 void PrintExpression::emitCpp(stringstream *ss) {
-	(*ss) << "print(";
+	(*ss) << "INTERNAL_FUZULI_FUNCTION(env, \"print\", ";
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
 		dynamic_cast<CppEmitter*>(this->expressions[i])->emitCpp(ss);
+		if(i != this->expressions.size() -1){
+			(*ss) << ", ";
+		}
 	}
 	(*ss) << ");" << endl;
 }

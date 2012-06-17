@@ -178,7 +178,6 @@ void OrExpression::emitCpp(stringstream *ss) {
 
 PlusExpression::PlusExpression(vector<Expression *> expr) {
 	this->expressions = expr;
-
 }
 
 PlusExpression::~PlusExpression() {
@@ -197,14 +196,15 @@ Token *PlusExpression::eval(Environment *env) {
 }
 
 void PlusExpression::emitCpp(stringstream *ss) {
-	(*ss) << "(";
+	(*ss) << "(new PlusExpression("<<this->expressions.size()<<",";
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
 		CppEmitter *ce = dynamic_cast<CppEmitter*>(this->expressions[i]);
 		ce->emitCpp(ss);
-		if (i != this->expressions.size() - 1)
-			(*ss) << "+";
+		if (i!=this->expressions.size()-1){
+			(*ss)<<", ";
+		}
 	}
-	(*ss) << ")";
+	(*ss) << ")->eval(env);";
 }
 
 IncExpression::IncExpression(vector<Expression *> expr) {
@@ -365,7 +365,7 @@ Token *LessExpression::eval(Environment *env) {
 void LessExpression::emitCpp(stringstream *ss) {
 	CppEmitter *emitter = dynamic_cast<CppEmitter*>(this->expressions[0]);
 	emitter->emitCpp(ss);
-	(*ss) << " < ";
+	(*ss) << "->getFloatValue() < ";
 	emitter = dynamic_cast<CppEmitter*>(this->expressions[1]);
 	emitter->emitCpp(ss);
 }

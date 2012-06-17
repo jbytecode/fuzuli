@@ -1,24 +1,15 @@
-(require "/usr/lib/fuzuli/nfl/types.nfl")
-(require "/usr/lib/fuzuli/nfl/math.nfl")
+(let result (CPlusPlus "
 
-
-(let a "3.14")
-(let b a)
-(type b FLOAT)
-
-(if (and (= b 3.14) (= (typeof b) FLOAT))
-    (print "PASSED!\n")
-    (print "ERROR\n")
+(def a INTEGER)
+(def b FLOAT)
+(let a 3)
+(let b 4.1)
+(let c (+ a b))
+(if (< c 5)
+	(print \"Ok\" 5 6 1)
+	(print \"Ih ıh\")
 )
 
+"))
 
-
-(let h PI)
-(type h INTEGER)
-
-(if (and (= h 3) (= (typeof h) INTEGER))
-    (print "PASSED!\n")
-    (print "ERROR\n")
-)
-
-(print a)
+(print result)

@@ -19,6 +19,7 @@
 #include "../include/FuzuliTypes.h"
 #include <vector>
 #include <sstream>
+#include <stdarg.h>
 
 namespace fuzuli {
 
@@ -30,6 +31,16 @@ Expression::Expression() {
 
 Expression::~Expression() {
 
+}
+
+Expression::Expression(unsigned int count, ...){
+	va_list list;
+	va_start(list, count);
+	for (unsigned int i=0;i<count;i++){
+		Expression *exp = va_arg(list, Expression*);
+		this->expressions.push_back(exp);
+	}
+	va_end(list);
 }
 
 void Expression::addExpression(Expression *exp){
