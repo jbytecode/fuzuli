@@ -37,6 +37,7 @@
 								<option id="gnu.cpp.compiler.option.debugging.level.826383844" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.405433014" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/usr/include/tcl"/>
+									<listOptionValue builtIn="false" value="/usr/include/FL"/>
 									<listOptionValue builtIn="false" value="../../Interpreter/include/"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.other.pic.1476264035" name="Position Independent Code (-fPIC)" superClass="gnu.cpp.compiler.option.other.pic" value="true" valueType="boolean"/>
@@ -54,6 +55,7 @@
 								</option>
 								<option id="gnu.cpp.link.option.libs.336608579" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="m"/>
+									<listOptionValue builtIn="false" value="fltk"/>
 									<listOptionValue builtIn="false" value="ncurses"/>
 									<listOptionValue builtIn="false" value="form"/>
 									<listOptionValue builtIn="false" value="ssl"/>

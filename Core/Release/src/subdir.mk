@@ -8,6 +8,7 @@ CPP_SRCS += \
 ../src/Math.cpp \
 ../src/MySql.cpp \
 ../src/TclTk.cpp \
+../src/fltk.cpp \
 ../src/gd.cpp \
 ../src/ncurses.cpp \
 ../src/net.cpp \
@@ -19,6 +20,7 @@ OBJS += \
 ./src/Math.o \
 ./src/MySql.o \
 ./src/TclTk.o \
+./src/fltk.o \
 ./src/gd.o \
 ./src/ncurses.o \
 ./src/net.o \
@@ -30,6 +32,7 @@ CPP_DEPS += \
 ./src/Math.d \
 ./src/MySql.d \
 ./src/TclTk.d \
+./src/fltk.d \
 ./src/gd.d \
 ./src/ncurses.d \
 ./src/net.d \
@@ -41,7 +44,7 @@ CPP_DEPS += \
 src/%.o: ../src/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross G++ Compiler'
-	g++ -I/usr/include/tcl -I../../Interpreter/include/ -O3 -Wall -c -fmessage-length=0 -fPIC -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -I/usr/include/tcl -I/usr/include/FL -I../../Interpreter/include/ -O3 -Wall -c -fmessage-length=0 -fPIC -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

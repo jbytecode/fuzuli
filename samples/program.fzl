@@ -1,12 +1,25 @@
-(require "/usr/lib/fuzuli/nfl/vga.nfl")
-(require "/usr/lib/fuzuli/nfl/io.nfl")
+(require "/usr/lib/fuzuli/nfl/fltk.nfl")
 
-(vga_init)
-(vga_setmode 12)
-(vga_setcolor 2)
-(vga_drawpixel 100 100)
-(vga_drawpixel 101 100)
-(vga_drawpixel 102 100)
-(vga_drawpixel 103 100)
-(sleep 5000000)
-(vga_setmode TEXT)
+(function button_event (params event)
+	(block
+		(print "Button event:\n")
+		(print event "\n")
+	)
+)
+
+
+(let form1 (form_new 300 300 "Hello Fuzuli GUI"))
+
+(form_begin form1)
+
+(let but1 (button_new 20 20 200 50 "Click here"))
+(let but2 (button_new 20 80 200 50 "Do not click here"))
+
+
+(form_add form1 but1)
+(form_add form1 but2)
+
+(form_end form1)
+
+(form_show form1)
+(main_loop)

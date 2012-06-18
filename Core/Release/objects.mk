@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -lm -lncurses -lform -lssl -lcrypto -lsocket -ltk -lgd -lmysqlclient -ltcl
+LIBS := -lm -lfltk -lncurses -lform -lssl -lcrypto -lsocket -ltk -lgd -lmysqlclient -ltcl
 
