@@ -184,3 +184,22 @@
 	(return (C ncurses_lib "COLOR_PAIRd"  num))
 )
 
+(function new_field (params height width y x a b)
+	(return (C ncurses_lib "newfieldd" height width y x a b))
+)
+
+(function new_form (params fields)
+	(return (C ncurses_lib "newformd" fields))
+)
+
+(function post_form (params form)
+	(return (C ncurses_lib "postformd" form))
+)
+
+(function form_driver (params form ch)
+	(return (C ncurses_lib "formdriverd" form ch))
+)
+
+(function mvprintw (params y x str)
+	(return (C ncurses_lib "mvprintwd" y x str))
+)

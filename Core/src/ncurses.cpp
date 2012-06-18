@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <cmath>
 #include <ncurses.h>
+#include <form.h>
 
 using namespace std;
 using namespace fuzuli;
@@ -70,6 +71,63 @@ Token *mvwaddstrd(Token *p, Environment *env);
 Token *wattrond(Token *p, Environment *env);
 Token *wattroffd(Token *p, Environment *env);
 Token *COLOR_PAIRd(Token *p, Environment *env);
+Token *newfieldd(Token *p, Environment *env);
+Token *newformd(Token *p, Environment *env);
+Token *postformd(Token *p, Environment *env);
+Token *formdriverd(Token *p, Environment *env);
+Token *mvprintwd(Token *p, Environment *env);
+}
+
+ThreeParameters
+Token *mvprintwd(Token *p, Environment *env){
+	int y = p->tokens[0]->getIntValue();
+	int x = p->tokens[1]->getIntValue();
+	mvprintw(y,x,p->tokens[2]->getContent());
+	return(Token::NULL_TOKEN);
+}
+
+TwoParameters
+Token *formdriverd (Token *p, Environment *env){
+	FORM *form = (FORM*)p->tokens[0]->object;
+	int ch = p->tokens[1]->getIntValue();
+	form_driver(form, ch);
+	return(Token::NULL_TOKEN);
+}
+
+
+OneParameters
+Token *postformd(Token *p, Environment *env){
+	FORM *form = (FORM*)p->tokens[0]->object;
+	post_form(form);
+	return(Token::NULL_TOKEN);
+}
+
+OneParameters
+Token *newformd(Token *p, Environment *env){
+	int fieldcount = p->tokens[0]->tokens.size();
+	FIELD **fields = new FIELD*[fieldcount+1];
+	for (int i=0;i<fieldcount;i++){
+		fields[i] = (FIELD*)p->tokens[0]->tokens[i]->object;
+	}
+	fields[fieldcount] = NULL;
+	FORM *form = new_form(fields);
+	Token *result = env->newToken("NcursesForm",COBJECT);
+	result->object = form;
+	return(result);
+}
+
+MoreThanThreeParameters
+Token *newfieldd(Token *p, Environment *env){
+	int height = p->tokens[0]->getIntValue();
+	int width = p->tokens[1]->getIntValue();
+	int y = p->tokens[2]->getIntValue();
+	int x = p->tokens[3]->getIntValue();
+	int a = p->tokens[4]->getIntValue();
+	int b = p->tokens[5]->getIntValue();
+	FIELD *field = new_field(height, width, y, x, a,b);
+	Token *result = env->newToken("@NcursesField",COBJECT);
+	result->object = field;
+	return(result);
 }
 
 Token *COLOR_PAIRd(Token *p, Environment *env){
@@ -354,8 +412,8 @@ Token *endwind(Token *p, Environment *env) {
 }
 
 Token *getchd(Token *p, Environment *env) {
-	getch();
-	return (Token::NULL_TOKEN);
+	int ch = getch();
+	return (env->newToken(ch, INTEGER));
 }
 
 Token *refreshd(Token *p, Environment *env) {

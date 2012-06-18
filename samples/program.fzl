@@ -1,15 +1,12 @@
-(let result (CPlusPlus "
+(require "/usr/lib/fuzuli/nfl/vga.nfl")
+(require "/usr/lib/fuzuli/nfl/io.nfl")
 
-(def a INTEGER)
-(def b FLOAT)
-(let a 3)
-(let b 4.1)
-(let c (+ a b))
-(if (< c 5)
-	(print \"Ok\" 5 6 1)
-	(print \"Ih ıh\")
-)
-
-"))
-
-(print result)
+(vga_init)
+(vga_setmode 12)
+(vga_setcolor 2)
+(vga_drawpixel 100 100)
+(vga_drawpixel 101 100)
+(vga_drawpixel 102 100)
+(vga_drawpixel 103 100)
+(sleep 5000000)
+(vga_setmode TEXT)
