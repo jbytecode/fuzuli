@@ -1,49 +1,33 @@
-(require "/usr/lib/fuzuli/nfl/gui.nfl")
-(tcltk_init)
+(require "/usr/lib/fuzuli/nfl/fltk.nfl")
 
-
-
-
-
-(tk_button 
-	(list
-		(tk_name "savebutton")
-		(tk_text "Save")
-		(tk_padx 150)
-		(tk_pady 25)
-		(tk_command "Save")
-	)
-)
-
-(tk_button 
-	(list
-		(tk_name "loadbutton")
-		(tk_text "Load")
-		(tk_padx 150)
-		(tk_pady 25)
-		(tk_command "Load")
-	)
-)
-
-(function Save (params)
+(function event (params event)
 	(block
-		(print "Hello from Save!\n")
-		(return ":)")
+		(print event "\n")
+		(if (= (nth event 1) "+")
+			(let val (+ val 1))
+			(let val (- val 1))
+		)
+		(progress_setvalue progress1 val)
+		(dump)
 	)
 )
-(function Load (params)
-	(block
-		(print "Hello from Load!\n")
-		(return ":)")
-	)
-)
 
 
+(let val 0)
 
+(let form1 (window_new 230 230 "Hello Fuzuli GUI"))
+(window_begin form1)
 
-(tk_pack "loadbutton")
-(tk_pack "savebutton")
-	
+(let but1 (button_new 10 20 200 50 "-"))
+(let but2 (button_new 10 100 200 50 "+"))
+(let progress1 (progress_new 10 180 200 20 "this is progress bar"))
+(widget_backgroundcolor progress1 0xab)
 
-(tcltk_mainloop)
+(window_add form1 but1)
+(window_add form1 but2)
+(window_add form1 progress1)
+(window_end form1)
+
+(window_show form1)
+(main_loop)
 

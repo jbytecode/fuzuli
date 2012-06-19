@@ -6,6 +6,7 @@
 #include <Fl_Widget.H>
 #include <Fl_Input.H>
 #include <Fl_Progress.H>
+#include <Fl_Dial.H>
 
 namespace fuzuli {
 
@@ -52,6 +53,16 @@ public:
 			Environment *env) : Fl_Progress(x,y,width,height,t){
 		this->environment = env;
 		this->ftype = string("Progress");
+	};
+};
+
+
+class FuzuliDial: public FuzuliWidgetInfo, public Fl_Dial {
+public:
+	FuzuliDial(int x, int y, int width, int height, const char *t,
+			Environment *env) : Fl_Dial(x,y,width,height,t){
+		this->environment = env;
+		this->ftype = string("Dial");
 	};
 };
 

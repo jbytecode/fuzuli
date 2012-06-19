@@ -80,6 +80,25 @@
 	(return (C window_lib "progress_setvalue" progress value))
 )
 
+
+(function dial_new (params x y width height title)
+	(return (C window_lib "dial_new" x y width height title))
+)
+
+(function dial_setvalue (params dial value)
+	(return (C window_lib "dial_setvalue" dial value))
+)
+
+
+(function dial_getvalue (params dial)
+	(return (C window_lib "dial_getvalue" dial))
+)
+
+
 (function widget_backgroundcolor (params widget color)
 	(return (C window_lib "widget_backgroundcolor" widget color))
+)
+
+(function widget_foregroundcolor (params widget color)
+	(return (C window_lib "widget_foregroundcolor" widget color))
 )

@@ -89,8 +89,11 @@ Token *CExpression::eval(Environment *env) {
 		cout << dlerror() << endl;
 		exit(-2);
 	}
+
 	Token *result = function(params, env);
-	//cout << "C result "<<result->getContent()<<" as registered as "<<ss.str().c_str()<<endl;
+	result->IncreaseReferences();
+	env->GC();
+	result->ReduceReferences();
 	return (result);
 }
 

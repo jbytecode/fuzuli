@@ -25,7 +25,9 @@
 #include <Fl_Button.H>
 #include <Fl_Widget.H>
 #include <Fl_Input.H>
+#include <Fl_Dial.H>
 #include <fl_ask.H>
+
 
 namespace fuzuli {
 
@@ -50,10 +52,15 @@ Token *progress_new(Token*p, Environment *env);
 Token *progress_setvalue(Token *p, Environment *env);
 Token *progress_getvalue(Token *p, Environment *env);
 
-Token *widget_backgroundcolor (Token *p, Environment *env);
+Token *dial_new(Token *p, Environment *env);
+Token *dial_setvalue(Token *p, Environment *env);
+Token *dial_getvalue(Token *p, Environment *env);
 
-Token *messagebox (Token *p, Environment *env);
-Token *inputbox (Token *p, Environment *env);
+Token *widget_backgroundcolor(Token *p, Environment *env);
+Token *widget_foregroundcolor(Token *p, Environment *env);
+
+Token *messagebox(Token *p, Environment *env);
+Token *inputbox(Token *p, Environment *env);
 
 }
 
@@ -166,41 +173,74 @@ void default_callback(Fl_Widget* widget, void* p) {
 	v.push_back(lst);
 	FunctionCallExpression *fce = new FunctionCallExpression(v);
 	fce->eval(env);
-
 }
 
-Token *inputbox (Token *p, Environment *env){
-	const char *result_cstr = fl_input(p->tokens[0]->getContent(), p->tokens[1]->getContent());
-	return(env->newToken(result_cstr,STRING));
+Token *inputbox(Token *p, Environment *env) {
+	const char *result_cstr = fl_input(p->tokens[0]->getContent(),
+			p->tokens[1]->getContent());
+	return (env->newToken(result_cstr, STRING));
 }
 
-
-Token *messagebox (Token *p, Environment *env){
+Token *messagebox(Token *p, Environment *env) {
 	fl_message("%s", p->tokens[0]->getContent());
-	return(Token::NULL_TOKEN);
-}
-
-Token *widget_backgroundcolor (Token *p, Environment *env){
-	Fl_Widget *widget = (Fl_Widget*)p->tokens[0]->object;
-	widget->color2( (unsigned int)p->tokens[1]->getIntValue());
-	return(Token::NULL_TOKEN);
+	return (Token::NULL_TOKEN);
 }
 
 
-Token *progress_getvalue(Token *p, Environment *env){
-	FuzuliProgress *progress = (FuzuliProgress*)p->tokens[0]->object;
+
+Token *widget_backgroundcolor(Token *p, Environment *env) {
+	Fl_Widget *widget = (Fl_Widget*) p->tokens[0]->object;
+	widget->color2((unsigned int) p->tokens[1]->getIntValue());
+	return (Token::NULL_TOKEN);
+}
+
+Token *widget_foregroundcolor(Token *p, Environment *env) {
+	Fl_Widget *widget = (Fl_Widget*) p->tokens[0]->object;
+	widget->color((unsigned int) p->tokens[1]->getIntValue());
+	return (Token::NULL_TOKEN);
+}
+
+
+Token *dial_new(Token *p, Environment *env) {
+	int x = p->tokens[0]->getIntValue();
+	int y = p->tokens[1]->getIntValue();
+	int w = p->tokens[2]->getIntValue();
+	int h = p->tokens[3]->getIntValue();
+	const char *title = p->tokens[4]->getContent();
+	FuzuliDial *dial = new FuzuliDial(x, y, w, h, title, env);
+	dial->callback(default_callback, env);
+	Token *result = env->newToken("@Dial", COBJECT);
+	result->object = dial;
+	return (result);
+}
+
+Token *progress_getvalue(Token *p, Environment *env) {
+	FuzuliProgress *progress = (FuzuliProgress*) p->tokens[0]->object;
 	Token *result = env->newToken(progress->value(), FLOAT);
-	return(result);
+	return (result);
 }
 
-Token *progress_setvalue(Token *p, Environment *env){
-	FuzuliProgress *progress = (FuzuliProgress*)p->tokens[0]->object;
+Token *progress_setvalue(Token *p, Environment *env) {
+	FuzuliProgress *progress = (FuzuliProgress*) p->tokens[0]->object;
 	double value = p->tokens[1]->getFloatValue();
 	progress->value(value);
-	return(Token::NULL_TOKEN);
+	return (Token::NULL_TOKEN);
 }
 
-Token *progress_new(Token *p, Environment *env){
+Token *dial_setvalue(Token *p, Environment *env) {
+	FuzuliDial *dial = (FuzuliDial*) p->tokens[0]->object;
+	double value = p->tokens[1]->getFloatValue();
+	dial->value(value);
+	return (Token::NULL_TOKEN);
+}
+
+Token *dial_getvalue(Token *p, Environment *env) {
+	FuzuliDial *dial = (FuzuliDial*) p->tokens[0]->object;
+	Token *result = env->newToken(dial->value(), FLOAT);
+	return (result);
+}
+
+Token *progress_new(Token *p, Environment *env) {
 	int x = p->tokens[0]->getIntValue();
 	int y = p->tokens[1]->getIntValue();
 	int w = p->tokens[2]->getIntValue();
@@ -226,17 +266,17 @@ Token *button_new(Token *p, Environment *env) {
 	return (result);
 }
 
-Token *input_gettext(Token *p, Environment *env){
+Token *input_gettext(Token *p, Environment *env) {
 	FuzuliInput *input = (FuzuliInput*) p->tokens[0]->object;
-		Token *result = env->newToken(input->value(), STRING);
-		return(result);
+	Token *result = env->newToken(input->value(), STRING);
+	return (result);
 }
 
-Token *input_settext(Token *p, Environment *env){
+Token *input_settext(Token *p, Environment *env) {
 	FuzuliInput *input = (FuzuliInput*) p->tokens[0]->object;
 	const char *text = p->tokens[1]->getContent();
 	input->value(text);
-	return(Token::NULL_TOKEN);
+	return (Token::NULL_TOKEN);
 }
 
 Token *input_new(Token *p, Environment *env) {
@@ -294,6 +334,7 @@ Token *window_new_3(Token *p, Environment *env) {
 	const char* title = p->tokens[2]->getContent();
 	FuzuliWindow *win = new FuzuliWindow(w, h, title, env);
 	Token *result = env->newToken("@FLWindow", COBJECT);
+	win->callback(default_callback, env);
 	result->object = win;
 	return (result);
 }
