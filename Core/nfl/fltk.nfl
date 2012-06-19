@@ -1,52 +1,55 @@
-/*
- * fuzuli : A general purpose interpreter
- * Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
- 	
-	(let window_lib (dynload "FuzuliCore"))
-	
-	(function main_loop (params)
-		(C window_lib "form_main_loop")
-	)
-	
-	(function form_new (params width height title)
-		(return (C window_lib "form_new_3" width height title))
-	)
-	
-	(function form_begin (params form)
-		(return (C window_lib "form_begin" form))
-	)
-	
-	(function form_end (params form)
-		(return (C window_lib "form_end" form))
-	)
-	
-	(function form_show (params form)
-		(return (C window_lib "form_show" form))
-	)
-	
-	(function form_add (params form widget)
-		(return (C window_lib "form_add" form widget))
-	)		
-	
-	(function button_new (params x y width height title)
-		(return (C window_lib "button_new" x y width height title))
-	)
-	
-	
+#
+# fuzuli : A general purpose interpreter
+# Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+ 
+(let window_lib (dynload "FuzuliCore"))
+
+(function main_loop (params)
+	(C window_lib "window_main_loop")
+)
+
+(function window_new (params width height title)
+	(return (C window_lib "window_new_3" width height title))
+)
+
+(function window_begin (params form)
+	(return (C window_lib "window_begin" form))
+)
+
+(function window_end (params form)
+	(return (C window_lib "window_end" form))
+)
+
+(function window_show (params form)
+	(return (C window_lib "window_show" form))
+)
+
+(function window_add (params form btn)
+	(return (C window_lib "window_add" form btn))
+)
+
+(function button_new (params x y width height title)
+	(return (C window_lib "button_new" x y width height title))
+)
+
+(function input_new (params x y width height title)
+	(return (C window_lib "input_new" x y width height title))
+)
+
 
 
 
