@@ -7,7 +7,6 @@ CPP_SRCS += \
 ../src/IO.cpp \
 ../src/Math.cpp \
 ../src/MySql.cpp \
-../src/TclTk.cpp \
 ../src/fltk.cpp \
 ../src/gd.cpp \
 ../src/ncurses.cpp \
@@ -19,7 +18,6 @@ OBJS += \
 ./src/IO.o \
 ./src/Math.o \
 ./src/MySql.o \
-./src/TclTk.o \
 ./src/fltk.o \
 ./src/gd.o \
 ./src/ncurses.o \
@@ -31,7 +29,6 @@ CPP_DEPS += \
 ./src/IO.d \
 ./src/Math.d \
 ./src/MySql.d \
-./src/TclTk.d \
 ./src/fltk.d \
 ./src/gd.d \
 ./src/ncurses.d \

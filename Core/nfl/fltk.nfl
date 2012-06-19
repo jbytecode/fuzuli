@@ -18,6 +18,15 @@
  
 (let window_lib (dynload "FuzuliCore"))
 
+(function messagebox (params msg)
+	(return (C window_lib "messagebox" msg))
+)
+
+
+(function inputbox (params text default)
+	(return (C window_lib "inputbox" text default))
+)
+
 (function main_loop (params)
 	(C window_lib "window_main_loop")
 )
@@ -71,3 +80,6 @@
 	(return (C window_lib "progress_setvalue" progress value))
 )
 
+(function widget_backgroundcolor (params widget color)
+	(return (C window_lib "widget_backgroundcolor" widget color))
+)

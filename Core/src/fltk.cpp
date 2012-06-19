@@ -25,6 +25,7 @@
 #include <Fl_Button.H>
 #include <Fl_Widget.H>
 #include <Fl_Input.H>
+#include <fl_ask.H>
 
 namespace fuzuli {
 
@@ -48,6 +49,12 @@ Token *input_gettext(Token *p, Environment *env);
 Token *progress_new(Token*p, Environment *env);
 Token *progress_setvalue(Token *p, Environment *env);
 Token *progress_getvalue(Token *p, Environment *env);
+
+Token *widget_backgroundcolor (Token *p, Environment *env);
+
+Token *messagebox (Token *p, Environment *env);
+Token *inputbox (Token *p, Environment *env);
+
 }
 
 void default_callback(Fl_Widget* widget, void* p) {
@@ -161,6 +168,24 @@ void default_callback(Fl_Widget* widget, void* p) {
 	fce->eval(env);
 
 }
+
+Token *inputbox (Token *p, Environment *env){
+	const char *result_cstr = fl_input(p->tokens[0]->getContent(), p->tokens[1]->getContent());
+	return(env->newToken(result_cstr,STRING));
+}
+
+
+Token *messagebox (Token *p, Environment *env){
+	fl_message("%s", p->tokens[0]->getContent());
+	return(Token::NULL_TOKEN);
+}
+
+Token *widget_backgroundcolor (Token *p, Environment *env){
+	Fl_Widget *widget = (Fl_Widget*)p->tokens[0]->object;
+	widget->color2( (unsigned int)p->tokens[1]->getIntValue());
+	return(Token::NULL_TOKEN);
+}
+
 
 Token *progress_getvalue(Token *p, Environment *env){
 	FuzuliProgress *progress = (FuzuliProgress*)p->tokens[0]->object;
