@@ -89,11 +89,21 @@
 	(return (C window_lib "dial_setvalue" dial value))
 )
 
-
 (function dial_getvalue (params dial)
 	(return (C window_lib "dial_getvalue" dial))
 )
 
+(function checkbox_new (params x y width height title)
+	(return (C window_lib "checkbox_new" x y width height title))
+)
+
+(function checkbox_setvalue (params cbox value)
+	(return (C window_lib "checkbox_setvalue" cbox value))
+)
+
+(function checkbox_getvalue (params cbox)
+	(return (C window_lib "checkbox_getvalue" cbox))
+)
 
 (function widget_backgroundcolor (params widget color)
 	(return (C window_lib "widget_backgroundcolor" widget color))

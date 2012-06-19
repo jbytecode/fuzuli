@@ -56,6 +56,12 @@ Token *dial_new(Token *p, Environment *env);
 Token *dial_setvalue(Token *p, Environment *env);
 Token *dial_getvalue(Token *p, Environment *env);
 
+
+Token *checkbox_new(Token *p, Environment *env);
+Token *checkbox_setvalue(Token *p, Environment *env);
+Token *checkbox_getvalue(Token *p, Environment *env);
+
+
 Token *widget_backgroundcolor(Token *p, Environment *env);
 Token *widget_foregroundcolor(Token *p, Environment *env);
 
@@ -198,6 +204,32 @@ Token *widget_foregroundcolor(Token *p, Environment *env) {
 	Fl_Widget *widget = (Fl_Widget*) p->tokens[0]->object;
 	widget->color((unsigned int) p->tokens[1]->getIntValue());
 	return (Token::NULL_TOKEN);
+}
+
+Token *checkbox_new(Token *p, Environment *env){
+	int x = p->tokens[0]->getIntValue();
+		int y = p->tokens[1]->getIntValue();
+		int w = p->tokens[2]->getIntValue();
+		int h = p->tokens[3]->getIntValue();
+		const char *title = p->tokens[4]->getContent();
+		FuzuliCheckButton *check = new FuzuliCheckButton(x, y, w, h, title, env);
+		check->callback(default_callback, env);
+		Token *result = env->newToken("@Check", COBJECT);
+		result->object = check;
+		return (result);
+}
+
+Token *checkbox_setvalue(Token *p, Environment *env){
+	FuzuliCheckButton *check = (FuzuliCheckButton*) p->tokens[0]->object;
+		Token *result = env->newToken(check->value(), INTEGER);
+		return (result);
+}
+
+
+Token *checkbox_getvalue(Token *p, Environment *env){
+	FuzuliCheckButton *check = (FuzuliCheckButton*) p->tokens[0]->object;
+		Token *result = env->newToken(check->value(), INTEGER);
+		return (result);
 }
 
 

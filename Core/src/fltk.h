@@ -7,6 +7,7 @@
 #include <Fl_Input.H>
 #include <Fl_Progress.H>
 #include <Fl_Dial.H>
+#include <Fl_Check_Button.H>
 
 namespace fuzuli {
 
@@ -61,6 +62,15 @@ class FuzuliDial: public FuzuliWidgetInfo, public Fl_Dial {
 public:
 	FuzuliDial(int x, int y, int width, int height, const char *t,
 			Environment *env) : Fl_Dial(x,y,width,height,t){
+		this->environment = env;
+		this->ftype = string("Dial");
+	};
+};
+
+class FuzuliCheckButton: public FuzuliWidgetInfo, public Fl_Check_Button {
+public:
+	FuzuliCheckButton(int x, int y, int width, int height, const char *t,
+			Environment *env) : Fl_Check_Button(x,y,width,height,t){
 		this->environment = env;
 		this->ftype = string("Dial");
 	};
