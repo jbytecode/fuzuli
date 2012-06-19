@@ -61,10 +61,8 @@
 									<listOptionValue builtIn="false" value="ssl"/>
 									<listOptionValue builtIn="false" value="crypto"/>
 									<listOptionValue builtIn="false" value="socket"/>
-									<listOptionValue builtIn="false" value="tk"/>
 									<listOptionValue builtIn="false" value="gd"/>
 									<listOptionValue builtIn="false" value="mysqlclient"/>
-									<listOptionValue builtIn="false" value="tcl"/>
 								</option>
 								<option id="gnu.cpp.link.option.userobjs.2102600690" name="Other objects" superClass="gnu.cpp.link.option.userobjs"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1844647046" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">

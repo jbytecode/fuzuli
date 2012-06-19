@@ -5,6 +5,7 @@
 #include <Fl_Button.H>
 #include <Fl_Widget.H>
 #include <Fl_Input.H>
+#include <Fl_Progress.H>
 
 namespace fuzuli {
 
@@ -42,6 +43,15 @@ public:
 			Environment *env) : Fl_Input(x, y, width, height, t) {
 		this->environment = env;
 		this->ftype = string("Input");
+	};
+};
+
+class FuzuliProgress: public FuzuliWidgetInfo, public Fl_Progress {
+public:
+	FuzuliProgress(int x, int y, int width, int height, const char *t,
+			Environment *env) : Fl_Progress(x,y,width,height,t){
+		this->environment = env;
+		this->ftype = string("Progress");
 	};
 };
 

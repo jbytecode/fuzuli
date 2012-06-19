@@ -40,7 +40,14 @@ Token *window_add(Token *p, Environment *env);
 Token *window_main_loop(Token *p, Environment *env);
 
 Token *button_new(Token *p, Environment *env);
+
 Token *input_new(Token *p, Environment *env);
+Token *input_settext(Token *p, Environment *env);
+Token *input_gettext(Token *p, Environment *env);
+
+Token *progress_new(Token*p, Environment *env);
+Token *progress_setvalue(Token *p, Environment *env);
+Token *progress_getvalue(Token *p, Environment *env);
 }
 
 void default_callback(Fl_Widget* widget, void* p) {
@@ -155,6 +162,32 @@ void default_callback(Fl_Widget* widget, void* p) {
 
 }
 
+Token *progress_getvalue(Token *p, Environment *env){
+	FuzuliProgress *progress = (FuzuliProgress*)p->tokens[0]->object;
+	Token *result = env->newToken(progress->value(), FLOAT);
+	return(result);
+}
+
+Token *progress_setvalue(Token *p, Environment *env){
+	FuzuliProgress *progress = (FuzuliProgress*)p->tokens[0]->object;
+	double value = p->tokens[1]->getFloatValue();
+	progress->value(value);
+	return(Token::NULL_TOKEN);
+}
+
+Token *progress_new(Token *p, Environment *env){
+	int x = p->tokens[0]->getIntValue();
+	int y = p->tokens[1]->getIntValue();
+	int w = p->tokens[2]->getIntValue();
+	int h = p->tokens[3]->getIntValue();
+	const char *title = p->tokens[4]->getContent();
+	FuzuliProgress *progress = new FuzuliProgress(x, y, w, h, title, env);
+	progress->callback(default_callback, env);
+	Token *result = env->newToken("@Button", COBJECT);
+	result->object = progress;
+	return (result);
+}
+
 Token *button_new(Token *p, Environment *env) {
 	int x = p->tokens[0]->getIntValue();
 	int y = p->tokens[1]->getIntValue();
@@ -166,6 +199,19 @@ Token *button_new(Token *p, Environment *env) {
 	Token *result = env->newToken("@Button", COBJECT);
 	result->object = button;
 	return (result);
+}
+
+Token *input_gettext(Token *p, Environment *env){
+	FuzuliInput *input = (FuzuliInput*) p->tokens[0]->object;
+		Token *result = env->newToken(input->value(), STRING);
+		return(result);
+}
+
+Token *input_settext(Token *p, Environment *env){
+	FuzuliInput *input = (FuzuliInput*) p->tokens[0]->object;
+	const char *text = p->tokens[1]->getContent();
+	input->value(text);
+	return(Token::NULL_TOKEN);
 }
 
 Token *input_new(Token *p, Environment *env) {

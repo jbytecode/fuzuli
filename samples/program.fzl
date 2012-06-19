@@ -2,26 +2,34 @@
 
 (function event (params event)
 	(block
-		(print "Fuzuli event:\n")
 		(print event "\n")
+		(if (= (nth event 1) "+")
+			(let val (+ val 1))
+			(let val (- val 1))
+		)
+		(progress_setvalue progress1 val)
 	)
 )
 
 
+(let val 0)
 
 (let form1 (window_new 300 300 "Hello Fuzuli GUI"))
 
 (window_begin form1)
 
 (let inp1 (input_new 90 10 180 30 "Enter name"))
-(let but1 (button_new 20 60 200 50 "Click here"))
-(let but2 (button_new 20 150 200 50 "Do not click here"))
+(let but1 (button_new 20 60 200 50 "-"))
+(let but2 (button_new 20 150 200 50 "+"))
+(let progress1 (progress_new 20 210 200 20 "this is progress bar"))
 
 (window_add form1 inp1)
 (window_add form1 but1)
 (window_add form1 but2)
-
+(window_add form1 progress1)
 (window_end form1)
 
 (window_show form1)
+
+(progress_setvalue progress1 val)
 (main_loop)
