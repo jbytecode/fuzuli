@@ -8,6 +8,7 @@
 #include <Fl_Progress.H>
 #include <Fl_Dial.H>
 #include <Fl_Check_Button.H>
+#include <Fl_Menu_Bar.H>
 
 namespace fuzuli {
 
@@ -75,6 +76,16 @@ public:
 		this->ftype = string("Dial");
 	};
 };
+
+class FuzuliMenuBar: public FuzuliWidgetInfo, public Fl_Menu_Bar {
+public:
+	FuzuliMenuBar(int x, int y, int width, int height, const char *t,
+			Environment *env) : Fl_Menu_Bar(x,y,width,height,t) {
+		this->environment = env;
+		this->ftype = string("MenuBar");
+	};
+};
+
 
 class FuzuliWindow: public FuzuliWidgetInfo, public Fl_Window {
 public:

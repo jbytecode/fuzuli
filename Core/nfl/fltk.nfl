@@ -105,6 +105,18 @@
 	(return (C window_lib "checkbox_getvalue" cbox))
 )
 
+(function menubar_new (params x y width height title)
+	(return (C window_lib "menubar_new" x y width height title))
+)
+
+(function menubar_add (params menubar path shortcut)
+	(return (C window_lib "menubar_add" menubar path shortcut))
+)
+
+(function menubar_selected (params menubar)
+	(return (C window_lib "menubar_selected" menubar))
+)
+
 (function widget_backgroundcolor (params widget color)
 	(return (C window_lib "widget_backgroundcolor" widget color))
 )
