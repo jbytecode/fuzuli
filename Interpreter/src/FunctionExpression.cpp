@@ -136,8 +136,6 @@ Token *FunctionCallExpression::eval(Environment *env) {
 	result = func->body->eval(funcEnvironment);
 	result->returnFlag = 0;
 
-	//Token *t = result->clone();
-	//t->setKillable(false);
 	result->IncreaseReferences();
 	funcEnvironment->GC();
 	result->ReduceReferences();

@@ -1,28 +1,33 @@
 (require "/usr/lib/fuzuli/nfl/fltk.nfl")
 (require "/usr/lib/fuzuli/nfl/io.nfl")
+(require "/usr/lib/fuzuli/nfl/string.nfl")
 
 (function event (params event)
 	(block
 		(print event "\n")
 		(if (= (nth event 0) "close")
 			(block (print "Exiting...") (exit 0))
-			(print (radiobutton_getvalue radio1)(radiobutton_getvalue radio2)(radiobutton_getvalue radio3)"\n")
+			(input_settext input1  
+					(strcat (list (radiobutton_getvalue radio1)
+								  (radiobutton_getvalue radio2)
+								  (radiobutton_getvalue radio3)
+								  (radiobutton_getvalue radio4)
+								  (radiobutton_getvalue radio5)
+								  (radiobutton_getvalue radio6))))
 		)
 	)
 )
 
-(let form1 (window_new 230 230 "Hello Fuzuli GUI"))
+(let form1 (window_new 230 230 "Radio Buttons"))
 (window_begin form1)
 
-(let radio1 (radiobutton_new 10 10 100 20 "radio1"))
-(let radio2 (radiobutton_new 10 30 100 20 "radio2"))
-(let radio3 (radiobutton_new 10 50 100 20 "radio3"))
+(let radio1 (radiobutton_new 60 10 100 20 "radio1"))
+(let radio2 (radiobutton_new 60 30 100 20 "radio2"))
+(let radio3 (radiobutton_new 60 50 100 20 "radio3"))
+(let radio4 (radiobutton_new 60 70 100 20 "radio4"))
+(let radio5 (radiobutton_new 60 90 100 20 "radio5"))
+(let radio6 (radiobutton_new 60 110 100 20 "radio6"))
 (let input1 (input_new 90 170 120 20 "Event"))
-
-(window_add form1 radio1)
-(window_add form1 radio2)
-(window_add form1 radio3)
-(window_add form1 input1)
 (window_end form1)
 
 (window_show form1)

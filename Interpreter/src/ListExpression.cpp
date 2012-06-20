@@ -37,6 +37,7 @@ Token *ListExpression::eval(Environment *env){
 	Token *result = env->newToken("@FuzuliList",LIST);
 	for (unsigned int i=0;i<this->expressions.size();i++){
 		Token *temp = this->expressions[i]->eval(env);
+		temp->IncreaseReferences();
 		if(temp->getType() == BREAKTOKEN) {
 			break;
 		}
