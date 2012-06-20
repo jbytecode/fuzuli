@@ -44,6 +44,12 @@ Token *window_main_loop(Token *p, Environment *env);
 
 Token *button_new(Token *p, Environment *env);
 
+Token *box_new(Token *p, Environment *env);
+
+Token *group_new(Token *p, Environment *env);
+Token *group_begin(Token *p, Environment *env);
+Token *group_end(Token *p, Environment *env);
+
 Token *input_new(Token *p, Environment *env);
 Token *input_settext(Token *p, Environment *env);
 Token *input_gettext(Token *p, Environment *env);
@@ -214,6 +220,33 @@ Token *widget_foregroundcolor(Token *p, Environment *env) {
 	widget->color((unsigned int) p->tokens[1]->getIntValue());
 	return (Token::NULL_TOKEN);
 }
+
+
+Token *group_new(Token *p, Environment *env) {
+	int x = p->tokens[0]->getIntValue();
+	int y = p->tokens[1]->getIntValue();
+	int w = p->tokens[2]->getIntValue();
+	int h = p->tokens[3]->getIntValue();
+	const char *title = p->tokens[4]->getContent();
+	FuzuliGroup *group = new FuzuliGroup(x, y, w, h, title, env);
+	group->callback(default_callback, env);
+	Token *result = env->newToken("@Group", COBJECT);
+	result->object = group;
+	return (result);
+}
+
+Token *group_begin(Token *p, Environment *env) {
+	FuzuliGroup *group = (FuzuliGroup*) p->tokens[0]->object;
+	group->begin();
+	return (Token::NULL_TOKEN);
+}
+
+Token *group_end(Token *p, Environment *env) {
+	FuzuliGroup *group = (FuzuliGroup*) p->tokens[0]->object;
+	group->end();
+	return (Token::NULL_TOKEN);
+}
+
 
 Token *checkbox_new(Token *p, Environment *env) {
 	int x = p->tokens[0]->getIntValue();
@@ -411,6 +444,20 @@ Token *texteditor_new(Token *p, Environment *env) {
 	input->callback(default_callback, env);
 	Token *result = env->newToken("@TextEditor", COBJECT);
 	result->object = input;
+	return (result);
+}
+
+
+Token *box_new(Token *p, Environment *env) {
+	int x = p->tokens[0]->getIntValue();
+	int y = p->tokens[1]->getIntValue();
+	int w = p->tokens[2]->getIntValue();
+	int h = p->tokens[3]->getIntValue();
+	const char *title = p->tokens[4]->getContent();
+	FuzuliBox *box = new FuzuliBox(x, y, w, h, title, env);
+	box->callback(default_callback, env);
+	Token *result = env->newToken("@Box", COBJECT);
+	result->object = box;
 	return (result);
 }
 

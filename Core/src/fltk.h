@@ -10,6 +10,8 @@
 #include <Fl_Check_Button.H>
 #include <Fl_Menu_Bar.H>
 #include <Fl_Text_Editor.H>
+#include <Fl_Box.H>
+#include <Fl_Group.H>
 
 namespace fuzuli {
 
@@ -104,6 +106,25 @@ public:
 			Environment *env) : Fl_Menu_Bar(x,y,width,height,t) {
 		this->environment = env;
 		this->ftype = string("MenuBar");
+	};
+};
+
+class FuzuliBox: public FuzuliWidgetInfo, public Fl_Box {
+public:
+	FuzuliBox(int x, int y, int width, int height, const char *t,
+			Environment *env) : Fl_Box(x,y,width,height,t) {
+		this->environment = env;
+		this->ftype = string("MenuBar");
+	};
+};
+
+
+class FuzuliGroup: public FuzuliWidgetInfo, public Fl_Group {
+public:
+	FuzuliGroup(int x, int y, int width, int height, const char *t,
+			Environment *env) : Fl_Group(x,y,width,height,t) {
+		this->environment = env;
+		this->ftype = string("Group");
 	};
 };
 

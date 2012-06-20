@@ -32,3 +32,4 @@
 
 (window_show form1)
 (main_loop)
+

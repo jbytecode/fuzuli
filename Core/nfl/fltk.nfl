@@ -144,6 +144,25 @@
 	(return (C window_lib "menubar_selected" menubar))
 )
 
+(function box_new (params x y width height title)
+	(return (C window_lib "box_new" x y width height title))
+)
+
+
+(function group_new (params x y width height title)
+	(return (C window_lib "group_new" x y width height title))
+)
+
+(function group_begin (params grp)
+	(return (C window_lib "group_begin" grp))
+)
+
+(function group_end (params grp)
+	(return (C window_lib "group_end" grp))
+)
+
+
+
 (function widget_backgroundcolor (params widget color)
 	(return (C window_lib "widget_backgroundcolor" widget color))
 )
