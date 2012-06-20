@@ -67,6 +67,20 @@
 	(return (C window_lib "input_settext" input text))
 )
 
+
+(function texteditor_new (params x y width height title)
+	(return (C window_lib "texteditor_new" x y width height title))
+)
+
+(function texteditor_gettext (params input)
+	(return (C window_lib "texteditor_gettext" input))
+)
+
+(function texteditor_settext (params input text)
+	(return (C window_lib "texteditor_settext" input text))
+)
+
+
 (function progress_new (params x y width height title)
 	(return (C window_lib "progress_new" x y width height title))
 )
@@ -78,6 +92,19 @@
 
 (function progress_getvalue (params progress value)
 	(return (C window_lib "progress_setvalue" progress value))
+)
+
+
+(function radiobutton_new (params x y width height title)
+	(return (C window_lib "radiobutton_new" x y width height title))
+)
+
+(function radiobutton_setvalue (params dial value)
+	(return (C window_lib "radiobutton_setvalue" dial value))
+)
+
+(function radiobutton_getvalue (params dial)
+	(return (C window_lib "radiobutton_getvalue" dial))
 )
 
 

@@ -9,6 +9,7 @@
 #include <Fl_Dial.H>
 #include <Fl_Check_Button.H>
 #include <Fl_Menu_Bar.H>
+#include <Fl_Text_Editor.H>
 
 namespace fuzuli {
 
@@ -40,6 +41,16 @@ public:
 };
 
 
+class FuzuliRadioButton: public FuzuliButton {
+public:
+	FuzuliRadioButton(int x, int y, int width, int height, const char *t,
+			Environment *env) : FuzuliButton(x, y, width, height, t, env) {
+		this->type(FL_RADIO_BUTTON);
+	};
+};
+
+
+
 class FuzuliInput: public FuzuliWidgetInfo, public Fl_Input {
 public:
 	FuzuliInput(int x, int y, int width, int height, const char *t,
@@ -48,6 +59,16 @@ public:
 		this->ftype = string("Input");
 	};
 };
+
+class FuzuliTextEditor: public FuzuliWidgetInfo, public Fl_Text_Editor {
+public:
+	FuzuliTextEditor(int x, int y, int width, int height, const char *t,
+			Environment *env) : Fl_Text_Editor(x, y, width, height, t) {
+		this->environment = env;
+		this->ftype = string("TextEditor");
+	};
+};
+
 
 class FuzuliProgress: public FuzuliWidgetInfo, public Fl_Progress {
 public:

@@ -48,6 +48,11 @@ Token *input_new(Token *p, Environment *env);
 Token *input_settext(Token *p, Environment *env);
 Token *input_gettext(Token *p, Environment *env);
 
+
+Token *texteditor_new(Token *p, Environment *env);
+Token *texteditor_settext(Token *p, Environment *env);
+Token *texteditor_gettext(Token *p, Environment *env);
+
 Token *progress_new(Token*p, Environment *env);
 Token *progress_setvalue(Token *p, Environment *env);
 Token *progress_getvalue(Token *p, Environment *env);
@@ -59,6 +64,10 @@ Token *dial_getvalue(Token *p, Environment *env);
 Token *checkbox_new(Token *p, Environment *env);
 Token *checkbox_setvalue(Token *p, Environment *env);
 Token *checkbox_getvalue(Token *p, Environment *env);
+
+Token *radiobutton_new(Token *p, Environment *env);
+Token *radiobutton_setvalue(Token *p, Environment *env);
+Token *radiobutton_getvalue(Token *p, Environment *env);
 
 Token *menubar_new(Token *p, Environment *env);
 Token *menubar_add(Token *p, Environment *env);
@@ -221,13 +230,39 @@ Token *checkbox_new(Token *p, Environment *env) {
 
 Token *checkbox_setvalue(Token *p, Environment *env) {
 	FuzuliCheckButton *check = (FuzuliCheckButton*) p->tokens[0]->object;
-	Token *result = env->newToken(check->value(), INTEGER);
-	return (result);
+	check->value( p->tokens[1]->getIntValue() );
+	return (Token::NULL_TOKEN);
 }
 
 Token *checkbox_getvalue(Token *p, Environment *env) {
 	FuzuliCheckButton *check = (FuzuliCheckButton*) p->tokens[0]->object;
 	Token *result = env->newToken(check->value(), INTEGER);
+	return (result);
+}
+
+
+Token *radiobutton_new(Token *p, Environment *env) {
+	int x = p->tokens[0]->getIntValue();
+	int y = p->tokens[1]->getIntValue();
+	int w = p->tokens[2]->getIntValue();
+	int h = p->tokens[3]->getIntValue();
+	const char *title = p->tokens[4]->getContent();
+	FuzuliRadioButton *radio = new FuzuliRadioButton(x, y, w, h, title, env);
+	radio->callback(default_callback, env);
+	Token *result = env->newToken("@RadioButton", COBJECT);
+	result->object = radio;
+	return (result);
+}
+
+Token *radiobutton_setvalue(Token *p, Environment *env) {
+	FuzuliRadioButton *radio = (FuzuliRadioButton*) p->tokens[0]->object;
+	radio->value(p->tokens[1]->getIntValue());
+	return (Token::NULL_TOKEN);
+}
+
+Token *radiobutton_getvalue(Token *p, Environment *env) {
+	FuzuliRadioButton *radio = (FuzuliRadioButton*) p->tokens[0]->object;
+	Token *result = env->newToken(radio->value(), INTEGER);
 	return (result);
 }
 
@@ -351,6 +386,34 @@ Token *input_new(Token *p, Environment *env) {
 	result->object = input;
 	return (result);
 }
+
+
+Token *texteditor_gettext(Token *p, Environment *env) {
+	FuzuliTextEditor *input = (FuzuliTextEditor*) p->tokens[0]->object;
+	Token *result = env->newToken(input->buffer()->text(), STRING);
+	return (result);
+}
+
+Token *texteditor_settext(Token *p, Environment *env) {
+	FuzuliTextEditor *input = (FuzuliTextEditor*) p->tokens[0]->object;
+	const char *text = p->tokens[1]->getContent();
+	input->buffer()->text(text);
+	return (Token::NULL_TOKEN);
+}
+
+Token *texteditor_new(Token *p, Environment *env) {
+	int x = p->tokens[0]->getIntValue();
+	int y = p->tokens[1]->getIntValue();
+	int w = p->tokens[2]->getIntValue();
+	int h = p->tokens[3]->getIntValue();
+	const char *title = p->tokens[4]->getContent();
+	FuzuliTextEditor *input = new FuzuliTextEditor(x, y, w, h, title, env);
+	input->callback(default_callback, env);
+	Token *result = env->newToken("@TextEditor", COBJECT);
+	result->object = input;
+	return (result);
+}
+
 
 TwoParameters
 Token *window_add(Token *p, Environment *env) {
