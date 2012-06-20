@@ -36,8 +36,6 @@
 								<option id="gnu.cpp.compiler.option.optimization.level.1730339922" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.debugging.level.826383844" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.405433014" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/usr/include/tcl"/>
-									<listOptionValue builtIn="false" value="/usr/include/FL"/>
 									<listOptionValue builtIn="false" value="../../Interpreter/include/"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.other.pic.1476264035" name="Position Independent Code (-fPIC)" superClass="gnu.cpp.compiler.option.other.pic" value="true" valueType="boolean"/>
@@ -74,6 +72,27 @@
 							<tool command="as" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.tool.gnu.cross.assembler.2031343313" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
 								<option id="gnu.both.asm.option.include.paths.1308281068" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.919821218" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<folderInfo id="cdt.managedbuild.config.gnu.cross.so.release.204783998.874622645" name="/" resourcePath="src_gui">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.so.release.93416939" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.so.release" unusedChildren="">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.800508715" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.139934928">
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1116121776" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.355561695" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.831593071">
+								<option id="gnu.cpp.compiler.option.include.paths.627262755" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="../../Interpreter/include/"/>
+									<listOptionValue builtIn="false" value="/usr/include/FL"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.2108903688" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.2056786305" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker.2018867341"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.437771675" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker.164098569"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.134857777" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver.840203561"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.1043492863" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.2031343313">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1482313754" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
