@@ -170,3 +170,15 @@
 (function widget_foregroundcolor (params widget color)
 	(return (C window_lib "widget_foregroundcolor" widget color))
 )
+
+(function fl_line (params x y x1 y1)
+	(return (C window_lib "fl_lined" x y x1 y1))
+)
+
+(function fl_color (params col)
+	(return (C window_lib "fl_colord" col))
+)
+
+(function fl_point(params x y)
+	(return (C window_lib "fl_pointd" x y))
+)

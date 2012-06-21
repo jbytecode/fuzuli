@@ -28,6 +28,7 @@
 #include <Fl_Dial.H>
 #include <fl_ask.H>
 #include <Fl_Menu.H>
+#include <fl_draw.H>
 
 namespace fuzuli {
 
@@ -85,6 +86,9 @@ Token *widget_foregroundcolor(Token *p, Environment *env);
 Token *messagebox(Token *p, Environment *env);
 Token *inputbox(Token *p, Environment *env);
 
+Token *fl_lined(Token *p, Environment *env);
+Token *fl_colord(Token *p, Environment *env);
+Token *fl_pointd(Token *p, Environment *env);
 }
 
 void default_callback(Fl_Widget* widget, void* p) {
@@ -198,6 +202,57 @@ void default_callback(Fl_Widget* widget, void* p) {
 	fce->eval(env);
 }
 
+void draw_callback(Fl_Widget* widget, void* p) {
+	Environment *env = (Environment*) p;
+	Token *details = env->newToken("@LIST", LIST);
+	Token *funcname = env->newToken("paint", STRING);
+
+	Token *source = env->newToken("@FuzuliWidget", COBJECT);
+	source->object = widget;
+	details->tokens.push_back(source);
+
+	vector<Expression*> v;
+	v.push_back(new IdentifierExpression(funcname));
+	vector<Expression*> vl;
+	for (unsigned int i = 0; i < details->tokens.size(); i++) {
+		vl.push_back(new StringExpression(details->tokens[i]));
+	}
+	ListExpression *lst = new ListExpression(vl);
+	v.push_back(lst);
+	FunctionCallExpression *fce = new FunctionCallExpression(v);
+	fce->eval(env);
+}
+
+void FuzuliBox::draw(){
+	draw_callback(this, this->environment);
+}
+
+void FuzuliWindow::draw(){
+	draw_callback(this, this->environment);
+}
+
+Token *fl_lined(Token *p, Environment *env){
+	int x = p->tokens[1]->getIntValue();
+	int y = p->tokens[2]->getIntValue();
+	int x1 = p->tokens[3]->getIntValue();
+	int y1 = p->tokens[4]->getIntValue();
+	fl_line(x,y,x1,y1);
+	return(Token::NULL_TOKEN);
+}
+
+Token *fl_colord(Token *p, Environment *env){
+	int x = p->tokens[0]->getIntValue();
+	fl_color(x);
+	return(Token::NULL_TOKEN);
+}
+
+
+Token *fl_pointd(Token *p, Environment *env){
+	int x = p->tokens[0]->getIntValue();
+	int y = p->tokens[1]->getIntValue();
+	fl_point(x,y);
+	return(Token::NULL_TOKEN);
+}
 Token *inputbox(Token *p, Environment *env) {
 	const char *result_cstr = fl_input(p->tokens[0]->getContent(),
 			p->tokens[1]->getContent());

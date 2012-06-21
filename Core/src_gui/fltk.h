@@ -29,7 +29,6 @@ public:
 		this->environment = env;
 		this->ftype = string("Widget");
 	};
-
 };
 
 
@@ -116,6 +115,7 @@ public:
 		this->environment = env;
 		this->ftype = string("MenuBar");
 	};
+	void draw();
 };
 
 
@@ -141,7 +141,8 @@ public:
 			Fl_Window(w, h, title) {
 		this->environment = env;
 		this->ftype = string("Window");
-	}
+	};
+	void draw();
 };
 
 
