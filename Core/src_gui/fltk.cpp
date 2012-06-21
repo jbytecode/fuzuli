@@ -89,6 +89,7 @@ Token *inputbox(Token *p, Environment *env);
 Token *fl_lined(Token *p, Environment *env);
 Token *fl_colord(Token *p, Environment *env);
 Token *fl_pointd(Token *p, Environment *env);
+Token *fl_circled(Token *p, Environment *env);
 }
 
 void default_callback(Fl_Widget* widget, void* p) {
@@ -232,10 +233,10 @@ void FuzuliWindow::draw(){
 }
 
 Token *fl_lined(Token *p, Environment *env){
-	int x = p->tokens[1]->getIntValue();
-	int y = p->tokens[2]->getIntValue();
-	int x1 = p->tokens[3]->getIntValue();
-	int y1 = p->tokens[4]->getIntValue();
+	int x = p->tokens[0]->getIntValue();
+	int y = p->tokens[1]->getIntValue();
+	int x1 = p->tokens[2]->getIntValue();
+	int y1 = p->tokens[3]->getIntValue();
 	fl_line(x,y,x1,y1);
 	return(Token::NULL_TOKEN);
 }
@@ -253,6 +254,15 @@ Token *fl_pointd(Token *p, Environment *env){
 	fl_point(x,y);
 	return(Token::NULL_TOKEN);
 }
+
+Token *fl_circled(Token *p, Environment *env){
+	double x = p->tokens[0]->getFloatValue();
+	double y = p->tokens[1]->getFloatValue();
+	double r = p->tokens[2]->getFloatValue();
+	fl_circle(x,y,r);
+	return(Token::NULL_TOKEN);
+}
+
 Token *inputbox(Token *p, Environment *env) {
 	const char *result_cstr = fl_input(p->tokens[0]->getContent(),
 			p->tokens[1]->getContent());

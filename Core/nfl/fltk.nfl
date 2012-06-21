@@ -182,3 +182,7 @@
 (function fl_point(params x y)
 	(return (C window_lib "fl_pointd" x y))
 )
+
+(function fl_circle(params x y r)
+	(return (C window_lib "fl_circled" x y r))
+)
