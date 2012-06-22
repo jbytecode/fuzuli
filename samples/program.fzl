@@ -3,7 +3,8 @@
 (require "/usr/lib/fuzuli/nfl/string.nfl")
 
 (print "Loading image\n")
-(let logo (jpg_new 	"fuzuli.jpg"))
+(let logo (jpg_new 	"samples/gui/fuzuli.jpg"))
+(let angle 1)
 		
 (function event (params event)
 	(block
@@ -14,23 +15,13 @@
 	)
 )
 
+
 (function paint (params event)
 	(block
-		(fl_color 0)
-		(for (let i 0)(< i 400)(++ i)
-			(fl_line i 0 i 400)
-		)
-		(fl_color 1)(fl_font HELVETICA 48)
-		(fl_text 50 90 " Playing with")
-		(png_draw logo 130 130)
-		(fl_color 2)
-		(fl_font FL_TIMES_BOLD 48)
-		(fl_text 95 290 "is fun!..")
-		(fl_color 9)
-		(fl_line 20 20 380 20)
-		(fl_line 380 20 380 380)
-		(fl_line 380 380 20 380)
-		(fl_line 20 380 20 20)
+		(let angle (+ angle 70))
+		(fl_rotate angle)	
+		(jpg_draw logo 100 100)
+		(fl_rotate angle)
 	)
 )
 (let form1 (window_new 400 400 "Drawing example"))

@@ -217,6 +217,30 @@
 	(return (C window_lib "fl_textd" x y text))
 )
 
+(function fl_textwidth (params text)
+	(return (C window_lib "fl_textwidth" text))
+)
+
+(function fl_rect (params x y w h)
+	(return (C window_lib "fl_rectd" x y w h))
+)
+
+(function fl_arc (params x y w h a1 a2)
+	(return (C window_lib "fl_arcd" x y w h a1 a2))
+)
+
+(function fl_arc2 (params x y r start end)
+	(return (C window_lib "fl_arc2d" x y r start end))
+)
+
+(function fl_pie (params x y w h a1 a2)
+	(return (C window_lib "fl_pied" x y w h a1 a2))
+)
+
+(function fl_rotate (params a)
+	(return (C window_lib "fl_rotated" a))
+)
+
 (function png_new (params filename)
 	(return (C window_lib "png_new" filename))
 )
@@ -227,4 +251,8 @@
 
 (function jpg_new (params filename)
 	(return (C window_lib "jpg_new" filename))
+)
+
+(function jpg_draw (params jpg x y )
+	(return (C window_lib "jpg_draw"  jpg x y))
 )
