@@ -39,3 +39,4 @@
 (box_new 0 0 400 400 "mybox")
 (window_end form1)
 (main_loop)
+

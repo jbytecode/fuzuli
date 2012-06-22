@@ -18,6 +18,28 @@
  
 (let window_lib (dynload "FuzuliCore"))
 
+
+(let FL_HELVETICA               0)
+(let FL_HELVETICA_BOLD          1)
+(let FL_HELVETICA_ITALIC        2)
+(let FL_HELVETICA_BOLD_ITALIC   3)
+(let FL_COURIER                 4)
+(let FL_COURIER_BOLD            5) 
+(let FL_COURIER_ITALIC          6)
+(let FL_COURIER_BOLD_ITALIC     7)
+(let FL_TIMES                   8)
+(let FL_TIMES_BOLD              9)
+(let FL_TIMES_ITALIC            10)
+(let FL_TIMES_BOLD_ITALIC       11)	
+(let FL_SYMBOL                  12)	
+(let FL_SCREEN                  13)	
+(let FL_SCREEN_BOLD             14)	
+(let FL_ZAPF_DINGBATS           15)	
+(let FL_FREE_FONT               16)
+(let FL_BOLD                    1)	
+(let FL_ITALIC                  2)	
+(let FL_BOLD_ITALIC             3)	
+
 (function messagebox (params msg)
 	(return (C window_lib "messagebox" msg))
 )
@@ -185,4 +207,24 @@
 
 (function fl_circle(params x y r)
 	(return (C window_lib "fl_circled" x y r))
+)
+
+(function fl_font (params font size)
+	(return (C window_lib "fl_fontd" font size))
+)
+
+(function fl_text (params x y text)
+	(return (C window_lib "fl_textd" x y text))
+)
+
+(function png_new (params filename)
+	(return (C window_lib "png_new" filename))
+)
+
+(function png_draw (params png x y )
+	(return (C window_lib "png_draw" png x y))
+)
+
+(function jpg_new (params filename)
+	(return (C window_lib "jpg_new" filename))
 )

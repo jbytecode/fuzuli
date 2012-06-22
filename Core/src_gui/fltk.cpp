@@ -29,6 +29,8 @@
 #include <fl_ask.H>
 #include <Fl_Menu.H>
 #include <fl_draw.H>
+#include <Fl_PNG_Image.H>
+#include <Fl_JPEG_Image.H>
 
 namespace fuzuli {
 
@@ -47,6 +49,11 @@ Token *button_new(Token *p, Environment *env);
 
 Token *box_new(Token *p, Environment *env);
 
+Token *png_new(Token *p, Environment *env);
+Token *png_draw(Token *p, Environment *env);
+Token *jpg_new(Token *p, Environment *env);
+Token *jpg_draw(Token *p, Environment *env);
+
 Token *group_new(Token *p, Environment *env);
 Token *group_begin(Token *p, Environment *env);
 Token *group_end(Token *p, Environment *env);
@@ -54,7 +61,6 @@ Token *group_end(Token *p, Environment *env);
 Token *input_new(Token *p, Environment *env);
 Token *input_settext(Token *p, Environment *env);
 Token *input_gettext(Token *p, Environment *env);
-
 
 Token *texteditor_new(Token *p, Environment *env);
 Token *texteditor_settext(Token *p, Environment *env);
@@ -90,6 +96,9 @@ Token *fl_lined(Token *p, Environment *env);
 Token *fl_colord(Token *p, Environment *env);
 Token *fl_pointd(Token *p, Environment *env);
 Token *fl_circled(Token *p, Environment *env);
+Token *fl_fontd(Token *p, Environment *env);
+Token *fl_textd(Token *p, Environment *env);
+
 }
 
 void default_callback(Fl_Widget* widget, void* p) {
@@ -208,6 +217,11 @@ void draw_callback(Fl_Widget* widget, void* p) {
 	Token *details = env->newToken("@LIST", LIST);
 	Token *funcname = env->newToken("paint", STRING);
 
+	FuzuliFunction *ffunction = env->searchFuncBackEnvironments("paint1");
+	if (ffunction == NULL) {
+		cout << "paint() not implemented. No event" << endl;
+		return;
+	}
 	Token *source = env->newToken("@FuzuliWidget", COBJECT);
 	source->object = widget;
 	details->tokens.push_back(source);
@@ -224,43 +238,88 @@ void draw_callback(Fl_Widget* widget, void* p) {
 	fce->eval(env);
 }
 
-void FuzuliBox::draw(){
+void FuzuliBox::draw() {
 	draw_callback(this, this->environment);
 }
 
-void FuzuliWindow::draw(){
-	draw_callback(this, this->environment);
-}
-
-Token *fl_lined(Token *p, Environment *env){
+Token *fl_lined(Token *p, Environment *env) {
 	int x = p->tokens[0]->getIntValue();
 	int y = p->tokens[1]->getIntValue();
 	int x1 = p->tokens[2]->getIntValue();
 	int y1 = p->tokens[3]->getIntValue();
-	fl_line(x,y,x1,y1);
-	return(Token::NULL_TOKEN);
+	fl_line(x, y, x1, y1);
+	return (Token::NULL_TOKEN);
 }
 
-Token *fl_colord(Token *p, Environment *env){
+Token *fl_colord(Token *p, Environment *env) {
 	int x = p->tokens[0]->getIntValue();
 	fl_color(x);
-	return(Token::NULL_TOKEN);
+	return (Token::NULL_TOKEN);
 }
 
-
-Token *fl_pointd(Token *p, Environment *env){
+Token *fl_pointd(Token *p, Environment *env) {
 	int x = p->tokens[0]->getIntValue();
 	int y = p->tokens[1]->getIntValue();
-	fl_point(x,y);
-	return(Token::NULL_TOKEN);
+	fl_point(x, y);
+	return (Token::NULL_TOKEN);
 }
 
-Token *fl_circled(Token *p, Environment *env){
+Token *fl_circled(Token *p, Environment *env) {
 	double x = p->tokens[0]->getFloatValue();
 	double y = p->tokens[1]->getFloatValue();
 	double r = p->tokens[2]->getFloatValue();
-	fl_circle(x,y,r);
-	return(Token::NULL_TOKEN);
+	fl_circle(x, y, r);
+	return (Token::NULL_TOKEN);
+}
+
+Token *fl_fontd(Token *p, Environment *env) {
+	int font = p->tokens[0]->getIntValue();
+	int size = p->tokens[1]->getIntValue();
+	fl_font(font, size);
+	return (Token::NULL_TOKEN);
+}
+
+Token *fl_textd(Token *p, Environment *env) {
+	int x = p->tokens[0]->getIntValue();
+	int y = p->tokens[1]->getIntValue();
+	fl_draw(p->tokens[2]->getContent(), x, y);
+	return (Token::NULL_TOKEN);
+}
+
+OneParameters
+Token *png_new(Token *p, Environment *env) {
+	cout << "Loading " << p->tokens[0]->getContent() << endl;
+	Fl_PNG_Image *image = new Fl_PNG_Image(p->tokens[0]->getContent());
+	cout << "Loaded" << endl;
+	Token *result = env->newToken("@PngImage", COBJECT);
+	result->object = image;
+	return (result);
+}
+
+ThreeParameters
+Token *png_draw(Token *p, Environment *env) {
+	Fl_PNG_Image *image = (Fl_PNG_Image*) p->tokens[0]->object;
+	int x = p->tokens[1]->getIntValue();
+	int y = p->tokens[2]->getIntValue();
+	image->draw(x, y);
+	return (Token::NULL_TOKEN);
+}
+
+OneParameters
+Token *jpg_new(Token *p, Environment *env) {
+	Fl_JPEG_Image *image = new Fl_JPEG_Image(p->tokens[0]->getContent());
+	Token *result = env->newToken("@JpgImage", COBJECT);
+	result->object = image;
+	return (result);
+}
+
+ThreeParameters
+Token *jpg_draw(Token *p, Environment *env) {
+	Fl_JPEG_Image *image = (Fl_JPEG_Image*) p->tokens[0]->object;
+	int x = p->tokens[1]->getIntValue();
+	int y = p->tokens[2]->getIntValue();
+	image->draw(x, y);
+	return (Token::NULL_TOKEN);
 }
 
 Token *inputbox(Token *p, Environment *env) {
@@ -285,7 +344,6 @@ Token *widget_foregroundcolor(Token *p, Environment *env) {
 	widget->color((unsigned int) p->tokens[1]->getIntValue());
 	return (Token::NULL_TOKEN);
 }
-
 
 Token *group_new(Token *p, Environment *env) {
 	int x = p->tokens[0]->getIntValue();
@@ -312,7 +370,6 @@ Token *group_end(Token *p, Environment *env) {
 	return (Token::NULL_TOKEN);
 }
 
-
 Token *checkbox_new(Token *p, Environment *env) {
 	int x = p->tokens[0]->getIntValue();
 	int y = p->tokens[1]->getIntValue();
@@ -328,7 +385,7 @@ Token *checkbox_new(Token *p, Environment *env) {
 
 Token *checkbox_setvalue(Token *p, Environment *env) {
 	FuzuliCheckButton *check = (FuzuliCheckButton*) p->tokens[0]->object;
-	check->value( p->tokens[1]->getIntValue() );
+	check->value(p->tokens[1]->getIntValue());
 	return (Token::NULL_TOKEN);
 }
 
@@ -337,7 +394,6 @@ Token *checkbox_getvalue(Token *p, Environment *env) {
 	Token *result = env->newToken(check->value(), INTEGER);
 	return (result);
 }
-
 
 Token *radiobutton_new(Token *p, Environment *env) {
 	int x = p->tokens[0]->getIntValue();
@@ -382,16 +438,16 @@ Token *menubar_add(Token *p, Environment *env) {
 	FuzuliMenuBar *menubar = (FuzuliMenuBar*) p->tokens[0]->object;
 	const char *menupath = p->tokens[1]->getContent();
 	const char *shortcut = p->tokens[2]->getContent();
-	menubar->add(menupath,shortcut,default_callback,env);
+	menubar->add(menupath, shortcut, default_callback, env);
 
-	return(Token::NULL_TOKEN);
+	return (Token::NULL_TOKEN);
 }
 
-Token *menubar_selected(Token *p, Environment *env){
+Token *menubar_selected(Token *p, Environment *env) {
 	FuzuliMenuBar *menubar = (FuzuliMenuBar*) p->tokens[0]->object;
 	const Fl_Menu_Item *item = menubar->mvalue();
 	Token *result = env->newToken(item->text, STRING);
-	return(result);
+	return (result);
 }
 
 Token *dial_new(Token *p, Environment *env) {
@@ -485,7 +541,6 @@ Token *input_new(Token *p, Environment *env) {
 	return (result);
 }
 
-
 Token *texteditor_gettext(Token *p, Environment *env) {
 	FuzuliTextEditor *input = (FuzuliTextEditor*) p->tokens[0]->object;
 	Token *result = env->newToken(input->buffer()->text(), STRING);
@@ -512,7 +567,6 @@ Token *texteditor_new(Token *p, Environment *env) {
 	return (result);
 }
 
-
 Token *box_new(Token *p, Environment *env) {
 	int x = p->tokens[0]->getIntValue();
 	int y = p->tokens[1]->getIntValue();
@@ -525,7 +579,6 @@ Token *box_new(Token *p, Environment *env) {
 	result->object = box;
 	return (result);
 }
-
 
 TwoParameters
 Token *window_add(Token *p, Environment *env) {

@@ -142,7 +142,6 @@ public:
 		this->environment = env;
 		this->ftype = string("Window");
 	};
-	void draw();
 };
 
 
