@@ -111,6 +111,12 @@ void default_callback(Fl_Widget* widget, void* p) {
 	Token *details = env->newToken("@LIST", LIST);
 	Token *funcname = env->newToken("event", STRING);
 
+	FuzuliFunction *ffunction = env->searchFuncBackEnvironments("paint1");
+	if (ffunction == NULL) {
+		cout << "paint() not implemented. No event" << endl;
+		return;
+	}
+
 	switch (Fl::event()) {
 	case FL_PUSH:
 		details->tokens.push_back(env->newToken("push", STRING));
@@ -297,47 +303,45 @@ Token *fl_textwidth(Token *p, Environment *env) {
 	return (result);
 }
 
-
-Token *fl_rectd(Token *p, Environment *env){
+Token *fl_rectd(Token *p, Environment *env) {
 	int x = p->tokens[0]->getIntValue();
 	int y = p->tokens[1]->getIntValue();
 	int w = p->tokens[2]->getIntValue();
 	int h = p->tokens[3]->getIntValue();
-	fl_rectf(x,y,w,h);
-	return(Token::NULL_TOKEN);
+	fl_rectf(x, y, w, h);
+	return (Token::NULL_TOKEN);
 }
 
-Token *fl_arcd(Token *p, Environment *env){
+Token *fl_arcd(Token *p, Environment *env) {
 	int x = p->tokens[0]->getIntValue();
 	int y = p->tokens[1]->getIntValue();
 	int w = p->tokens[2]->getIntValue();
 	int h = p->tokens[3]->getIntValue();
 	double a1 = p->tokens[4]->getIntValue();
 	double a2 = p->tokens[5]->getIntValue();
-	fl_arc(x,y,w,h,a1,a2);
-	return(Token::NULL_TOKEN);
+	fl_arc(x, y, w, h, a1, a2);
+	return (Token::NULL_TOKEN);
 }
 
-
-Token *fl_arc2d(Token *p, Environment *env){
+Token *fl_arc2d(Token *p, Environment *env) {
 	double x = p->tokens[0]->getFloatValue();
 	double y = p->tokens[1]->getFloatValue();
 	double r = p->tokens[2]->getFloatValue();
 	double start = p->tokens[3]->getFloatValue();
 	double end = p->tokens[4]->getFloatValue();
-	fl_arc(x,y,r,start,end);
-	return(Token::NULL_TOKEN);
+	fl_arc(x, y, r, start, end);
+	return (Token::NULL_TOKEN);
 }
 
-Token *fl_pied(Token *p, Environment *env){
+Token *fl_pied(Token *p, Environment *env) {
 	int x = p->tokens[0]->getIntValue();
 	int y = p->tokens[1]->getIntValue();
 	int w = p->tokens[2]->getIntValue();
 	int h = p->tokens[3]->getIntValue();
 	double a1 = p->tokens[4]->getIntValue();
 	double a2 = p->tokens[5]->getIntValue();
-	fl_pie(x,y,w,h,a1,a2);
-	return(Token::NULL_TOKEN);
+	fl_pie(x, y, w, h, a1, a2);
+	return (Token::NULL_TOKEN);
 }
 
 Token *fl_rotated(Token *p, Environment *env) {
