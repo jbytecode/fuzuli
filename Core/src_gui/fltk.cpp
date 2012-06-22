@@ -111,9 +111,9 @@ void default_callback(Fl_Widget* widget, void* p) {
 	Token *details = env->newToken("@LIST", LIST);
 	Token *funcname = env->newToken("event", STRING);
 
-	FuzuliFunction *ffunction = env->searchFuncBackEnvironments("paint1");
+	FuzuliFunction *ffunction = env->searchFuncBackEnvironments("event1");
 	if (ffunction == NULL) {
-		cout << "paint() not implemented. No event" << endl;
+		cout << "event() not implemented. " << endl;
 		return;
 	}
 
