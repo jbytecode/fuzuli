@@ -31,7 +31,6 @@
 using namespace std;
 using namespace fuzuli;
 
-
 void __readToken(FILE *file, Token *tok);
 void __writeToken(FILE *file, Token *tok);
 void __readLine(FILE *file, Token *tok);
@@ -61,8 +60,8 @@ Token *print_r(Token *p, Environment *env);
 Token *popend(Token *p, Environment *env);
 Token *pclosed(Token *p, Environment *env);
 Token *exitd(Token *p, Environment *env);
-Token *is_dir (Token *p, Environment *env);
-Token *timed (Token *p, Environment *env);
+Token *is_dir(Token *p, Environment *env);
+Token *timed(Token *p, Environment *env);
 Token *randomize(Token *p, Environment *env);
 Token *putsd(Token *p, Environment *env);
 Token *fputsd(Token *p, Environment *env);
@@ -72,81 +71,82 @@ Token *readlined(Token *p, Environment *env);
 }
 
 NoParameters
-Token *readlined(Token *p, Environment *env){
+Token *readlined(Token *p, Environment *env) {
 	string str;
 	std::getline(cin, str);
 	Token *result = env->newToken(str.c_str(), STRING);
-	return(result);
+	return (result);
 }
 
 OneParameters
-Token *ftelld(Token *p, Environment *env){
-	FILE *file = (FILE*)p->tokens[0]->object;
+Token *ftelld(Token *p, Environment *env) {
+	FILE *file = (FILE*) p->tokens[0]->object;
 	long int lint_result = ftell(file);
-	stringstream ss; ss << ((double) lint_result);
+	stringstream ss;
+	ss << ((double) lint_result);
 	Token *result = env->newToken(ss.str().c_str(), FLOAT);
-	return(result);
+	return (result);
 }
 
 TwoParameters
-Token *fgetcd(Token *p, Environment *env){
-	FILE *file = (FILE*)p->tokens[0]->object;
+Token *fgetcd(Token *p, Environment *env) {
+	FILE *file = (FILE*) p->tokens[0]->object;
 	int int_result = fgetc(file);
-	stringstream ss; ss<< ( (char) int_result);
+	stringstream ss;
+	ss << ((char) int_result);
 	Token *result = env->newToken(ss.str().c_str(), STRING);
-	return(result);
+	return (result);
 }
 
 TwoParameters
-Token *fputsd(Token *p, Environment *env){
+Token *fputsd(Token *p, Environment *env) {
 	FILE *f = (FILE*) (p->tokens[0]->object);
 	Token *par = p->tokens[1];
 	fputs(par->getContent(), f);
-	return(Token::NULL_TOKEN);
+	return (Token::NULL_TOKEN);
 }
 
 OneParameters
-Token *putsd(Token *p, Environment *env){
+Token *putsd(Token *p, Environment *env) {
 	puts(p->tokens[0]->getContent());
-	return(Token::NULL_TOKEN);
+	return (Token::NULL_TOKEN);
 }
 
 OneParameters
-Token *randomize(Token *p, Environment *env){
+Token *randomize(Token *p, Environment *env) {
 	srand((unsigned int) p->tokens[0]->getFloatValue());
-	return(Token::NULL_TOKEN);
+	return (Token::NULL_TOKEN);
 }
-
 
 NoParameters
-Token *timed (Token *p, Environment *env){
-	Token *result = env->newToken(((double)time(NULL)) * 1.0, FLOAT);
-	return(result);
+Token *timed(Token *p, Environment *env) {
+	Token *result = env->newToken(((double) time(NULL)) * 1.0, FLOAT);
+	return (result);
 }
 
 OneParameters
-Token *is_dir (Token *p, Environment *env){
+Token *is_dir(Token *p, Environment *env) {
 	struct stat st;
 	int code = stat(p->tokens[0]->getContent(), &st);
-	if(code == -1){
-		cout << "Can not define whether "<<p->tokens[0]->getContent()<<" is dir"<<endl;
+	if (code == -1) {
+		cout << "Can not define whether " << p->tokens[0]->getContent()
+				<< " is dir" << endl;
 	}
 	int int_result = 0;
-	if(S_ISDIR(st.st_mode)){
+	if (S_ISDIR(st.st_mode)) {
 		int_result = 1;
 	}
-	Token *result = env->newToken (int_result, INTEGER);
-	return(result);
+	Token *result = env->newToken(int_result, INTEGER);
+	return (result);
 }
 
-
 OneParameters
-Token *pclosed(Token *p, Environment *env){
+Token *pclosed(Token *p, Environment *env) {
 	Token *pclose_result = env->newToken(-1, INTEGER);
-	FILE *process = (FILE*)p->tokens[0]->object;
+	FILE *process = (FILE*) p->tokens[0]->object;
 	int res = pclose(process);
 	pclose_result->setIntValue(res);
-	return(pclose_result);
+	return (pclose_result);
 }
 
 TwoParameters
@@ -301,7 +301,7 @@ void __writeToken(FILE *file, Token *tok) {
 OneParameters
 Token *chdird(Token *p, Environment *env) {
 	int ret = chdir(p->tokens[0]->getContent());
-	Token * result = env->newToken(ret,INTEGER);
+	Token * result = env->newToken(ret, INTEGER);
 	return (result);
 }
 
@@ -310,7 +310,7 @@ Token *getpwd(Token* p, Environment *env) {
 	char *ppath = NULL;
 	int len = 0;
 	ppath = getcwd(ppath, len);
-	Token *result = env->newToken (ppath, STRING);
+	Token *result = env->newToken(ppath, STRING);
 	return (result);
 }
 
@@ -394,7 +394,13 @@ Token *sleepd(Token *p, Environment *env) {
 
 OneParameters
 Token *getenvd(Token *p, Environment *env) {
-	Token *result = env->newToken(getenv(p->tokens[0]->getContent()), STRING);
+	char *envvar = getenv(p->tokens[0]->getContent());
+	Token *result;
+	if (envvar == NULL) {
+		result = Token::NULL_TOKEN;
+	} else {
+		result = env->newToken(envvar, STRING);
+	}
 	return (result);
 }
 
@@ -403,7 +409,7 @@ Token *setenvd(Token *p, Environment *env) {
 	const char *name = p->tokens[0]->getContent();
 	const char *value = p->tokens[1]->getContent();
 	int replace = p->tokens[2]->getIntValue();
-	setenv(name , value, replace);
+	setenv(name, value, replace);
 	return (Token::NULL_TOKEN);
 }
 
@@ -414,6 +420,6 @@ Token *rnd(Token *p, Environment *env) {
 }
 
 OneParameters
-Token *exitd(Token *p, Environment *env){
+Token *exitd(Token *p, Environment *env) {
 	exit(p->tokens[0]->getIntValue());
 }

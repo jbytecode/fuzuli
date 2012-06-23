@@ -22,6 +22,7 @@
 (let passed "PASSED!\n")
 (let error "ERROR\n")
 
+# TEST 1
 (let f (fopen "/tmp/kek.txt" "w"))
 (let liste (list 1 2 3 4 5 6 7 8 9 10 11 12 13 14))
 (fwrite f liste)
@@ -43,6 +44,7 @@
 
 
 
+# TEST 2
 # Factorial
 (function factorial (params x)
     (block
@@ -56,17 +58,30 @@
 
 (let result2 (factorial 6))
 (if (= result2 720) 
-	(print "PASSED!\n") 
-	(print "ERROR\n")
+	(print passed) 
+	(print error)
 )
 
 
 
+# TEST 3
 (randomize 12345)
 (let result3 (rnd))
 (if (= result3 0.178395)
 	(print passed)
-	(print error ":" result3 ":" 0.178395)
+	(print error)
 )
+
+
+# TEST 4
+(let oldvar (getenv "fuzuli"))
+(setenv "fuzuli" "programming language" 1)
+(if (= (getenv "fuzuli") "programming language")
+	(print passed)
+	(print error)
+)
+(setenv "fuzuli" oldvar 1)
+
+
 
 
