@@ -127,6 +127,12 @@
 	)
 )
 
+(function setenv (params var val changeflag)
+	(block
+		(return (C io_lib "setenvd" var val changeflag))
+	)
+)
+
 
 (function rnd (params)
 	(block

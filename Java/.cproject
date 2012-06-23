@@ -53,12 +53,13 @@
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1284325124" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
 								<option id="gnu.cpp.link.option.paths.1139256177" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="/usr/lib/jvm/java-6-openjdk-i386/jre/lib/i386/client"/>
+									<listOptionValue builtIn="false" value="/usr/lib/jvm/default-java/jre/lib/i386/"/>
+									<listOptionValue builtIn="false" value="/usr/lib/jvm/default-java/jre/lib/i386/client"/>
 								</option>
-								<option id="gnu.cpp.link.option.userobjs.1176830287" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
-									<listOptionValue builtIn="false" value="/usr/lib/jvm/default-java/jre/lib/i386/client/libjvm.so"/>
+								<option id="gnu.cpp.link.option.userobjs.1176830287" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs"/>
+								<option id="gnu.cpp.link.option.libs.1616787194" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
+									<listOptionValue builtIn="false" value="jvm"/>
 								</option>
-								<option id="gnu.cpp.link.option.libs.1616787194" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs"/>
 								<option id="gnu.cpp.link.option.shared.772673544" name="Shared (-shared)" superClass="gnu.cpp.link.option.shared" value="true" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.202440855" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>

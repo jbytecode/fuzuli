@@ -41,13 +41,13 @@ endif
 all: libFuzuliJava.so
 
 dependents:
-	-cd /home/hako/workspace/fuzuli/Interpreter/Release && $(MAKE) all
+	-cd /home/hako/workspace/fuzuli/Interpreter/Release && $(MAKE) clean all
 
 # Tool invocations
 libFuzuliJava.so: $(OBJS) $(USER_OBJS) /home/hako/workspace/fuzuli/Interpreter/Release/libfuzuli.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross G++ Linker'
-	g++ -L/usr/lib/jvm/java-6-openjdk-i386/jre/lib/i386/client -shared -o "libFuzuliJava.so" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L/usr/lib/jvm/default-java/jre/lib/i386/ -L/usr/lib/jvm/default-java/jre/lib/i386/client -shared -o "libFuzuliJava.so" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build

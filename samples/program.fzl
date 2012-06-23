@@ -1,32 +1,11 @@
-(require "/usr/lib/fuzuli/nfl/fltk.nfl")
 (require "/usr/lib/fuzuli/nfl/io.nfl")
+(setenv "LD_LIBRARY_PATH" "/usr/lib/jvm/default-java/jre/lib/i386:/usr/lib/jvm/default-java/jre/lib/i386/client" 1)
+(print (getenv "LD_LIBRARY_PATH") "\n\n")
+
+
 (require "/usr/lib/fuzuli/nfl/string.nfl")
-
-(print "Loading image\n")
-(let logo (jpg_new 	"samples/gui/fuzuli.jpg"))
-(let angle 1)
-		
-(function event (params event)
-	(block
-		(print event "\n")
-		(if (= (nth event 0) "close")
-			(block (print "Exiting...") (exit 0))
-		)
-	)
-)
+(require "/usr/lib/fuzuli/nfl/java.nfl")
 
 
-(function paint (params event)
-	(block
-		(let angle (+ angle 70))
-		(fl_rotate angle)	
-		(jpg_draw logo 100 100)
-		(fl_rotate angle)
-	)
-)
-(let form1 (window_new 400 400 "Drawing example"))
-(window_show form1)
-(window_begin form1)
-(box_new 0 0 400 400 "mybox")
-(window_end form1)
-(main_loop)
+(let jvm (java_init))
+(print "J:" jvm)

@@ -38,6 +38,7 @@ void __PrintToken(stringstream *ss, Token *tok) {
 		*ss << tok->getFloatValue();
 	} else if (tok->getType() == COBJECT) {
 		*ss << "@FuzuliNativeObject";
+		*ss << "[" << tok->getContent() << "]";
 	} else if (tok->getType() == LIST) {
 		*ss << "[";
 		for (unsigned int i = 0; i < tok->tokens.size(); i++) {
@@ -74,7 +75,7 @@ void PrintExpression::emitCpp(stringstream *ss) {
 	(*ss) << "INTERNAL_FUZULI_FUNCTION(env, \"print\", ";
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
 		dynamic_cast<CppEmitter*>(this->expressions[i])->emitCpp(ss);
-		if(i != this->expressions.size() -1){
+		if (i != this->expressions.size() - 1) {
 			(*ss) << ", ";
 		}
 	}

@@ -49,6 +49,7 @@ Token *datetime(Token* p, Environment *env);
 Token *asctimed(Token* p, Environment *env);
 Token *sleepd(Token* p, Environment *env);
 Token *getenvd(Token* p, Environment *env);
+Token *setenvd(Token *p, Environment *env);
 Token *rnd(Token *p, Environment *env);
 Token *fopend(Token* p, Environment *env);
 Token *fclosed(Token *p, Environment *env);
@@ -395,6 +396,15 @@ OneParameters
 Token *getenvd(Token *p, Environment *env) {
 	Token *result = env->newToken(getenv(p->tokens[0]->getContent()), STRING);
 	return (result);
+}
+
+OneParameters
+Token *setenvd(Token *p, Environment *env) {
+	const char *name = p->tokens[0]->getContent();
+	const char *value = p->tokens[1]->getContent();
+	int replace = p->tokens[2]->getIntValue();
+	setenv(name , value, replace);
+	return (Token::NULL_TOKEN);
 }
 
 NoParameters
