@@ -39,7 +39,7 @@
 									<listOptionValue builtIn="false" value="../../Interpreter/include/"/>
 									<listOptionValue builtIn="false" value="/usr/include/FL"/>
 								</option>
-								<option id="gnu.cpp.compiler.option.other.pic.2061827103" superClass="gnu.cpp.compiler.option.other.pic" value="true" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.other.pic.2061827103" name="Position Independent Code (-fPIC)" superClass="gnu.cpp.compiler.option.other.pic" value="true" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1273605842" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1821969873" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker">
