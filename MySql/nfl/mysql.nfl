@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-(let mysqllib (dynload "FuzuliCore"))
+(let mysqllib (dynload "FuzuliMySql"))
 
 (function mysql_connect (params host username password db port)
 	(block

@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-(let gd_lib (dynload "FuzuliCore"))
+(let gd_lib (dynload "FuzuliGd"))
 
 (function gd_createimage (params w h)
 	(block
