@@ -38,6 +38,7 @@
 								<option id="gnu.cpp.compiler.option.include.paths.967447627" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../Interpreter/include/"/>
 								</option>
+								<option id="gnu.cpp.compiler.option.other.pic.1331382623" superClass="gnu.cpp.compiler.option.other.pic" value="true" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.211446229" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.2068823734" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker">

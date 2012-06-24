@@ -34,6 +34,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Interpreter}&quot;"/>
 									<listOptionValue builtIn="false" value="/usr/lib/jvm/default-java/include"/>
 								</option>
+								<option id="gnu.c.compiler.option.misc.pic.587388349" superClass="gnu.c.compiler.option.misc.pic" value="true" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1062232191" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.235254137" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
@@ -56,7 +57,7 @@
 									<listOptionValue builtIn="false" value="/usr/lib/jvm/default-java/jre/lib/i386/"/>
 									<listOptionValue builtIn="false" value="/usr/lib/jvm/default-java/jre/lib/i386/client"/>
 								</option>
-								<option id="gnu.cpp.link.option.userobjs.1176830287" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs"/>
+								<option id="gnu.cpp.link.option.userobjs.1176830287" name="Other objects" superClass="gnu.cpp.link.option.userobjs"/>
 								<option id="gnu.cpp.link.option.libs.1616787194" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="jvm"/>
 								</option>
