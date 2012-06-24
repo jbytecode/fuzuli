@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
  
-(let window_lib (dynload "FuzuliCore"))
+(let window_lib (dynload "FuzuliFltk"))
 
 
 (let FL_HELVETICA               0)

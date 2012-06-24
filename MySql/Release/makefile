@@ -38,20 +38,20 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: libFuzuliCore.so
+all: libFuzuliMySql.so
 
 # Tool invocations
-libFuzuliCore.so: $(OBJS) $(USER_OBJS)
+libFuzuliMySql.so: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross G++ Linker'
-	g++ -L/usr/lib/happycoders -L/usr/lib/i386-linux-gnu -shared -o "libFuzuliCore.so" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -shared -o "libFuzuliMySql.so" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
 
 # Other Targets
 clean:
-	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(CC_DEPS)$(LIBRARIES)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS) libFuzuliCore.so
+	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(CC_DEPS)$(LIBRARIES)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS) libFuzuliMySql.so
 	-@echo ' '
 
 post-build:

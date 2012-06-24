@@ -1,11 +1,8 @@
 (require "/usr/lib/fuzuli/nfl/io.nfl")
-(setenv "LD_LIBRARY_PATH" "/usr/lib/jvm/default-java/jre/lib/i386:/usr/lib/jvm/default-java/jre/lib/i386/client" 1)
-(print (getenv "LD_LIBRARY_PATH") "\n\n")
-
-
-(require "/usr/lib/fuzuli/nfl/string.nfl")
-(require "/usr/lib/fuzuli/nfl/java.nfl")
-
-
-(let jvm (java_init))
-(print "J:" jvm)
+(let code (CPlusPlus "
+(def a INTEGER)
+(let a 3)
+(let b 7)
+(let c (+ a b))
+"))
+(print code)

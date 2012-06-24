@@ -4,5 +4,5 @@
 
 USER_OBJS := 
 
-LIBS := -lm -lssl -lcrypto
+LIBS := -lncurses -lform
 
