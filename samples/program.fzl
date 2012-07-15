@@ -1,8 +1,21 @@
-(require "/usr/lib/fuzuli/nfl/io.nfl")
-(let code (CPlusPlus "
-(def a INTEGER)
-(let a 3)
-(let b 7)
-(let c (+ a b))
-"))
-(print code)
+(let lib (dynload "FuzuliThread"))
+
+(function f (params)
+	(foreach i in (: 1 100)
+	(print i "->f\n")
+	(C lib "yield")
+	)
+)
+
+(function g (params)
+	(foreach i in (: 1 100)
+	(print "g\n")
+	(C lib "yield")
+	)
+)
+
+(let t1 (C lib "thread" "f"))
+(let t2 (C lib "thread" "g"))
+(C lib "join" t1)
+(C lib "join" t2)
+

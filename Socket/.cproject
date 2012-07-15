@@ -39,7 +39,7 @@
 								<option id="gnu.cpp.compiler.option.include.paths.1186785203" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../Interpreter/include/"/>
 								</option>
-								<option id="gnu.cpp.compiler.option.other.pic.1144731657" superClass="gnu.cpp.compiler.option.other.pic" value="true" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.other.pic.1144731657" name="Position Independent Code (-fPIC)" superClass="gnu.cpp.compiler.option.other.pic" value="true" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.377146828" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.367254923" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker">
