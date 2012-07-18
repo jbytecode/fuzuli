@@ -31,7 +31,7 @@ public:
 	virtual ~FuzuliRunnable();
 	FunctionCallExpression *fcallexpr;
 	FuzuliFunction *func;
-	boost::thread *t;
+	boost::thread t;
 	Environment *env;
 	void CreateThread(const char *fname, Environment *env);
 	void run();

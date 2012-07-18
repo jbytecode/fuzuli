@@ -22,16 +22,26 @@
 
 using namespace std;
 using namespace fuzuli;
+using namespace boost;
+
+
 
 extern "C" {
 	Token *thread (Token *p, Environment *env);
 	Token *yield (Token *p, Environment *env);
 	Token *join (Token *p, Environment *env);
+	Token *thread_sleep (Token *p, Environment *env);
+}
+
+Token *thread_sleep (Token *p, Environment *env){
+	int time = p->tokens[0]->getIntValue();
+	boost::this_thread::sleep(boost::posix_time::milliseconds(time));
+	return(Token::NULL_TOKEN);
 }
 
 Token *join (Token *p, Environment *env){
 	FuzuliRunnable *run = (FuzuliRunnable*)p->tokens[0]->object;
-	run->run();
+	run->t.join();
 	return(Token::NULL_TOKEN);
 }
 
@@ -45,12 +55,12 @@ Token *yield (Token *p, Environment *env){
 Token *thread (Token *p, Environment *env){
 	FuzuliRunnable *run = new FuzuliRunnable();
 	run->env =  env;
-	cout << "Creating thread "<<endl;
+
 	run->CreateThread(p->tokens[0]->getContent(), env);
-	cout << "Created "<<endl;
+
 
 	Token *result = env->newToken("@FuzuliRunnable", COBJECT);
-	result->object = run;
+	result->object = (void*)run;
 	return(result);
 }
 
