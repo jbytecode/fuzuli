@@ -14,3 +14,24 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+(let thread_library (dynload "FuzuliThread"))
+
+(function thread (params func)
+	(return (C thread_library "thread" func))
+)
+
+(function thread_sleep (params milliseconds)
+	(return (C thread_library "thread_sleep" milliseconds))
+)
+
+(function thread_yield (params)
+	(return (C thread_library "yield"))
+)
+
+(function thread_join (params athread)
+	(return (C thread_library "join" athread))
+)
+ 
+

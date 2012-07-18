@@ -53,6 +53,11 @@ make
 cd ..
 cd ..
 
+cd Thread/Release
+make
+cd ..
+cd ..
+
 #cd tests
 #./tester.sh
 #cd ..

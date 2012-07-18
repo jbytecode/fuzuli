@@ -56,6 +56,11 @@ make clean
 cd ..
 cd ..
 
+cd Thread
+cd Release
+make clean
+cd ..
+cd ..
 
 rm -Rf /usr/lib/fuzuli/*
 
