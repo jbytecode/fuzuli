@@ -33,7 +33,7 @@ BlockExpression::~BlockExpression() {
 }
 
 Token *BlockExpression::eval(Environment *env) {
-	env->GC();
+	env->doAutomaticGC();
 	Token *result = Token::NULL_TOKEN;
 	Environment *blockEnvironment = env->createNext();
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
@@ -41,19 +41,19 @@ Token *BlockExpression::eval(Environment *env) {
 		if (result) {
 			if (result->breakFlag == 1) {
 				result->IncreaseReferences();
-				blockEnvironment->GC();
+				blockEnvironment->doAutomaticGC();
 				result->ReduceReferences();
 				return (result);
 			} else if (result->returnFlag == 1) {
 				result->IncreaseReferences();
-				blockEnvironment->GC();
+				blockEnvironment->doAutomaticGC();
 				result->ReduceReferences();
 				return (result);
 			}
 		}
 	}
 	result->IncreaseReferences();
-	blockEnvironment->GC();
+	blockEnvironment->doAutomaticGC();
 	result->ReduceReferences();
 	return (result);
 }

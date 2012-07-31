@@ -57,3 +57,6 @@
 (print "After sorting:\n")
 (print mylist "\n")
 (dump)
+(gc)
+(dump)
+

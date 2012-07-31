@@ -820,11 +820,12 @@ public:
 	virtual ~Environment();
 	map<string, Token*> variables;
 	map<string, FuzuliFunction*> fuzuliFunctions;
-	vector<Token*> garbage;
+	list<Token*> garbage;
 	vector<Environment*> subenvironments;
 	Environment *previous;
 	Environment *next;
 
+	static bool isAutomaticGC;
 	bool isFirst();
 	void setFirst();
 	void registerGlobals();
@@ -832,6 +833,7 @@ public:
 	Token *newToken(double val, TokenType type);
 	Token *newToken(const char* val, TokenType type);
 	int GC();
+	int doAutomaticGC();
 	void dump();
 	bool variableExists(const char *name);
 

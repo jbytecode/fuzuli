@@ -1,0 +1,20 @@
+# Set auto garbage collection to false
+(gc false)
+
+(let limit 1000000)
+
+# Creating a list from 0 to limit
+(let a (: 1 limit))
+
+# Setting a to null, so we have too much garbage!
+(let a NULL)
+
+# Manual garbage collecting
+(let total (gc))
+
+(if (= total (+ limit 1)) 
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+
+

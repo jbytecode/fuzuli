@@ -136,7 +136,7 @@ Token *ForkExpression::eval(Environment *env) {
 	if (pid < 0) {
 		cout << "Error occoured in creating thread" << endl;
 	}
-	forkEnvironment->GC();
+	forkEnvironment->doAutomaticGC();
 	return (env->newToken(pid, INTEGER));
 }
 

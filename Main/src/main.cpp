@@ -120,7 +120,7 @@ int main(int argc, char** argv) {
 	Expression *ex;
 
 	while (1) {
-		globalEnvironment->GC();
+		globalEnvironment->doAutomaticGC();
 		ex = b->getNextExpression();
 		if (!ex){
 			break;

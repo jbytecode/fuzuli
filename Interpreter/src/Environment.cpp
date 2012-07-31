@@ -20,10 +20,13 @@
 #include <cstdlib>
 #include <sstream>
 #include <vector>
+#include <list>
 
 namespace fuzuli {
 
 using namespace std;
+
+bool Environment::isAutomaticGC = true;
 
 Environment::Environment() {
 	this->previous = NULL;
@@ -62,6 +65,8 @@ void Environment::registerGlobals() {
 	this->setVariable("STRING", new Token(3.0, INTEGER));
 	this->setVariable("LIST", new Token(4.0, LIST));
 	this->setVariable("NULL", new Token(5.0, NULLTOKEN));
+	this->setVariable("true", new Token(1.0, INTEGER));
+	this->setVariable("false", new Token(0.0, INTEGER));
 	Token::NULL_TOKEN->setKillable(false);
 }
 
@@ -84,18 +89,28 @@ int Environment::GC() {
 		numdeleted += this->subenvironments[i]->GC();
 	}
 	//cout << "Deleting "<<this->garbage.size()<< " garbages "<<endl;
-	for (unsigned int i = 0; i < garbage.size(); i++) {
-		Token *tok = this->garbage[i];
+	list<Token*>::iterator it;
+	for (it = this->garbage.begin(); it != this->garbage.end(); it++) {
+		Token *tok = *it;
 		if (tok->links <= 0 && tok->getKillable() == true) {
 			//cout << "Deleting "<<tok->getContent()<<endl;
-			this->garbage.erase(this->garbage.begin() + i);
+			this->garbage.erase(it);
 			delete tok;
+			it--;
 			numdeleted++;
-			i--;
 		}
 	}
 	return (numdeleted);
 }
+
+int Environment::doAutomaticGC(){
+	if(Environment::isAutomaticGC){
+		return this->GC();
+	}else{
+		return -1;
+	}
+}
+
 
 void Environment::setVariableInThisScope(const char*name, Token*value) {
 	if (this->variableExists(name)) {
@@ -244,8 +259,23 @@ GCExpression::~GCExpression() {
 }
 
 Token *GCExpression::eval(Environment *env) {
-	int num = env->GC();
-	Token *result = env->newToken(num, FLOAT);
+	int num = 0;
+	Token *result = new Token(num, FLOAT);
+	if(this->expressions.size() == 0){
+		num = env->GC();
+		result->setFloatValue(num);
+	}else if (this->expressions.size() == 1){
+		Token *onoffparam = this->expressions[0]->eval(env);
+		if(onoffparam->getFloatValue() == 1.0){
+			Environment::isAutomaticGC = true;
+			result->setFloatValue(1.0);
+			//cout << "Garbage Collector set to on"<<endl;
+		}else if(onoffparam->getFloatValue() == 0.0){
+			Environment::isAutomaticGC = false;
+			//cout << "Garbage Collector set to off"<<endl;
+			result->setFloatValue(0.0);
+		}
+	}
 	return (result);
 }
 

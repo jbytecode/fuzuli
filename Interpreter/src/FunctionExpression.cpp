@@ -101,7 +101,7 @@ Token *FunctionCallExpression::evalForClass(Environment* env) {
 
 	//Token *t = result->clone();
 	result->IncreaseReferences();
-	object_env->GC();
+	object_env->doAutomaticGC();
 	result->ReduceReferences();
 	return (result);
 }
@@ -137,7 +137,7 @@ Token *FunctionCallExpression::eval(Environment *env) {
 	result->returnFlag = 0;
 
 	result->IncreaseReferences();
-	funcEnvironment->GC();
+	funcEnvironment->doAutomaticGC();
 	result->ReduceReferences();
 	return (result);
 }

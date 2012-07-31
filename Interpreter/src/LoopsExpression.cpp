@@ -62,7 +62,7 @@ Token *ForExpression::eval(Environment *env) {
 		result = Token::NULL_TOKEN;
 	}
 	result->IncreaseReferences();
-	forEnvironment->GC();
+	forEnvironment->doAutomaticGC();
 	result->ReduceReferences();
 	return (result);
 }
@@ -92,7 +92,7 @@ Token *ForEachExpression::eval(Environment *env) {
 			if (result->breakFlag) {
 				result->breakFlag = 0;
 				result->IncreaseReferences();
-				foreachenv->GC();
+				foreachenv->doAutomaticGC();
 				result->ReduceReferences();
 				return (result);
 				break;
@@ -100,7 +100,7 @@ Token *ForEachExpression::eval(Environment *env) {
 		}
 	}
 	result->IncreaseReferences();
-	foreachenv->GC();
+	foreachenv->doAutomaticGC();
 	result->ReduceReferences();
 	return (result);
 }
@@ -129,7 +129,7 @@ Token *DoTimesExpression::eval(Environment *env) {
 			if (result->breakFlag) {
 				result->breakFlag = 0;
 				result->IncreaseReferences();
-				dotimesEnvironment->GC();
+				dotimesEnvironment->doAutomaticGC();
 				result->ReduceReferences();
 				return (result);
 				break;
@@ -142,7 +142,7 @@ Token *DoTimesExpression::eval(Environment *env) {
 		}
 	}
 	result->IncreaseReferences();
-	dotimesEnvironment->GC();
+	dotimesEnvironment->doAutomaticGC();
 	result->ReduceReferences();
 	return (result);
 
@@ -158,7 +158,7 @@ WhileExpression::~WhileExpression() {
 }
 
 Token *WhileExpression::eval(Environment *env) {
-	env->GC();
+	env->doAutomaticGC();
 	Environment *whileEnvironment = env->createNext();
 	Token *condition;
 	Token *result = Token::NULL_TOKEN;
@@ -173,7 +173,7 @@ Token *WhileExpression::eval(Environment *env) {
 			if (result->breakFlag == 1) {
 				result->breakFlag = 0;
 				result->IncreaseReferences();
-				whileEnvironment->GC();
+				whileEnvironment->doAutomaticGC();
 				result->ReduceReferences();
 				return (result);
 			}
@@ -182,7 +182,7 @@ Token *WhileExpression::eval(Environment *env) {
 
 	}
 	result->IncreaseReferences();
-	whileEnvironment->GC();
+	whileEnvironment->doAutomaticGC();
 	result->ReduceReferences();
 	return (result);
 }
