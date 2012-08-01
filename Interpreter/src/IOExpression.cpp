@@ -32,10 +32,8 @@ using namespace std;
 vector<string> RequireExpression::installedPackages;
 
 void __PrintToken(stringstream *ss, Token *tok) {
-	if (tok->getType() == INTEGER) {
-		*ss << tok->getIntValue();
-	} else if (tok->getType() == FLOAT) {
-		*ss << tok->getFloatValue();
+	if (tok->getType() == INTEGER || tok->getType()==FLOAT || tok->getType() ==STRING) {
+		*ss << tok->getContent();
 	} else if (tok->getType() == COBJECT) {
 		*ss << "@FuzuliNativeObject";
 		*ss << "[" << tok->getContent() << "]";
@@ -48,8 +46,6 @@ void __PrintToken(stringstream *ss, Token *tok) {
 			}
 		}
 		*ss << "]";
-	} else {
-		*ss << tok->getContent();
 	}
 }
 
