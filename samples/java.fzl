@@ -1,0 +1,28 @@
+# Run 
+# export LD_LIBRARY_PATH=/usr/lib/jvm/default-java/jre/lib/i386:/usr/lib/jvm/default-java/jre/lib/i386/client
+# before running this program. Location of those folders can be different in other systems.
+
+(require "/usr/lib/fuzuli/nfl/java.nfl")
+(let env (java_init))
+(let clz (java_FindClass env "java/lang/String"))
+(print clz "\n")
+(let method (java_GetMethodID env clz "<init>" "(Ljava/lang/String;)V"))
+(print method "\n")
+
+(let val (jvalue env "Hello Java World!"))
+
+(let obj (java_NewObject env clz method (list val)))
+(print "Obj is:" obj "\n")
+
+(let tostrmethod (java_GetMethodID env clz "toString" "()Ljava/lang/String;"))
+(print "tostr Method : " tostrmethod "\n")
+(let result (java_Call env obj tostrmethod (list)))
+(print "Result: " result "\n")
+
+
+
+
+
+
+
+

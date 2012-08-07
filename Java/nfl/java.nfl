@@ -47,3 +47,8 @@
 	)
 )
 
+(function java_Call (params jvm obj methodid valuelist)
+	(block
+		(return (C javalib "java_Call" jvm obj methodid valuelist))
+	)
+)

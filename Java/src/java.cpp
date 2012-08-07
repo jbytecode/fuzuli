@@ -20,6 +20,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include <typeinfo>
 #include <jni.h>
 
 using namespace std;
@@ -30,7 +31,34 @@ Token *java_init(Token *p, Environment *env);
 Token *java_FindClass(Token *p, Environment *env);
 Token *java_GetMethodID(Token *p, Environment *env);
 Token *java_NewObject(Token *p, Environment *env);
+Token *java_Call(Token *p, Environment *env);
 Token *jvalued (Token *p, Environment *env);
+}
+
+jvalue get_as_jval (JNIEnv *javaenv, Token *tok){
+	jvalue jval;
+	switch(tok->getType()){
+		case INTEGER:
+			jval.i = tok->getIntValue();
+			break;
+
+		case FLOAT:
+			jval.d = tok->getFloatValue();
+			break;
+
+		case STRING:
+			jval.l = javaenv->NewStringUTF(tok->getContent());
+			break;
+
+		case COBJECT:
+			jval.l = (jobject&)tok->object;
+			break;
+
+		default:
+			cout << "This kind of objects can not be passed to jvalue"<<endl;
+			exit(0);
+		}
+	return (jval);
 }
 
 Token *jvalued (Token *p, Environment *env){
@@ -38,30 +66,22 @@ Token *jvalued (Token *p, Environment *env){
 	Token *param = p->tokens[1];
 	Token *result = env->newToken("@JavaObject", COBJECT);
 	return(result);
-	jvalue jval;
-	switch(param->getType()){
-	case INTEGER:
-		jval.i = param->getIntValue();
-		break;
-
-	case FLOAT:
-		jval.d = param->getFloatValue();
-		break;
-
-	case STRING:
-		jval.l = javaenv->NewStringUTF(param->getContent());
-		break;
-
-	case COBJECT:
-		jval.l = (jobject&)param->object;
-		break;
-
-	default:
-		cout << "This kind of objects can not be passed to jvalue"<<endl;
-		exit(0);
-	}
-
+	jvalue jval = get_as_jval(javaenv, param);
 	result->object = (void*)&jval;
+	return(result);
+}
+
+Token *java_Call(Token *p, Environment *env){
+	JNIEnv *javaenv = (JNIEnv*) p->tokens[0]->object;
+	jobject obj = (jobject) p->tokens[1]->object;
+	jmethodID methodid = (jmethodID) p->tokens[2]->object;
+	jvalue *args = new jvalue[p->tokens[3]->tokens.size()];
+	for (unsigned int i=0;i<p->tokens[3]->tokens.size();i++){
+		args[i] = get_as_jval(javaenv, p->tokens[3]->tokens[i]);
+	}
+	Token *result = new Token("@JavaObject", COBJECT);
+	jobject jobj = javaenv->CallObjectMethodA(obj, methodid, args);
+	result->object = jobj;
 	return(result);
 }
 
@@ -79,9 +99,7 @@ Token *java_NewObject(Token *p, Environment *env) {
 
 	if(otherparams->tokens.size()==1){
 		cout << "Converting "<< otherparams->tokens[0]->getContent()<<endl;
-		//jstring js = javaenv->NewStringUTF(otherparams->tokens[0]->getContent());
-		jvalue val;
-		val.i = 9;
+		jvalue val = (jvalue&)otherparams->tokens[0]->object;
 		obj = javaenv->NewObject(clazz, methodid, val);
 	}
 	Token *result = new Token("@JavaObject", COBJECT);
