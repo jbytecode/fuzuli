@@ -18,7 +18,8 @@
 
 #include "FuzuliTypes.h"
 #include <iostream>
-#include <stdlib.h>
+#include <cstdlib>
+#include <cstring>
 #include <jni.h>
 
 using namespace std;
@@ -29,18 +30,60 @@ Token *java_init(Token *p, Environment *env);
 Token *java_FindClass(Token *p, Environment *env);
 Token *java_GetMethodID(Token *p, Environment *env);
 Token *java_NewObject(Token *p, Environment *env);
+Token *jvalued (Token *p, Environment *env);
+}
+
+Token *jvalued (Token *p, Environment *env){
+	JNIEnv *javaenv = (JNIEnv*) p->tokens[0]->object;
+	Token *param = p->tokens[1];
+	Token *result = env->newToken("@JavaObject", COBJECT);
+	return(result);
+	jvalue jval;
+	switch(param->getType()){
+	case INTEGER:
+		jval.i = param->getIntValue();
+		break;
+
+	case FLOAT:
+		jval.d = param->getFloatValue();
+		break;
+
+	case STRING:
+		jval.l = javaenv->NewStringUTF(param->getContent());
+		break;
+
+	case COBJECT:
+		jval.l = (jobject&)param->object;
+		break;
+
+	default:
+		cout << "This kind of objects can not be passed to jvalue"<<endl;
+		exit(0);
+	}
+
+	result->object = (void*)&jval;
+	return(result);
 }
 
 /*
  * (C javalib "java_NewObject" jvm clazz methodid valuelist)
  */
 Token *java_NewObject(Token *p, Environment *env) {
+
 	JNIEnv *javaenv = (JNIEnv*) p->tokens[0]->object;
 	jclass clazz = (jclass) p->tokens[1]->object;
 	jmethodID methodid = (jmethodID) p->tokens[2]->object;
+	jobject obj = NULL;
 	cout << "New Obj:" << endl;
-	jobject obj = javaenv->NewObject(clazz, methodid);
+	Token *otherparams = p->tokens[3];
 
+	if(otherparams->tokens.size()==1){
+		cout << "Converting "<< otherparams->tokens[0]->getContent()<<endl;
+		//jstring js = javaenv->NewStringUTF(otherparams->tokens[0]->getContent());
+		jvalue val;
+		val.i = 9;
+		obj = javaenv->NewObject(clazz, methodid, val);
+	}
 	Token *result = new Token("@JavaObject", COBJECT);
 	result->object = (void*)obj;
 	return (result);
@@ -72,19 +115,7 @@ Token *java_FindClass(Token *p, Environment *env) {
 	return (result);
 }
 
-ThreeParameters
-Token *java_new(Token *p, Environment *env) {
-	JNIEnv *javaenv = (JNIEnv*) p->tokens[0]->object;
-	jclass clazz = javaenv->FindClass("java/lang/String");
-	jstring str = javaenv->NewStringUTF("Hey!!!!!!");
-	jmethodID methodid = javaenv->GetMethodID(clazz, "<init>",
-			"(Ljava/lang/String;)V");
-	jobject obj = javaenv->NewObject(clazz, methodid, str);
-	jboolean jb = JNI_TRUE;
-	const char *c = javaenv->GetStringUTFChars((jstring) obj, &jb);
-	cout << "obj:" << c << endl;
-	return (Token::NULL_TOKEN);
-}
+
 
 //to-do
 //Class path info did not added.
@@ -101,7 +132,7 @@ Token *java_init(Token *p, Environment *env) {
 	args.options = options;
 	args.ignoreUnrecognized = JNI_TRUE;
 
-	jint res = JNI_CreateJavaVM(&vm, (void **) &jenv, &args);
+	JNI_CreateJavaVM(&vm, (void **) &jenv, &args);
 
 	Token *result = new Token("@FuzuliJVM", COBJECT);
 	result->object = (void *) jenv;

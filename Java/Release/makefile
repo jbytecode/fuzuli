@@ -47,7 +47,7 @@ dependents:
 libFuzuliJava.so: $(OBJS) $(USER_OBJS) /home/hako/workspace/fuzuli/Interpreter/Release/libfuzuli.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross G++ Linker'
-	g++ -L/usr/lib/jvm/default-java/jre/lib/i386/ -L/usr/lib/jvm/default-java/jre/lib/i386/client -shared -o "libFuzuliJava.so" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L/usr/lib/jvm/default-java/jre/lib/i386/client/ -shared -o "libFuzuliJava.so" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build

@@ -1,0 +1,20 @@
+# Run 
+# export LD_LIBRARY_PATH=/usr/lib/jvm/default-java/jre/lib/i386:/usr/lib/jvm/default-java/jre/lib/i386/client
+# before running this program. Location of those folders can be different in other systems.
+
+(require "/usr/lib/fuzuli/nfl/java.nfl")
+(let env (java_init))
+(let clz (java_FindClass env "java/lang/INTEGER"))
+(print clz "\n")
+(let method (java_GetMethodID env clz "<init>" "(I)Ljava/lang/INTEGER;"))
+(print method "\n")
+
+(let obj (java_NewObject env clz method (list 9)))
+#(print "Obj is:" obj "\n")
+
+
+
+
+
+
+

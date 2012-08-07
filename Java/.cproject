@@ -54,10 +54,11 @@
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1284325124" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
 								<option id="gnu.cpp.link.option.paths.1139256177" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="/usr/lib/jvm/default-java/jre/lib/i386/"/>
-									<listOptionValue builtIn="false" value="/usr/lib/jvm/default-java/jre/lib/i386/client"/>
+									<listOptionValue builtIn="false" value="/usr/lib/jvm/default-java/jre/lib/i386/client/"/>
 								</option>
-								<option id="gnu.cpp.link.option.userobjs.1176830287" name="Other objects" superClass="gnu.cpp.link.option.userobjs"/>
+								<option id="gnu.cpp.link.option.userobjs.1176830287" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value="/usr/lib/jvm/default-java/jre/lib/i386/client/libjvm.so"/>
+								</option>
 								<option id="gnu.cpp.link.option.libs.1616787194" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="jvm"/>
 								</option>
