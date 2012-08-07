@@ -63,12 +63,13 @@ Token *ClassExpression::eval(Environment *env) {
 	cls->body = this->expressions[3];
 	FuzuliClass::all_classes[cls->name] = cls;
 
-	if(strcmp(extented_class->getContent(), "Object") !=0){
-			FuzuliClass *parent = FuzuliClass::all_classes[extented_class->getContent()];
-			vector<Expression*> tmp_expr;
-			for (unsigned int i=0;i<parent->body->expressions.size();i++){
-				cls->body->expressions.push_back(parent->body->expressions[i]);
-			}
+	if (strcmp(extented_class->getContent(), "Object") != 0) {
+		FuzuliClass *parent =
+				FuzuliClass::all_classes[extented_class->getContent()];
+		vector<Expression*> tmp_expr;
+		for (unsigned int i = 0; i < parent->body->expressions.size(); i++) {
+			cls->body->expressions.push_back(parent->body->expressions[i]);
+		}
 	}
 
 	return (Token::NULL_TOKEN);
@@ -93,10 +94,30 @@ Token *NewExpression::eval(Environment *env) {
 	}
 	Environment *cls_env = env->createNext();
 	cls->body->eval(cls_env);
+
+	//Running Constructor
+	vector<Expression*> fexpr;
+	stringstream ss;
+	string constructorname = className->getContent();
+	ss << constructorname << this->expressions.size()-1;
+	string constructor_internal_name = ss.str();
+
+	if(cls_env->subenvironments[0]->getFunction(constructor_internal_name.c_str()) != NULL){
+	fexpr.push_back(
+			new IdentifierExpression(
+					new Token(constructorname.c_str(), IDENTIFIER)));
+	for (unsigned int i = 1; i < this->expressions.size(); i++) {
+		fexpr.push_back(this->expressions[i]);
+	}
+	FunctionCallExpression *fcall = new FunctionCallExpression(fexpr);
+	fcall->eval(cls_env->subenvironments[0]);
+	}
+
 	Token *obj = env->newToken("@FuzuliObject", FUZULIFUNCTION);
-	obj->object = (void*)cls_env;
+	obj->object = (void*) cls_env;
 	return (obj);
 }
 
-};
+}
+;
 
