@@ -64,4 +64,36 @@ void BlockExpression::emitCpp(stringstream *ss) {
 	(*ss) << "}" << endl;
 }
 
+
+GroupExpression::GroupExpression(vector<Expression*> expr) {
+	this->expressions = expr;
+}
+
+GroupExpression::~GroupExpression() {
+	// TODO Auto-generated destructor stub
+}
+
+Token *GroupExpression::eval(Environment *env) {
+	Token *result = Token::NULL_TOKEN;
+	for (unsigned int i = 0; i < this->expressions.size(); i++) {
+		result = this->expressions[i]->eval(env);
+		if (result) {
+			if (result->breakFlag == 1) {
+				result->IncreaseReferences();
+				result->ReduceReferences();
+				return (result);
+			} else if (result->returnFlag == 1) {
+				result->IncreaseReferences();
+				result->ReduceReferences();
+				return (result);
+			}
+		}
+	}
+	return (result);
+}
+
+void GroupExpression::emitCpp(stringstream *ss) {
+
+}
+
 } /* namespace fuzuli */

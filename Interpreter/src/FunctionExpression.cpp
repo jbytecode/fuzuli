@@ -84,6 +84,8 @@ Token *FunctionCallExpression::evalForClass(Environment* env) {
 		cout << "Fuzuli Function " << _fun.c_str() << "("
 				<< str_func_name.str().c_str() << ")" << " is not defined in "
 				<< _object.c_str() << endl;
+		cout << "Alternatives:"<<endl;
+		object_env->dump();
 		exit(-1);
 	}
 

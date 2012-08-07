@@ -220,6 +220,10 @@ void Environment::setArgcArgv(int argc, char **argv) {
 
 void Environment::dump() {
 	cout << "Environment"<< endl;
+	map<string, FuzuliFunction*>::iterator it;
+	for (it=fuzuliFunctions.begin(); it!=fuzuliFunctions.end();it++){
+		cout << "Function: " << it->first<<endl;
+	}
 	cout << "Deep: "<<this->deep << endl;
 	cout << "# Sub Environments: "<<this->subenvironments.size()<<endl;
 	cout << "# ";

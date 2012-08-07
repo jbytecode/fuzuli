@@ -236,6 +236,14 @@ public:
 	void emitCpp(stringstream *ss);
 };
 
+class GroupExpression: public Expression, public CppEmitter {
+public:
+	GroupExpression(vector<Expression*> expr);
+	virtual ~GroupExpression();
+	Token *eval(Environment *env);
+	void emitCpp(stringstream *ss);
+};
+
 class BreakExpression: public fuzuli::Expression {
 public:
 	BreakExpression(vector<Expression*> expr);

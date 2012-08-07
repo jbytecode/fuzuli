@@ -20,6 +20,7 @@
 #include <vector>
 #include <sstream>
 #include <string.h>
+#include <typeinfo>
 
 namespace fuzuli {
 
@@ -56,14 +57,20 @@ Token *ClassExpression::eval(Environment *env) {
 	Token *extented_class =
 			reinterpret_cast<IdentifierExpression*>(this->expressions[2])->stringToken;
 
-	if(strcmp(extented_class->getContent(), "Object") !=0){
-		cout << "Extending from classes rather than Object is not supported yet"<<endl;
-	}
 	FuzuliClass *cls = new FuzuliClass();
 	cls->extends = string(extented_class->getContent());
 	cls->name = string(name->getContent());
 	cls->body = this->expressions[3];
 	FuzuliClass::all_classes[cls->name] = cls;
+
+	if(strcmp(extented_class->getContent(), "Object") !=0){
+			FuzuliClass *parent = FuzuliClass::all_classes[extented_class->getContent()];
+			vector<Expression*> tmp_expr;
+			for (unsigned int i=0;i<parent->body->expressions.size();i++){
+				cls->body->expressions.push_back(parent->body->expressions[i]);
+			}
+	}
+
 	return (Token::NULL_TOKEN);
 }
 
