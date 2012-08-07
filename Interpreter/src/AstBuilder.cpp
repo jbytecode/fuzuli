@@ -194,6 +194,10 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> expr) {
 		BlockExpression *pe = new BlockExpression(expr);
 		return (pe);
 	} else if (tok->getType() == IDENTIFIER
+			&& strcmp(tok->getContent(), "group") == 0) {
+		GroupExpression *pe = new GroupExpression(expr);
+		return (pe);
+	} else if (tok->getType() == IDENTIFIER
 			&& strcmp(tok->getContent(), "print") == 0) {
 		PrintExpression *pe = new PrintExpression(expr);
 		return (pe);

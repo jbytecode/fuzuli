@@ -75,7 +75,6 @@ Token *isspaced(Token *p, Environment *env) {
 	return (result);
 }
 
-
 OneParameters
 Token *ispunctd(Token *p, Environment *env) {
 	int int_result = std::ispunct((int) p->tokens[0]->getContent()[0]);
@@ -95,7 +94,6 @@ Token *isprintd(Token *p, Environment *env) {
 	Token *result = env->newToken(int_result, INTEGER);
 	return (result);
 }
-
 
 OneParameters
 Token *isgraphd(Token *p, Environment *env) {
@@ -256,7 +254,6 @@ Token *urldecode(Token *p, Environment *env) {
 	return (result);
 }
 
-
 OneParameters
 Token *md5(Token *p, Environment *env) {
 	const char *source = p->tokens[0]->getContent();
@@ -379,7 +376,7 @@ Token *lcase(Token *p, Environment *env) {
 	return (result);
 }
 
-MoreThanThreeParameters
+OneParameters
 Token *strcatd(Token *p, Environment *env) {
 	Token *result = env->newToken("", STRING);
 	stringstream ss;
