@@ -164,12 +164,6 @@ Token *Environment::getVariable(const char *name) {
 }
 
 Environment *Environment::createNext() {
-	if(this->next){
-		this->next->GC();
-		//deleting this->next causes oop to be demaged.
-		//look at here soon.
-		//delete this->next;
-	}
 	this->next = new Environment(this);
 	this->next->deep = this->deep + 1;
 	this->subenvironments.push_back(this->next);

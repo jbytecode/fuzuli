@@ -73,8 +73,7 @@ Token * AsterixExpression::eval(Environment *env) {
 	double val = 0.0;
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
 		Token *t = expressions[i]->eval(env);
-		val = t->getFloatValue();
-		product *= val;
+		product *= t->getFloatValue();
 	}
 
 	result->setFloatValue(product);
@@ -104,7 +103,7 @@ Token *DivisionExpression::eval(Environment *env) {
 	Token *result = env->newToken(0.0, FLOAT);
 	Token *tok1 = this->expressions[0]->eval(env);
 	Token *tok2 = this->expressions[1]->eval(env);
-	result->setFloatValue(tok1->getFloatValue() / tok2->getFloatValue());
+	result->setFloatValue( tok1->getFloatValue() / tok2->getFloatValue());
 	return (result);
 }
 
@@ -259,7 +258,6 @@ void DecExpression::emitCpp(stringstream *ss) {
 
 SubtractionExpression::SubtractionExpression(vector<Expression*> expr) {
 	this->expressions = expr;
-
 }
 
 SubtractionExpression::~SubtractionExpression() {
