@@ -110,8 +110,8 @@ Token *FunctionCallExpression::evalForClass(Environment* env) {
 	result->returnFlag = 0;
 
 	result->IncreaseReferences();
-	object_env->doAutomaticGC();
-	result->ReduceReferences();
+	//object_env->doAutomaticGC();
+	//result->ReduceReferences();
 	return (result);
 }
 

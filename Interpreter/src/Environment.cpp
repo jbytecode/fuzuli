@@ -45,6 +45,12 @@ Environment::~Environment() {
 	this->variables.clear();
 	this->fuzuliFunctions.clear();
 	this->previous->next = NULL;
+	for (unsigned int i=0;i< this->previous->subenvironments.size();i++){
+		if(this->previous->subenvironments[i] == this){
+			this->previous->subenvironments.erase(this->previous->subenvironments.begin() + i);
+			break;
+		}
+	}
 	delete this->next;
 }
 
@@ -98,6 +104,14 @@ int Environment::GC() {
 			delete tok;
 			it--;
 			numdeleted++;
+		}
+	}
+	for (unsigned int i=0; i< this->subenvironments.size();i++){
+		Environment *tempe = this->subenvironments[i];
+		if(tempe->fuzuliFunctions.size() == 0){
+			this->subenvironments.erase(this->subenvironments.begin() + i);
+			delete tempe;
+			i--;
 		}
 	}
 	return (numdeleted);
@@ -163,6 +177,7 @@ Token *Environment::getVariable(const char *name) {
 	}
 }
 
+
 Environment *Environment::createNext() {
 	this->next = new Environment(this);
 	this->next->deep = this->deep + 1;
@@ -213,14 +228,22 @@ void Environment::setArgcArgv(int argc, char **argv) {
 }
 
 void Environment::dump() {
-	cout << "Environment"<< endl;
+	cout << "*** Environment ***"<< endl;
+	cout << "Deep: "<<this->deep << endl;
 	map<string, FuzuliFunction*>::iterator it;
 	for (it=fuzuliFunctions.begin(); it!=fuzuliFunctions.end();it++){
 		cout << "Function: " << it->first<<endl;
 	}
-	cout << "Deep: "<<this->deep << endl;
+	cout << "Garbage: " << endl;
+	list<Token*>::iterator g_it;
+	for (g_it = this->garbage.begin(); g_it != this->garbage.end(); g_it++) {
+		Token *tok = *g_it;
+		cout  << "Garbage: " << tok->getContent() << endl;
+	}
 	cout << "# Sub Environments: "<<this->subenvironments.size()<<endl;
-	cout << "# ";
+	for (unsigned int i=0;i<this->subenvironments.size();i++){
+		this->subenvironments[i]->dump();
+	}
 	Token *tok = Token::NULL_TOKEN;
 	tok->toString();
 }

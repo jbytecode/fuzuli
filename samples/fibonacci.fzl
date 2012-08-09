@@ -10,13 +10,10 @@
 (function write (params)
 	(block
 		(for (let i 0) (< i 22) (inc i)
-			(block
 				(print (fibonacci i) "\n")
-			)
 		)
 	)
 )
 	
 (write)
 (gc)
-(dump)
