@@ -118,14 +118,13 @@ SetExpression::~SetExpression() {
 }
 
 Token *SetExpression::eval(Environment *env){
-	Token *name = dynamic_cast<IdentifierExpression*>(this->expressions[0])->stringToken;  /* list name*/
+	Token *arr = this->expressions[0]->eval(env);
 	Token *n = this->expressions[1]->eval(env);		/* n */
-	Token *var = env->getVariable(name->getContent());
 	Token *newvalue =  this->expressions[2]->eval(env);
-	var->tokens[n->getIntValue()]->ReduceReferences();
-	var->tokens[n->getIntValue()] = newvalue;
+	arr->tokens[n->getIntValue()]->ReduceReferences();
+	arr->tokens[n->getIntValue()] = newvalue;
 	newvalue->IncreaseReferences();
-	return(var->tokens[n->getIntValue()]);
+	return(arr->tokens[n->getIntValue()]);
 }
 
 

@@ -1,0 +1,52 @@
+(class Matrix extends Object
+	(block
+		(def data LIST)
+		(def n INTEGER)
+		(def m INTEGER)
+
+		(function create (params rows cols)
+			(block
+				(let n rows)
+				(let m cols)
+				(let data (: 1 rows))
+				(for (let i 0) (< i rows) (++ i)
+					(set data i (: 1 cols))
+				)
+			)
+		)
+		
+		(function getData (params)
+			(return data)
+		)
+
+		(function fill (params x)
+			(for (let i 0) (< i n) (++ i)
+				(for (let j 0) (< j m) (++ j)
+					(set (nth data i) j x)
+				)
+			)
+		)
+
+		(function clear (params)
+			(fill 0.0)
+		)
+
+		(function get (params row col)
+			(return (nth (nth data row) col))
+		)
+
+		(function set (params row col value)
+			(set (nth data row) col value)
+		)
+
+	)
+)
+
+(let a (new Matrix))
+(a.create 3 4)
+(a.fill 9)
+(print (a.getData) "\n")
+(a.set 0 0 7)
+(print (a.get 0 0) "\n")
+
+

@@ -30,7 +30,7 @@
    (let c (fsockread socket 4096))
    (if (= (typeof c) NULL) (break))
    (append htmllist c)
-	(print ".\n")
+   (print ".\n")
 )
 # Closing socket
 (fsockclose socket)
@@ -59,7 +59,7 @@
    )
 )
 
-(let part 0)
-(let html 0)
+(let part NULL)
+(let html NULL)
 (gc)
 (dump)
