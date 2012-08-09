@@ -72,10 +72,8 @@ Token * AsterixExpression::eval(Environment *env) {
 	double product = 1.0;
 	double val = 0.0;
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
-		Token *t = expressions[i]->eval(env);
-		product *= t->getFloatValue();
+		product *= expressions[i]->eval(env)->getFloatValue();
 	}
-
 	result->setFloatValue(product);
 	return (result);
 }
@@ -187,8 +185,7 @@ Token *PlusExpression::eval(Environment *env) {
 	Token *result = env->newToken(0.0, FLOAT);
 	double sum = 0.0;
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
-		Token *t = expressions[i]->eval(env);
-		sum += t->getFloatValue();
+		sum += expressions[i]->eval(env)->getFloatValue();
 	}
 	result->setFloatValue(sum);
 	return (result);
