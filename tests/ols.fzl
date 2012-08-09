@@ -15,69 +15,91 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Linear Regression 
+(require "/usr/lib/fuzuli/nfl/math.nfl")
+(require "/usr/lib/fuzuli/nfl/io.nfl")
 
-(let x (list 1 2 3 4 5 6 7 8 9 10))
-(let y (list 10 20 30 40 50 60 70 80 90 100))
+# Test Definitions
+(let passed "PASSED!\n")
+(let error "ERROR\n")
 
-(function sum (params a)
+(function sum (params alist)
 	(block
-		(def s FLOAT)
-		(def i INTEGER)
 		(let s 0.0)
-		(for (let i 0) (< i (length a)) (inc i)
-			(let s (+ s (nth a i)))
+		(for (let i 0) (< i (length alist)) (inc i)
+			(block
+				(let s (+ s (nth alist i)))
+			)
 		)
 		(return s)
 	)
 )
 
-(function mean (params a)
-	(block	
-		(def total FLOAT)
-		(def result FLOAT)
-
-		(let total (sum a))
-		(let result (/ total (length a)))
-			
-		(return result)
-	)
-)
-
-
-(function covariance (params c d)
+(function mean (params alist)
 	(block
-		(def meana FLOAT)
-		(def meanb FLOAT)
-		(def xy FLOAT)
-		(def i INTEGER)
-		(let meana (mean c)) 
-		(let meanb (mean d))
-		(let xy 0.0)
-		(for (let i 0) (< i (length a)) (inc i)
-			(block
-				(let xy (+ xy (* (- (nth c i) meana) (- (nth d i) meanb ))))
-			)
-		) 
-		(return xy)
+		(return (/ (sum alist) (length alist) ))
 	)
+)
 
+(function variance (params alist)
+	(block
+		(let m (mean alist))
+		(let result 0.0)
+		(for (let i 0) (<i (length alist)) (inc i)
+			(let result (+ result (pow (- (nth alist i) m) 2.0)))
+		)
+		(return (/ result (- (length alist) 1.0)))
+	)
 )
 
 
-(let beta1 (/ (covariance x y) (covariance x x)))
-(let beta0 (- (mean y) (* beta1 (mean x))))
-#(print "beta0 " beta0  "\n") 
-#(print "beta1 " beta1  "\n")
-
-(if (= beta0 0.0)
-	(print "PASSED!\n")
-	(print "ERROR\n")
+(function covariance (params x y)
+	(block
+		(let mx (mean x))
+		(let my (mean y))
+		(let result 0.0)
+		(for (let i 0) (< i (length x)) (inc i)
+			(block
+				(let d (* (- (nth x i) mx) (- (nth y i) my)))
+				#(print i "] " (nth x i) "  " (- (nth x i) mx) " & " (nth y i ) " "(- (nth y i) my) "\n")
+				(let result (+ result d))
+			)
+		)
+		(return (/ result (- (length x) 1.0)))
+	)
 )
 
-(if (= beta1 10.0)
-	(print "PASSED!\n")
-	(print "ERROR\n")
+(function leastsquares (params x y)
+	(block
+		(let mycov (covariance x y))
+		(let myvar (variance x))
+		(let beta1 (/ mycov myvar))
+		(let my (mean y))
+		(let mx (mean x))
+		(let beta0 (- my (* beta1 mx)))
+		(return (list beta0 beta1))		
+	)
+)
+
+(let x (list 1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 10.0))
+(let y (list 2.0 4.0 6.0 8.0 10.0 12.0 14.0 16.0 18.0 20.0))
+
+
+(let ols (leastsquares x y))
+(let beta0 (nth ols 0))
+(let beta1 (nth ols 1))
+
+# Test 1 
+# Intercept is 0
+(if (= beta0 0)
+	(print passed)
+	(print error)
 )
 
 
-
+# Test 2 
+# Slope is 2
+(if (= beta1 2)
+	(print passed)
+	(print error)
+)

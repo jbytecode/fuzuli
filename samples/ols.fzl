@@ -74,5 +74,3 @@
 (let ols (leastsquares x y))
 (print_r ols)
 (print (mean x) " " (mean y) "\n")
-(gc)
-(dump)

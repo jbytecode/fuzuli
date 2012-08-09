@@ -34,12 +34,7 @@ ForExpression::~ForExpression() {
 }
 
 Token *ForExpression::eval(Environment *env) {
-	Environment *forEnvironment;
-	if (!env->next) {
-		forEnvironment = env->createNext();
-	} else {
-		forEnvironment = env->next;
-	}
+	Environment *forEnvironment = env->createNext();
 	this->expressions[0]->eval(forEnvironment); /* Starter */
 	Token *condition;
 	Token *result = Token::NULL_TOKEN;
