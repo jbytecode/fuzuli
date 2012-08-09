@@ -266,6 +266,9 @@ void __readToken(FILE *file, Token *tok) {
 			__readToken(file, listelement);
 		}
 	}
+	if(dummy_return != 0){
+		//Process return values later if needed
+	}
 }
 
 void __readLine(FILE *file, Token *tok) {
@@ -280,6 +283,9 @@ void __readLine(FILE *file, Token *tok) {
 		ss << c;
 	}
 	tok->setContent(ss.str().c_str());
+	if(dummy_return != 0){
+		//Process return values later if needed
+	}
 }
 
 void __writeToken(FILE *file, Token *tok) {

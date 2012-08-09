@@ -70,7 +70,6 @@ AsterixExpression::~AsterixExpression() {
 Token * AsterixExpression::eval(Environment *env) {
 	Token *result = env->newToken(0.0, FLOAT);
 	double product = 1.0;
-	double val = 0.0;
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
 		product *= expressions[i]->eval(env)->getFloatValue();
 	}

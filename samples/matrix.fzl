@@ -57,14 +57,44 @@
 			)
 		)
 
+
+		(function clonematrix (params)
+			(block
+				(let mat (new Matrix))
+				(mat.create n m)
+				(
+			)
+		)
+		(function echelon (params)
+			(block
+				(def temp LIST)
+				(let i 0)(let j 0)(let k 0)
+				(let temp (clonematrix))
+				(print "Cloned matrix is " temp "\n")
+				(def pivot FLOAT)
+				(for (let i 0)(< i n)(++i)
+					(for (let j 0)(< j m)(++j)
+						(let pivot (/ (* -1 (temp.get j i)) (temp.get i i)))
+						(for (let k 0)(< k cols)(++k)
+							(temp.setValue j k (+ (* (temp.get i k) pivot) (temp.get j k)))
+						)
+					)
+				)
+				(return temp)
+			)
+		)
+
 	)
 )
 
 (let a (new Matrix))
 (a.create 2 2)
 (a.setValue 0 0 1)(a.setValue 0 1 2)(a.setValue 1 0 3)(a.setValue 1 1 4)
-(print (a.getData) "\n")
+(print "Original: " (a.getData) "\n")
 (let trans (a.transpose))
-(print (trans.getData) "\n")
-
+(print "Transpose: " (trans.getData) "\n")
+(let klon (a.clonematrix a))
+(print "Klon: " (klon.getData) "\n")
+(let echelon (a.echelon))
+(print "Echelon: " (echelon.getData) "\n")
 

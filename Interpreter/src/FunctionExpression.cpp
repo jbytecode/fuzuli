@@ -93,7 +93,7 @@ Token *FunctionCallExpression::evalForClass(Environment* env) {
 				<< str_func_name.str().c_str() << ")" << " is not defined in "
 				<< _object.c_str() << endl;
 		cout << "Contents of environment:"<<endl;
-		object_env->dump();
+		//object_env->dump();
 		exit(-1);
 	}
 
