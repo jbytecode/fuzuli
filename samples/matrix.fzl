@@ -100,6 +100,34 @@
 			)
 		)
 
+		(function minor (params)
+			(block
+				(let x 0)(let y 0)(let cnt 0)
+				(let temp (clonematrix))
+				(let newmat (new Matrix))
+				(newmat.create (- n 1) (- m 1))
+				(let myarr (: 0 (* (- n 1) (- m 1))))
+				(for (let i 0) (< i n) (++ i)
+					(for (let j 0) (< j m) (++ j)
+						(if (and (!= i x) (!= j y))
+							(block
+								(set myarr cnt (temp.get i j))
+								(++ cnt)
+							)
+						)
+					)
+				)
+				(let cnt 0)
+				(for (let i 0)(< i (- n 1))(++ i)
+					(for (let j 0)(< j (- m 1))(++ j)
+						(newmat.setValue i j (nth myarr cnt))
+						(++ cnt)
+					)
+				)
+				(return newmat)
+			)
+		)
+
 	)
 )
 
@@ -114,4 +142,7 @@
 (let echelon (a.echelon))
 (print "Echelon: " (echelon.getData) "\n")
 (let det (a.det))
-(print "Determinant: " (a.det) "\n")
+(print "Determinant: " det "\n")
+(let minor (a.minor))
+(print "Minor: " (minor.getData) "\n")
+
