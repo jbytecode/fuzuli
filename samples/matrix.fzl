@@ -62,18 +62,23 @@
 			(block
 				(let mat (new Matrix))
 				(mat.create n m)
-				(
+				(for (let i 0) (< i n) (++ i)
+          (for (let j 0) (< j m) (++ j)
+            (mat.setValue i j (get i j))
+          )
+        )
+				(return mat)
 			)
 		)
+
 		(function echelon (params)
 			(block
 				(def temp LIST)
 				(let i 0)(let j 0)(let k 0)
 				(let temp (clonematrix))
-				(print "Cloned matrix is " temp "\n")
 				(def pivot FLOAT)
 				(for (let i 0)(< i n)(++i)
-					(for (let j 0)(< j m)(++j)
+					(for (let j (+ i 1))(< j m)(++j)
 						(let pivot (/ (* -1 (temp.get j i)) (temp.get i i)))
 						(for (let k 0)(< k cols)(++k)
 							(temp.setValue j k (+ (* (temp.get i k) pivot) (temp.get j k)))
@@ -81,6 +86,17 @@
 					)
 				)
 				(return temp)
+			)
+		)
+
+		(function det (params)
+			(block
+				(let ech (echelon))
+				(let determinant 1.0)
+				(for (let i 0) (< i n) (++ i)
+					(let determinant (* determinant (ech.get i i)))
+				)
+				(return determinant)
 			)
 		)
 
@@ -93,8 +109,9 @@
 (print "Original: " (a.getData) "\n")
 (let trans (a.transpose))
 (print "Transpose: " (trans.getData) "\n")
-(let klon (a.clonematrix a))
+(let klon (a.clonematrix))
 (print "Klon: " (klon.getData) "\n")
 (let echelon (a.echelon))
 (print "Echelon: " (echelon.getData) "\n")
-
+(let det (a.det))
+(print "Determinant: " (a.det) "\n")
