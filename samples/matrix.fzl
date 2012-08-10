@@ -1,3 +1,5 @@
+(require "/usr/lib/fuzuli/nfl/math.nfl")
+
 (gc false)
 (class Matrix extends Object
 	(block
@@ -100,9 +102,9 @@
 			)
 		)
 
-		(function minor (params)
+		(function minor (params x y)
 			(block
-				(let x 0)(let y 0)(let cnt 0)
+			  (let cnt 0)
 				(let temp (clonematrix))
 				(let newmat (new Matrix))
 				(newmat.create (- n 1) (- m 1))
@@ -128,6 +130,36 @@
 			)
 		)
 
+		(function inverse (params)
+			(block
+				(let determinant (det))
+				(if (or (!= n m) (= det 0))
+					(block
+						(print "Cannot invert matrix\n")
+						(return)
+					)
+				)
+				(let temp (clonematrix))
+				(let cofactor (new Matrix))
+				(cofactor.create n m)
+				(for (let j 0)(< j m)(++j)
+					(for (let i 0)(< i n)(++i)
+						(let mintemp (temp.minor i j))
+						(let tempdet (mintemp.det))
+						(cofactor.setValue i j tempdet)
+					)
+				)
+				(let cofactor (cofactor.transpose))
+				(for (let i 0)(< i n)(++ i)
+					(for (let j 0)(< j m)(++ j)
+						(let val (/ (* (cofactor.get i j) (pow -1.0 (+ i j))) det))
+						(cofactor.setValue i j val)
+					)
+				)		
+				(return cofactor)
+			)	
+		)
+
 	)
 )
 
@@ -143,6 +175,8 @@
 (print "Echelon: " (echelon.getData) "\n")
 (let det (a.det))
 (print "Determinant: " det "\n")
-(let minor (a.minor))
+(let minor (a.minor 0 0))
 (print "Minor: " (minor.getData) "\n")
+(let inverse (a.inverse))
+(print "Inverse: " (inverse.getData) "\n")
 
