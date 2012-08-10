@@ -1,6 +1,5 @@
 (require "/usr/lib/fuzuli/nfl/math.nfl")
 
-(gc false)
 (class Matrix extends Object
 	(block
 		(def data LIST)
@@ -179,4 +178,3 @@
 (print "Minor: " (minor.getData) "\n")
 (let inverse (a.inverse))
 (print "Inverse: " (inverse.getData) "\n")
-
