@@ -249,6 +249,10 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> expr) {
 			&& strcmp(tok->getContent(), "find") == 0) {
 		FindExpression *pe = new FindExpression(expr);
 		return (pe);
+	}else if (tok->getType() == IDENTIFIER
+			&& strcmp(tok->getContent(), "fill") == 0) {
+		FillExpression *pe = new FillExpression(expr);
+		return (pe);
 	} else if (tok->getType() == IDENTIFIER
 			&& strcmp(tok->getContent(), "params") == 0) {
 		ParamsExpression *pe = new ParamsExpression(expr);

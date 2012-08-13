@@ -253,4 +253,25 @@ Token *FindExpression::eval(Environment *env){
 }
 
 
+FillExpression::FillExpression(vector<Expression*> expr){
+	this->expressions = expr;
+}
+
+FillExpression::~FillExpression(){
+
+}
+
+Token* FillExpression::eval(Environment *env){
+	Token *arr = this->expressions[0]->eval(env);
+	Token *val = this->expressions[1]->eval(env);
+	if(arr->getType() == LIST){
+		for (unsigned int i=0;i<arr->tokens.size(); i++){
+			arr->tokens[i]->setContent(val->getContent());
+		}
+	}else{
+		cout << "Non-array object can not be filled at line "<<val->getLineNumber()<<endl;
+	}
+	return(arr);
+}
+
 } /* namespace fuzuli */

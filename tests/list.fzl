@@ -87,4 +87,15 @@
 )
 
 
+# test 9 - fill
+(let mylist (: 0 100))
+(fill mylist 0)
+(let sum 0.0)
+(for (let i 0)(< i (length mylist)) (++i)
+	(let sum (nth mylist i))
+)
+(if (= sum 0)
+	(print passed)
+	(print error)
+)
 
