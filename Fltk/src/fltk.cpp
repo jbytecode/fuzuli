@@ -354,7 +354,6 @@ OneParameters
 Token *png_new(Token *p, Environment *env) {
 	cout << "Loading " << p->tokens[0]->getContent() << endl;
 	Fl_PNG_Image *image = new Fl_PNG_Image(p->tokens[0]->getContent());
-	cout << "Loaded" << endl;
 	Token *result = env->newToken("@PngImage", COBJECT);
 	result->object = image;
 	return (result);
@@ -416,6 +415,7 @@ Token *group_new(Token *p, Environment *env) {
 	int h = p->tokens[3]->getIntValue();
 	const char *title = p->tokens[4]->getContent();
 	FuzuliGroup *group = new FuzuliGroup(x, y, w, h, title, env);
+	env->preventGC(true);
 	group->callback(default_callback, env);
 	Token *result = env->newToken("@Group", COBJECT);
 	result->object = group;
@@ -442,6 +442,7 @@ Token *checkbox_new(Token *p, Environment *env) {
 	const char *title = p->tokens[4]->getContent();
 	FuzuliCheckButton *check = new FuzuliCheckButton(x, y, w, h, title, env);
 	check->callback(default_callback, env);
+	env->preventGC(true);
 	Token *result = env->newToken("@Check", COBJECT);
 	result->object = check;
 	return (result);
@@ -467,6 +468,7 @@ Token *radiobutton_new(Token *p, Environment *env) {
 	const char *title = p->tokens[4]->getContent();
 	FuzuliRadioButton *radio = new FuzuliRadioButton(x, y, w, h, title, env);
 	radio->callback(default_callback, env);
+	env->preventGC(true);
 	Token *result = env->newToken("@RadioButton", COBJECT);
 	result->object = radio;
 	return (result);
@@ -492,6 +494,7 @@ Token *menubar_new(Token *p, Environment *env) {
 	const char *title = p->tokens[4]->getContent();
 	FuzuliMenuBar *menubar = new FuzuliMenuBar(x, y, w, h, title, env);
 	menubar->callback(default_callback, env);
+	env->preventGC(true);
 	Token *result = env->newToken("@Check", COBJECT);
 	result->object = menubar;
 	return (result);
@@ -503,7 +506,7 @@ Token *menubar_add(Token *p, Environment *env) {
 	const char *menupath = p->tokens[1]->getContent();
 	const char *shortcut = p->tokens[2]->getContent();
 	menubar->add(menupath, shortcut, default_callback, env);
-
+	env->preventGC(true);
 	return (Token::NULL_TOKEN);
 }
 
@@ -522,6 +525,7 @@ Token *dial_new(Token *p, Environment *env) {
 	const char *title = p->tokens[4]->getContent();
 	FuzuliDial *dial = new FuzuliDial(x, y, w, h, title, env);
 	dial->callback(default_callback, env);
+	env->preventGC(true);
 	Token *result = env->newToken("@Dial", COBJECT);
 	result->object = dial;
 	return (result);
@@ -548,6 +552,7 @@ Token *progress_new(Token *p, Environment *env) {
 	const char *title = p->tokens[4]->getContent();
 	FuzuliProgress *progress = new FuzuliProgress(x, y, w, h, title, env);
 	progress->callback(default_callback, env);
+	env->preventGC(true);
 	Token *result = env->newToken("@Button", COBJECT);
 	result->object = progress;
 	return (result);
@@ -574,6 +579,7 @@ Token *button_new(Token *p, Environment *env) {
 	const char *title = p->tokens[4]->getContent();
 	FuzuliButton *button = new FuzuliButton(x, y, w, h, title, env);
 	button->callback(default_callback, env);
+	env->preventGC(true);
 	Token *result = env->newToken("@Button", COBJECT);
 	result->object = button;
 	return (result);
@@ -600,6 +606,7 @@ Token *input_new(Token *p, Environment *env) {
 	const char *title = p->tokens[4]->getContent();
 	FuzuliInput *input = new FuzuliInput(x, y, w, h, title, env);
 	input->callback(default_callback, env);
+	env->preventGC(true);
 	Token *result = env->newToken("@Input", COBJECT);
 	result->object = input;
 	return (result);
@@ -626,6 +633,7 @@ Token *texteditor_new(Token *p, Environment *env) {
 	const char *title = p->tokens[4]->getContent();
 	FuzuliTextEditor *input = new FuzuliTextEditor(x, y, w, h, title, env);
 	input->callback(default_callback, env);
+	env->preventGC(true);
 	Token *result = env->newToken("@TextEditor", COBJECT);
 	result->object = input;
 	return (result);
@@ -639,6 +647,7 @@ Token *box_new(Token *p, Environment *env) {
 	const char *title = p->tokens[4]->getContent();
 	FuzuliBox *box = new FuzuliBox(x, y, w, h, title, env);
 	box->callback(default_callback, env);
+	env->preventGC(true);
 	Token *result = env->newToken("@Box", COBJECT);
 	result->object = box;
 	return (result);
@@ -687,6 +696,7 @@ Token *window_new_3(Token *p, Environment *env) {
 	FuzuliWindow *win = new FuzuliWindow(w, h, title, env);
 	Token *result = env->newToken("@FLWindow", COBJECT);
 	win->callback(default_callback, env);
+	env->preventGC(true);
 	result->object = win;
 	return (result);
 }

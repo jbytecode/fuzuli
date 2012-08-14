@@ -32,16 +32,19 @@ Environment::Environment() {
 	this->previous = NULL;
 	this->next = NULL;
 	this->first = false;
+	this->preventGC(false);
 }
 
 Environment::Environment(Environment *base) {
 	this->previous = base;
 	this->next = NULL;
 	this->first = false;
+	this->preventGC(base->preventGC());
 }
 
 Environment::~Environment() {
-	//cout << "Destruct envir"<<endl;
+	cout << "** This environment is being deleted"<<endl;
+	this->dump();
 	this->variables.clear();
 	this->fuzuliFunctions.clear();
 	this->previous->next = NULL;
@@ -89,6 +92,14 @@ Token *Environment::newToken(double val, enum TokenType type) {
 	return (tok);
 }
 
+void Environment::preventGC(bool p){
+	this->prevent_garbage_collection = p;
+}
+
+bool Environment::preventGC(){
+	return(this->prevent_garbage_collection);
+}
+
 int Environment::GC() {
 	int numdeleted = 0;
 	for (unsigned int i=0;i<this->subenvironments.size();i++){
@@ -108,7 +119,7 @@ int Environment::GC() {
 	}
 	for (unsigned int i=0; i< this->subenvironments.size();i++){
 		Environment *tempe = this->subenvironments[i];
-		if(tempe->fuzuliFunctions.size() == 0){
+		if(tempe->fuzuliFunctions.size() == 0 && !tempe->preventGC()){
 			this->subenvironments.erase(this->subenvironments.begin() + i);
 			delete tempe;
 			i--;
@@ -118,7 +129,8 @@ int Environment::GC() {
 }
 
 int Environment::doAutomaticGC(){
-	if(Environment::isAutomaticGC){
+	cout << "* doAutomaticGC() prevent status: "<< this->prevent_garbage_collection << endl;
+	if(Environment::isAutomaticGC && this->prevent_garbage_collection==false){
 		return this->GC();
 	}else{
 		return -1;

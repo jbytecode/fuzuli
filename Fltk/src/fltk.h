@@ -27,6 +27,7 @@ public:
 	FuzuliWidget(int x, int y, int width, int height, const char *t,
 			Environment *env) : Fl_Widget(x,y,width,height,t) {
 		this->environment = env;
+		this->environment->preventGC(true);
 		this->ftype = string("Widget");
 	};
 };
@@ -37,6 +38,7 @@ public:
 	FuzuliButton(int x, int y, int width, int height, const char *t,
 			Environment *env) : Fl_Button(x, y, width, height, t) {
 		this->environment = env;
+		this->environment->preventGC(true);
 		this->ftype = string("Button");
 	};
 };

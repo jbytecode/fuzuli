@@ -849,6 +849,8 @@ public:
 	Token *newToken(const char* val, TokenType type);
 	int GC();
 	int doAutomaticGC();
+	void preventGC(bool p);
+	bool preventGC();
 	void dump();
 	bool variableExists(const char *name);
 
@@ -870,6 +872,7 @@ public:
 	int deep;
 private:
 	bool first;
+	bool prevent_garbage_collection;
 };
 
 class AstBuilder {
