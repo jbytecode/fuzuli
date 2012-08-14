@@ -592,6 +592,22 @@ public:
 	Token *eval(Environment *env);
 };
 
+class FirstExpression: public Expression {
+public:
+	FirstExpression(vector<Expression*>expr);
+	virtual ~FirstExpression();
+	Token *eval(Environment *env);
+};
+
+class LastExpression: public Expression {
+public:
+	LastExpression(vector<Expression*>expr);
+	virtual ~LastExpression();
+	Token *eval(Environment *env);
+};
+
+
+
 class NotExpression: public fuzuli::Expression, public CppEmitter {
 public:
 	NotExpression(vector<Expression*> expr);

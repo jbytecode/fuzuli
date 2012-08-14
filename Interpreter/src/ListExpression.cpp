@@ -33,22 +33,18 @@ ListExpression::~ListExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *ListExpression::eval(Environment *env){
-	Token *result = env->newToken("@FuzuliList",LIST);
-	for (unsigned int i=0;i<this->expressions.size();i++){
+Token *ListExpression::eval(Environment *env) {
+	Token *result = env->newToken("@FuzuliList", LIST);
+	for (unsigned int i = 0; i < this->expressions.size(); i++) {
 		Token *temp = this->expressions[i]->eval(env);
 		temp->IncreaseReferences();
-		if(temp->getType() == BREAKTOKEN) {
+		if (temp->getType() == BREAKTOKEN) {
 			break;
 		}
 		result->tokens.push_back(temp);
 	}
-	return(result);
+	return (result);
 }
-
-
-
-
 
 /************************/
 /* Other List Functions */
@@ -65,14 +61,12 @@ LengthExpression::~LengthExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *LengthExpression::eval(Environment *env){
+Token *LengthExpression::eval(Environment *env) {
 	Token *tok = this->expressions[0]->eval(env);
 	Token *result = env->newToken(0.0, INTEGER);
 	result->setIntValue(tok->tokens.size());
-	return(result);
+	return (result);
 }
-
-
 
 /************************/
 /* Nth */
@@ -85,26 +79,23 @@ NthExpression::~NthExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *NthExpression::eval(Environment *env){
+Token *NthExpression::eval(Environment *env) {
 	Token *list = this->expressions[0]->eval(env);
-	if(list==NULL){
-		cout << "FuzuliList is NULL in nth" <<endl;
+	if (list == NULL) {
+		cout << "FuzuliList is NULL in nth" << endl;
 		exit(-3);
 	}
 	Token *n = this->expressions[1]->eval(env);
-	if( ((unsigned int)n->getIntValue()) >= list->tokens.size()){
-		cout << "List index out of bounds of "<< n->getContent()<<endl;
+	if (((unsigned int) n->getIntValue()) >= list->tokens.size()) {
+		cout << "List index out of bounds of " << n->getContent() << endl;
 		exit(-3);
 	}
 	Token *result = list->tokens[n->getIntValue()];
-	if(result==NULL){
+	if (result == NULL) {
 		result = Token::NULL_TOKEN;
 	}
-	return(result);
+	return (result);
 }
-
-
-
 
 /************************/
 /* Set 					*/
@@ -117,71 +108,66 @@ SetExpression::~SetExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *SetExpression::eval(Environment *env){
+Token *SetExpression::eval(Environment *env) {
 	Token *arr = this->expressions[0]->eval(env);
-	Token *n = this->expressions[1]->eval(env);		/* n */
-	Token *newvalue =  this->expressions[2]->eval(env);
+	Token *n = this->expressions[1]->eval(env); /* n */
+	Token *newvalue = this->expressions[2]->eval(env);
 	arr->tokens[n->getIntValue()]->ReduceReferences();
 	arr->tokens[n->getIntValue()] = newvalue;
 	newvalue->IncreaseReferences();
-	return(arr->tokens[n->getIntValue()]);
+	return (arr->tokens[n->getIntValue()]);
 }
-
 
 /************************/
 /* Explode				*/
 /************************/
-ExplodeExpression::ExplodeExpression(vector<Expression*> expr){
+ExplodeExpression::ExplodeExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 }
 
-ExplodeExpression::~ExplodeExpression(){
+ExplodeExpression::~ExplodeExpression() {
 
 }
 
-Token *ExplodeExpression::eval(Environment *env){
+Token *ExplodeExpression::eval(Environment *env) {
 	Token *source_str = this->expressions[0]->eval(env);
 	Token *delim = this->expressions[1]->eval(env);
 	Token *result = env->newToken("@FuzuliList", LIST);
 
-	char *temp = (char*)malloc(strlen(source_str->getContent()));
+	char *temp = (char*) malloc(strlen(source_str->getContent()));
 	strcpy(temp, source_str->getContent());
 
 	char *p = strtok(temp, delim->getContent());
-	while(p){
+	while (p) {
 		Token *tok = env->newToken(p, STRING);
 		result->tokens.push_back(tok);
-		p = strtok (NULL, delim->getContent());
+		p = strtok(NULL, delim->getContent());
 	}
 
 	free(temp);
-	return(result);
+	return (result);
 }
 
-
-
-ColonExpression::ColonExpression(vector<Expression*> expr){
+ColonExpression::ColonExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 }
 
-ColonExpression::~ColonExpression(){
-	cout << "ColonExpression Destructor"<<endl;
+ColonExpression::~ColonExpression() {
+	cout << "ColonExpression Destructor" << endl;
 }
 
-Token *ColonExpression::eval(Environment *env){
+Token *ColonExpression::eval(Environment *env) {
 	Token *num1 = this->expressions[0]->eval(env);
 	Token *num2 = this->expressions[1]->eval(env);
 	Token *result = env->newToken("@FuzuliList", LIST);
 	int start = num1->getIntValue();
-	int stop =  num2->getIntValue();
-	for (int i=start; i<=stop; i++){
+	int stop = num2->getIntValue();
+	for (int i = start; i <= stop; i++) {
 		Token *tok = env->newToken(i, FLOAT);
 		result->tokens.push_back(tok);
 	}
-	return(result);
+	return (result);
 }
-
-
 
 AppendExpression::AppendExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -191,14 +177,13 @@ AppendExpression::~AppendExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *AppendExpression::eval(Environment *env){
-	Token *list = this->expressions[0]->eval(env);  /* list name*/
+Token *AppendExpression::eval(Environment *env) {
+	Token *list = this->expressions[0]->eval(env); /* list name*/
 	Token *element = this->expressions[1]->eval(env);
 	list->tokens.push_back(element);
 	element->IncreaseReferences();
-	return(list);
+	return (list);
 }
-
 
 PrependExpression::PrependExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -208,70 +193,107 @@ PrependExpression::~PrependExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *PrependExpression::eval(Environment *env){
-	Token *list = this->expressions[0]->eval(env);  /* list name*/
+Token *PrependExpression::eval(Environment *env) {
+	Token *list = this->expressions[0]->eval(env); /* list name*/
 	Token *element = this->expressions[1]->eval(env);
 	list->tokens.insert(list->tokens.begin(), element);
 	element->IncreaseReferences();
-	return(list);
+	return (list);
 }
 
-RemoveExpression::RemoveExpression(vector<Expression*> expr){
+RemoveExpression::RemoveExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 }
 
-RemoveExpression::~RemoveExpression(){
+RemoveExpression::~RemoveExpression() {
 
 }
 
-Token *RemoveExpression::eval(Environment *env){
+Token *RemoveExpression::eval(Environment *env) {
 	Token *arr = this->expressions[0]->eval(env);
 	Token *n = this->expressions[1]->eval(env);
 	arr->tokens[n->getIntValue()]->ReduceReferences();
-	arr->tokens.erase( arr->tokens.begin() + n->getIntValue());
-	return(arr);
+	arr->tokens.erase(arr->tokens.begin() + n->getIntValue());
+	return (arr);
 }
 
-
-FindExpression::FindExpression(vector<Expression*> expr){
+FindExpression::FindExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 }
 
-FindExpression::~FindExpression(){
+FindExpression::~FindExpression() {
 
 }
 
-Token *FindExpression::eval(Environment *env){
+Token *FindExpression::eval(Environment *env) {
 	Token *arr = this->expressions[0]->eval(env);
 	Token *what = this->expressions[1]->eval(env);
-	for (unsigned int i=0;i<arr->tokens.size();i++){
-		if(arr->tokens[i]->Equal(what)){
-			return(env->newToken(i, INTEGER));
+	for (unsigned int i = 0; i < arr->tokens.size(); i++) {
+		if (arr->tokens[i]->Equal(what)) {
+			return (env->newToken(i, INTEGER));
 		}
 	}
-	return(Token::NULL_TOKEN);
+	return (Token::NULL_TOKEN);
 }
 
-
-FillExpression::FillExpression(vector<Expression*> expr){
+FillExpression::FillExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 }
 
-FillExpression::~FillExpression(){
+FillExpression::~FillExpression() {
 
 }
 
-Token* FillExpression::eval(Environment *env){
+Token* FillExpression::eval(Environment *env) {
 	Token *arr = this->expressions[0]->eval(env);
 	Token *val = this->expressions[1]->eval(env);
-	if(arr->getType() == LIST){
-		for (unsigned int i=0;i<arr->tokens.size(); i++){
+	if (arr->getType() == LIST) {
+		for (unsigned int i = 0; i < arr->tokens.size(); i++) {
 			arr->tokens[i]->setContent(val->getContent());
 		}
-	}else{
-		cout << "Non-array object can not be filled at line "<<val->getLineNumber()<<endl;
+	} else {
+		cout << "Non-array object can not be filled at line "
+				<< val->getLineNumber() << endl;
 	}
-	return(arr);
+	return (arr);
 }
+
+FirstExpression::FirstExpression(vector<Expression*> expr) {
+	this->expressions = expr;
+}
+
+FirstExpression::~FirstExpression() {
+
+}
+
+Token *FirstExpression::eval(Environment *env) {
+	Token *arr = this->expressions[0]->eval(env);
+	if (arr->getType() == LIST) {
+		return (arr->tokens[0]);
+	} else {
+		cout << "Array is not a list in (first) expression" << endl;
+	}
+	return (Token::NULL_TOKEN);
+}
+
+LastExpression::LastExpression(vector<Expression*> expr) {
+	this->expressions = expr;
+}
+
+LastExpression::~LastExpression() {
+
+}
+
+Token *LastExpression::eval(Environment *env) {
+	Token *arr = this->expressions[0]->eval(env);
+	if (arr->getType() == LIST) {
+		return (arr->tokens[arr->tokens.size() - 1]);
+	} else {
+		cout << "Array is not a list in (first) expression" << endl;
+	}
+	return (Token::NULL_TOKEN);
+}
+
+
 
 } /* namespace fuzuli */

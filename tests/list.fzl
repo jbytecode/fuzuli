@@ -99,3 +99,19 @@
 	(print error)
 )
 
+# test 10 - first
+(let mylist (: -10 100))
+(let f (first mylist))
+(if (= f -10)
+	(print passed)
+	(print error)
+)
+
+# test 11 - last
+(let mylist (: -10 100))
+(let l (last mylist))
+(if (= l 100)
+	(print passed)
+	(print error)
+)
+
