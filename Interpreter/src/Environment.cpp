@@ -43,8 +43,6 @@ Environment::Environment(Environment *base) {
 }
 
 Environment::~Environment() {
-	cout << "** This environment is being deleted"<<endl;
-	this->dump();
 	this->variables.clear();
 	this->fuzuliFunctions.clear();
 	this->previous->next = NULL;
@@ -54,7 +52,9 @@ Environment::~Environment() {
 			break;
 		}
 	}
-	delete this->next;
+	if(this->next && !this->next->preventGC()) {
+		delete this->next;
+	}
 }
 
 void Environment::setFirst() {
@@ -129,7 +129,6 @@ int Environment::GC() {
 }
 
 int Environment::doAutomaticGC(){
-	cout << "* doAutomaticGC() prevent status: "<< this->prevent_garbage_collection << endl;
 	if(Environment::isAutomaticGC && this->prevent_garbage_collection==false){
 		return this->GC();
 	}else{
