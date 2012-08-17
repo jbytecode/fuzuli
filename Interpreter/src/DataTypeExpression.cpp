@@ -50,13 +50,6 @@ Token *IntegerExpression::eval(Environment *env){
 }
 
 
-void IntegerExpression::emitCpp(stringstream *ss){
-	(*ss)<< this->integerValue;
-}
-
-
-
-
 FloatExpression::FloatExpression() {
 
 }
@@ -76,9 +69,6 @@ Token *FloatExpression::eval(Environment *env){
 	return(this->token);
 }
 
-void FloatExpression::emitCpp(stringstream *ss){
-	(*ss)<< this->floatValue;
-}
 
 
 StringExpression::StringExpression(Token *tok) {
@@ -102,9 +92,6 @@ Token *StringExpression::eval(Environment *env){
 }
 
 
-void StringExpression::emitCpp(stringstream *ss){
-	(*ss)<< "\"" << this->stringToken->getContent() << "\"";
-}
 
 
 IdentifierExpression::IdentifierExpression(Token *tok) {
@@ -122,9 +109,6 @@ Token *IdentifierExpression::eval(Environment *env){
 	return(result);
 }
 
-void IdentifierExpression::emitCpp(stringstream *ss){
-	(*ss) << this->stringToken->getContent();
-}
 
 
 

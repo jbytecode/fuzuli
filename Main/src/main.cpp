@@ -30,6 +30,30 @@ using namespace fuzuli;
 static int a_argc;
 static char **a_argv;
 
+void doByteCode(const char* fileName, int argc, char** argv){
+	SourceCode *s = new SourceCode();
+	s->readFromFile(fileName);
+	//cout << s->getSourceCode()->c_str() << endl;
+
+	s->reset();
+
+	AstBuilder *b = new AstBuilder(s);
+	Environment *globalEnvironment = new Environment();
+	globalEnvironment->setFirst();
+	globalEnvironment->setArgcArgv(argc, argv);
+	Expression *ex;
+
+	while (1) {
+		globalEnvironment->doAutomaticGC();
+		ex = b->getNextExpression();
+		if (!ex){
+			break;
+		}
+		dynamic_cast<Serialization*>(ex)->serialize(&cout);
+	}
+	cout << endl;
+}
+
 int calculateNumberOfParanthesis(const char *c){
 	int num = 0;
 	int len = strlen(c);
@@ -105,6 +129,9 @@ int main(int argc, char** argv) {
 		exit(0);
 	} else if (argc == 2 && strcmp(argv[1], "--repl") == 0) {
 		doRepl();
+		exit(0);
+	} else if (argc == 3 && strcmp(argv[1], "-bytecode") == 0){
+		doByteCode (argv[2], argc, argv);
 		exit(0);
 	}
 	SourceCode *s = new SourceCode();
