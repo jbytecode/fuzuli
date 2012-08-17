@@ -116,7 +116,8 @@ enum ExpressionType {
 	INTEGER_EXPRESSION,
 	FLOAT_EXPRESSION,
 	LET_EXPRESSION,
-	PRINT_EXPRESSION
+	DEF_EXPRESSION,
+	PRINT_EXPRESSION,
 };
 
 
@@ -442,7 +443,7 @@ private:
 	Token *token;
 };
 
-class DefExpression: public Expression {
+class DefExpression: public Expression, public Serialization {
 public:
 	DefExpression(vector<Expression*> expr);
 	~DefExpression();
