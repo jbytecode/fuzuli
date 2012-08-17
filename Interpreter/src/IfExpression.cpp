@@ -54,19 +54,6 @@ Token *IfExpression::eval(Environment *env) {
 }
 
 
-void IfExpression::emitCpp(stringstream *ss){
-	//CppEmitter *emitter = dynamic_cast<CppEmitter*>(this->expressions[0]);
-	(*ss) << "if(";
-	dynamic_cast<CppEmitter*>(this->expressions[0])->emitCpp(ss);
-	(*ss) << "){" <<endl << "\t";
-	dynamic_cast<CppEmitter*>(this->expressions[1])->emitCpp(ss);
-	(*ss) << "}" <<endl;
-	if(this->expressions.size()==3){
-		(*ss) << "else{" <<endl << "\t";
-		dynamic_cast<CppEmitter*>(this->expressions[2])->emitCpp(ss);
-		(*ss) << "}"<<endl;
-	}
-}
 
 SwitchExpression::SwitchExpression(vector<Expression*> expr){
 	this->expressions = expr;

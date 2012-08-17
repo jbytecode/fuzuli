@@ -51,9 +51,7 @@ Token *IntegerExpression::eval(Environment *env){
 
 
 void IntegerExpression::emitCpp(stringstream *ss){
-	(*ss)<<  "(new IntegerExpression(new Token(";
 	(*ss)<< this->integerValue;
-	(*ss)<< ", INTEGER)))";
 }
 
 
@@ -79,9 +77,7 @@ Token *FloatExpression::eval(Environment *env){
 }
 
 void FloatExpression::emitCpp(stringstream *ss){
-	(*ss)<<  "(new FloatExpression(new Token(";
 	(*ss)<< this->floatValue;
-	(*ss)<< ", FLOAT)))";
 }
 
 
@@ -107,9 +103,7 @@ Token *StringExpression::eval(Environment *env){
 
 
 void StringExpression::emitCpp(stringstream *ss){
-	(*ss)<<  "(new FloatExpression(new Token(";
 	(*ss)<< "\"" << this->stringToken->getContent() << "\"";
-	(*ss)<< ", STRING)))";
 }
 
 

@@ -67,16 +67,6 @@ Token *PrintExpression::eval(Environment *env) {
 	return (Token::NULL_TOKEN);
 }
 
-void PrintExpression::emitCpp(stringstream *ss) {
-	(*ss) << "INTERNAL_FUZULI_FUNCTION(env, \"print\", ";
-	for (unsigned int i = 0; i < this->expressions.size(); i++) {
-		dynamic_cast<CppEmitter*>(this->expressions[i])->emitCpp(ss);
-		if (i != this->expressions.size() - 1) {
-			(*ss) << ", ";
-		}
-	}
-	(*ss) << ");" << endl;
-}
 
 RequireExpression::RequireExpression(vector<Expression*> expr) {
 	this->expressions = expr;

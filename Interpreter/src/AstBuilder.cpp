@@ -321,11 +321,7 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> expr) {
 			&& strcmp(tok->getContent(), "include") == 0) {
 		IncludeExpression *pe = new IncludeExpression(expr);
 		return (pe);
-	} else if (tok->getType() == IDENTIFIER
-			&& strcmp(tok->getContent(), "CPlusPlus") == 0) {
-		CPlusPlusExpression *pe = new CPlusPlusExpression(expr);
-		return (pe);
-	} else if (tok->getType() == IDENTIFIER
+	}else if (tok->getType() == IDENTIFIER
 			&& strcmp(tok->getContent(), "dump") == 0) {
 		DumpExpression *pe = new DumpExpression(expr);
 		return (pe);

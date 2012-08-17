@@ -46,13 +46,6 @@ Token *LetExpression::eval(Environment *env) {
 	return (result);
 }
 
-void LetExpression::emitCpp(stringstream *ss) {
-	dynamic_cast<CppEmitter*>(this->expressions[0])->emitCpp(ss);
-	(*ss) << " = ";
-	dynamic_cast<CppEmitter*>(this->expressions[1])->emitCpp(ss);
-	(*ss) << "->eval(env)";
-	(*ss) << endl;
-}
 
 DefExpression::DefExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -76,11 +69,6 @@ Token *DefExpression::eval(Environment *env) {
 	return (var);
 }
 
-void DefExpression::emitCpp(stringstream *ss) {
-	(*ss) << "Token* ";
-	dynamic_cast<CppEmitter*>(this->expressions[0])->emitCpp(ss);
-	(*ss) << " = NULL;" << endl;
-}
 
 CloneExpression::CloneExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -95,8 +83,5 @@ Token *CloneExpression::eval(Environment *env) {
 	return (tok->clone());
 }
 
-void CloneExpression::emitCpp(stringstream *ss) {
-
-}
 
 } /* namespace fuzuli */

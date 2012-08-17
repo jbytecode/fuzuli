@@ -3,7 +3,7 @@
 (require "/usr/lib/fuzuli/nfl/string.nfl")
 
 (let result 0)
-
+(let numstack (list))
 
 (function event (params p)
 	(block
@@ -14,7 +14,15 @@
 		(if (= cmd "C")(block
 			(input_settext txt_result result)
 		))
-		
+
+		(if (or (isdigit cmd) (= cmd "."))
+			(block
+				(let val (input_gettext txt_result))
+				(let newval (strcat (list val cmd)))
+				(input_settext txt_result newval)
+			)
+		)
+
 
 	)
 )

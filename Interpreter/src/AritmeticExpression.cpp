@@ -48,16 +48,6 @@ Token *AndExpression::eval(Environment *env) {
 	return (result);
 }
 
-void AndExpression::emitCpp(stringstream *ss) {
-	(*ss) << "(";
-	for (unsigned int i = 0; i < this->expressions.size(); i++) {
-		dynamic_cast<CppEmitter*>(this->expressions[i])->emitCpp(ss);
-		if (i != this->expressions.size() - 1) {
-			(*ss) << " && ";
-		}
-	}
-	(*ss) << ")";
-}
 
 AsterixExpression::AsterixExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -77,16 +67,6 @@ Token * AsterixExpression::eval(Environment *env) {
 	return (result);
 }
 
-void AsterixExpression::emitCpp(stringstream *ss) {
-	(*ss) << "(";
-	for (unsigned int i = 0; i < this->expressions.size(); i++) {
-		CppEmitter *ce = dynamic_cast<CppEmitter*>(this->expressions[i]);
-		ce->emitCpp(ss);
-		if (i != this->expressions.size() - 1)
-			(*ss) << "*";
-	}
-	(*ss) << ")";
-}
 
 DivisionExpression::DivisionExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -104,13 +84,6 @@ Token *DivisionExpression::eval(Environment *env) {
 	return (result);
 }
 
-void DivisionExpression::emitCpp(stringstream *ss) {
-	(*ss) << "(";
-	dynamic_cast<CppEmitter*>(this->expressions[0])->emitCpp(ss);
-	(*ss) << " / ";
-	dynamic_cast<CppEmitter*>(this->expressions[1])->emitCpp(ss);
-	(*ss) << ")";
-}
 
 NotExpression::NotExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -133,11 +106,6 @@ Token *NotExpression::eval(Environment *env) {
 	return (result);
 }
 
-void NotExpression::emitCpp(stringstream *ss) {
-	(*ss) << "!(";
-	dynamic_cast<CppEmitter*>(this->expressions[0])->emitCpp(ss);
-	(*ss) << ")";
-}
 
 OrExpression::OrExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -161,16 +129,6 @@ Token *OrExpression::eval(Environment *env) {
 	return (result);
 }
 
-void OrExpression::emitCpp(stringstream *ss) {
-	(*ss) << "(";
-	for (unsigned int i = 0; i < this->expressions.size(); i++) {
-		dynamic_cast<CppEmitter*>(this->expressions[i])->emitCpp(ss);
-		if (i != this->expressions.size() - 1) {
-			(*ss) << " || ";
-		}
-	}
-	(*ss) << ")";
-}
 
 PlusExpression::PlusExpression(vector<Expression *> expr) {
 	this->expressions = expr;
@@ -190,17 +148,6 @@ Token *PlusExpression::eval(Environment *env) {
 	return (result);
 }
 
-void PlusExpression::emitCpp(stringstream *ss) {
-	(*ss) << "(new PlusExpression("<<this->expressions.size()<<",";
-	for (unsigned int i = 0; i < this->expressions.size(); i++) {
-		CppEmitter *ce = dynamic_cast<CppEmitter*>(this->expressions[i]);
-		ce->emitCpp(ss);
-		if (i!=this->expressions.size()-1){
-			(*ss)<<", ";
-		}
-	}
-	(*ss) << ")->eval(env);";
-}
 
 IncExpression::IncExpression(vector<Expression *> expr) {
 	this->expressions = expr;
@@ -221,10 +168,6 @@ Token *IncExpression::eval(Environment *env) {
 	return(result);
 }
 
-void IncExpression::emitCpp(stringstream *ss) {
-	dynamic_cast<CppEmitter*>(this->expressions[0])->emitCpp(ss);
-	(*ss) << "++";
-}
 
 // MinusMinus Expression
 // i--
@@ -247,10 +190,6 @@ Token *DecExpression::eval(Environment *env) {
 	return(result);
 }
 
-void DecExpression::emitCpp(stringstream *ss) {
-	dynamic_cast<CppEmitter*>(this->expressions[0])->emitCpp(ss);
-	(*ss) << "--";
-}
 
 SubtractionExpression::SubtractionExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -273,13 +212,6 @@ Token *SubtractionExpression::eval(Environment *env) {
 	return (result);
 }
 
-void SubtractionExpression::emitCpp(stringstream *ss) {
-	(*ss) << "(";
-	dynamic_cast<CppEmitter*>(this->expressions[0])->emitCpp(ss);
-	(*ss) << " - ";
-	dynamic_cast<CppEmitter*>(this->expressions[1])->emitCpp(ss);
-	(*ss) << ")";
-}
 
 EqualsExpression::EqualsExpression(vector<Expression *> expr) {
 	this->expressions = expr;
@@ -300,13 +232,6 @@ Token *EqualsExpression::eval(Environment *env) {
 	return (result);
 }
 
-void EqualsExpression::emitCpp(stringstream *ss) {
-	CppEmitter *emitter = dynamic_cast<CppEmitter*>(this->expressions[0]);
-	emitter->emitCpp(ss);
-	(*ss) << " == ";
-	emitter = dynamic_cast<CppEmitter*>(this->expressions[1]);
-	emitter->emitCpp(ss);
-}
 
 NotEqualsExpression::NotEqualsExpression(vector<Expression *> expr) {
 	this->expressions = expr;
@@ -328,13 +253,6 @@ Token *NotEqualsExpression::eval(Environment *env) {
 	return (result);
 }
 
-void NotEqualsExpression::emitCpp(stringstream *ss) {
-	CppEmitter *emitter = dynamic_cast<CppEmitter*>(this->expressions[0]);
-	emitter->emitCpp(ss);
-	(*ss) << " != ";
-	emitter = dynamic_cast<CppEmitter*>(this->expressions[1]);
-	emitter->emitCpp(ss);
-}
 
 LessExpression::LessExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -356,13 +274,6 @@ Token *LessExpression::eval(Environment *env) {
 	return (result);
 }
 
-void LessExpression::emitCpp(stringstream *ss) {
-	CppEmitter *emitter = dynamic_cast<CppEmitter*>(this->expressions[0]);
-	emitter->emitCpp(ss);
-	(*ss) << "->getFloatValue() < ";
-	emitter = dynamic_cast<CppEmitter*>(this->expressions[1]);
-	emitter->emitCpp(ss);
-}
 
 LessOrEqualExpression::LessOrEqualExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -384,13 +295,6 @@ Token *LessOrEqualExpression::eval(Environment *env) {
 	return (result);
 }
 
-void LessOrEqualExpression::emitCpp(stringstream *ss) {
-	CppEmitter *emitter = dynamic_cast<CppEmitter*>(this->expressions[0]);
-	emitter->emitCpp(ss);
-	(*ss) << " <= ";
-	emitter = dynamic_cast<CppEmitter*>(this->expressions[1]);
-	emitter->emitCpp(ss);
-}
 
 BiggerExpression::BiggerExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -412,13 +316,6 @@ Token *BiggerExpression::eval(Environment *env) {
 	return (result);
 }
 
-void BiggerExpression::emitCpp(stringstream *ss) {
-	CppEmitter *emitter = dynamic_cast<CppEmitter*>(this->expressions[0]);
-	emitter->emitCpp(ss);
-	(*ss) << " > ";
-	emitter = dynamic_cast<CppEmitter*>(this->expressions[1]);
-	emitter->emitCpp(ss);
-}
 
 BigOrEqualExpression::BigOrEqualExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -440,13 +337,6 @@ Token *BigOrEqualExpression::eval(Environment *env) {
 	return (result);
 }
 
-void BigOrEqualExpression::emitCpp(stringstream *ss) {
-	CppEmitter *emitter = dynamic_cast<CppEmitter*>(this->expressions[0]);
-	emitter->emitCpp(ss);
-	(*ss) << " >= ";
-	emitter = dynamic_cast<CppEmitter*>(this->expressions[1]);
-	emitter->emitCpp(ss);
-}
 
 ModulaExpression::ModulaExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -465,9 +355,6 @@ Token *ModulaExpression::eval(Environment *env) {
 	return (result);
 }
 
-void ModulaExpression::emitCpp(stringstream *ss) {
-	cout << "% cppemit is not defined yet" << endl;
-}
 
 BitAndExpression::BitAndExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -485,13 +372,6 @@ Token *BitAndExpression::eval(Environment *env) {
 	return (result);
 }
 
-void BitAndExpression::emitCpp(stringstream *ss) {
-	CppEmitter *emitter = dynamic_cast<CppEmitter*>(this->expressions[0]);
-	emitter->emitCpp(ss);
-	(*ss) << " & ";
-	emitter = dynamic_cast<CppEmitter*>(this->expressions[1]);
-	emitter->emitCpp(ss);
-}
 
 BitNotExpression::BitNotExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -507,11 +387,6 @@ Token *BitNotExpression::eval(Environment *env) {
 	return (result);
 }
 
-void BitNotExpression::emitCpp(stringstream *ss) {
-	CppEmitter *emitter = dynamic_cast<CppEmitter*>(this->expressions[0]);
-	(*ss) << " & ";
-	emitter->emitCpp(ss);
-}
 
 BitOrExpression::BitOrExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -529,13 +404,6 @@ Token *BitOrExpression::eval(Environment *env) {
 	return (result);
 }
 
-void BitOrExpression::emitCpp(stringstream *ss) {
-	CppEmitter *emitter = dynamic_cast<CppEmitter*>(this->expressions[0]);
-	emitter->emitCpp(ss);
-	(*ss) << " | ";
-	emitter = dynamic_cast<CppEmitter*>(this->expressions[1]);
-	emitter->emitCpp(ss);
-}
 
 BitXORExpression::BitXORExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -553,13 +421,6 @@ Token *BitXORExpression::eval(Environment *env) {
 	return (result);
 }
 
-void BitXORExpression::emitCpp(stringstream *ss) {
-	CppEmitter *emitter = dynamic_cast<CppEmitter*>(this->expressions[0]);
-	emitter->emitCpp(ss);
-	(*ss) << " ^ ";
-	emitter = dynamic_cast<CppEmitter*>(this->expressions[1]);
-	emitter->emitCpp(ss);
-}
 
 BitShiftLeftExpression::BitShiftLeftExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -577,13 +438,6 @@ Token *BitShiftLeftExpression::eval(Environment *env) {
 	return (result);
 }
 
-void BitShiftLeftExpression::emitCpp(stringstream *ss) {
-	CppEmitter *emitter = dynamic_cast<CppEmitter*>(this->expressions[0]);
-	emitter->emitCpp(ss);
-	(*ss) << " << ";
-	emitter = dynamic_cast<CppEmitter*>(this->expressions[1]);
-	emitter->emitCpp(ss);
-}
 
 BitShiftRightExpression::BitShiftRightExpression(vector<Expression*> expr) {
 	this->expressions = expr;
@@ -601,13 +455,6 @@ Token *BitShiftRightExpression::eval(Environment *env) {
 	return (result);
 }
 
-void BitShiftRightExpression::emitCpp(stringstream *ss) {
-	CppEmitter *emitter = dynamic_cast<CppEmitter*>(this->expressions[0]);
-	emitter->emitCpp(ss);
-	(*ss) << " >> ";
-	emitter = dynamic_cast<CppEmitter*>(this->expressions[1]);
-	emitter->emitCpp(ss);
-}
 
 
 SetPrecisionExpression::SetPrecisionExpression(vector<Expression*> expr){

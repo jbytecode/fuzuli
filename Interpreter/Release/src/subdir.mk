@@ -7,7 +7,6 @@ CPP_SRCS += \
 ../src/AritmeticExpression.cpp \
 ../src/AstBuilder.cpp \
 ../src/BlockExpression.cpp \
-../src/CppEmitter.cpp \
 ../src/DataTypeExpression.cpp \
 ../src/DynLoadExpression.cpp \
 ../src/Environment.cpp \
@@ -28,7 +27,6 @@ OBJS += \
 ./src/AritmeticExpression.o \
 ./src/AstBuilder.o \
 ./src/BlockExpression.o \
-./src/CppEmitter.o \
 ./src/DataTypeExpression.o \
 ./src/DynLoadExpression.o \
 ./src/Environment.o \
@@ -49,7 +47,6 @@ CPP_DEPS += \
 ./src/AritmeticExpression.d \
 ./src/AstBuilder.d \
 ./src/BlockExpression.d \
-./src/CppEmitter.d \
 ./src/DataTypeExpression.d \
 ./src/DynLoadExpression.d \
 ./src/Environment.d \

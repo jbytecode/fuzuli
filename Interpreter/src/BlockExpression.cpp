@@ -58,11 +58,7 @@ Token *BlockExpression::eval(Environment *env) {
 	return (result);
 }
 
-void BlockExpression::emitCpp(stringstream *ss) {
-	(*ss) << "{" << endl;
-	dynamic_cast<CppEmitter*>(this->expressions[0])->emitCpp(ss);
-	(*ss) << "}" << endl;
-}
+
 
 
 GroupExpression::GroupExpression(vector<Expression*> expr) {
@@ -92,8 +88,5 @@ Token *GroupExpression::eval(Environment *env) {
 	return (result);
 }
 
-void GroupExpression::emitCpp(stringstream *ss) {
-
-}
 
 } /* namespace fuzuli */
