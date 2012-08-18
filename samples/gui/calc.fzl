@@ -4,6 +4,7 @@
 
 (let result 0)
 (let numstack (list))
+(let op "")
 
 (function event (params p)
 	(block
@@ -13,6 +14,8 @@
 		
 		(if (= cmd "C")(block
 			(input_settext txt_result result)
+			(let numstack (list))
+			(let op "")
 		))
 
 		(if (or (isdigit cmd) (= cmd "."))
@@ -23,6 +26,26 @@
 			)
 		)
 
+		(if (= cmd "+")
+			(block
+				(let op "+")
+				(if (= 0 (length numstack))(append numstack (input_gettext txt_result)))
+				(input_settext txt_result "")
+			)
+		)	
+		
+		(if (= cmd "=")
+			(block
+				(append numstack (input_gettext txt_result))
+				(if (!= (length numstack) 2) (break))
+				(let num1 (nth numstack 1))
+				(let num2 (nth numstack 0))
+				(let numstack (list))
+				(append numstack (+ num1 num2))
+				(input_settext txt_result (nth numstack 0))
+			)
+		)
+		(print numstack "\n")	
 
 	)
 )

@@ -144,13 +144,6 @@ private:
 
 };
 
-class Serialization {
-public:
-	Serialization();
-	virtual ~Serialization();
-	virtual void serialize(ostream *os);
-	virtual Expression* deserialize(istream *is);
-};
 
 class AndExpression: public fuzuli::Expression {
 public:
@@ -399,14 +392,12 @@ public:
 	vector<Token*> paramNames;
 };
 
-class IdentifierExpression: public Expression, public Serialization {
+class IdentifierExpression: public Expression {
 public:
 	IdentifierExpression(Token *tok);
 	virtual ~IdentifierExpression();
 	Token *eval(Environment *env);
 	Token *stringToken;
-	void serialize(ostream *os);
-	Expression* deserialize(istream *is);
 };
 
 class IfExpression: public fuzuli::Expression {
@@ -416,34 +407,30 @@ public:
 	Token *eval(Environment *env);
 };
 
-class IntegerExpression: public Expression, public Serialization {
+class IntegerExpression: public Expression{
 public:
 	IntegerExpression();
 	IntegerExpression(Token *tok);
 	virtual ~IntegerExpression();
 	Token* eval(Environment *env);
 	int integerValue;
-	void serialize(ostream *os);
-	Expression *deserialize(istream *is);
 
 private:
 	Token *token;
 };
 
-class FloatExpression: public Expression, public Serialization {
+class FloatExpression: public Expression {
 public:
 	FloatExpression();
 	FloatExpression(Token *tok);
 	virtual ~FloatExpression();
 	Token* eval(Environment *env);
 	double floatValue;
-	void serialize(ostream *os);
-	Expression *deserialize(istream *is);
 private:
 	Token *token;
 };
 
-class DefExpression: public Expression, public Serialization {
+class DefExpression: public Expression {
 public:
 	DefExpression(vector<Expression*> expr);
 	~DefExpression();
@@ -464,13 +451,11 @@ public:
 	Token *eval(Environment *env);
 };
 
-class LetExpression: public Expression, public Serialization {
+class LetExpression: public Expression{
 public:
 	LetExpression(vector<Expression*> expr);
 	virtual ~LetExpression();
 	Token *eval(Environment *env);
-	void serialize(ostream *os);
-	Expression* deserialize(istream *is);
 };
 
 class EvalExpression: public Expression {
@@ -647,13 +632,11 @@ public:
 	virtual Token *eval(Environment *env);
 };
 
-class PrintExpression: public Expression, public Serialization {
+class PrintExpression: public Expression {
 public:
 	PrintExpression(vector<Expression*> expr);
 	virtual ~PrintExpression();
 	Token *eval(Environment *env);
-	void serialize(ostream *os);
-	Expression* deserialize(istream *is);
 };
 
 class SourceCode {
@@ -744,15 +727,13 @@ public:
 	Token *eval(Environment *env);
 };
 
-class StringExpression: public Expression, public Serialization {
+class StringExpression: public Expression {
 public:
 	StringExpression(Token *tok);
 	virtual ~StringExpression();
 	Token *eval(Environment *env);
 	Token *stringToken;
 	string stringValue;
-	void serialize(ostream *os);
-	Expression* deserialize(istream *is);
 };
 
 class WebExpression: public Expression {
