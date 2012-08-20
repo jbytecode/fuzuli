@@ -99,13 +99,13 @@ unsigned int SourceCode::getCurrentLine() {
 	return (this->currentLine);
 }
 
-void SourceCode::setCounter(unsigned int val){
+void SourceCode::setCounter(unsigned int val) {
 	this->oldcounter = this->counter;
 	this->counter = val;
 }
 
-unsigned int SourceCode::getCounter(){
-	return(this->counter);
+unsigned int SourceCode::getCounter() {
+	return (this->counter);
 }
 
 Token *SourceCode::getNextToken() {
@@ -198,9 +198,41 @@ Token *SourceCode::getNextToken() {
 		tokenvalue << "*";
 		break;
 
+	// Three types of directives can be followed by a /
+	// First one is single line comment
+	// Second one is a multi a line comment
+	// Third one is the division operator with two operators.
 	case '/':
-		tokentype = DIVIDE;
-		tokenvalue << "/";
+		nextChar = look();
+		if (nextChar == '/') {
+			eat();
+			while (1) {
+				currentChar = look();
+				if (currentChar == '\n' || currentChar == '\r') {
+					return (getNextToken());
+					break;
+				}
+				eat();
+			}
+		} else if (nextChar == '*') {
+			eat();
+			while (1) {
+				currentChar = look();
+				if (currentChar == '*') {
+					eat();
+					currentChar = look();
+					if (currentChar == '/') {
+						eat();
+						return (getNextToken());
+					}
+				}
+				eat();
+			}
+		} else {
+			// Divison operator
+			tokentype = DIVIDE;
+			tokenvalue << "/";
+		}
 		break;
 
 	case '=':
@@ -389,13 +421,13 @@ Token *SourceCode::getNextToken() {
 				char nextone = look();
 				if (nextone == 'n') {
 					tokenvalue << "\n";
-				} else if (nextone == 'r'){
+				} else if (nextone == 'r') {
 					tokenvalue << "\r";
-				}else if (nextone == '"') {
+				} else if (nextone == '"') {
 					tokenvalue << "\"";
-				} else if (nextone == 't'){
+				} else if (nextone == 't') {
 					tokenvalue << "\t";
-				} else if (nextone == '\''){
+				} else if (nextone == '\'') {
 					tokenvalue << "'";
 				}
 				eat();
