@@ -27,7 +27,6 @@ using namespace std;
 
 EvalExpression::EvalExpression(vector<Expression*> expr) {
 	this->expressions = expr;
-	this->resultToken = Token::NULL_TOKEN;
 }
 
 EvalExpression::~EvalExpression() {
@@ -63,7 +62,7 @@ Token *EvalExpression::eval(Environment *env) {
 		if (res) {
 			return (res);
 		} else {
-			return (this->resultToken);
+			return (Token::NULL_TOKEN);
 		}
 	} else if (content->getType() == COBJECT) {
 		/*
@@ -75,6 +74,8 @@ Token *EvalExpression::eval(Environment *env) {
 			result = expr->expressions[i]->eval(env);
 		}
 		return(result);
+	}else{
+		return Token::NULL_TOKEN;
 	}
 }
 
