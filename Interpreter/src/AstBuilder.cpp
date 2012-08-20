@@ -298,6 +298,10 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> expr) {
 		EvalExpression *pe = new EvalExpression(expr);
 		return (pe);
 	} else if (tok->getType() == IDENTIFIER
+			&& strcmp(tok->getContent(), "expression") == 0) {
+		ExpressionExpression *pe = new ExpressionExpression(expr);
+		return (pe);
+	} else if (tok->getType() == IDENTIFIER
 			&& strcmp(tok->getContent(), "explode") == 0) {
 		ExplodeExpression *pe = new ExplodeExpression(expr);
 		return (pe);

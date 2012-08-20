@@ -744,13 +744,14 @@ public:
 	const char *html;
 };
 
-class JavaScriptExpression: public Expression {
+class ExpressionExpression: public Expression {
 public:
-	JavaScriptExpression(const char *html);
-	~JavaScriptExpression();
+	ExpressionExpression(vector<Expression*> expr);
+	~ExpressionExpression();
 	Token *eval(Environment *env);
-	const char *javascript;
 };
+
+
 
 class SetCookieExpression: public Expression {
 public:

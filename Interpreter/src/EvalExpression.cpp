@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "../include/FuzuliTypes.h"
 #include <vector>
 #include <cstdlib>
@@ -36,30 +35,62 @@ EvalExpression::~EvalExpression() {
 }
 
 Token *EvalExpression::eval(Environment *env) {
-	Token *str_code = this->expressions[0]->eval(env);
-	SourceCode source;
-	string *s = new string(str_code->getContent()); s->append("\n");
-	source.readFromText(s);
-	AstBuilder astBuilder(&source);
-	Expression *expr;
-	Token *res = Token::NULL_TOKEN;
-	source.reset();
+	Token *content = this->expressions[0]->eval(env);
+	/*
+	 * If x in (eval x) is string, x is parsed and being run.
+	 * Otherwise, x is a Fuzuli Expression.
+	 */
+	if (content->getType() == STRING) {
+		SourceCode source;
+		string *s = new string(content->getContent());
+		s->append("\n");
+		source.readFromText(s);
+		AstBuilder astBuilder(&source);
+		Expression *expr;
+		Token *res = Token::NULL_TOKEN;
+		source.reset();
 
-	while (1) {
-		expr = astBuilder.getNextExpression();
-		if (!expr) {
-			break;
+		while (1) {
+			expr = astBuilder.getNextExpression();
+			if (!expr) {
+				break;
+			}
+			res = expr->eval(env);
+			if (res->getType() == BREAKTOKEN) {
+				break;
+			}
 		}
-		res = expr->eval(env);
-		if (res->getType() == BREAKTOKEN) {
-			break;
+		if (res) {
+			return (res);
+		} else {
+			return (this->resultToken);
 		}
-	}
-	if (res) {
-		return (res);
-	} else {
-		return (this->resultToken);
+	} else if (content->getType() == COBJECT) {
+		/*
+		 * Content is a Fuzuli Expression.
+		 */
+		Expression *expr = static_cast<Expression*>(content->object);
+		Token *result = NULL;
+		for (unsigned int i=0;i<expr->expressions.size();i++){
+			result = expr->expressions[i]->eval(env);
+		}
+		return(result);
 	}
 }
 
+ExpressionExpression::ExpressionExpression(vector<Expression*> expr) {
+	this->expressions = expr;
 }
+
+ExpressionExpression::~ExpressionExpression() {
+
+}
+
+Token *ExpressionExpression::eval(Environment *env) {
+	Token *result = env->newToken("@FuzuliExpression", COBJECT);
+	result->object = this;
+	return (result);
+}
+
+} /* End of namspace Fuzuli */
+
