@@ -884,6 +884,13 @@ public:
 	Token *eval(Environment *env);
 };
 
+class TimingExpression: public Expression {
+public:
+	TimingExpression(vector<Expression*>expr);
+	virtual ~TimingExpression();
+	Token *eval(Environment *env);
+};
+
 }
 
 #endif /* FUZULITYPES_H_ */

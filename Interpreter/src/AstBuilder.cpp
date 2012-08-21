@@ -361,7 +361,11 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> expr) {
 			&& strcmp(tok->getContent(), "delete") == 0) {
 		DeleteExpression *pe = new DeleteExpression(expr);
 		return (pe);
-	}   else {
+	} else if (tok->getType() == IDENTIFIER
+			&& strcmp(tok->getContent(), "timing") == 0) {
+		TimingExpression *pe = new TimingExpression(expr);
+		return (pe);
+	}    else {
 		/* It may be a FuzuliFunction */
 		expr.insert(expr.begin(), new IdentifierExpression(tok));
 		FunctionCallExpression *pe = new FunctionCallExpression(expr);

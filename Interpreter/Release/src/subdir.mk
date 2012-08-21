@@ -20,6 +20,7 @@ CPP_SRCS += \
 ../src/LoopsExpression.cpp \
 ../src/Oop.cpp \
 ../src/SourceCode.cpp \
+../src/Timing.cpp \
 ../src/Token.cpp \
 ../src/WebExpression.cpp 
 
@@ -40,6 +41,7 @@ OBJS += \
 ./src/LoopsExpression.o \
 ./src/Oop.o \
 ./src/SourceCode.o \
+./src/Timing.o \
 ./src/Token.o \
 ./src/WebExpression.o 
 
@@ -60,6 +62,7 @@ CPP_DEPS += \
 ./src/LoopsExpression.d \
 ./src/Oop.d \
 ./src/SourceCode.d \
+./src/Timing.d \
 ./src/Token.d \
 ./src/WebExpression.d 
 

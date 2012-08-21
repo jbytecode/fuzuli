@@ -41,7 +41,7 @@ endif
 all: libFuzuliJava.so
 
 dependents:
-	-cd /home/hako/workspace/fuzuli/Interpreter/Release && $(MAKE) all
+	-cd /home/hako/workspace/fuzuli/Interpreter/Release && $(MAKE) clean all
 
 # Tool invocations
 libFuzuliJava.so: $(OBJS) $(USER_OBJS) /home/hako/workspace/fuzuli/Interpreter/Release/libfuzuli.so
