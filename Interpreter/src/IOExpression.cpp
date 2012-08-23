@@ -67,6 +67,25 @@ Token *PrintExpression::eval(Environment *env) {
 }
 
 
+PrintlnExpression::PrintlnExpression(vector<Expression*> expr) {
+	this->expressions = expr;
+	this->type = PRINTLN_EXPRESSION;
+}
+
+PrintlnExpression::~PrintlnExpression() {
+}
+
+Token *PrintlnExpression::eval(Environment *env) {
+	stringstream ss;
+	for (unsigned int i = 0; i < this->expressions.size(); i++) {
+		Token *tok = this->expressions[i]->eval(env);
+		__PrintToken(&ss, tok);
+	}
+	cout << ss.str().c_str() << endl;
+	return (Token::NULL_TOKEN);
+}
+
+
 RequireExpression::RequireExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 	this->resultToken = new Token("FuzuliPackage", PACKAGE);

@@ -202,6 +202,10 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> expr) {
 		PrintExpression *pe = new PrintExpression(expr);
 		return (pe);
 	} else if (tok->getType() == IDENTIFIER
+			&& strcmp(tok->getContent(), "println") == 0) {
+		PrintlnExpression *pe = new PrintlnExpression(expr);
+		return (pe);
+	}  else if (tok->getType() == IDENTIFIER
 			&& strcmp(tok->getContent(), "let") == 0) {
 		LetExpression *pe = new LetExpression(expr);
 		return (pe);

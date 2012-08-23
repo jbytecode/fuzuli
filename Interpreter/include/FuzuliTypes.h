@@ -701,6 +701,13 @@ public:
 	Token *eval(Environment *env);
 };
 
+class PrintlnExpression: public Expression {
+public:
+	PrintlnExpression(vector<Expression*> expr);
+	virtual ~PrintlnExpression();
+	Token *eval(Environment *env);
+};
+
 class SourceCode {
 public:
 	SourceCode();
