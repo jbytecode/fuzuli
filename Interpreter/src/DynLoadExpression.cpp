@@ -29,6 +29,7 @@ static vector<DynLoadExpression*> installedLibraries;
 DynLoadExpression::DynLoadExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 	this->resultToken = new Token("@FuzuliDynamicLibrary", DLL);
+	this->type = DYNLOAD_EXPRESSION;
 }
 
 DynLoadExpression::~DynLoadExpression() {
@@ -65,6 +66,7 @@ Token *DynLoadExpression::eval(Environment *env) {
 CExpression::CExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 	this->resultToken = Token::NULL_TOKEN;
+	this->type = C_EXPRESSION;
 }
 
 CExpression::~CExpression() {

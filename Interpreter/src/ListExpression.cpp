@@ -27,6 +27,7 @@ using namespace std;
 
 ListExpression::ListExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = LIST_EXPRESSION;
 }
 
 ListExpression::~ListExpression() {
@@ -46,15 +47,10 @@ Token *ListExpression::eval(Environment *env) {
 	return (result);
 }
 
-/************************/
-/* Other List Functions */
-/************************/
 
-/************************/
-/* Length 				*/
-/************************/
 LengthExpression::LengthExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = LENGTH_EXPRESSION;
 }
 
 LengthExpression::~LengthExpression() {
@@ -68,11 +64,10 @@ Token *LengthExpression::eval(Environment *env) {
 	return (result);
 }
 
-/************************/
-/* Nth */
-/************************/
+
 NthExpression::NthExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = NTH_EXPRESSION;
 }
 
 NthExpression::~NthExpression() {
@@ -81,10 +76,6 @@ NthExpression::~NthExpression() {
 
 Token *NthExpression::eval(Environment *env) {
 	Token *list = this->expressions[0]->eval(env);
-	if (list == NULL) {
-		cout << "FuzuliList is NULL in nth" << endl;
-		exit(-3);
-	}
 	Token *n = this->expressions[1]->eval(env);
 	if (((unsigned int) n->getIntValue()) >= list->tokens.size()) {
 		cout << "List index out of bounds of " << n->getContent() << endl;
@@ -97,11 +88,10 @@ Token *NthExpression::eval(Environment *env) {
 	return (result);
 }
 
-/************************/
-/* Set 					*/
-/************************/
+
 SetExpression::SetExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = SET_EXPRESSION;
 }
 
 SetExpression::~SetExpression() {
@@ -118,11 +108,10 @@ Token *SetExpression::eval(Environment *env) {
 	return (arr->tokens[n->getIntValue()]);
 }
 
-/************************/
-/* Explode				*/
-/************************/
+
 ExplodeExpression::ExplodeExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = EXPLODE_EXPRESSION;
 }
 
 ExplodeExpression::~ExplodeExpression() {
@@ -150,6 +139,7 @@ Token *ExplodeExpression::eval(Environment *env) {
 
 ColonExpression::ColonExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = COLON_EXPRESSION;
 }
 
 ColonExpression::~ColonExpression() {
@@ -171,6 +161,7 @@ Token *ColonExpression::eval(Environment *env) {
 
 AppendExpression::AppendExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = APPEND_EXPRESSION;
 }
 
 AppendExpression::~AppendExpression() {
@@ -187,6 +178,7 @@ Token *AppendExpression::eval(Environment *env) {
 
 PrependExpression::PrependExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = PREPEND_EXPRESSION;
 }
 
 PrependExpression::~PrependExpression() {
@@ -203,6 +195,7 @@ Token *PrependExpression::eval(Environment *env) {
 
 RemoveExpression::RemoveExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = REMOVE_EXPRESSION;
 }
 
 RemoveExpression::~RemoveExpression() {
@@ -219,6 +212,7 @@ Token *RemoveExpression::eval(Environment *env) {
 
 FindExpression::FindExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = FIND_EXPRESSION;
 }
 
 FindExpression::~FindExpression() {
@@ -238,6 +232,7 @@ Token *FindExpression::eval(Environment *env) {
 
 FillExpression::FillExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = FILL_EXPRESSION;
 }
 
 FillExpression::~FillExpression() {
@@ -260,6 +255,7 @@ Token* FillExpression::eval(Environment *env) {
 
 FirstExpression::FirstExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = FIRST_EXPRESSION;
 }
 
 FirstExpression::~FirstExpression() {
@@ -278,6 +274,7 @@ Token *FirstExpression::eval(Environment *env) {
 
 LastExpression::LastExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = LAST_EXPRESSION;
 }
 
 LastExpression::~LastExpression() {

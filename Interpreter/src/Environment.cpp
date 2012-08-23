@@ -271,6 +271,7 @@ bool Environment::variableExists(const char *name) {
 
 DumpExpression::DumpExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = DUMP_EXPRESSION;
 }
 
 DumpExpression::~DumpExpression() {
@@ -284,6 +285,7 @@ Token* DumpExpression::eval(Environment *env) {
 
 GCExpression::GCExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = GC_EXPRESSION;
 }
 
 GCExpression::~GCExpression() {
@@ -313,6 +315,7 @@ Token *GCExpression::eval(Environment *env) {
 
 DeleteExpression::DeleteExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = DELETE_EXPRESSION;
 }
 
 DeleteExpression::~DeleteExpression() {

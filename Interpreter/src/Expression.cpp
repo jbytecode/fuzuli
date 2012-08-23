@@ -27,6 +27,7 @@ using namespace std;
 
 Expression::Expression() {
 	this->resultToken = Token::NULL_TOKEN;
+	this->type = UNDEFINED_EXPRESSION;
 }
 
 Expression::~Expression() {

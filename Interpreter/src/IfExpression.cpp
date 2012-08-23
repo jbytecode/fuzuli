@@ -26,6 +26,7 @@ using namespace std;
 
 IfExpression::IfExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = IF_EXPRESSION;
 }
 
 IfExpression::~IfExpression() {
@@ -57,6 +58,7 @@ Token *IfExpression::eval(Environment *env) {
 
 SwitchExpression::SwitchExpression(vector<Expression*> expr){
 	this->expressions = expr;
+	this->type = SWITCH_EXPERSSION;
 }
 
 SwitchExpression::~SwitchExpression(){
@@ -78,6 +80,7 @@ Token *SwitchExpression::eval(Environment *env){
 
 CaseExpression::CaseExpression(vector<Expression*> expr){
 	this->expressions = expr;
+	this->type = CASE_EXPRESSION;
 }
 
 CaseExpression::~CaseExpression(){

@@ -28,6 +28,7 @@ using namespace std;
 
 AndExpression::AndExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = AND_EXPRESSION;
 }
 
 AndExpression::~AndExpression() {
@@ -51,6 +52,7 @@ Token *AndExpression::eval(Environment *env) {
 
 AsterixExpression::AsterixExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = ASTERIX_EXPRESSION;
 }
 
 AsterixExpression::~AsterixExpression() {
@@ -70,6 +72,7 @@ Token * AsterixExpression::eval(Environment *env) {
 
 DivisionExpression::DivisionExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = DIVISION_EXPRESSION;
 }
 
 DivisionExpression::~DivisionExpression() {
@@ -87,6 +90,7 @@ Token *DivisionExpression::eval(Environment *env) {
 
 NotExpression::NotExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = NOT_EXPRESSION;
 }
 
 NotExpression::~NotExpression() {
@@ -109,6 +113,7 @@ Token *NotExpression::eval(Environment *env) {
 
 OrExpression::OrExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = OR_EXPRESSION;
 }
 
 OrExpression::~OrExpression() {
@@ -132,6 +137,7 @@ Token *OrExpression::eval(Environment *env) {
 
 PlusExpression::PlusExpression(vector<Expression *> expr) {
 	this->expressions = expr;
+	this->type = PLUS_EXPRESSION;
 }
 
 PlusExpression::~PlusExpression() {
@@ -151,6 +157,7 @@ Token *PlusExpression::eval(Environment *env) {
 
 IncExpression::IncExpression(vector<Expression *> expr) {
 	this->expressions = expr;
+	this->type = INC_EXPRESSION;
 }
 
 IncExpression::~IncExpression() {
@@ -173,6 +180,7 @@ Token *IncExpression::eval(Environment *env) {
 // i--
 DecExpression::DecExpression(vector<Expression *> expr) {
 	this->expressions = expr;
+	this->type = DEC_EXPRESSION;
 }
 
 DecExpression::~DecExpression() {
@@ -193,6 +201,7 @@ Token *DecExpression::eval(Environment *env) {
 
 SubtractionExpression::SubtractionExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = SUBTRACTION_EXPRESSION;
 }
 
 SubtractionExpression::~SubtractionExpression() {
@@ -215,6 +224,7 @@ Token *SubtractionExpression::eval(Environment *env) {
 
 EqualsExpression::EqualsExpression(vector<Expression *> expr) {
 	this->expressions = expr;
+	this->type = EQUALS_EXPRESSION;
 }
 
 EqualsExpression::~EqualsExpression() {
@@ -235,6 +245,7 @@ Token *EqualsExpression::eval(Environment *env) {
 
 NotEqualsExpression::NotEqualsExpression(vector<Expression *> expr) {
 	this->expressions = expr;
+	this->type = NOTEQUALS_EXPRESSION;
 }
 
 NotEqualsExpression::~NotEqualsExpression() {
@@ -256,6 +267,7 @@ Token *NotEqualsExpression::eval(Environment *env) {
 
 LessExpression::LessExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = LESS_EXPRESSION;
 }
 
 LessExpression::~LessExpression() {
@@ -277,6 +289,7 @@ Token *LessExpression::eval(Environment *env) {
 
 LessOrEqualExpression::LessOrEqualExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = LESSOREQUAL_EXPRESSION;
 }
 
 LessOrEqualExpression::~LessOrEqualExpression() {
@@ -298,6 +311,7 @@ Token *LessOrEqualExpression::eval(Environment *env) {
 
 BiggerExpression::BiggerExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = BIGGER_EXPRESSION;
 }
 
 BiggerExpression::~BiggerExpression() {
@@ -319,6 +333,7 @@ Token *BiggerExpression::eval(Environment *env) {
 
 BigOrEqualExpression::BigOrEqualExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = BIGOREQUAL_EXPRESSION;
 }
 
 BigOrEqualExpression::~BigOrEqualExpression() {
@@ -340,6 +355,7 @@ Token *BigOrEqualExpression::eval(Environment *env) {
 
 ModulaExpression::ModulaExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = MODULA_EXPRESSION;
 }
 
 ModulaExpression::~ModulaExpression() {
@@ -358,6 +374,7 @@ Token *ModulaExpression::eval(Environment *env) {
 
 BitAndExpression::BitAndExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = BITAND_EXPRESSION;
 }
 
 BitAndExpression::~BitAndExpression() {
@@ -375,6 +392,7 @@ Token *BitAndExpression::eval(Environment *env) {
 
 BitNotExpression::BitNotExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = BITNOT_EXPRESSION;
 }
 
 BitNotExpression::~BitNotExpression() {
@@ -390,6 +408,7 @@ Token *BitNotExpression::eval(Environment *env) {
 
 BitOrExpression::BitOrExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = BITOR_EXPRESSION;
 }
 
 BitOrExpression::~BitOrExpression() {
@@ -407,6 +426,7 @@ Token *BitOrExpression::eval(Environment *env) {
 
 BitXORExpression::BitXORExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = BITXOR_EXPRESSION;
 }
 
 BitXORExpression::~BitXORExpression() {
@@ -424,6 +444,7 @@ Token *BitXORExpression::eval(Environment *env) {
 
 BitShiftLeftExpression::BitShiftLeftExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = BITSHIFTLEFT_EXPRESSION;
 }
 
 BitShiftLeftExpression::~BitShiftLeftExpression() {
@@ -441,6 +462,7 @@ Token *BitShiftLeftExpression::eval(Environment *env) {
 
 BitShiftRightExpression::BitShiftRightExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = BITSHIFTRIGHT_EXPERSSION;
 }
 
 BitShiftRightExpression::~BitShiftRightExpression() {
@@ -459,6 +481,7 @@ Token *BitShiftRightExpression::eval(Environment *env) {
 
 SetPrecisionExpression::SetPrecisionExpression(vector<Expression*> expr){
 	this->expressions = expr;
+	this->type = SETPRECISION_EXPRESSION;
 }
 
 SetPrecisionExpression::~SetPrecisionExpression(){
@@ -474,6 +497,7 @@ Token *SetPrecisionExpression::eval(Environment *env){
 
 SetEpsilonExpression::SetEpsilonExpression(vector<Expression*> expr){
 	this->expressions = expr;
+	this->type = SETEPSILON_EXPRESSION;
 }
 
 SetEpsilonExpression::~SetEpsilonExpression(){

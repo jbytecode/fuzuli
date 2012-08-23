@@ -27,6 +27,7 @@ using namespace std;
 
 EvalExpression::EvalExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = EVAL_EXPRESSION;
 }
 
 EvalExpression::~EvalExpression() {
@@ -81,6 +82,7 @@ Token *EvalExpression::eval(Environment *env) {
 
 ExpressionExpression::ExpressionExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = EXPRESSION_EXPRESSION;
 }
 
 ExpressionExpression::~ExpressionExpression() {

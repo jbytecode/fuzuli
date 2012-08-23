@@ -25,6 +25,7 @@ using namespace std;
 
 TimingExpression::TimingExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = TIMING_EXPRESSION;
 }
 
 TimingExpression::~TimingExpression() {

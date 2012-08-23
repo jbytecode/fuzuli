@@ -28,6 +28,7 @@ using namespace std;
 LetExpression::LetExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 	//this->resultToken = Token::NULL_TOKEN;
+	this->type = LET_EXPRESSION;
 }
 
 LetExpression::~LetExpression() {
@@ -49,6 +50,7 @@ Token *LetExpression::eval(Environment *env) {
 
 DefExpression::DefExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = DEF_EXPRESSION;
 }
 
 DefExpression::~DefExpression() {
@@ -72,6 +74,7 @@ Token *DefExpression::eval(Environment *env) {
 
 CloneExpression::CloneExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = CLONE_EXPRESSION;
 }
 
 CloneExpression::~CloneExpression() {

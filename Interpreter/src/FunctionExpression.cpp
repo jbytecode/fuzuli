@@ -25,6 +25,7 @@ namespace fuzuli {
 
 FunctionExpression::FunctionExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = FUNCTION_EXPRESSION;
 }
 
 FunctionExpression::~FunctionExpression() {
@@ -52,6 +53,7 @@ Token *FunctionExpression::eval(Environment *env) {
 
 FunctionCallExpression::FunctionCallExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = FUNCTIONCALL_EXPRESSION;
 }
 
 FunctionCallExpression::~FunctionCallExpression() {
@@ -153,6 +155,7 @@ Token *FunctionCallExpression::eval(Environment *env) {
 
 ParamsExpression::ParamsExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = PARAMS_EXPRESSION;
 }
 
 ParamsExpression::~ParamsExpression() {
@@ -173,6 +176,7 @@ Token *ParamsExpression::eval(Environment* env) {
 /* Return Expression for Fuzuli Functions */
 ReturnExpression::ReturnExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = RETURN_EXPRESSION;
 }
 
 ReturnExpression::~ReturnExpression() {

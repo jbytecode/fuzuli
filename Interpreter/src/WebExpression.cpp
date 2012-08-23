@@ -37,6 +37,7 @@ void clean_white_spaces(string &s) {
 
 WebExpression::WebExpression(const char *html) {
 	this->html = html;
+	this->type = WEB_EXPRESSION;
 }
 
 WebExpression::~WebExpression() {
@@ -52,6 +53,7 @@ Token *WebExpression::eval(Environment *env) {
 RequestExpression::RequestExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 	this->resultToken = Token::NULL_TOKEN;
+	this->type = REQUEST_EXPRESSION;
 }
 
 RequestExpression::~RequestExpression() {
@@ -120,6 +122,7 @@ Token *RequestExpression::eval(Environment *env) {
 SetCookieExpression::SetCookieExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 	this->resultToken = Token::NULL_TOKEN;
+	this->type = SETCOOKIE_EXPRESSION;
 }
 
 SetCookieExpression::~SetCookieExpression() {
@@ -136,6 +139,7 @@ Token *SetCookieExpression::eval(Environment *env) {
 
 GetCookieExpression::GetCookieExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = GETCOOKIE_EXPRESSION;
 }
 
 GetCookieExpression::~GetCookieExpression() {
@@ -167,6 +171,7 @@ Token *GetCookieExpression::eval(Environment *env) {
 IncludeExpression::IncludeExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 	this->resultToken = Token::NULL_TOKEN;
+	this->type = INCLUDE_EXPRESSION;
 }
 
 IncludeExpression::~IncludeExpression() {
@@ -192,6 +197,7 @@ Token *IncludeExpression::eval(Environment *env) {
 
 IssetExpression::IssetExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = ISSET_EXPRESSION;
 }
 
 IssetExpression::~IssetExpression() {

@@ -26,6 +26,7 @@ using namespace std;
 
 BlockExpression::BlockExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = BLOCK_EXPRESSION;
 }
 
 BlockExpression::~BlockExpression() {
@@ -63,6 +64,7 @@ Token *BlockExpression::eval(Environment *env) {
 
 GroupExpression::GroupExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = GROUP_EXPRESSION;
 }
 
 GroupExpression::~GroupExpression() {

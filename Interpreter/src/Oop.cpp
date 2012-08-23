@@ -38,6 +38,7 @@ FuzuliClass::~FuzuliClass() {
 
 ClassExpression::ClassExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = CLASS_EXPRESSION;
 }
 
 ClassExpression::~ClassExpression() {
@@ -77,6 +78,7 @@ Token *ClassExpression::eval(Environment *env) {
 
 NewExpression::NewExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = NEW_EXPRESSION;
 }
 
 NewExpression::~NewExpression() {

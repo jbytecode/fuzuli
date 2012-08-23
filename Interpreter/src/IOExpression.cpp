@@ -22,9 +22,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <pthread.h>
-#include <signal.h>
-#include <sys/wait.h>
+
 
 namespace fuzuli {
 using namespace std;
@@ -51,6 +49,7 @@ void __PrintToken(stringstream *ss, Token *tok) {
 
 PrintExpression::PrintExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = PRINT_EXPRESSION;
 }
 
 PrintExpression::~PrintExpression() {
@@ -71,6 +70,7 @@ Token *PrintExpression::eval(Environment *env) {
 RequireExpression::RequireExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 	this->resultToken = new Token("FuzuliPackage", PACKAGE);
+	this->type = REQUIRE_EXPRESSION;
 }
 
 RequireExpression::~RequireExpression() {
@@ -101,43 +101,6 @@ Token *RequireExpression::eval(Environment *env) {
 		expr->eval(env);
 	}
 	return (this->resultToken);
-}
-
-ForkExpression::ForkExpression(vector<Expression*> expr) {
-	this->expressions = expr;
-}
-
-ForkExpression::~ForkExpression() {
-	cout << "Called fork destructor" << endl;
-}
-
-Token *ForkExpression::eval(Environment *env) {
-	Environment *forkEnvironment = env->createNext();
-	int pid;
-	pid = fork();
-	if (pid == 0) {
-		this->expressions[0]->eval(forkEnvironment);
-		kill(getpid(), SIGKILL);
-	}
-	if (pid < 0) {
-		cout << "Error occoured in creating thread" << endl;
-	}
-	forkEnvironment->doAutomaticGC();
-	return (env->newToken(pid, INTEGER));
-}
-
-WaitExpression::WaitExpression(vector<Expression*> expr) {
-	this->expressions = expr;
-}
-
-WaitExpression::~WaitExpression() {
-
-}
-
-Token *WaitExpression::eval(Environment *env) {
-	Token* pid = this->expressions[0]->eval(env);
-	int result = waitpid(pid->getIntValue(), 0, 0);
-	return (env->newToken(result, INTEGER));
 }
 
 

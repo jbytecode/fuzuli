@@ -27,6 +27,7 @@ using namespace std;
 
 ForExpression::ForExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = FOR_EXPRESSION;
 }
 
 ForExpression::~ForExpression() {
@@ -64,6 +65,7 @@ Token *ForExpression::eval(Environment *env) {
 
 ForEachExpression::ForEachExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = FOREACH_EXPRESSION;
 }
 
 ForEachExpression::~ForEachExpression() {
@@ -102,6 +104,7 @@ Token *ForEachExpression::eval(Environment *env) {
 
 DoTimesExpression::DoTimesExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = DOTIMES_EXPRESSION;
 }
 
 DoTimesExpression::~DoTimesExpression() {
@@ -146,6 +149,7 @@ Token *DoTimesExpression::eval(Environment *env) {
 
 WhileExpression::WhileExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = WHILE_EXPRESSION;
 }
 
 WhileExpression::~WhileExpression() {
@@ -184,6 +188,7 @@ Token *WhileExpression::eval(Environment *env) {
 
 BreakExpression::BreakExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = BREAK_EXPRESSION;
 }
 
 BreakExpression::~BreakExpression() {

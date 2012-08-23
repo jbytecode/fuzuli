@@ -115,6 +115,7 @@ Token *IdentifierExpression::eval(Environment *env){
 
 VariableExpression::VariableExpression(vector<Expression*> expr) {
 	this->expressions = expr;
+	this->type = VARIABLE_EXPRESSION;
 }
 
 VariableExpression::~VariableExpression() {
@@ -130,6 +131,7 @@ Token *VariableExpression::eval(Environment *env){
 
 TypeofExpression::TypeofExpression(vector<Expression*> expr){
 	this->expressions = expr;
+	this->type = TYPEOF_EXPRESSION;
 }
 
 TypeofExpression::~TypeofExpression(){
@@ -145,6 +147,7 @@ Token *TypeofExpression::eval(Environment *env){
 
 TypeExpression::TypeExpression(vector<Expression*> expr){
 	this->expressions = expr;
+	this->type = TYPE_EXPRESSION;
 }
 
 TypeExpression::~TypeExpression(){

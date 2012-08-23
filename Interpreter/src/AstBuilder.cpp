@@ -330,14 +330,6 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> expr) {
 		DumpExpression *pe = new DumpExpression(expr);
 		return (pe);
 	}else if (tok->getType() == IDENTIFIER
-			&& strcmp(tok->getContent(), "fork") == 0) {
-		ForkExpression *pe = new ForkExpression(expr);
-		return (pe);
-	}else if (tok->getType() == IDENTIFIER
-			&& strcmp(tok->getContent(), "wait") == 0) {
-		WaitExpression *pe = new WaitExpression(expr);
-		return (pe);
-	} else if (tok->getType() == IDENTIFIER
 			&& strcmp(tok->getContent(), "gc") == 0) {
 		GCExpression *pe = new GCExpression(expr);
 		return (pe);
