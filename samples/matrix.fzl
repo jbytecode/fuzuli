@@ -15,7 +15,7 @@
 				(for (let i 0) (< i rows) (++ i)
 					(set data i (: 1 cols))
 				)
-				(fill 0.0)
+				(fill data 0.0)
 			)
 		)
 		
@@ -23,15 +23,6 @@
 			(return data)
 		)
 
-		(function fill (params x)
-			(block
-			(for (let i 0) (< i n) (++ i)
-				(for (let j 0) (< j m) (++ j)
-					(setValue i j x)
-				)
-			)
-			)
-		)
 
 		(function clear (params)
 			(fill 0.0)
@@ -161,8 +152,9 @@
 
 	)
 )
-
+(println "Creating matrix")
 (let a (new Matrix))
+(println "Called new")
 (a.create 2 2)
 (a.setValue 0 0 1)(a.setValue 0 1 2)(a.setValue 1 0 3)(a.setValue 1 1 4)
 (print "Original: " (a.getData) "\n")
