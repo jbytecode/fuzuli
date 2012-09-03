@@ -43,7 +43,9 @@ Token *LetExpression::eval(Environment *env) {
 		oldvariable->ReduceReferences();
 	}
 	env->setVariable(varname->getContent(), result);
-	result->IncreaseReferences();
+	if (result->getKillable()) {
+		result->IncreaseReferences();
+	}
 	return (result);
 }
 
