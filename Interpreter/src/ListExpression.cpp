@@ -102,10 +102,11 @@ Token *SetExpression::eval(Environment *env) {
 	Token *arr = this->expressions[0]->eval(env);
 	Token *n = this->expressions[1]->eval(env); /* n */
 	Token *newvalue = this->expressions[2]->eval(env);
-	arr->tokens[n->getIntValue()]->ReduceReferences();
-	arr->tokens[n->getIntValue()] = newvalue;
+	int int_n = n->getIntValue();
+	arr->tokens[int_n]->ReduceReferences();
+	arr->tokens[int_n] = newvalue;
 	newvalue->IncreaseReferences();
-	return (arr->tokens[n->getIntValue()]);
+	return (arr->tokens[int_n]);
 }
 
 
