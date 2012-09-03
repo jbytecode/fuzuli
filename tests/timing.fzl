@@ -35,9 +35,8 @@
 
 
 (let result (/ t2 t1))
-(if (and (>= result 2) (<= result 3))
+(if (and (>= result 1.5) (<= result 3.5))
 	(print passed)
 	(print error)
 )
-
 

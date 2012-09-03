@@ -1,0 +1,10 @@
+(let p1
+	(timing
+		(for (let i 0) (< i 1000000) (++ i)
+			(group)
+		)
+	)
+)
+(println "Time for 'for 0-1000000' : " p1)
+
+
