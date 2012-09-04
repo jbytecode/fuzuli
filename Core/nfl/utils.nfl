@@ -19,21 +19,15 @@
 (let util_lib (dynload "FuzuliCore"))
 
 (function shuffle (params alist)
-	(block
 		(return (C util_lib "shuffle" alist))
-	)
 )
 
 (function sorta (params alist)
-	(block
 		(return (C util_lib "sorta" alist))
-	)
 )
 
 (function sortd (params alist)
-	(block
 		(return (C util_lib "sortd" alist))
-	)
 )
 
 

@@ -19,197 +19,135 @@
 (let io_lib (dynload "FuzuliCore"))
 
 (function fopen (params file mode)
-	(block
 		(return (C io_lib "fopend" file mode))
-	)
 )
 
 (function fclose (params file)
-	(block
 		(return (C io_lib "fclosed" file))
-	)
 )
 
 (function feof (params file)
-	(block
 		(return (C io_lib "feofd" file))
-	)
 )
 
 (function fwrite (params file obj)
-	(block
 		(return (C io_lib "fwrited" file obj))
-	)
 )
 
 
 (function fread (params file obj)
-	(block
 		(return (C io_lib "freadd" file obj))
-	)
 )
 
 
 (function fflush (params file)
-	(block
 		(return (C io_lib "fflushd" file))
-	)
 )
 
 (function chdir (params x)
-	(block
 		(return (C io_lib x))
-	)
 ) 
 
 (function getpwd (params)
-	(block
 		(return (C io_lib "getpwd"))
-	)
 )
 
 (function dir (params x)
-	(block
 		(return (C io_lib "dir" x))
-	)
 )
 
 (function unlink (params x)
-	(block
 		(return (C io_lib "unlinkd" x))
-	)
 )
 
 (function rename (params x y)
-	(block
 		(return (C io_lib "renamed" x y))
-	)
 )
 
 
 (function tmpfile (params)
-	(block
 		(return (C io_lib "tmpfiled"))
-	)
 )
 
 
 (function tmpnam (params)
-	(block
 		(return (C io_lib "tmpnamed"))
-	)
 )
 
 
 (function datetime (params)
-	(block
 		(return (C io_lib "datetime"))
-	)
 )
 
 
 (function asctime (params)
-	(block
 		(return (C io_lib "asctimed"))
-	)
 )
 
 (function sleep (params x)
-	(block
 		(return (C io_lib "sleepd" x))
-	)
 )
 
 
 (function getenv (params var)
-	(block
 		(return (C io_lib "getenvd" var))
-	)
 )
 
 (function setenv (params var val changeflag)
-	(block
 		(return (C io_lib "setenvd" var val changeflag))
-	)
 )
 
 
 (function rnd (params)
-	(block
 		(return (C io_lib "rnd"))
-	)
 )
 
 (function print_r (params alist)
-	(block
 		(return (C io_lib "print_r" alist))
-	)
 )
 
 (function popen (params process mode)
-	(block
 		(return (C io_lib "popend" process mode))
-	)
 )
 
 (function pclose (params process)
-	(block
 		(return (C io_lib "pclosed" process))
-	)
 )
 
 (function exit (params code)
-	(block
 		(return (C io_lib "exitd" code))
-	)
 )
 
 (function is_dir (params dir)
-	(block
 		(return (C io_lib "is_dir" dir))
-	)
 )
 
 
 (function time (params)
-	(block
 		(return (C io_lib "timed"))
-	)
 )
 
 (function randomize (params seed)
-	(block
 		(return (C io_lib "randomize" seed))
-	)
 )
 
 
 (function puts (params text)
-	(block
 		(return (C io_lib "putsd" text))
-	)
 )
 
 (function fputs (params file text)
-	(block
 		(return (C io_lib "fputsd" file text))
-	)
 )
 
 (function fgetc (params file)
-	(block
 		(return (C io_lib "fgetcd" file))
-	)
 )
 
 (function ftell (params file)
-	(block
 		(return (C io_lib "ftelld" file))
-	)
 )
 
 (function readline (params)
-	(block
 		(return (C io_lib "readlined"))
-	)
 )

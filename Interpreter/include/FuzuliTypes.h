@@ -451,7 +451,7 @@ public:
 	ParamsExpression(vector<Expression*> expr);
 	virtual ~ParamsExpression();
 	Token *eval(Environment *env);
-	vector<Token*> paramNames;
+	vector<string> paramNames;
 };
 
 class IdentifierExpression: public Expression {

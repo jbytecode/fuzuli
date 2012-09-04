@@ -19,62 +19,44 @@
 (let str_lib (dynload "FuzuliCore"))
 
 (function trim (params x)
-	(block
-		(return  (rtrim (ltrim x)) )
-	)
+		(return  (rtrim (ltrim x)))
 )
 
 
 (function ltrim (params x)
-	(block
 		(return (C str_lib "ltrim" x))
-	)
 )
 
 (function rtrim (params x)
-	(block
 		(return (C str_lib "rtrim" x))
-	)
 )
 
 
 (function lcase (params x)
-	(block
-		(return (C str_lib "lcase" x))
-	)
+	(return (C str_lib "lcase" x))
 )
 
 (function ucase (params x)
-	(block
-		(return (C str_lib "ucase" x))
-	)
+	(return (C str_lib "ucase" x))
 )
 
 (function left (params x n)
-	(block
-		(return (C str_lib "left" x n))
-	)
+	(return (C str_lib "left" x n))
 )
 
 
 (function right (params x n)
-	(block
-		(return (C str_lib "right" x n))
-	)
+	(return (C str_lib "right" x n))
 )
 
 
 (function strcat (params alist)
-	(block
-		(return (C str_lib "strcatd" alist))
-	)
+	(return (C str_lib "strcatd" alist))
 )
 
 
 (function strlen (params x)
-	(block
-		(return (C str_lib "strlend" x)) 
-	)
+	(return (C str_lib "strlend" x)) 
 )
 
 (function substr (params x a b)
@@ -84,124 +66,87 @@
 )
 
 (function strreverse (params x)
-	(block
-		(return (C str_lib "strreverse" x))
-	)
+	(return (C str_lib "strreverse" x))
 )
 
 
 
 (function instr (params text part)
-	(block
-		(return (C str_lib "instr" text part))
-	)
+	(return (C str_lib "instr" text part))
 )
 
 
 (function chr (params byte)
-	(block
-		(return (C str_lib "chr" byte))
-	)
+	(return (C str_lib "chr" byte))
 )
 
 (function ord (params character)
-	(block
-		(return (C str_lib "ord" character))
-	)
+	(return (C str_lib "ord" character))
 )
 
 (function md5 (params text)
-	(block
-		(return (C str_lib "md5" text))
-	)
+	(return (C str_lib "md5" text))
 )
 
 (function urldecode (params url)
-	(block
-		(return (C str_lib "urldecode" url))
-	)
+	(return (C str_lib "urldecode" url))
 )
 
 (function levenshtein (params text1 text2)
-	(block
-		(return (C str_lib "levenshtein" text1 text2))
-	)
+	(return (C str_lib "levenshtein" text1 text2))
 )
 
 
 (function str_replace (params mainstr what to)
-	(block
 		(return (C str_lib "str_replace" mainstr what to))
-	)
 )
 
 (function str_shuffle (params str)
-	(block
 		(return (C str_lib "str_shuffle" str))
-	)
+
 )
 
 (function isdigit (params str)
-	(block
 		(return (C str_lib "isdigitd" str))
-	)
 )
 
 (function isalpha (params str)
-	(block
 		(return (C str_lib "isalphad" str))
-	)
 )
 
 (function isalnum (params str)
-	(block
 		(return (C str_lib "isalnumd" str))
-	)
 )
 
 (function isupper (params str)
-	(block
 		(return (C str_lib "isupperd" str))
-	)
 )
 
 (function islower (params str)
-	(block
 		(return (C str_lib "islowerd" str))
-	)
 )
 
 (function iscntrl (params str)
-	(block
 		(return (C str_lib "iscntrld" str))
-	)
 )
 
 
 (function isgraph (params str)
-	(block
 		(return (C str_lib "isgraphd" str))
-	)
 )
 
 
 (function isprint (params str)
-	(block
 		(return (C str_lib "isprintd" str))
-	)
 )
 
 
 (function ispunct (params str)
-	(block
 		(return (C str_lib "ispunctd" str))
-	)
 )
 
 (function isspace (params str)
-	(block
 		(return (C str_lib "isspaced" str))
-	)
 )
 
 
