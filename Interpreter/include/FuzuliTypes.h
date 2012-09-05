@@ -856,7 +856,6 @@ public:
 	list<Token*> garbage;
 	vector<Environment*> subenvironments;
 	Environment *previous;
-	Environment *next;
 
 	static bool isAutomaticGC;
 	bool isFirst();

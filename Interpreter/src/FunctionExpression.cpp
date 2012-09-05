@@ -80,7 +80,7 @@ Token *FunctionCallExpression::evalForClass(Environment* env) {
 	if (_object == "this") {
 		object_env = env;
 	} else {
-		object_env = ((Environment*) (obj->object))->next;
+		object_env = ((Environment*) (obj->object))->subenvironments[0];
 	}
 	Token *thisToken = env->newToken("@FuzuliObject", FUZULIFUNCTION);
 	thisToken->object = object_env;
@@ -114,8 +114,8 @@ Token *FunctionCallExpression::evalForClass(Environment* env) {
 	result->returnFlag = 0;
 
 	result->IncreaseReferences();
-	//object_env->doAutomaticGC();
-	//result->ReduceReferences();
+	object_env->doAutomaticGC();
+	result->ReduceReferences();
 	return (result);
 }
 
@@ -145,6 +145,7 @@ Token *FunctionCallExpression::eval(Environment *env) {
 	result->IncreaseReferences();
 	funcEnvironment->doAutomaticGC();
 	result->ReduceReferences();
+
 	return (result);
 }
 
