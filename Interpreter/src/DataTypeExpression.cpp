@@ -112,23 +112,6 @@ Token *IdentifierExpression::eval(Environment *env){
 
 
 
-
-VariableExpression::VariableExpression(vector<Expression*> expr) {
-	this->expressions = expr;
-	this->type = VARIABLE_EXPRESSION;
-}
-
-VariableExpression::~VariableExpression() {
-	// TODO Auto-generated destructor stub
-}
-
-Token *VariableExpression::eval(Environment *env){
-	Token *name = this->expressions[0]->eval(env);
-	Token *variable = env->getVariable(name->getContent());
-	return(variable);
-}
-
-
 TypeofExpression::TypeofExpression(vector<Expression*> expr){
 	this->expressions = expr;
 	this->type = TYPEOF_EXPRESSION;

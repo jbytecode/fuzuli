@@ -34,7 +34,6 @@ BlockExpression::~BlockExpression() {
 }
 
 Token *BlockExpression::eval(Environment *env) {
-	env->doAutomaticGC();
 	Token *result = Token::NULL_TOKEN;
 	Environment *blockEnvironment = env->createNext();
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
@@ -78,10 +77,12 @@ Token *GroupExpression::eval(Environment *env) {
 		if (result) {
 			if (result->breakFlag == 1) {
 				result->IncreaseReferences();
+				env->doAutomaticGC();
 				result->ReduceReferences();
 				return (result);
 			} else if (result->returnFlag == 1) {
 				result->IncreaseReferences();
+				env->doAutomaticGC();
 				result->ReduceReferences();
 				return (result);
 			}

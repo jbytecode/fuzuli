@@ -454,7 +454,7 @@ public:
 	ParamsExpression(vector<Expression*> expr);
 	virtual ~ParamsExpression();
 	Token *eval(Environment *env);
-	vector<string> paramNames;
+	vector<string*> paramNames;
 };
 
 class IdentifierExpression: public Expression {
@@ -785,12 +785,6 @@ private:
 	bool killable;
 };
 
-class VariableExpression: public fuzuli::Expression {
-public:
-	VariableExpression(vector<Expression*> expr);
-	virtual ~VariableExpression();
-	Token *eval(Environment *env);
-};
 
 class WhileExpression: public fuzuli::Expression {
 public:

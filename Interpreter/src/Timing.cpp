@@ -33,9 +33,9 @@ TimingExpression::~TimingExpression() {
 }
 
 Token *TimingExpression::eval(Environment *env) {
+	Token *result = env->newToken(0.0, FLOAT);
 	clock_t clock_start = clock();
 	clock_t clock_end;
-	Token *result = env->newToken(0.0, FLOAT);
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
 		this->expressions[i]->eval(env);
 	}

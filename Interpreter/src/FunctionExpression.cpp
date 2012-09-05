@@ -106,9 +106,9 @@ Token *FunctionCallExpression::evalForClass(Environment* env) {
 	ParamsExpression *paramsExpr = (ParamsExpression*) func->params;
 	paramsExpr->eval(env);
 	for (unsigned int i = 0; i < paramsExpr->paramNames.size(); i++) {
-		string param = paramsExpr->paramNames[i];
+		string *param = paramsExpr->paramNames[i];
 		Token *value = this->expressions[i + 1]->eval(env);
-		object_env->setVariableForFunctionParams(param.c_str(), value);
+		object_env->setVariableForFunctionParams(param->c_str(), value);
 	}
 	result = func->body->eval(object_env);
 	result->returnFlag = 0;
@@ -134,9 +134,9 @@ Token *FunctionCallExpression::eval(Environment *env) {
 	Environment *funcEnvironment = env->createNext();
 	ParamsExpression *paramsExpr = (ParamsExpression*) func->params;
 	for (unsigned int i = 0; i < paramsExpr->paramNames.size(); i++) {
-		string param = paramsExpr->paramNames[i];
+		string *param = paramsExpr->paramNames[i];
 		Token *value = this->expressions[i + 1]->eval(env);
-		funcEnvironment->setVariableForFunctionParams(param.c_str(), value);
+		funcEnvironment->setVariableForFunctionParams(param->c_str(), value);
 	}
 
 	result = func->body->eval(funcEnvironment);
@@ -156,8 +156,7 @@ ParamsExpression::ParamsExpression(vector<Expression*> expr) {
 	Token *temp;
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
 		temp = ((IdentifierExpression*) (this->expressions[i]))->stringToken;
-		//cout << "params: pushing "<< temp->getContent()<<endl;
-		this->paramNames.push_back(temp->getContent());
+		this->paramNames.push_back(new string(temp->getContent()));
 	}
 }
 
@@ -166,8 +165,6 @@ ParamsExpression::~ParamsExpression() {
 }
 
 Token *ParamsExpression::eval(Environment* env) {
-	//Token *temp = this->paramNames[this->paramNames.size() - 1];
-	//return (temp);
 	return (Token::NULL_TOKEN);
 }
 
