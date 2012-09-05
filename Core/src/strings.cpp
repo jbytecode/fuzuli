@@ -355,11 +355,13 @@ Token *left(Token *p, Environment *env) {
 OneParameters
 Token *ucase(Token *p, Environment *env) {
 	const char *content = p->tokens[0]->getContent();
-	char *newcontent = (char*) malloc(strlen(content) * sizeof(char));
+	unsigned int len = strlen(content);
+	char *newcontent = (char*) malloc(len * sizeof(char));
 	Token *result = env->newToken(content, STRING);
-	for (unsigned int i = 0; i < strlen(content); i++) {
+	for (unsigned int i = 0; i < len; i++) {
 		newcontent[i] = toupper(content[i]);
 	}
+	newcontent[len] = '\0';
 	result->setContent((const char*) newcontent);
 	return (result);
 }
@@ -367,11 +369,13 @@ Token *ucase(Token *p, Environment *env) {
 OneParameters
 Token *lcase(Token *p, Environment *env) {
 	const char *content = p->tokens[0]->getContent();
-	char *newcontent = (char*) malloc(strlen(content) * sizeof(char));
+	unsigned int len = strlen(content);
+	char *newcontent = (char*) malloc(len * sizeof(char));
 	Token *result = env->newToken(content, STRING);
-	for (unsigned int i = 0; i < strlen(content); i++) {
+	for (unsigned int i = 0; i < len; i++) {
 		newcontent[i] = tolower(content[i]);
 	}
+	newcontent[len] = '\0';
 	result->setContent((const char*) newcontent);
 	return (result);
 }
