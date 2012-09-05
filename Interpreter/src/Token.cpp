@@ -42,6 +42,7 @@ Token::~Token() {
 }
 
 Token::Token(string *content, enum TokenType type) {
+	this->ss = new stringstream();
 	this->content = content;
 	this->type = type;
 	count++;
@@ -52,6 +53,7 @@ Token::Token(string *content, enum TokenType type) {
 }
 
 Token::Token(const char *content, enum TokenType type) {
+	this->ss = new stringstream();
 	this->content = new string(content);
 	this->type = type;
 	count++;
@@ -62,16 +64,16 @@ Token::Token(const char *content, enum TokenType type) {
 }
 
 Token::Token(double num, enum TokenType type) {
-	stringstream ss;
+	this->ss = new stringstream();
 	if (type == INTEGER) {
-		ss << (int) num;
+		*ss << (int) num;
 	} else if (type == FLOAT) {
-		ss.precision(Token::doubleprecision);
-		ss << (double) num;
+		ss->precision(Token::doubleprecision);
+		*ss << (double) num;
 	} else {
-		ss << num;
+		*ss << num;
 	}
-	this->content = new string(ss.str());
+	this->content = new string(ss->str());
 	this->type = type;
 	count++;
 	returnFlag = 0;
@@ -130,19 +132,19 @@ double Token::getFloatValue() {
 }
 
 void Token::setIntValue(int i) {
-	stringstream ss;
+	this->ss->str("");
 	this->content->clear();
-	ss << i;
-	this->content->append(ss.str());
+	*ss << i;
+	this->content->append(ss->str());
 	this->type = INTEGER;
 }
 
 void Token::setFloatValue(double d) {
-	stringstream ss;
-	ss.precision(Token::doubleprecision);
+	this->ss->str("");
+	ss->precision(Token::doubleprecision);
 	this->content->clear();
-	ss << d;
-	this->content->append(ss.str());
+	*ss << d;
+	this->content->append(ss->str());
 	this->type = FLOAT;
 }
 

@@ -30,6 +30,7 @@
 #include <iostream>
 #include <map>
 #include <list>
+#include <sstream>
 
 namespace fuzuli {
 
@@ -780,6 +781,7 @@ public:
 	int links;
 private:
 	string *content;
+	stringstream *ss;
 	enum TokenType type;
 	int line;
 	bool killable;
