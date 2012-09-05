@@ -61,5 +61,5 @@
 
 (let part NULL)
 (let html NULL)
-(gc)
+(println "Garbage collected: " (gc))
 (dump)

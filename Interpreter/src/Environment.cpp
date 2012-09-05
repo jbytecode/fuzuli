@@ -73,10 +73,9 @@ Token *Environment::newToken(const char *val, enum TokenType type) {
 }
 
 Token *Environment::newToken(double val, enum TokenType type) {
-	Token *tok = new Token(val, type);
-	this->garbage.push_back(tok);
-	tok->environment = this;
-	return (tok);
+		Token *tok = new Token(val, type);
+		this->garbage.push_back(tok);
+		return (tok);
 }
 
 void Environment::preventGC(bool p){

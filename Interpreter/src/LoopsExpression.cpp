@@ -59,7 +59,6 @@ Token *ForExpression::eval(Environment *env) {
 	}
 
 	forEnvironment->doAutomaticGC();
-
 	return (Token::NULL_TOKEN);
 }
 

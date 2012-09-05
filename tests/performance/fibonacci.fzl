@@ -1,3 +1,4 @@
+(gc false)
 (function fibonacci (params x)
 	(block
 	(if (<= x 2) 
