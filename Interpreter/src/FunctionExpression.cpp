@@ -54,6 +54,12 @@ Token *FunctionExpression::eval(Environment *env) {
 FunctionCallExpression::FunctionCallExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 	this->type = FUNCTIONCALL_EXPRESSION;
+	paramscount = this->expressions.size() - 1;
+	fname = ((IdentifierExpression*) this->expressions[0])->stringToken;
+	stringstream ss_func_name;
+	ss_func_name << fname->getContent();
+	ss_func_name << paramscount;
+	this->str_func_name = ss_func_name.str();
 }
 
 FunctionCallExpression::~FunctionCallExpression() {
@@ -61,10 +67,8 @@ FunctionCallExpression::~FunctionCallExpression() {
 }
 
 Token *FunctionCallExpression::evalForClass(Environment* env) {
-	int paramscount = this->expressions.size() - 1;
 	Environment *object_env;
 	Token *result;
-	Token *fname = ((IdentifierExpression*) this->expressions[0])->stringToken;
 	FuzuliFunction *func;
 
 	string fullname = string(fname->getContent());
@@ -116,13 +120,8 @@ Token *FunctionCallExpression::evalForClass(Environment* env) {
 }
 
 Token *FunctionCallExpression::eval(Environment *env) {
-	int paramscount = this->expressions.size() - 1;
 	Token *result;
-	Token *fname = ((IdentifierExpression*) this->expressions[0])->stringToken;
-	stringstream str_func_name;
-	str_func_name << fname->getContent();
-	str_func_name << paramscount;
-	FuzuliFunction *func = env->getFunction(str_func_name.str().c_str());
+	FuzuliFunction *func = env->getFunction(this->str_func_name.c_str());
 	if (func == NULL) {
 		if (strchr(fname->getContent(), '.') != 0) {
 			return (this->evalForClass(env));
@@ -134,12 +133,10 @@ Token *FunctionCallExpression::eval(Environment *env) {
 	}
 	Environment *funcEnvironment = env->createNext();
 	ParamsExpression *paramsExpr = (ParamsExpression*) func->params;
-	paramsExpr->eval(env);
 	for (unsigned int i = 0; i < paramsExpr->paramNames.size(); i++) {
 		string param = paramsExpr->paramNames[i];
 		Token *value = this->expressions[i + 1]->eval(env);
-		funcEnvironment->setVariableForFunctionParams(param.c_str(),
-				value);
+		funcEnvironment->setVariableForFunctionParams(param.c_str(), value);
 	}
 
 	result = func->body->eval(funcEnvironment);
@@ -170,7 +167,7 @@ ParamsExpression::~ParamsExpression() {
 Token *ParamsExpression::eval(Environment* env) {
 	//Token *temp = this->paramNames[this->paramNames.size() - 1];
 	//return (temp);
-	return(Token::NULL_TOKEN);
+	return (Token::NULL_TOKEN);
 }
 
 /* Return Expression for Fuzuli Functions */

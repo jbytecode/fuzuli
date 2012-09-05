@@ -429,6 +429,9 @@ public:
 	virtual ~FunctionCallExpression();
 	Token *eval(Environment *env);
 	Token *evalForClass(Environment *env);
+	string str_func_name;
+	Token *fname;
+	int paramscount;
 };
 
 
