@@ -1,0 +1,26 @@
+(require "/usr/lib/fuzuli/nfl/fltk.nfl")
+(require "/usr/lib/fuzuli/nfl/io.nfl")
+
+(function event (params event)
+	(block
+		(print event "\n")
+		(if (= (nth event 0) "close")
+			(block (print "Exiting...") (exit 0))
+		)
+		 (input_settext input1 (checkbox_getvalue check1))
+	)
+)
+
+(let form1 (window_new 230 230 "Hello Fuzuli GUI"))
+(window_begin form1)
+
+(let check1 (checkbox_new 10 20 200 100 "This is a check box"))
+(let input1 (input_new 90 170 120 20 "Checked?"))
+
+(window_add form1 check1)
+(window_add form1 input1)
+(window_end form1)
+
+(window_show form1)
+(main_loop)
+

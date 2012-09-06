@@ -1,0 +1,53 @@
+#
+# fuzuli : A general purpose interpreter
+# Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
+(require "/usr/lib/fuzuli/nfl/utils.nfl")
+(require "/usr/lib/fuzuli/nfl/io.nfl")
+
+(let a (list 3 5 4 3 2 1))
+(let sorted1 (sorta a))
+
+(if (and
+		(= (nth sorted1 0) 1)
+		(= (nth sorted1 1) 2)
+		(= (nth sorted1 2) 3)
+		(= (nth sorted1 3) 3)
+		(= (nth sorted1 4) 4)
+		(= (nth sorted1 5) 5)
+	)
+	(print "PASSED!\n")
+	(print "ERROR\n")
+)
+
+
+
+(let sorted2 (sortd a))
+
+(if (and
+        (= (nth sorted2 0) 5)
+        (= (nth sorted2 1) 4)
+        (= (nth sorted2 2) 3)
+        (= (nth sorted2 3) 3)
+        (= (nth sorted2 4) 2)
+        (= (nth sorted2 5) 1)
+    )
+    (print "PASSED!\n")
+    (print "ERROR\n")
+)
+

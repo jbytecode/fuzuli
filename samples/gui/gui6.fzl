@@ -1,0 +1,35 @@
+(require "/usr/lib/fuzuli/nfl/fltk.nfl")
+(require "/usr/lib/fuzuli/nfl/io.nfl")
+(require "/usr/lib/fuzuli/nfl/string.nfl")
+
+(function event (params event)
+	(block
+		(print event "\n")
+		(if (= (nth event 0) "close")
+			(block (print "Exiting...") (exit 0))
+		)
+	)
+)
+
+(let form1 (window_new 400 400 "Radio Buttons"))
+(window_begin form1)
+
+(let grp1 (group_new 10 10 100 100 ""))
+(group_begin grp1)
+(let radio1 (radiobutton_new 10 10 60 20 "R1"))
+(let radio2 (radiobutton_new 10 40 60 20 "R2"))
+(group_end grp1)
+
+
+(let grp2 (group_new 10 140 100 100 ""))
+(group_begin grp2)
+(let radio3 (radiobutton_new 10 150 60 20 "R3"))
+(let radio4 (radiobutton_new 10 180 60 20 "R4"))
+(group_begin grp2)
+
+(let input1 (input_new 90 220 120 20 "Event"))
+(window_end form1)
+
+(window_show form1)
+(main_loop)
+

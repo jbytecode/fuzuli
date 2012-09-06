@@ -1,0 +1,76 @@
+# Linear Regression 
+(require "/usr/lib/fuzuli/nfl/math.nfl")
+(require "/usr/lib/fuzuli/nfl/io.nfl")
+(require "/usr/lib/fuzuli/nfl/types.nfl")
+
+(function sum (params alist)
+	(block
+		(let s 0.0)
+		(for (let i 0) (< i (length alist)) (inc i)
+			(block
+				(let s (+ s (nth alist i)))
+			)
+		)
+		(return s)
+	)
+)
+
+(function mean (params alist)
+	(block
+		(return (/ (sum alist) (length alist) ))
+	)
+)
+
+(function variance (params alist)
+	(block
+		(let m (mean alist))
+		(let result 0.0)
+		(for (let i 0) (<i (length alist)) (inc i)
+			(let result (+ result (pow (- (nth alist i) m) 2.0)))
+		)
+		(return (/ result (- (length alist) 1.0)))
+	)
+)
+
+
+(function covariance (params x y)
+	(block
+		(let mx (mean x))
+		(let my (mean y))
+		(let result 0.0)
+		(for (let i 0) (< i (length x)) (inc i)
+			(block
+				(let d (* (- (nth x i) mx) (- (nth y i) my)))
+				#(print i "] " (nth x i) "  " (- (nth x i) mx) " & " (nth y i ) " "(- (nth y i) my) "\n")
+				(let result (+ result d))
+			)
+		)
+		(return (/ result (- (length x) 1.0)))
+	)
+)
+
+(function leastsquares (params x y)
+	(block
+		(let mycov (covariance x y))
+		(let myvar (variance x))
+		(let beta1 (/ mycov myvar))
+		(let my (mean y))
+		(let mx (mean x))
+		(let beta0 (- my (* beta1 mx)))
+		(return (list beta0 beta1))		
+	)
+)
+
+(let x (list 1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 10.0))
+(let y (list 2.0 4.0 6.0 8.0 10.0 12.0 14.0 16.0 18.0 20.0))
+
+
+(print "mean(x)=" (mean  x) "\n")
+(print "mean(y)=" (mean  y) "\n")
+(print "var(x)=" (variance  x) "\n")
+(print "var(y)=" (variance  y) "\n")
+(let mycov (covariance  x y))
+(print "Cov(x,y)="  mycov "\n")
+(let ols (leastsquares x y))
+(print_r ols)
+(print (mean x) " " (mean y) "\n")

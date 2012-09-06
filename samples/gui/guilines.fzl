@@ -1,0 +1,29 @@
+(require "/usr/lib/fuzuli/nfl/fltk.nfl")
+(require "/usr/lib/fuzuli/nfl/io.nfl")
+(require "/usr/lib/fuzuli/nfl/string.nfl")
+
+(function event (params event)
+	(block
+		(print event "\n")
+		(if (= (nth event 0) "close")
+			(block (print "Exiting...") (exit 0))
+		)
+	)
+)
+
+(function paint (params event)
+	(block
+		(let c 0)
+		(for (let i 0) (< i 400) (inc i)
+			(fl_color (% c 255)) (inc c)
+			(fl_line i 0 i 400)
+		) (gc)(dump)
+	)
+)
+(let form1 (window_new 400 400 "Radio Buttons"))
+(window_begin form1)
+(let mybox (box_new 10 10 380 380 "mybox"))
+(window_end form1)
+(window_show form1)
+(main_loop)
+

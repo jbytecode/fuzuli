@@ -1,0 +1,42 @@
+#!/bin/sh
+TEXTFILES="textfiles/Artistic textfiles/GPL textfiles/LGPL	\
+          textfiles/LGPL-2.1 textfiles/BSD textfiles/GPL-2	\
+	  textfiles/LGPL-2"
+
+echo "=== Test TCP with text files ==="
+for file in $TEXTFILES; do
+  rm -f ./tmp
+  ./tcp_cp server ./tmp > /tmp/s&
+  PID=$!
+  sleep 0.5
+  ./tcp_cp client $file > /tmp/c
+  sleep 0.5
+  kill -9 $PID > /dev/null 2>&1
+  cmp ./tmp $file || exit 1
+  echo "$file : OK"
+done
+echo "=== Test UDP with text files ==="
+for file in $TEXTFILES; do
+  rm -f ./tmp
+  ./udp_cp server ./tmp &
+  PID=$!
+  sleep 0.5
+  ./udp_cp client $file
+  sleep 0.5
+  kill -9 $PID > /dev/null 2>&1 
+  cmp ./tmp $file || exit 1
+  echo "$file : OK"
+done
+rm -f /tmp/server /tmp/client
+echo "=== Test Local with text files ==="
+for file in $TEXTFILES; do
+  rm -f ./tmp
+  ./local_cp server ./tmp &
+  PID=$!
+  sleep 0.5
+  ./local_cp client $file
+  sleep 0.5
+  kill -9 $PID > /dev/null 2>&1
+  cmp ./tmp $file || exit 1
+  echo "$file : OK"
+done

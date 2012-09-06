@@ -1,0 +1,34 @@
+(require "/usr/lib/fuzuli/nfl/fltk.nfl")
+(require "/usr/lib/fuzuli/nfl/io.nfl")
+
+(function event (params event)
+	(block
+		(print event "\n")
+		(if (= (nth event 0) "close")
+			(block (print "Exiting...") (exit 0))
+			(input_settext input1 (menubar_selected menubar1))
+		)
+	)
+)
+
+(let form1 (window_new 230 230 "Hello Fuzuli GUI"))
+(window_begin form1)
+
+(let menubar1 (menubar_new 0 0 230 30 "This is a menubar"))
+(menubar_add menubar1 "File/Open" "")
+(menubar_add menubar1 "File/Save" "")
+(menubar_add menubar1 "File/Exit" "")
+(menubar_add menubar1 "Edit/Copy" "")
+(menubar_add menubar1 "Edit/Paste/Paste new" "")
+(menubar_add menubar1 "Edit/Paste/Paste as" "")
+(menubar_add menubar1 "Edit/Paste/Paste" "")
+(menubar_add menubar1 "home/hako/Desktop/fuzuli.exe" "")
+(let input1 (input_new 90 170 120 20 "Event"))
+
+(window_add form1 menubar1)
+(window_add form1 input1)
+(window_end form1)
+
+(window_show form1)
+(main_loop)
+

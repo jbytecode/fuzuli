@@ -1,0 +1,205 @@
+#
+# fuzuli : A general purpose interpreter
+# Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+(let ncurses_lib (dynload "FuzuliNCurses"))
+
+(function initscr (params)
+	(return (C ncurses_lib "initscrd"))
+)
+
+(function printw (params x)
+	(return (C ncurses_lib "printwd" x))
+)
+
+(function refresh (params)
+	(return (C ncurses_lib "refreshd"))
+)
+
+(function getch (params)
+	(return (C ncurses_lib "getchd"))
+)
+
+(function endwin (params)
+	(return (C ncurses_lib "endwind"))
+)
+
+(function init_pair (params num col1 col2)
+	(return (C ncurses_lib "initpaird" num col1 col2))
+)
+
+(function start_color (params)
+	(return (C ncurses_lib "startcolord"))
+)
+
+(function set_color_pair (params num)
+	(return (C ncurses_lib "setcolorpair" num))
+)
+
+(function newwin (params height weight starty startx)
+	(return (C ncurses_lib "newwinp" height weight starty startx))
+)
+
+(function box (params window p1 p2)
+	(return (C ncurses_lib "boxp" window p1 p2))
+)
+
+(function wrefresh (params window)
+	(return (C ncurses_lib "wrefreshd" window))
+)
+
+(function delwin (params window)
+	(return (C ncurses_lib "delwind" window))
+)
+
+(function wborder (params window c1 c2 c3 c4 c5 c6 c7 c8)
+	(return (C ncurses_lib "wborderd" window c1 c2 c3 c4 c5 c6 c7 c8))
+)
+
+(function getyx (params window)
+	(return (C ncurses_lib "getyxd" window))
+)
+
+(function addch (params ch)
+	(return (C ncurses_lib "addchd" ch))
+)
+
+(function clear (params)
+	(return (C ncurses_lib "cleard"))
+)
+
+(function cbreak (params)
+	(return (C ncurses_lib "cbreakd"))
+)
+
+(function nocbreak (params)
+	(return (C ncurses_lib "nocbreakd"))
+)
+
+(function delch (params)
+	(return (C ncurses_lib "delchd"))
+)
+
+(function deleteln (params)
+	(return (C ncurses_lib "deletelnd"))
+)
+
+(function doupdate (params)
+	(return (C ncurses_lib "doupdated"))
+)
+
+(function echo (params)
+	(return (C ncurses_lib "echod"))
+)
+
+(function echochar (params ch)
+	(return (C ncurses_lib "echochard" ch))
+)
+
+(function erase (params)
+	(return (C ncurses_lib "erased"))
+)
+
+(function erasechar (params)
+	(return (C ncurses_lib "erasechard"))
+)
+
+(function flushinp (params)
+	(return (C ncurses_lib "flushinpd"))
+)
+
+(function getmouse (params)
+	(return (C ncurses_lib "getmoused"))
+)
+
+(function wgetch (params win)
+	(return (C ncurses_lib "wgetchd" win))
+)
+
+(function move (params y x)
+	(return (C ncurses_lib "moved" y x))
+)
+
+(function mvaddch (params y x c)
+	(return (C ncurses_lib "mvaddchd" y x c))
+)
+
+(function mvaddstr (params y x str)
+	(return (C ncurses_lib "mvaddstrd" y x str))
+)
+
+(function waddch (params win c)
+	(return (C ncurses_lib "waddchd" win c))
+)
+
+(function waddstr (params win c)
+	(return (C ncurses_lib "waddstrd" win c))
+)
+
+
+(function wclear (params win)
+	(return (C ncurses_lib "wcleard" win))
+)
+
+(function wcolor_set (params win num)
+	(return (C ncurses_lib "wcleard" win num))
+)
+
+
+(function werase (params win)
+	(return (C ncurses_lib "werased" win))
+)
+
+(function wbkgd (params win num)
+	(return (C ncurses_lib "wbkgdd" win num))
+)
+
+(function mvwaddstr (params win y x str)
+	(return (C ncurses_lib "mvwaddstrd" win y x str))
+)
+
+
+(function wattron (params win num)
+	(return (C ncurses_lib "wattrond" win num))
+)
+
+(function wattroff (params win num)
+	(return (C ncurses_lib "wattroffd" win num))
+)
+
+(function COLOR_PAIR (params num)
+	(return (C ncurses_lib "COLOR_PAIRd"  num))
+)
+
+(function new_field (params height width y x a b)
+	(return (C ncurses_lib "newfieldd" height width y x a b))
+)
+
+(function new_form (params fields)
+	(return (C ncurses_lib "newformd" fields))
+)
+
+(function post_form (params form)
+	(return (C ncurses_lib "postformd" form))
+)
+
+(function form_driver (params form ch)
+	(return (C ncurses_lib "formdriverd" form ch))
+)
+
+(function mvprintw (params y x str)
+	(return (C ncurses_lib "mvprintwd" y x str))
+)
