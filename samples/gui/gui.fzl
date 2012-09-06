@@ -4,8 +4,8 @@
 	(block
 		(print event "\n")
 		(if (= (nth event 1) "+")
-			(let val (+ val 1))
-			(let val (- val 1))
+			(inc val)
+			(dec val)
 		)
 		(if (= (nth event 0) "close") (exit 0))
 		(progress_setvalue progress1 val)
