@@ -86,17 +86,16 @@ Token *FunctionCallExpression::evalForClass(Environment* env) {
 	thisToken->object = object_env;
 	object_env->setVariable("this", thisToken);
 
-	stringstream str_func_name;
-	str_func_name.clear();
-	str_func_name << _fun.c_str();
-	str_func_name << paramscount;
+	ss->str(""); ss->clear();
+	*ss << _fun.c_str();
+	*ss << paramscount;
 	//func = object_env->fuzuliFunctions[(str_func_name.str())];
-	func = object_env->getFunction(str_func_name.str().c_str());
+	func = object_env->getFunction(ss->str().c_str());
 
 	if (func == NULL) {
-		cout << "*** " << str_func_name.str().c_str() << endl;
+		cout << "*** " << ss->str().c_str() << endl;
 		cout << "Fuzuli Function " << _fun.c_str() << "("
-				<< str_func_name.str().c_str() << ")" << " is not defined in "
+				<< ss->str().c_str() << ")" << " is not defined in "
 				<< _object.c_str() << endl;
 		cout << "Contents of environment:" << endl;
 		//object_env->dump();
@@ -110,7 +109,9 @@ Token *FunctionCallExpression::evalForClass(Environment* env) {
 		Token *value = this->expressions[i + 1]->eval(env);
 		object_env->setVariableForFunctionParams(param->c_str(), value);
 	}
+
 	result = func->body->eval(object_env);
+
 	result->returnFlag = 0;
 
 	result->IncreaseReferences();
@@ -120,7 +121,7 @@ Token *FunctionCallExpression::evalForClass(Environment* env) {
 }
 
 Token *FunctionCallExpression::eval(Environment *env) {
-	Token *result;
+	Token *result = NULL;
 	FuzuliFunction *func = env->getFunction(this->str_func_name.c_str());
 	if (func == NULL) {
 		if (strchr(fname->getContent(), '.') != 0) {
@@ -140,6 +141,7 @@ Token *FunctionCallExpression::eval(Environment *env) {
 	}
 
 	result = func->body->eval(funcEnvironment);
+
 	result->returnFlag = 0;
 
 	result->IncreaseReferences();
@@ -181,7 +183,6 @@ ReturnExpression::~ReturnExpression() {
 Token *ReturnExpression::eval(Environment *env) {
 	Token *tok = this->expressions[0]->eval(env);
 	tok->returnFlag = 1;
-	//tok->IncreaseReferences();
 	return (tok);
 }
 

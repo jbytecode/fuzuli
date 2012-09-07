@@ -193,20 +193,24 @@ bool Token::getKillable() {
 }
 
 void Token::ReduceReferences(){
+	unsigned int i=0;
 	this->links--;
-	for (unsigned int i=0;i<this->tokens.size();i++){
-		if(this->tokens[i]->getType()!=NULLTOKEN){
+	while (i<this->tokens.size()){
+		if(this->tokens[i]->getKillable()){
 			this->tokens[i]->ReduceReferences();
 		}
+		i++;
 	}
 }
 
 void Token::IncreaseReferences(){
 	this->links++;
-	for (unsigned int i=0;i<this->tokens.size();i++){
-		if(this->tokens[i]->getType()!=NULLTOKEN){
+	unsigned int i = 0;
+	while (i<this->tokens.size()){
+		if(this->tokens[i]->getKillable()){
 			this->tokens[i]->IncreaseReferences();
 		}
+		i++;
 	}
 }
 
