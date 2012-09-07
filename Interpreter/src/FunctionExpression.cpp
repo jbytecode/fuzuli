@@ -26,6 +26,7 @@ namespace fuzuli {
 FunctionExpression::FunctionExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 	this->type = FUNCTION_EXPRESSION;
+	ss = new stringstream();
 }
 
 FunctionExpression::~FunctionExpression() {
@@ -34,18 +35,17 @@ FunctionExpression::~FunctionExpression() {
 
 Token *FunctionExpression::eval(Environment *env) {
 	FuzuliFunction *func = new FuzuliFunction();
-	stringstream str_func_name;
-	str_func_name
-			<< ((IdentifierExpression*) this->expressions[0])->stringToken->getContent();
-	str_func_name << this->expressions[1]->expressions.size();
+	ss->str("");ss->clear();
+	*ss << ((IdentifierExpression*) this->expressions[0])->stringToken->getContent();
+	*ss << this->expressions[1]->expressions.size();
+	const char *css = ss->str().c_str();
+	func->name = new StringExpression(env->newToken(css, STRING));
 
-	func->name = new StringExpression(
-			env->newToken(str_func_name.str().c_str(), STRING));
 	func->params = this->expressions[1];
 	func->body = this->expressions[2];
 	func->environment = env;
 
-	env->setFunction(str_func_name.str().c_str(), func);
+	env->setFunction(css, func);
 	Token *willReturn = env->newToken("@FuzuliFunction", FUZULIFUNCTION);
 	willReturn->setKillable(false);
 	return (willReturn);
@@ -56,10 +56,10 @@ FunctionCallExpression::FunctionCallExpression(vector<Expression*> expr) {
 	this->type = FUNCTIONCALL_EXPRESSION;
 	paramscount = this->expressions.size() - 1;
 	fname = ((IdentifierExpression*) this->expressions[0])->stringToken;
-	stringstream ss_func_name;
-	ss_func_name << fname->getContent();
-	ss_func_name << paramscount;
-	this->str_func_name = ss_func_name.str();
+	ss = new stringstream();
+	*ss << fname->getContent();
+	*ss << paramscount;
+	this->str_func_name = ss->str();
 }
 
 FunctionCallExpression::~FunctionCallExpression() {

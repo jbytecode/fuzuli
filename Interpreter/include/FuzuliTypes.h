@@ -422,6 +422,8 @@ public:
 	virtual ~FunctionExpression();
 	Token *eval(Environment *env);
 	FuzuliFunction *fuzulifunction;
+private:
+	stringstream *ss;
 };
 
 class FunctionCallExpression: public Expression {
@@ -433,6 +435,8 @@ public:
 	string str_func_name;
 	Token *fname;
 	int paramscount;
+private:
+	stringstream *ss;
 };
 
 
