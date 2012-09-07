@@ -36,7 +36,6 @@ AndExpression::~AndExpression() {
 }
 
 Token *AndExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, INTEGER);
 	int allTrue = 1;
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
 		Token *tok = this->expressions[i]->eval(env);
@@ -45,8 +44,7 @@ Token *AndExpression::eval(Environment *env) {
 			break;
 		}
 	}
-	result->setIntValue(allTrue);
-	return (result);
+	return (env->newToken(allTrue, INTEGER));
 }
 
 AsterixExpression::AsterixExpression(vector<Expression*> expr) {
@@ -59,13 +57,11 @@ AsterixExpression::~AsterixExpression() {
 }
 
 Token * AsterixExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, FLOAT);
 	double product = 1.0;
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
 		product *= expressions[i]->eval(env)->getFloatValue();
 	}
-	result->setFloatValue(product);
-	return (result);
+	return (env->newToken(product, FLOAT));
 }
 
 DivisionExpression::DivisionExpression(vector<Expression*> expr) {
@@ -78,11 +74,9 @@ DivisionExpression::~DivisionExpression() {
 }
 
 Token *DivisionExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, FLOAT);
 	Token *tok1 = this->expressions[0]->eval(env);
 	Token *tok2 = this->expressions[1]->eval(env);
-	result->setFloatValue(tok1->getFloatValue() / tok2->getFloatValue());
-	return (result);
+	return (env->newToken(tok1->getFloatValue() / tok2->getFloatValue(), FLOAT));
 }
 
 NotExpression::NotExpression(vector<Expression*> expr) {
@@ -140,13 +134,11 @@ PlusExpression::~PlusExpression() {
 }
 
 Token *PlusExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, FLOAT);
 	double sum = 0.0;
 	for (unsigned int i = 0; i < this->expressions.size(); i++) {
 		sum += expressions[i]->eval(env)->getFloatValue();
 	}
-	result->setFloatValue(sum);
-	return (result);
+	return (env->newToken(sum, FLOAT));
 }
 
 IncExpression::IncExpression(vector<Expression *> expr) {
@@ -213,16 +205,11 @@ SubtractionExpression::~SubtractionExpression() {
 }
 
 Token *SubtractionExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, FLOAT);
-	if (this->expressions.size() != 2) {
-		cout << "Subtraction - takes only two parameters but "
-				<< this->expressions.size() << " parameters found" << endl;
-		return (NULL);
-	}
-	Token *tok1 = this->expressions[0]->eval(env);
-	Token *tok2 = this->expressions[1]->eval(env);
-	result->setFloatValue(tok1->getFloatValue() - tok2->getFloatValue());
-	return (result);
+	double diff = expressions[0]->eval(env)->getFloatValue();
+		for (unsigned int i = 1; i < this->expressions.size(); i++) {
+			diff -= expressions[i]->eval(env)->getFloatValue();
+		}
+	return (env->newToken(diff, FLOAT));
 }
 
 EqualsExpression::EqualsExpression(vector<Expression *> expr) {
@@ -235,14 +222,13 @@ EqualsExpression::~EqualsExpression() {
 }
 
 Token *EqualsExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, FLOAT);
-	result->setIntValue(0);
+	double num = 0.0;
 	Token *tok1 = this->expressions[0]->eval(env);
 	Token *tok2 = this->expressions[1]->eval(env);
 	if (tok1->Equal(tok2)) {
-		result->setIntValue(1);
+		num = 1.0;
 	}
-	return (result);
+	return (env->newToken(num, FLOAT));
 }
 
 NotEqualsExpression::NotEqualsExpression(vector<Expression *> expr) {
@@ -255,15 +241,13 @@ NotEqualsExpression::~NotEqualsExpression() {
 }
 
 Token *NotEqualsExpression::eval(Environment *env) {
-	Token *result = env->newToken(1.0, INTEGER);
+	int num = 1;
 	Token *tok1 = this->expressions[0]->eval(env);
 	Token *tok2 = this->expressions[1]->eval(env);
 	if (tok1->Equal(tok2)) {
-		result->setIntValue(0);
-	} else {
-		result->setIntValue(1);
+		num = 0;
 	}
-	return (result);
+	return (env->newToken(num,INTEGER));
 }
 
 LessExpression::LessExpression(vector<Expression*> expr) {
@@ -276,15 +260,13 @@ LessExpression::~LessExpression() {
 }
 
 Token *LessExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, INTEGER);
+	int num = 0;
 	Token *first = this->expressions[0]->eval(env);
 	Token *second = this->expressions[1]->eval(env);
 	if (first->getFloatValue() < second->getFloatValue()) {
-		result->setIntValue(1);
-	} else {
-		result->setIntValue(0);
+		num = 1;
 	}
-	return (result);
+	return (env->newToken(num,INTEGER));
 }
 
 LessOrEqualExpression::LessOrEqualExpression(vector<Expression*> expr) {
