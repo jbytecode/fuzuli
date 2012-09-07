@@ -1,0 +1,22 @@
+# String function in Fuzuli
+
+(require "/usr/lib/fuzuli/nfl/string.nfl")
+
+(let myStr "Fuzuli Programming Language and Interpreter")
+(let tab3 "\t\t")
+
+(println "Original text:" tab3 myStr)
+(println "Number of characters: " tab3 (strlen myStr))
+(println "Reverse:" tab3 (strreverse myStr))
+(println "First 6 characters:" tab3 (left myStr 6))
+(println "Last 11 characters:" tab3 (right myStr 11))
+(println "Characters between 7 and 19:" tab3 (substr myStr 7 19))
+(println "MD5 of string:" tab3 (md5 myStr))
+(println "Uppercase:" tab3 (ucase myStr))
+(println "Lowercase:" tab3 (lcase myStr))
+(println "Array of words:" tab3 (explode myStr " "))
+(println "Location of programming?" tab3 (instr myStr "programming"))
+(println "Location of Programming?" tab3 (instr myStr "Programming"))
+(println "Replace Programming:" tab3 (str_replace myStr "Programming" ""))
+(println "Shuffle:" tab3 (str_shuffle myStr))
+
