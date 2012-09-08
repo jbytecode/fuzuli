@@ -1,7 +1,7 @@
 # Set auto garbage collection to false
 (gc false)
 
-(let limit 1000000)
+(let limit 100000)
 
 # Creating a list from 0 to limit
 (let a (: 1 limit))
