@@ -9,7 +9,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Interpreter"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Interpreter/Release"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="fuzuli"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="fuzuli" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -69,8 +69,8 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="fuzuli.cdt.managedbuild.target.gnu.exe.334746062" name="Executable" projectType="cdt.managedbuild.target.gnu.exe"/>
 	</storageModule>
-	<storageModule moduleId="refreshScope" versionNumber="1">
-		<resource resourceType="PROJECT" workspacePath="/fuzuli"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Release"/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
 		<buildTargets>
@@ -105,4 +105,5 @@
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 </cproject>
