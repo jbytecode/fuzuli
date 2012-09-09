@@ -128,6 +128,7 @@ int Environment::doAutomaticGCwithProtection(Token *tok){
 		tok->IncreaseReferences();
 		numGC = this->GC();
 		tok->ReduceReferences();
+		return(numGC);
 	}else{
 		return -1;
 	}
