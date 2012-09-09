@@ -122,6 +122,16 @@ int Environment::doAutomaticGC(){
 	}
 }
 
+int Environment::doAutomaticGCwithProtection(Token *tok){
+	if(Environment::isAutomaticGC && this->prevent_garbage_collection==false){
+		int numGC = 0;
+		tok->IncreaseReferences();
+		numGC = this->GC();
+		tok->ReduceReferences();
+	}else{
+		return -1;
+	}
+}
 
 void Environment::setVariableInThisScope(const char*name, Token*value) {
 	if (this->variableExists(name)) {

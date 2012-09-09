@@ -93,9 +93,7 @@ Token *CExpression::eval(Environment *env) {
 	}
 
 	Token *result = function(params, env);
-	result->IncreaseReferences();
-	env->doAutomaticGC();
-	result->ReduceReferences();
+	env->doAutomaticGCwithProtection(result);
 	return (result);
 }
 

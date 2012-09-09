@@ -40,21 +40,15 @@ Token *BlockExpression::eval(Environment *env) {
 		result = this->expressions[i]->eval(blockEnvironment);
 		if (result) {
 			if (result->breakFlag == 1) {
-				result->IncreaseReferences();
-				blockEnvironment->doAutomaticGC();
-				result->ReduceReferences();
+				blockEnvironment->doAutomaticGCwithProtection(result);
 				return (result);
 			} else if (result->returnFlag == 1) {
-				result->IncreaseReferences();
-				blockEnvironment->doAutomaticGC();
-				result->ReduceReferences();
+				blockEnvironment->doAutomaticGCwithProtection(result);
 				return (result);
 			}
 		}
 	}
-	result->IncreaseReferences();
-	blockEnvironment->doAutomaticGC();
-	result->ReduceReferences();
+	blockEnvironment->doAutomaticGCwithProtection(result);
 	return (result);
 }
 
@@ -76,14 +70,10 @@ Token *GroupExpression::eval(Environment *env) {
 		result = this->expressions[i]->eval(env);
 		if (result) {
 			if (result->breakFlag == 1) {
-				result->IncreaseReferences();
-				env->doAutomaticGC();
-				result->ReduceReferences();
+				env->doAutomaticGCwithProtection(result);
 				return (result);
 			} else if (result->returnFlag == 1) {
-				result->IncreaseReferences();
-				env->doAutomaticGC();
-				result->ReduceReferences();
+				env->doAutomaticGCwithProtection(result);
 				return (result);
 			}
 		}

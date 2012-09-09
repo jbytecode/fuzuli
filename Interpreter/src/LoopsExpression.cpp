@@ -48,9 +48,7 @@ Token *ForExpression::eval(Environment *env) {
 			result = this->expressions[i]->eval(forEnvironment);
 			if (result->breakFlag) {
 				result->breakFlag = 0;
-				result->IncreaseReferences();
-				forEnvironment->doAutomaticGC();
-				result->ReduceReferences();
+				forEnvironment->doAutomaticGCwithProtection(result);
 				return (result);
 				break;
 			}
@@ -87,17 +85,13 @@ Token *ForEachExpression::eval(Environment *env) {
 			result = this->expressions[u]->eval(foreachenv);
 			if (result->breakFlag) {
 				result->breakFlag = 0;
-				result->IncreaseReferences();
-				foreachenv->doAutomaticGC();
-				result->ReduceReferences();
+				foreachenv->doAutomaticGCwithProtection(result);
 				return (result);
 				break;
 			}
 		}
 	}
-	result->IncreaseReferences();
-	foreachenv->doAutomaticGC();
-	result->ReduceReferences();
+	foreachenv->doAutomaticGCwithProtection(result);
 	return (result);
 }
 
@@ -125,9 +119,7 @@ Token *DoTimesExpression::eval(Environment *env) {
 			result = this->expressions[i]->eval(dotimesEnvironment);
 			if (result->breakFlag) {
 				result->breakFlag = 0;
-				result->IncreaseReferences();
-				dotimesEnvironment->doAutomaticGC();
-				result->ReduceReferences();
+				dotimesEnvironment->doAutomaticGCwithProtection(result);
 				return (result);
 				break;
 			}
@@ -138,9 +130,7 @@ Token *DoTimesExpression::eval(Environment *env) {
 			break;
 		}
 	}
-	result->IncreaseReferences();
-	dotimesEnvironment->doAutomaticGC();
-	result->ReduceReferences();
+	dotimesEnvironment->doAutomaticGCwithProtection(result);
 	return (result);
 
 	return (result);
@@ -169,18 +159,14 @@ Token *WhileExpression::eval(Environment *env) {
 			result = this->expressions[ui]->eval(whileEnvironment);
 			if (result->breakFlag == 1) {
 				result->breakFlag = 0;
-				result->IncreaseReferences();
-				whileEnvironment->doAutomaticGC();
-				result->ReduceReferences();
+				whileEnvironment->doAutomaticGCwithProtection(result);
 				return (result);
 			}
 
 		}
 
 	}
-	result->IncreaseReferences();
-	whileEnvironment->doAutomaticGC();
-	result->ReduceReferences();
+	whileEnvironment->doAutomaticGCwithProtection(result);
 	return (result);
 }
 
