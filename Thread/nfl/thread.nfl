@@ -33,5 +33,5 @@
 (function thread_join (params athread)
 	(return (C thread_library "join" athread))
 )
- 
+
 
