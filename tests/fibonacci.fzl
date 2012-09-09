@@ -15,6 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+(let passed "PASSED!\n")
+(let error "ERROR\n")
+
 (function fibonacci (params x)
     (block
     (if (<= x 2)
@@ -24,29 +27,33 @@
     )
 )
 
-
+# TEST 1
 (if (= (fibonacci 3) 2)
-	(print "PASSED!\n")
-	(print "ERROR\n")
+	(print passed)
+	(print error)
 )
 
+# TEST 2
 (if (= (fibonacci 4) 3)
-    (print "PASSED!\n")
-    (print "ERROR\n")
+    (print passed)
+    (print error)
 )
 
+# TEST 3
 (if (= (fibonacci 5) 5)
-    (print "PASSED!\n")
-    (print "ERROR\n")
+    (print passed)
+    (print error)
 )
 
+# TEST 4
 (if (= (fibonacci 6) 8)
-    (print "PASSED!\n")
-    (print "ERROR\n")
+    (print passed)
+    (print error)
 )
 
+# TEST 5
 (if (= (fibonacci 7) 13)
-    (print "PASSED!\n")
-    (print "ERROR\n")
+    (print passed)
+    (print error)
 )
 
