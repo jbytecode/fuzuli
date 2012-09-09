@@ -866,6 +866,7 @@ public:
 	Token *newToken(const char* val, TokenType type);
 	int GC();
 	int doAutomaticGC();
+	int doAutomaticGCwithProtection(Token *tok);
 	void preventGC(bool p);
 	bool preventGC();
 	void dump();
