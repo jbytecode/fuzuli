@@ -1,3 +1,4 @@
+(gc false)
 (function fibonacci (params x)
         (if (<= x 2)
                 (return 1)
@@ -5,7 +6,7 @@
         )
 )
 
-(let process_time
+(print
         (timing
                 (for (let i 0) (< i 24) (inc i)
                         (fibonacci i)
@@ -13,4 +14,3 @@
         )
 )
 
-(print process_time)
