@@ -1,4 +1,5 @@
 nestedloops
+nestedfor
 factorial
 fibonacci
 ackermann

@@ -8,9 +8,7 @@ foreach ($arr as $a){
 		foreach ($arr as $c){
 			foreach ($arr as $d){
 				foreach ($arr as $e){
-					foreach ($arr as $f){
-						$i++;
-					}
+					$i++;
 				}
 			}
 		}
