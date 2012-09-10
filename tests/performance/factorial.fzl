@@ -5,7 +5,7 @@
         )
 )
 
-(let process_time
+(print
         (timing
                 (for (let i 0) (< i 1000) (inc i)
                         (factorial 25)
@@ -13,4 +13,3 @@
         )
 )
 
-(print process_time)
