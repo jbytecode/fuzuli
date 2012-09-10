@@ -8,9 +8,7 @@
 		(foreach c in arr
 			(foreach d in arr
 				(foreach e in arr
-					(foreach f in arr
-						(inc x)
-					)
+					(inc x)
 				)
 			)
 		)
