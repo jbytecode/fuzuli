@@ -83,11 +83,10 @@ Token::Token(double num, enum TokenType type) {
 }
 
 const char* Token::toString() {
-	stringstream ss;
-	ss << "Content:" << *this->content << " Type:" << this->type;
+	ss->clear();ss->str("");
+	*ss << "Content:" << *this->content << " Type:" << this->type;
 	cout << "Tokens " << count << endl;
-	string result = ss.str();
-	return (result.c_str());
+	return (ss->str().c_str());
 }
 
 Token *Token::clone() {
