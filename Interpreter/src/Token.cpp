@@ -104,7 +104,7 @@ Token *Token::clone() {
 	return (tok);
 }
 
-enum TokenType Token::getType() {
+const enum TokenType Token::getType() {
 	return (this->type);
 }
 
@@ -148,7 +148,7 @@ void Token::setFloatValue(double d) {
 	this->type = FLOAT;
 }
 
-int Token::Equal(Token *tok) {
+const int Token::Equal(Token *tok) {
 	if (this->type == tok->type) {
 		if (this->type == INTEGER) {
 			return (std::fabs(this->getIntValue() - tok->getIntValue())
@@ -188,7 +188,7 @@ void Token::setKillable(bool killableState) {
 	this->killable = killableState;
 }
 
-bool Token::getKillable() {
+bool Token::getKillable() const {
 	return (this->killable);
 }
 
