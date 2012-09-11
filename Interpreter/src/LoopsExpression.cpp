@@ -39,12 +39,14 @@ Token *ForExpression::eval(Environment *env) {
 	this->expressions[0]->eval(forEnvironment); /* Starter */
 	Token *condition;
 	Token *result;
+	unsigned int i=3;
 	while (1) {
 		condition = this->expressions[1]->eval(forEnvironment);
 		if (condition->getIntValue() == 0) {
 			break;
 		}
-		for (unsigned int i = 3; i < this->expressions.size(); i++) {
+		i=3;
+		while (i < this->expressions.size()) {
 			result = this->expressions[i]->eval(forEnvironment);
 			if (result->breakFlag) {
 				result->breakFlag = 0;
@@ -52,6 +54,7 @@ Token *ForExpression::eval(Environment *env) {
 				return (result);
 				break;
 			}
+			i++;
 		}
 		this->expressions[2]->eval(forEnvironment);
 	}

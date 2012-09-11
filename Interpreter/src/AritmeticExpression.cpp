@@ -147,15 +147,15 @@ IncExpression::~IncExpression() {
 }
 
 Token *IncExpression::eval(Environment *env) {
-	Token *name = ((IdentifierExpression*) this->expressions[0])->stringToken;
-	Environment *varenv = env->searchBackEnvironments(name->getContent());
 	Token *val = this->expressions[0]->eval(env);
 	Token *result;
 	if (!val->getKillable()) {
+		Token *name = ((IdentifierExpression*) this->expressions[0])->stringToken;
+		Environment *varenv = env->searchBackEnvironments(name->getContent());
 		result = env->newToken(val->getFloatValue() + 1.0, FLOAT);
 		val->ReduceReferences();
 		result->IncreaseReferences();
-		varenv->setVariable(name->getContent(), result);
+		varenv->setVariableInThisScope(name->getContent(), result);
 	} else {
 		val->setFloatValue(val->getFloatValue() + 1);
 		result = val;
@@ -175,15 +175,15 @@ DecExpression::~DecExpression() {
 }
 
 Token *DecExpression::eval(Environment *env) {
-	Token *name = ((IdentifierExpression*) this->expressions[0])->stringToken;
-	Environment *varenv = env->searchBackEnvironments(name->getContent());
 	Token *val = this->expressions[0]->eval(env);
 	Token *result;
 	if (!val->getKillable()) {
-		result = env->newToken(val->getFloatValue() - 1.0, FLOAT);
+		Token *name = ((IdentifierExpression*) this->expressions[0])->stringToken;
+		Environment *varenv = env->searchBackEnvironments(name->getContent());
+		result = env->newToken(val->getFloatValue() + 1.0, FLOAT);
 		val->ReduceReferences();
 		result->IncreaseReferences();
-		varenv->setVariable(name->getContent(), result);
+		varenv->setVariableInThisScope(name->getContent(), result);
 	} else {
 		val->setFloatValue(val->getFloatValue() - 1);
 		result = val;

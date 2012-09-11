@@ -8,7 +8,7 @@
 		(for (let c 0)(< c n) (++c)
 			(for (let d 0) (< d n) (++d)
 				(for (let e 0) (< e n) (++e)
-					(inc num)
+					(++ num)
 				)
 			)
 		)
