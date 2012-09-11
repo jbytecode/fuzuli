@@ -19,13 +19,16 @@
 
 (require "/usr/lib/fuzuli/nfl/math.nfl")
 
+(let passed "PASSED!\n")
+(let error "ERROR\n")
+
 (let a "3.14")
 (let b a)
 (type b FLOAT)
 
 (if (and (= b 3.14) (= (typeof b) FLOAT))
-	(print "PASSED!\n")
-	(print "ERROR\n")
+	(print passed)
+	(print error)
 )
 
 
@@ -34,7 +37,7 @@
 (type h INTEGER)
 
 (if (and (= h 3) (= (typeof h) INTEGER))
-	(print "PASSED!\n")
-	(print "ERROR\n")
+	(print passed)
+	(print error)
 )
 

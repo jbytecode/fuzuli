@@ -15,6 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+(let passed "PASSED!\n")
+(let error "ERROR\n")
+
 (def summ INTEGER)
 (let summ 0)
 (dotimes i 10
@@ -23,7 +26,7 @@
 
 
 (if (= summ (/ (* 9 10) 2))
-	(print "PASSED!\n")
-	(print "ERROR\n")
+	(print passed)
+	(print error)
 )
 

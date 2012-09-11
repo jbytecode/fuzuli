@@ -15,7 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+(let passed "PASSED!\n")
+(let error "ERROR\n")
 
 (function f (params x)
 	(block
@@ -36,22 +37,22 @@
 
 # Function f with single parameter
 (if (= (f 3) 3)
-	(print "PASSED!\n")
-	(print "ERROR\n")
+	(print passed)
+	(print error)
 )
 
 
 # Function f with two parameters
 (if (= (f 3 6) 9)
-    (print "PASSED!\n")
-    (print "ERROR\n")
+    (print passed)
+    (print error)
 )
 
 
 # Function f with three parameters
 (if (= (f 3 6 12) 21)
-    (print "PASSED!\n")
-    (print "ERROR\n")
+    (print passed)
+    (print error)
 )
 
 

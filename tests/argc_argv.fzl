@@ -15,9 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+(let passed "PASSED!\n")
+(let error "ERROR\n")
+
 (if (= argc 2)
-	(print "PASSED!\n")
-	(print "ERROR\n")
+	(print passed)
+	(print error)
 )
 
 

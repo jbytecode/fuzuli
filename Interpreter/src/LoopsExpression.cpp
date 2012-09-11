@@ -63,6 +63,11 @@ Token *ForExpression::eval(Environment *env) {
 ForEachExpression::ForEachExpression(vector<Expression*> expr) {
 	this->expressions = expr;
 	this->type = FOREACH_EXPRESSION;
+	Token *in = ((IdentifierExpression*) this->expressions[1])->stringToken;
+		if (strcmp(in->getContent(), "in") != 0) {
+			cout << "Keyword 'in' required in foreach expression" << endl;
+			exit(-1);
+		}
 }
 
 ForEachExpression::~ForEachExpression() {
@@ -73,24 +78,25 @@ Token *ForEachExpression::eval(Environment *env) {
 	Environment *foreachenv = env->createNext();
 	Token *result = Token::NULL_TOKEN;
 	Token *iden = ((IdentifierExpression*) this->expressions[0])->stringToken;
-	Token *in = ((IdentifierExpression*) this->expressions[1])->stringToken;
-	if (strcmp(in->getContent(), "in") != 0) {
-		cout << "Keyword 'in' required in foreach expression" << endl;
-		exit(-1);
-	}
 	Token *list = this->expressions[2]->eval(env);
+
+	list->IncreaseReferences();
+
 	for (unsigned int i = 0; i < list->tokens.size(); i++) {
-		foreachenv->setVariable(iden->getContent(), list->tokens[i]);
+		foreachenv->setVariableInThisScope(iden->getContent(), list->tokens[i]);
+
 		for (unsigned int u = 3; u < this->expressions.size(); u++) {
 			result = this->expressions[u]->eval(foreachenv);
 			if (result->breakFlag) {
 				result->breakFlag = 0;
+				list->ReduceReferences();
 				foreachenv->doAutomaticGCwithProtection(result);
 				return (result);
 				break;
 			}
 		}
 	}
+	list->ReduceReferences();
 	foreachenv->doAutomaticGCwithProtection(result);
 	return (result);
 }

@@ -16,11 +16,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+(let passed "PASSED!\n")
+(let error "ERROR\n")
 
 (let a 0xffff)
 
 (if (= a 65535)
-	(print "PASSED!\n")
-	(print "ERROR\n")
+	(print passed)
+	(print error)
 )
 
