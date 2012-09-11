@@ -58,9 +58,10 @@ sort($files);
 						$total_unknown=$total_unknown+1;
 						$error_files[]=$newfile;
 					}
-				print file_get_contents($fuzuli_temp);
+        $file_content = file_get_contents($fuzuli_temp);
+				print $file_content;
 				print "--\n";
-				$tests=explode("\n", file_get_contents($fuzuli_temp));
+				$tests=explode("\n", $file_content);
 				foreach($tests as $test) {
 					if($test=="PASSED!") {
 						$total_passed=$total_passed+1;	
