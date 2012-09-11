@@ -16,17 +16,19 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+(let passed "PASSED!\n")
+(let error "ERROR\n")
 
 (let i 2)
 
 (switch i
 	(case 1
-		(print "ERROR\n")
+		(print error)
 	)
 	(case 2
-		(print "PASSED!\n")
+		(print passed)
 	)
 	(case 3
-		(print "ERROR\n")
+		(print error)
 	)
 )

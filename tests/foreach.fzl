@@ -18,21 +18,14 @@
 (let passed "PASSED!\n")
 (let error "ERROR\n")
 
-(let a 5)
-(let b 10)
-(let numOkays 0)
 
-(block
-	(if (= a 5) (let numOkays (+ numOkays 1)))
-	(if (= b 10) (let numOkays (+ numOkays 1)))
-	(let c 3)
+(let summ 0)
+(foreach i in (: 0 10)
+	(let summ (+ summ i)) 
 )
 
 
-(if (= (typeof c) NULL) (let numOkays (+ numOkays 1)))
-
-
-(if (= numOkays 3) 
+(if (= summ (/ (* 10 11) 2))
 	(print passed)
 	(print error)
 )

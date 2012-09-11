@@ -20,6 +20,9 @@
 (require "/usr/lib/fuzuli/nfl/utils.nfl")
 (require "/usr/lib/fuzuli/nfl/io.nfl")
 
+(let passed "PASSED!\n")
+(let error "ERROR\n")
+
 (let a (list 3 5 4 3 2 1))
 (let sorted1 (sorta a))
 
@@ -31,8 +34,8 @@
 		(= (nth sorted1 4) 4)
 		(= (nth sorted1 5) 5)
 	)
-	(print "PASSED!\n")
-	(print "ERROR\n")
+	(print passed)
+	(print error)
 )
 
 
@@ -47,7 +50,7 @@
         (= (nth sorted2 4) 2)
         (= (nth sorted2 5) 1)
     )
-    (print "PASSED!\n")
-    (print "ERROR\n")
+    (print passed)
+    (print error)
 )
 

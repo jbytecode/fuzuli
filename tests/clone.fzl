@@ -15,24 +15,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+(let passed "PASSED!\n")
+(let error "ERROR\n")
 
 (let i 10)
 (let a (clone i))
 (inc i)
 
 (if (and  (= i 11) (= a 10))
-	(print "PASSED!\n")
-	(print "ERROR\n")
+	(print passed)
+	(print error)
 )
 
 
-(let myarr (list "elma" "armut"))
+(let myarr (list "element1" "element2"))
 (let otherarr (clone myarr))
 
 (if (and 
-	(= (nth otherarr 0) "elma")
-	(= (nth otherarr 1) "armut"))
-		(print "PASSED!\n")
-		(print "ERROR\n")
+	(= (nth otherarr 0) "element1")
+	(= (nth otherarr 1) "element2"))
+		(print passed)
+		(print error)
 )
 

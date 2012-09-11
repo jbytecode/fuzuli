@@ -67,13 +67,13 @@ void Environment::registerGlobals() {
 }
 
 Token *Environment::newToken(const char *val, enum TokenType type) {
-	Token *tok = new Token(val, type);
+	Token *tok = new(nothrow) Token(val, type);
 	this->garbage.push_back(tok);
 	return (tok);
 }
 
 Token *Environment::newToken(double val, enum TokenType type) {
-		Token *tok = new Token(val, type);
+		Token *tok = new(nothrow) Token(val, type);
 		this->garbage.push_back(tok);
 		return (tok);
 }
@@ -135,9 +135,6 @@ int Environment::doAutomaticGCwithProtection(Token *tok){
 }
 
 void Environment::setVariableInThisScope(const char*name, Token*value) {
-	if (this->variableExists(name)) {
-		delete this->variables[string(name)];
-	}
 	this->variables[string(name)] = value;
 }
 
@@ -187,7 +184,7 @@ Token *Environment::getVariable(const char *name) {
 
 
 Environment *Environment::createNext() {
-	Environment *envir = new Environment(this);
+	Environment *envir = new(nothrow) Environment(this);
 	envir->deep = this->deep + 1;
 	this->subenvironments.push_back(envir);
 	return (envir);
