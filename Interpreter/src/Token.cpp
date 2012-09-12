@@ -147,30 +147,71 @@ void Token::setFloatValue(double d) {
 	this->type = FLOAT;
 }
 
-const int Token::Equal(Token *tok) {
-	if (this->type == tok->type) {
-		if (this->type == INTEGER) {
-			return (std::fabs(this->getIntValue() - tok->getIntValue())
-					<= Token::epsilon);
-		} else if (this->type == FLOAT) {
-			return (std::fabs(this->getFloatValue() - tok->getFloatValue())
-					<= Token::epsilon);
-		} else {
-			if (strcmp(this->getContent(), tok->getContent()) == 0) {
-				return (1);
-			} else {
-				return (0);
-			}
-		}
-	} else {
-		if (strcmp(this->getContent(), tok->getContent()) == 0) {
-			return (1);
-		} else {
-			return (0);
-		}
-	}
+int Token::operator==(Token& other){
+	 if (this->getType() == other.getType()) {
+	                if (this->type == INTEGER) {
+	                        return (std::fabs(this->getIntValue() - other.getIntValue())
+	                                        <= Token::epsilon);
+	                } else if (this->type == FLOAT) {
+	                        return (std::fabs(this->getFloatValue() - other.getFloatValue())
+	                                        <= Token::epsilon);
+	                } else {
+	                        if (strcmp(this->getContent(), other.getContent()) == 0) {
+	                                return (1);
+	                        } else {
+	                                return (0);
+	                        }
+	                }
+	        } else {
+	                if (strcmp(this->getContent(), other.getContent()) == 0) {
+	                        return (1);
+	                } else {
+	                        return (0);
+	                }
+	        }
+
 }
 
+int Token::operator!=(Token& other){
+	return(! (this->getFloatValue() == other.getFloatValue()));
+}
+
+int Token::operator<(Token& other){
+	return(this->getFloatValue() < other.getFloatValue());
+}
+
+int Token::operator<=(Token& other){
+	return(this->getFloatValue() <= other.getFloatValue());
+}
+
+int Token::operator>(Token& other){
+	return(this->getFloatValue() > other.getFloatValue());
+}
+
+int Token::operator>=(Token& other){
+	return(this->getFloatValue() >= other.getFloatValue());
+}
+
+double Token::operator+(Token& other){
+	return(this->getFloatValue() + other.getFloatValue());
+}
+
+double Token::operator-(Token& other){
+	return(this->getFloatValue() - other.getFloatValue());
+}
+
+double Token::operator++(){
+	double num = atof(this->content->c_str()) + 1;
+	cout << "New value of token is "<< num<<endl;
+	this->setFloatValue(num);
+	return num;
+}
+
+double Token::operator--(){
+	double num = atof(this->content->c_str()) - 1;
+	this->setFloatValue(num);
+	return num;
+}
 int Token::getLineNumber() {
 	return (this->line);
 }

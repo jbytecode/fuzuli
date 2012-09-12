@@ -70,7 +70,7 @@ Token *SwitchExpression::eval(Environment *env){
 	for (unsigned int i=1; i<this->expressions.size(); i++){
 		CaseExpression *ce = dynamic_cast<CaseExpression*> (this->expressions[i]);
 		Token *controlCEVar = ce->expressions[0]->eval(env);
-		if(controlVar->Equal(controlCEVar)){
+		if(*controlVar == *controlCEVar){
 			ce->expressions[1]->eval(env);
 			break;
 		}

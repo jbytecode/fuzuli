@@ -21,25 +21,26 @@
 $php_bin="/usr/bin/php";
 $fuzuli_bin="/usr/lib/fuzuli/fuzuli";
 
-$php_temp=tempnam("/temp", "php_output");
-$fuzuli_temp=tempnam("/temp", "fuzuli_output");
+$php_temp=tempnam ("/temp", "php_output");
+$fuzuli_temp=tempnam ("/temp", "fuzuli_output");
 
-$tests=file_get_contents("items.inc");
-$files=explode("\n",$tests);
+$tests=file_get_contents ("items.inc");
+$files=explode ("\n",$tests);
 
-echo "--------------------------------------------------------------\n";
-printf ("|%' -20.20s%' 20.20s%' 20.20s\n", "Files", "PHP Times", "FUZULI Times");
-echo "--------------------------------------------------------------\n";
+echo "----------------------------------------------------------------------------------\n";
+printf ("|%' -20.20s%' 20.20s%' 20.20s%' 20.20s\n", "Files", "PHP Times(ms)", "FUZULI Times(ms)", "Ratio");
+echo "----------------------------------------------------------------------------------\n";
 
-	foreach($files as $items) {
-		!$items ? exit:
-		system("".$php_bin." ".$items.".php > ".$php_temp."");
-       		$php_content=round(file_get_contents($php_temp));
+        foreach ($files as $items) {
+                !$items ? exit:
+                system ("".$php_bin." ".$items.".php > ".$php_temp."");
+                $php_content=round (file_get_contents ($php_temp));
 
-       		system("".$fuzuli_bin." ".$items.".fzl > $fuzuli_temp");
-        	$fuzuli_content=round(file_get_contents($fuzuli_temp));
+                system ("".$fuzuli_bin." ".$items.".fzl > $fuzuli_temp");
+                $fuzuli_content=round (file_get_contents ($fuzuli_temp));
+            
+            $range=round ($fuzuli_content/$php_content);
 
-        	printf ("%' -20.20s%' 20.20s%' 20.20s\n", $items, $php_content, $fuzuli_content)."\n";		
-	}
+                printf ("%' -20.20s%' 20.20s%' 20.20s%' 20.20s\n", $items, $php_content, $fuzuli_content, $range)."\n";
+        }
 ?>
-
