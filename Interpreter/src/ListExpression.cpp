@@ -224,7 +224,7 @@ Token *FindExpression::eval(Environment *env) {
 	Token *arr = this->expressions[0]->eval(env);
 	Token *what = this->expressions[1]->eval(env);
 	for (unsigned int i = 0; i < arr->tokens.size(); i++) {
-		if (arr->tokens[i]->Equal(what)) {
+		if (*arr->tokens[i] == *what) {
 			return (env->newToken(i, INTEGER));
 		}
 	}

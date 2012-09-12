@@ -763,7 +763,18 @@ public:
 	double getFloatValue();
 	void setFloatValue(const double d);
 	void setIntValue(const int i);
-	const int Equal(Token *tok);
+
+	int operator==(Token &other);
+	int operator!=(Token &other);
+	int operator<(Token &other);
+	int operator<=(Token &other);
+	int operator>(Token &other);
+	int operator>=(Token &other);
+	double operator+(Token &other);
+	double operator-(Token &other);
+	double operator++();
+	double operator--();
+
 	int getLineNumber();
 	void setLineNumber(const int lineNum);
 	void incLineNumber();
