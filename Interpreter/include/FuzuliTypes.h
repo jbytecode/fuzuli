@@ -772,8 +772,8 @@ public:
 	int operator>=(Token &other);
 	double operator+(Token &other);
 	double operator-(Token &other);
-	double operator++();
-	double operator--();
+	Token& operator++();
+	Token& operator--();
 
 	int getLineNumber();
 	void setLineNumber(const int lineNum);
