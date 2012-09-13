@@ -3,6 +3,7 @@
 	<name>Core</name>
 	<comment></comment>
 	<projects>
+		<project>Interpreter</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
