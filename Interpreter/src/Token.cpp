@@ -200,18 +200,18 @@ double Token::operator-(Token& other){
 	return(this->getFloatValue() - other.getFloatValue());
 }
 
-double Token::operator++(){
+Token& Token::operator++(){
 	double num = atof(this->content->c_str()) + 1;
-	cout << "New value of token is "<< num<<endl;
 	this->setFloatValue(num);
 	return num;
 }
 
-double Token::operator--(){
+Token& Token::operator--(){
 	double num = atof(this->content->c_str()) - 1;
 	this->setFloatValue(num);
 	return num;
 }
+
 int Token::getLineNumber() {
 	return (this->line);
 }

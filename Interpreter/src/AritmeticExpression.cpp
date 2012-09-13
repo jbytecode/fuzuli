@@ -157,7 +157,8 @@ Token *IncExpression::eval(Environment *env) {
 		result->IncreaseReferences();
 		varenv->setVariableInThisScope(name->getContent(), result);
 	} else {
-		val->setFloatValue(val->getFloatValue() + 1);
+		//val->setFloatValue(val->getFloatValue() + 1);
+		++*val;
 		result = val;
 	}
 	return (result);
@@ -185,7 +186,8 @@ Token *DecExpression::eval(Environment *env) {
 		result->IncreaseReferences();
 		varenv->setVariableInThisScope(name->getContent(), result);
 	} else {
-		val->setFloatValue(val->getFloatValue() - 1);
+		//val->setFloatValue(val->getFloatValue() - 1);
+		--*val;
 		result = val;
 	}
 	return (result);
@@ -218,11 +220,9 @@ EqualsExpression::~EqualsExpression() {
 }
 
 Token *EqualsExpression::eval(Environment *env) {
-	double num;
 	Token *tok1 = this->expressions[0]->eval(env);
 	Token *tok2 = this->expressions[1]->eval(env);
-	num = (*tok1 == *tok2);
-	return (env->newToken(num, FLOAT));
+	return (env->newToken(*tok1 == *tok2, FLOAT));
 }
 
 NotEqualsExpression::NotEqualsExpression(vector<Expression *> expr) {
@@ -237,8 +237,7 @@ NotEqualsExpression::~NotEqualsExpression() {
 Token *NotEqualsExpression::eval(Environment *env) {
 	Token *tok1 = this->expressions[0]->eval(env);
 	Token *tok2 = this->expressions[1]->eval(env);
-	int num = *tok1 != *tok2;
-	return (env->newToken(num,INTEGER));
+	return (env->newToken(*tok1 != *tok2,INTEGER));
 }
 
 LessExpression::LessExpression(vector<Expression*> expr) {
@@ -253,8 +252,7 @@ LessExpression::~LessExpression() {
 Token *LessExpression::eval(Environment *env) {
 	Token *first = this->expressions[0]->eval(env);
 	Token *second = this->expressions[1]->eval(env);
-	int num = *first < *second;
-	return (env->newToken(num,INTEGER));
+	return (env->newToken(*first < *second,INTEGER));
 }
 
 LessOrEqualExpression::LessOrEqualExpression(vector<Expression*> expr) {
@@ -269,8 +267,7 @@ LessOrEqualExpression::~LessOrEqualExpression() {
 Token *LessOrEqualExpression::eval(Environment *env) {
 	Token *first = this->expressions[0]->eval(env);
 	Token *second = this->expressions[1]->eval(env);
-	int num = *first <= *second;
-	return (env->newToken(num,INTEGER));
+	return (env->newToken(*first <= *second,INTEGER));
 }
 
 BiggerExpression::BiggerExpression(vector<Expression*> expr) {
@@ -285,8 +282,7 @@ BiggerExpression::~BiggerExpression() {
 Token *BiggerExpression::eval(Environment *env) {
 	Token *first = this->expressions[0]->eval(env);
 	Token *second = this->expressions[1]->eval(env);
-	int num = *first > *second;
-	return (env->newToken(num,INTEGER));
+	return (env->newToken(*first > *second,INTEGER));
 }
 
 BigOrEqualExpression::BigOrEqualExpression(vector<Expression*> expr) {
@@ -301,8 +297,7 @@ BigOrEqualExpression::~BigOrEqualExpression() {
 Token *BigOrEqualExpression::eval(Environment *env) {
 	Token *first = this->expressions[0]->eval(env);
 	Token *second = this->expressions[1]->eval(env);
-	int num = *first >= *second;
-	return (env->newToken(num,INTEGER));
+	return (env->newToken(*first >= *second,INTEGER));
 }
 
 ModulaExpression::ModulaExpression(vector<Expression*> expr) {
