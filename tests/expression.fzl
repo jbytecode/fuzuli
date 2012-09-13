@@ -19,7 +19,6 @@
 (let error "ERROR\n")
 
 # Test 1
-# Letting myexp to a print "PASSED!\n"
 (let myexp
 	(expression
 		(print passed)

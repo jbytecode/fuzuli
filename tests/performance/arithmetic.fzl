@@ -1,0 +1,12 @@
+(print (timing
+(dotimes i 10000
+	(let a 1)
+	(let b 2)
+	(let c (+ (< a b) (> a b) (= a b) (!= a b) (<= a b) (>= a b)))
+	(let c (<< c 2))
+	(let c (& c 0xaaaaaa))
+	(let c (% c 2))
+	(let c (^ c 0xffaa11))
+	(let c (<< (<< (<< c 2) 2) 2))
+)
+))
