@@ -4,8 +4,8 @@
 (print "Original List:\n")
 (print mylist "\n")
 
-(for (let i 0) (< i (length mylist)) (inc i)
-	(for (let j i) (< j (length mylist)) (inc j)
+(for (let i 0) (< i (length mylist)) (++ i)
+	(for (let j i) (< j (length mylist)) (++ j)
 		(if (> (nth mylist i) (nth mylist j))
 			(block
 			(let temp (nth mylist i))

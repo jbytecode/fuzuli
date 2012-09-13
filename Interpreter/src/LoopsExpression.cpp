@@ -59,7 +59,7 @@ Token *ForExpression::eval(Environment *env) {
 		this->expressions[2]->eval(forEnvironment);
 	}
 
-	forEnvironment->doAutomaticGC();
+	forEnvironment->doAutomaticGCwithProtection(result);
 	return (Token::NULL_TOKEN);
 }
 
