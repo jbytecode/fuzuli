@@ -203,13 +203,13 @@ double Token::operator-(Token& other){
 Token& Token::operator++(){
 	double num = atof(this->content->c_str()) + 1;
 	this->setFloatValue(num);
-	return num;
+	return *this;
 }
 
 Token& Token::operator--(){
 	double num = atof(this->content->c_str()) - 1;
 	this->setFloatValue(num);
-	return num;
+	return *this;
 }
 
 int Token::getLineNumber() {
