@@ -70,7 +70,7 @@ Token *DefExpression::eval(Environment *env) {
 		exit(-1);
 	}
 	env->setVariableInThisScope(var->getContent(), typeint);
-	return (var);
+	return (Token::NULL_TOKEN);
 }
 
 
