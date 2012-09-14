@@ -38,7 +38,7 @@ Token *ForExpression::eval(Environment *env) {
 	Environment *forEnvironment = env->createNext();
 	this->expressions[0]->eval(forEnvironment); /* Starter */
 	Token *condition;
-	Token *result;
+	Token *result = NULL;
 	unsigned int i=3;
 	while (1) {
 		condition = this->expressions[1]->eval(forEnvironment);
@@ -59,7 +59,7 @@ Token *ForExpression::eval(Environment *env) {
 		this->expressions[2]->eval(forEnvironment);
 	}
 
-	forEnvironment->doAutomaticGCwithProtection(result);
+	forEnvironment->doAutomaticGC();
 	return (Token::NULL_TOKEN);
 }
 
