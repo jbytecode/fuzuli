@@ -25,7 +25,7 @@ namespace fuzuli {
 
 using namespace std;
 
-EvalExpression::EvalExpression(vector<Expression*> expr) {
+EvalExpression::EvalExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = EVAL_EXPRESSION;
 }
@@ -35,7 +35,7 @@ EvalExpression::~EvalExpression() {
 }
 
 Token *EvalExpression::eval(Environment *env) {
-	Token *content = this->expressions[0]->eval(env);
+	Token *content = this->expressions->at(0)->eval(env);
 	/*
 	 * If x in (eval x) is string, x is parsed and being run.
 	 * Otherwise, x is a Fuzuli Expression.
@@ -71,8 +71,8 @@ Token *EvalExpression::eval(Environment *env) {
 		 */
 		Expression *expr = static_cast<Expression*>(content->object);
 		Token *result = NULL;
-		for (unsigned int i=0;i<expr->expressions.size();i++){
-			result = expr->expressions[i]->eval(env);
+		for (unsigned int i=0;i<expr->expressions->size();i++){
+			result = expr->expressions->at(i)->eval(env);
 		}
 		return(result);
 	}else{
@@ -80,7 +80,7 @@ Token *EvalExpression::eval(Environment *env) {
 	}
 }
 
-ExpressionExpression::ExpressionExpression(vector<Expression*> expr) {
+ExpressionExpression::ExpressionExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = EXPRESSION_EXPRESSION;
 }

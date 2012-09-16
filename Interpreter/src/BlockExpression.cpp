@@ -24,7 +24,7 @@ namespace fuzuli {
 
 using namespace std;
 
-BlockExpression::BlockExpression(vector<Expression*> expr) {
+BlockExpression::BlockExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = BLOCK_EXPRESSION;
 }
@@ -36,8 +36,8 @@ BlockExpression::~BlockExpression() {
 Token *BlockExpression::eval(Environment *env) {
 	Token *result = Token::NULL_TOKEN;
 	Environment *blockEnvironment = env->createNext();
-	for (unsigned int i = 0; i < this->expressions.size(); i++) {
-		result = this->expressions[i]->eval(blockEnvironment);
+	for (unsigned int i = 0; i < this->expressions->size(); i++) {
+		result = this->expressions->at(i)->eval(blockEnvironment);
 		if (result) {
 			if (result->breakFlag == 1) {
 				blockEnvironment->doAutomaticGCwithProtection(result);
@@ -55,7 +55,7 @@ Token *BlockExpression::eval(Environment *env) {
 
 
 
-GroupExpression::GroupExpression(vector<Expression*> expr) {
+GroupExpression::GroupExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = GROUP_EXPRESSION;
 }
@@ -66,8 +66,8 @@ GroupExpression::~GroupExpression() {
 
 Token *GroupExpression::eval(Environment *env) {
 	Token *result = Token::NULL_TOKEN;
-	for (unsigned int i = 0; i < this->expressions.size(); i++) {
-		result = this->expressions[i]->eval(env);
+	for (unsigned int i = 0; i < this->expressions->size(); i++) {
+		result = this->expressions->at(i)->eval(env);
 		if (result) {
 			if (result->breakFlag == 1) {
 				env->doAutomaticGCwithProtection(result);

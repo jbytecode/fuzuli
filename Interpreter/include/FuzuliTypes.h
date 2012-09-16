@@ -207,13 +207,11 @@ using namespace std;
 class Expression {
 public:
 	Expression();
-	Expression(unsigned int count, ...);
 	virtual ~Expression();
-	void setExpressions(vector<Expression*> expressions);
+	void setExpressions(vector<Expression*> *expressions);
 	virtual Token *eval(Environment *env);
 	const char* toString();
-	void addExpression(Expression *exp);
-	vector<Expression*> expressions;
+	vector<Expression*> *expressions;
 	Token *resultToken;
 	enum ExpressionType type;
 private:
@@ -221,93 +219,93 @@ private:
 };
 
 
-class AndExpression: public fuzuli::Expression {
+class AndExpression: public Expression {
 public:
-	AndExpression(vector<Expression*> expr);
+	AndExpression(vector<Expression*> *expr);
 	virtual ~AndExpression();
 	Token *eval(Environment *env);
 };
 
-class BitShiftLeftExpression: public fuzuli::Expression {
+class BitShiftLeftExpression: public Expression {
 public:
-	BitShiftLeftExpression(vector<Expression*> expr);
+	BitShiftLeftExpression(vector<Expression*> *expr);
 	virtual ~BitShiftLeftExpression();
 	Token *eval(Environment *env);
 };
 
-class BitShiftRightExpression: public fuzuli::Expression {
+class BitShiftRightExpression: public Expression {
 public:
-	BitShiftRightExpression(vector<Expression*> expr);
+	BitShiftRightExpression(vector<Expression*> *expr);
 	virtual ~BitShiftRightExpression();
 	Token *eval(Environment *env);
 };
 
-class BitAndExpression: public fuzuli::Expression {
+class BitAndExpression: public Expression {
 public:
-	BitAndExpression(vector<Expression*> expr);
+	BitAndExpression(vector<Expression*> *expr);
 	virtual ~BitAndExpression();
 	Token *eval(Environment *env);
 };
 
-class BitOrExpression: public fuzuli::Expression {
+class BitOrExpression: public Expression {
 public:
-	BitOrExpression(vector<Expression*> expr);
+	BitOrExpression(vector<Expression*> *expr);
 	virtual ~BitOrExpression();
 	Token *eval(Environment *env);
 };
 
-class BitNotExpression: public fuzuli::Expression {
+class BitNotExpression: public Expression {
 public:
-	BitNotExpression(vector<Expression*> expr);
+	BitNotExpression(vector<Expression*> *expr);
 	virtual ~BitNotExpression();
 	Token *eval(Environment *env);
 };
 
-class BitXORExpression: public fuzuli::Expression {
+class BitXORExpression: public Expression {
 public:
-	BitXORExpression(vector<Expression*> expr);
+	BitXORExpression(vector<Expression*> *expr);
 	virtual ~BitXORExpression();
 	Token *eval(Environment *env);
 };
 
 class AsterixExpression: public Expression {
 public:
-	AsterixExpression(vector<Expression*> expression);
+	AsterixExpression(vector<Expression*> *expression);
 	virtual ~AsterixExpression();
 	virtual Token *eval(Environment *env);
 };
 
 class BlockExpression: public Expression {
 public:
-	BlockExpression(vector<Expression*> expr);
+	BlockExpression(vector<Expression*> *expr);
 	virtual ~BlockExpression();
 	Token *eval(Environment *env);
 };
 
 class GroupExpression: public Expression {
 public:
-	GroupExpression(vector<Expression*> expr);
+	GroupExpression(vector<Expression*> *expr);
 	virtual ~GroupExpression();
 	Token *eval(Environment *env);
 };
 
-class BreakExpression: public fuzuli::Expression {
+class BreakExpression: public Expression {
 public:
-	BreakExpression(vector<Expression*> expr);
+	BreakExpression(vector<Expression*> *expr);
 	virtual ~BreakExpression();
 	Token *eval(Environment *env);
 };
 
 class DumpExpression: public Expression {
 public:
-	DumpExpression(vector<Expression*> expr);
+	DumpExpression(vector<Expression*> *expr);
 	virtual ~DumpExpression();
 	Token *eval(Environment *env);
 };
 
 class DynLoadExpression: public Expression {
 public:
-	DynLoadExpression(vector<Expression*> expr);
+	DynLoadExpression(vector<Expression*> *expr);
 	virtual ~DynLoadExpression();
 	Token *eval(Environment *env);
 	void *libraryHandle;
@@ -316,91 +314,91 @@ public:
 
 class LessExpression: public Expression {
 public:
-	LessExpression(vector<Expression*> expr);
+	LessExpression(vector<Expression*> *expr);
 	virtual ~LessExpression();
 	Token *eval(Environment *env);
 };
 
 class LessOrEqualExpression: public Expression {
 public:
-	LessOrEqualExpression(vector<Expression*> expr);
+	LessOrEqualExpression(vector<Expression*> *expr);
 	virtual ~LessOrEqualExpression();
 	Token *eval(Environment *env);
 };
 
 class BiggerExpression: public Expression {
 public:
-	BiggerExpression(vector<Expression*> expr);
+	BiggerExpression(vector<Expression*> *expr);
 	virtual ~BiggerExpression();
 	Token *eval(Environment *env);
 };
 
 class BigOrEqualExpression: public Expression {
 public:
-	BigOrEqualExpression(vector<Expression*> expr);
+	BigOrEqualExpression(vector<Expression*> *expr);
 	virtual ~BigOrEqualExpression();
 	Token *eval(Environment *env);
 };
 
 class CExpression: public Expression {
 public:
-	CExpression(vector<Expression*> expr);
+	CExpression(vector<Expression*> *expr);
 	virtual ~CExpression();
 	Token *eval(Environment *env);
 };
 
 class DivisionExpression: public Expression {
 public:
-	DivisionExpression(vector<Expression*> expr);
+	DivisionExpression(vector<Expression*> *expr);
 	virtual ~DivisionExpression();
 	Token *eval(Environment *env);
 };
 
-class EqualsExpression: public fuzuli::Expression {
+class EqualsExpression: public Expression {
 public:
-	EqualsExpression(vector<Expression*> expr);
+	EqualsExpression(vector<Expression*> *expr);
 	virtual ~EqualsExpression();
 	Token *eval(Environment *env);
 };
 
-class NotEqualsExpression: public fuzuli::Expression {
+class NotEqualsExpression: public Expression {
 public:
-	NotEqualsExpression(vector<Expression*> expr);
+	NotEqualsExpression(vector<Expression*> *expr);
 	virtual ~NotEqualsExpression();
 	Token *eval(Environment *env);
 };
 
-class ForExpression: public fuzuli::Expression {
+class ForExpression: public Expression {
 public:
-	ForExpression(vector<Expression*> expr);
+	ForExpression(vector<Expression*> *expr);
 	virtual ~ForExpression();
 	Token *eval(Environment *env);
 };
 
 class ForEachExpression: public Expression {
 public:
-	ForEachExpression(vector<Expression*> expr);
+	ForEachExpression(vector<Expression*> *expr);
 	virtual ~ForEachExpression();
 	Token *eval(Environment *env);
 };
 
-class DoTimesExpression: public fuzuli::Expression {
+class DoTimesExpression: public Expression {
 public:
-	DoTimesExpression(vector<Expression*> expr);
+	DoTimesExpression(vector<Expression*> *expr);
 	virtual ~DoTimesExpression();
 	Token *eval(Environment *env);
 };
 
-class SwitchExpression: public fuzuli::Expression {
+class SwitchExpression: public Expression {
 public:
-	SwitchExpression(vector<Expression*> expr);
+	SwitchExpression(vector<Expression*> *expr);
 	virtual ~SwitchExpression();
 	Token *eval(Environment *env);
 };
 
-class CaseExpression: public fuzuli::Expression {
+class CaseExpression: public Expression {
 public:
-	CaseExpression(vector<Expression*> expr);
+	CaseExpression(vector<Expression*> *expr);
 	virtual ~CaseExpression();
 	Token *eval(Environment *env);
 };
@@ -418,7 +416,7 @@ public:
 
 class FunctionExpression: public Expression {
 public:
-	FunctionExpression(vector<Expression*> expr);
+	FunctionExpression(vector<Expression*> *expr);
 	virtual ~FunctionExpression();
 	Token *eval(Environment *env);
 	FuzuliFunction *fuzulifunction;
@@ -428,7 +426,7 @@ private:
 
 class FunctionCallExpression: public Expression {
 public:
-	FunctionCallExpression(vector<Expression*> expr);
+	FunctionCallExpression(vector<Expression*> *expr);
 	virtual ~FunctionCallExpression();
 	Token *eval(Environment *env);
 	Token *evalForClass(Environment *env);
@@ -442,21 +440,21 @@ private:
 
 class RequestExpression: public Expression {
 public:
-	RequestExpression(vector<Expression*> expr);
+	RequestExpression(vector<Expression*> *expr);
 	virtual ~RequestExpression();
 	Token *eval(Environment *env);
 };
 
 class IssetExpression: public Expression {
 public:
-	IssetExpression(vector<Expression*> expr);
+	IssetExpression(vector<Expression*> *expr);
 	virtual ~IssetExpression();
 	Token *eval(Environment *env);
 };
 
 class ParamsExpression: public Expression {
 public:
-	ParamsExpression(vector<Expression*> expr);
+	ParamsExpression(vector<Expression*> *expr);
 	virtual ~ParamsExpression();
 	Token *eval(Environment *env);
 	vector<string*> paramNames;
@@ -470,9 +468,9 @@ public:
 	Token *stringToken;
 };
 
-class IfExpression: public fuzuli::Expression {
+class IfExpression: public Expression {
 public:
-	IfExpression(vector<Expression*> expr);
+	IfExpression(vector<Expression*> *expr);
 	virtual ~IfExpression();
 	Token *eval(Environment *env);
 };
@@ -502,43 +500,43 @@ private:
 
 class DefExpression: public Expression {
 public:
-	DefExpression(vector<Expression*> expr);
+	DefExpression(vector<Expression*> *expr);
 	~DefExpression();
 	Token *eval(Environment *env);
 };
 
 class TypeofExpression: public Expression {
 public:
-	TypeofExpression(vector<Expression*> expr);
+	TypeofExpression(vector<Expression*> *expr);
 	~TypeofExpression();
 	Token *eval(Environment *env);
 };
 
 class TypeExpression: public Expression {
 public:
-	TypeExpression(vector<Expression*> expr);
+	TypeExpression(vector<Expression*> *expr);
 	~TypeExpression();
 	Token *eval(Environment *env);
 };
 
 class LetExpression: public Expression{
 public:
-	LetExpression(vector<Expression*> expr);
+	LetExpression(vector<Expression*> *expr);
 	virtual ~LetExpression();
 	Token *eval(Environment *env);
 };
 
 class EvalExpression: public Expression {
 public:
-	EvalExpression(vector<Expression*> expr);
+	EvalExpression(vector<Expression*> *expr);
 	virtual ~EvalExpression();
 	Token *eval(Environment *env);
 };
 
 /* List class */
-class ListExpression: public fuzuli::Expression {
+class ListExpression: public Expression {
 public:
-	ListExpression(vector<Expression*> expr);
+	ListExpression(vector<Expression*> *expr);
 	virtual ~ListExpression();
 	Token *eval(Environment *env);
 };
@@ -547,142 +545,142 @@ public:
 /* Other List Functions */
 /************************/
 
-class LengthExpression: public fuzuli::Expression {
+class LengthExpression: public Expression {
 public:
-	LengthExpression(vector<Expression*> expr);
+	LengthExpression(vector<Expression*> *expr);
 	virtual ~LengthExpression();
 	Token *eval(Environment *env);
 };
 
-class NthExpression: public fuzuli::Expression {
+class NthExpression: public Expression {
 public:
-	NthExpression(vector<Expression*> expr);
+	NthExpression(vector<Expression*> *expr);
 	virtual ~NthExpression();
 	Token *eval(Environment *env);
 };
 
-class SetExpression: public fuzuli::Expression {
+class SetExpression: public Expression {
 public:
-	SetExpression(vector<Expression*> expr);
+	SetExpression(vector<Expression*> *expr);
 	virtual ~SetExpression();
 	Token *eval(Environment *env);
 };
 
 class ExplodeExpression: public Expression {
 public:
-	ExplodeExpression(vector<Expression*> expr);
+	ExplodeExpression(vector<Expression*> *expr);
 	virtual ~ExplodeExpression();
 	Token *eval(Environment *env);
 };
 
 class AppendExpression: public Expression {
 public:
-	AppendExpression(vector<Expression*> expr);
+	AppendExpression(vector<Expression*> *expr);
 	virtual ~AppendExpression();
 	Token *eval(Environment *env);
 };
 
 class PrependExpression: public Expression {
 public:
-	PrependExpression(vector<Expression*> expr);
+	PrependExpression(vector<Expression*> *expr);
 	virtual ~PrependExpression();
 	Token *eval(Environment *env);
 };
 
 class RemoveExpression: public Expression {
 public:
-	RemoveExpression(vector<Expression*> expr);
+	RemoveExpression(vector<Expression*> *expr);
 	virtual ~RemoveExpression();
 	Token *eval(Environment *env);
 };
 
 class FindExpression: public Expression {
 public:
-	FindExpression(vector<Expression*> expr);
+	FindExpression(vector<Expression*> *expr);
 	virtual ~FindExpression();
 	Token *eval(Environment *env);
 };
 
 class FillExpression: public Expression {
 public:
-	FillExpression(vector<Expression*> expr);
+	FillExpression(vector<Expression*> *expr);
 	virtual ~FillExpression();
 	Token *eval(Environment *env);
 };
 
 class FirstExpression: public Expression {
 public:
-	FirstExpression(vector<Expression*> expr);
+	FirstExpression(vector<Expression*> *expr);
 	virtual ~FirstExpression();
 	Token *eval(Environment *env);
 };
 
 class LastExpression: public Expression {
 public:
-	LastExpression(vector<Expression*> expr);
+	LastExpression(vector<Expression*> *expr);
 	virtual ~LastExpression();
 	Token *eval(Environment *env);
 };
 
-class NotExpression: public fuzuli::Expression {
+class NotExpression: public Expression {
 public:
-	NotExpression(vector<Expression*> expr);
+	NotExpression(vector<Expression*> *expr);
 	virtual ~NotExpression();
 	Token *eval(Environment *env);
 };
 
-class OrExpression: public fuzuli::Expression {
+class OrExpression: public Expression {
 public:
-	OrExpression(vector<Expression*> expr);
+	OrExpression(vector<Expression*> *expr);
 	virtual ~OrExpression();
 	Token *eval(Environment *env);
 };
 
 class PlusExpression: public Expression {
 public:
-	PlusExpression(vector<Expression*> expr);
+	PlusExpression(vector<Expression*> *expr);
 	virtual ~PlusExpression();
 	virtual Token *eval(Environment *env);
 };
 
 class ModulaExpression: public Expression {
 public:
-	ModulaExpression(vector<Expression*> expr);
+	ModulaExpression(vector<Expression*> *expr);
 	virtual ~ModulaExpression();
 	virtual Token *eval(Environment *env);
 };
 
 class ColonExpression: public Expression {
 public:
-	ColonExpression(vector<Expression*> expr);
+	ColonExpression(vector<Expression*> *expr);
 	virtual ~ColonExpression();
 	virtual Token *eval(Environment *env);
 };
 
 class RemainderExpression: public Expression {
 public:
-	RemainderExpression(vector<Expression*> expr);
+	RemainderExpression(vector<Expression*> *expr);
 	virtual ~RemainderExpression();
 	virtual Token *eval(Environment *env);
 };
 
 class IncExpression: public Expression {
 public:
-	IncExpression(vector<Expression*> expr);
+	IncExpression(vector<Expression*> *expr);
 	virtual ~IncExpression();
 	virtual Token *eval(Environment *env);
 };
 
 class DecExpression: public Expression {
 public:
-	DecExpression(vector<Expression*> expr);
+	DecExpression(vector<Expression*> *expr);
 	virtual ~DecExpression();
 	virtual Token *eval(Environment *env);
 };
 
 class CloneExpression: public Expression {
 public:
-	CloneExpression(vector<Expression*> expr);
+	CloneExpression(vector<Expression*> *expr);
 	virtual ~CloneExpression();
 	virtual Token *eval(Environment *env);
 };
@@ -690,28 +688,28 @@ public:
 class RequireExpression: public Expression {
 public:
 	static vector<string> installedPackages;
-	RequireExpression(vector<Expression*> expr);
+	RequireExpression(vector<Expression*> *expr);
 	virtual ~RequireExpression();
 	virtual Token *eval(Environment *env);
 };
 
 class ReturnExpression: public Expression {
 public:
-	ReturnExpression(vector<Expression*> expr);
+	ReturnExpression(vector<Expression*> *expr);
 	virtual ~ReturnExpression();
 	virtual Token *eval(Environment *env);
 };
 
 class PrintExpression: public Expression {
 public:
-	PrintExpression(vector<Expression*> expr);
+	PrintExpression(vector<Expression*> *expr);
 	virtual ~PrintExpression();
 	Token *eval(Environment *env);
 };
 
 class PrintlnExpression: public Expression {
 public:
-	PrintlnExpression(vector<Expression*> expr);
+	PrintlnExpression(vector<Expression*> *expr);
 	virtual ~PrintlnExpression();
 	Token *eval(Environment *env);
 };
@@ -742,7 +740,7 @@ private:
 
 class SubtractionExpression: public Expression {
 public:
-	SubtractionExpression(vector<Expression*> expr);
+	SubtractionExpression(vector<Expression*> *expr);
 	virtual ~SubtractionExpression();
 	Token *eval(Environment *env);
 };
@@ -803,9 +801,9 @@ private:
 };
 
 
-class WhileExpression: public fuzuli::Expression {
+class WhileExpression: public Expression {
 public:
-	WhileExpression(vector<Expression*> expr);
+	WhileExpression(vector<Expression*> *expr);
 	virtual ~WhileExpression();
 	Token *eval(Environment *env);
 };
@@ -829,7 +827,7 @@ public:
 
 class ExpressionExpression: public Expression {
 public:
-	ExpressionExpression(vector<Expression*> expr);
+	ExpressionExpression(vector<Expression*> *expr);
 	~ExpressionExpression();
 	Token *eval(Environment *env);
 };
@@ -838,21 +836,21 @@ public:
 
 class SetCookieExpression: public Expression {
 public:
-	SetCookieExpression(vector<Expression*> expr);
+	SetCookieExpression(vector<Expression*> *expr);
 	~SetCookieExpression();
 	Token *eval(Environment *env);
 };
 
 class GetCookieExpression: public Expression {
 public:
-	GetCookieExpression(vector<Expression*> expr);
+	GetCookieExpression(vector<Expression*> *expr);
 	~GetCookieExpression();
 	Token *eval(Environment *env);
 };
 
 class IncludeExpression: public Expression {
 public:
-	IncludeExpression(vector<Expression*> expr);
+	IncludeExpression(vector<Expression*> *expr);
 	~IncludeExpression();
 	Token *eval(Environment *env);
 };
@@ -909,7 +907,7 @@ public:
 	AstBuilder(SourceCode *source);
 	Expression *getNextExpression();
 	virtual ~AstBuilder();
-	Expression *fuzuliCall(Token *tok, vector<Expression*> exp);
+	Expression *fuzuliCall(Token *tok, vector<Expression*> *exp);
 
 private:
 	SourceCode *code;
@@ -917,21 +915,21 @@ private:
 
 class GCExpression: public Expression {
 public:
-	GCExpression(vector<Expression*> expr);
+	GCExpression(vector<Expression*> *expr);
 	virtual ~GCExpression();
 	Token *eval(Environment *env);
 };
 
 class SetPrecisionExpression: public Expression {
 public:
-	SetPrecisionExpression(vector<Expression*> expr);
+	SetPrecisionExpression(vector<Expression*> *expr);
 	virtual ~SetPrecisionExpression();
 	Token *eval(Environment *env);
 };
 
 class SetEpsilonExpression: public Expression {
 public:
-	SetEpsilonExpression(vector<Expression*> expr);
+	SetEpsilonExpression(vector<Expression*> *expr);
 	virtual ~SetEpsilonExpression();
 	Token *eval(Environment *env);
 };
@@ -948,28 +946,28 @@ public:
 
 class ClassExpression: public Expression {
 public:
-	ClassExpression(vector<Expression*> expr);
+	ClassExpression(vector<Expression*> *expr);
 	virtual ~ClassExpression();
 	Token *eval(Environment *env);
 };
 
 class NewExpression: public Expression {
 public:
-	NewExpression(vector<Expression*> expr);
+	NewExpression(vector<Expression*> *expr);
 	virtual ~NewExpression();
 	Token *eval(Environment *env);
 };
 
 class DeleteExpression: public Expression {
 public:
-	DeleteExpression(vector<Expression*> expr);
+	DeleteExpression(vector<Expression*> *expr);
 	virtual ~DeleteExpression();
 	Token *eval(Environment *env);
 };
 
 class TimingExpression: public Expression {
 public:
-	TimingExpression(vector<Expression*>expr);
+	TimingExpression(vector<Expression*> *expr);
 	virtual ~TimingExpression();
 	Token *eval(Environment *env);
 };

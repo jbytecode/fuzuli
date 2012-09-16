@@ -25,7 +25,7 @@ namespace fuzuli {
 
 using namespace std;
 
-ForExpression::ForExpression(vector<Expression*> expr) {
+ForExpression::ForExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = FOR_EXPRESSION;
 }
@@ -36,18 +36,18 @@ ForExpression::~ForExpression() {
 
 Token *ForExpression::eval(Environment *env) {
 	Environment *forEnvironment = env->createNext();
-	this->expressions[0]->eval(forEnvironment); /* Starter */
+	this->expressions->at(0)->eval(forEnvironment); /* Starter */
 	Token *condition;
 	Token *result = NULL;
 	unsigned int i=3;
 	while (1) {
-		condition = this->expressions[1]->eval(forEnvironment);
+		condition = this->expressions->at(1)->eval(forEnvironment);
 		if (condition->getIntValue() == 0) {
 			break;
 		}
 		i=3;
-		while (i < this->expressions.size()) {
-			result = this->expressions[i]->eval(forEnvironment);
+		while (i < this->expressions->size()) {
+			result = this->expressions->at(i)->eval(forEnvironment);
 			if (result->breakFlag) {
 				result->breakFlag = 0;
 				forEnvironment->doAutomaticGCwithProtection(result);
@@ -56,17 +56,17 @@ Token *ForExpression::eval(Environment *env) {
 			}
 			i++;
 		}
-		this->expressions[2]->eval(forEnvironment);
+		this->expressions->at(2)->eval(forEnvironment);
 	}
 
 	forEnvironment->doAutomaticGC();
 	return (Token::NULL_TOKEN);
 }
 
-ForEachExpression::ForEachExpression(vector<Expression*> expr) {
+ForEachExpression::ForEachExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = FOREACH_EXPRESSION;
-	Token *in = ((IdentifierExpression*) this->expressions[1])->stringToken;
+	Token *in = ((IdentifierExpression*) this->expressions->at(1))->stringToken;
 		if (strcmp(in->getContent(), "in") != 0) {
 			cout << "Keyword 'in' required in foreach expression" << endl;
 			exit(-1);
@@ -80,16 +80,16 @@ ForEachExpression::~ForEachExpression() {
 Token *ForEachExpression::eval(Environment *env) {
 	Environment *foreachenv = env->createNext();
 	Token *result = Token::NULL_TOKEN;
-	Token *iden = ((IdentifierExpression*) this->expressions[0])->stringToken;
-	Token *list = this->expressions[2]->eval(env);
+	Token *iden = ((IdentifierExpression*) this->expressions->at(0))->stringToken;
+	Token *list = this->expressions->at(2)->eval(env);
 
 	list->IncreaseReferences();
 
 	for (unsigned int i = 0; i < list->tokens.size(); i++) {
 		foreachenv->setVariableInThisScope(iden->getContent(), list->tokens[i]);
 
-		for (unsigned int u = 3; u < this->expressions.size(); u++) {
-			result = this->expressions[u]->eval(foreachenv);
+		for (unsigned int u = 3; u < this->expressions->size(); u++) {
+			result = this->expressions->at(u)->eval(foreachenv);
 			if (result->breakFlag) {
 				result->breakFlag = 0;
 				list->ReduceReferences();
@@ -104,7 +104,7 @@ Token *ForEachExpression::eval(Environment *env) {
 	return (result);
 }
 
-DoTimesExpression::DoTimesExpression(vector<Expression*> expr) {
+DoTimesExpression::DoTimesExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = DOTIMES_EXPRESSION;
 }
@@ -118,14 +118,14 @@ Token *DoTimesExpression::eval(Environment *env) {
 	Token *condition;
 	Token *result;
 	Token *iden =
-			(dynamic_cast<IdentifierExpression*>(this->expressions[0]))->stringToken;
-	Token *max = this->expressions[1]->eval(env);
+			(dynamic_cast<IdentifierExpression*>(this->expressions->at(0)))->stringToken;
+	Token *max = this->expressions->at(1)->eval(env);
 	condition = dotimesEnvironment->newToken(0.0, INTEGER);
 	dotimesEnvironment->setVariableInThisScope(iden->getContent(), condition);
 	condition->IncreaseReferences();
 	while (1) {
-		for (unsigned int i = 2; i < this->expressions.size(); i++) {
-			result = this->expressions[i]->eval(dotimesEnvironment);
+		for (unsigned int i = 2; i < this->expressions->size(); i++) {
+			result = this->expressions->at(i)->eval(dotimesEnvironment);
 			if (result->breakFlag) {
 				result->breakFlag = 0;
 				dotimesEnvironment->doAutomaticGCwithProtection(result);
@@ -145,7 +145,7 @@ Token *DoTimesExpression::eval(Environment *env) {
 	return (result);
 }
 
-WhileExpression::WhileExpression(vector<Expression*> expr) {
+WhileExpression::WhileExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = WHILE_EXPRESSION;
 }
@@ -159,13 +159,13 @@ Token *WhileExpression::eval(Environment *env) {
 	Token *condition;
 	Token *result = Token::NULL_TOKEN;
 	while (1) {
-		condition = this->expressions[0]->eval(whileEnvironment);
+		condition = this->expressions->at(0)->eval(whileEnvironment);
 		if (condition->getIntValue() == 0) {
 			break;
 		}
 
-		for (unsigned int ui = 1; ui < this->expressions.size(); ui++) {
-			result = this->expressions[ui]->eval(whileEnvironment);
+		for (unsigned int ui = 1; ui < this->expressions->size(); ui++) {
+			result = this->expressions->at(ui)->eval(whileEnvironment);
 			if (result->breakFlag == 1) {
 				result->breakFlag = 0;
 				whileEnvironment->doAutomaticGCwithProtection(result);
@@ -179,7 +179,7 @@ Token *WhileExpression::eval(Environment *env) {
 	return (result);
 }
 
-BreakExpression::BreakExpression(vector<Expression*> expr) {
+BreakExpression::BreakExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = BREAK_EXPRESSION;
 }

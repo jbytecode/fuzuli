@@ -34,19 +34,6 @@ Expression::~Expression() {
 
 }
 
-Expression::Expression(unsigned int count, ...){
-	va_list list;
-	va_start(list, count);
-	for (unsigned int i=0;i<count;i++){
-		Expression *exp = va_arg(list, Expression*);
-		this->expressions.push_back(exp);
-	}
-	va_end(list);
-}
-
-void Expression::addExpression(Expression *exp){
-	this->expressions.push_back(exp);
-}
 
 Token * Expression::eval(Environment *env){
 	return(this->resultToken);
@@ -54,8 +41,8 @@ Token * Expression::eval(Environment *env){
 
 const char* Expression::toString() {
 	stringstream ss;
-	for (unsigned int i = 0; i < this->expressions.size(); i++) {
-		ss << this->expressions[i]->toString() << endl;
+	for (unsigned int i = 0; i < this->expressions->size(); i++) {
+		ss << this->expressions->at(i)->toString() << endl;
 	}
 	return (ss.str().c_str());
 }

@@ -112,7 +112,7 @@ Token *IdentifierExpression::eval(Environment *env){
 
 
 
-TypeofExpression::TypeofExpression(vector<Expression*> expr){
+TypeofExpression::TypeofExpression(vector<Expression*> *expr){
 	this->expressions = expr;
 	this->type = TYPEOF_EXPRESSION;
 }
@@ -122,13 +122,13 @@ TypeofExpression::~TypeofExpression(){
 }
 
 Token *TypeofExpression::eval(Environment *env){
-	Token *tok = this->expressions[0]->eval(env);
+	Token *tok = this->expressions->at(0)->eval(env);
 	Token *result = env->newToken (tok->getType(), INTEGER);
 	return(result);
 }
 
 
-TypeExpression::TypeExpression(vector<Expression*> expr){
+TypeExpression::TypeExpression(vector<Expression*> *expr){
 	this->expressions = expr;
 	this->type = TYPE_EXPRESSION;
 }
@@ -138,9 +138,9 @@ TypeExpression::~TypeExpression(){
 }
 
 Token *TypeExpression::eval(Environment *env){
-	Token *name = ((IdentifierExpression*)this->expressions[0])->stringToken;
+	Token *name = ((IdentifierExpression*)this->expressions->at(0))->stringToken;
 	Token *val = env->getVariable(name->getContent());
-	Token *type = this->expressions[1]->eval(env);
+	Token *type = this->expressions->at(1)->eval(env);
 	int index = type->getIntValue();
 	val->setType((enum TokenType)index);
 	return(Token::NULL_TOKEN);

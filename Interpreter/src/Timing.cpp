@@ -23,7 +23,7 @@ namespace fuzuli {
 
 using namespace std;
 
-TimingExpression::TimingExpression(vector<Expression*> expr) {
+TimingExpression::TimingExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = TIMING_EXPRESSION;
 }
@@ -36,8 +36,8 @@ Token *TimingExpression::eval(Environment *env) {
 	Token *result = env->newToken(0.0, FLOAT);
 	clock_t clock_start = clock();
 	clock_t clock_end;
-	for (unsigned int i = 0; i < this->expressions.size(); i++) {
-		this->expressions[i]->eval(env);
+	for (unsigned int i = 0; i < this->expressions->size(); i++) {
+		this->expressions->at(i)->eval(env);
 	}
 	clock_end = clock();
 	result->setFloatValue(((double) (clock_end - clock_start)) / 1000.0);
