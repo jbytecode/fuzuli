@@ -252,7 +252,7 @@ bool Environment::variableExists(const char *name) {
 	return (false);
 }
 
-DumpExpression::DumpExpression(vector<Expression*> expr) {
+DumpExpression::DumpExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = DUMP_EXPRESSION;
 }
@@ -266,7 +266,7 @@ Token* DumpExpression::eval(Environment *env) {
 	return (Token::NULL_TOKEN);
 }
 
-GCExpression::GCExpression(vector<Expression*> expr) {
+GCExpression::GCExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = GC_EXPRESSION;
 }
@@ -278,11 +278,11 @@ GCExpression::~GCExpression() {
 Token *GCExpression::eval(Environment *env) {
 	int num = 0;
 	Token *result = new Token(num, FLOAT);
-	if(this->expressions.size() == 0){
+	if(this->expressions->size() == 0){
 		num = env->GC();
 		result->setFloatValue(num);
-	}else if (this->expressions.size() == 1){
-		Token *onoffparam = this->expressions[0]->eval(env);
+	}else if (this->expressions->size() == 1){
+		Token *onoffparam = this->expressions->at(0)->eval(env);
 		if(onoffparam->getFloatValue() == 1.0){
 			Environment::isAutomaticGC = true;
 			result->setFloatValue(1.0);
@@ -296,7 +296,7 @@ Token *GCExpression::eval(Environment *env) {
 	return (result);
 }
 
-DeleteExpression::DeleteExpression(vector<Expression*> expr) {
+DeleteExpression::DeleteExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = DELETE_EXPRESSION;
 }
@@ -307,7 +307,7 @@ DeleteExpression::~DeleteExpression() {
 
 Token *DeleteExpression::eval(Environment *env) {
 	Token *obj =
-			(dynamic_cast<IdentifierExpression*>(this->expressions[0]))->stringToken;
+			(dynamic_cast<IdentifierExpression*>(this->expressions->at(0)))->stringToken;
 	cout << "Investigating :" << obj->getContent() << endl;
 	if (env->getVariable(obj->getContent())) {
 		//cout << obj->getContent() << " is variable. killing..." << endl;

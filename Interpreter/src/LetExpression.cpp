@@ -25,7 +25,7 @@ namespace fuzuli {
 
 using namespace std;
 
-LetExpression::LetExpression(vector<Expression*> expr) {
+LetExpression::LetExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	//this->resultToken = Token::NULL_TOKEN;
 	this->type = LET_EXPRESSION;
@@ -36,8 +36,8 @@ LetExpression::~LetExpression() {
 }
 
 Token *LetExpression::eval(Environment *env) {
-	Token *varname = ((IdentifierExpression*) this->expressions[0])->stringToken;
-	Token *result = this->expressions[1]->eval(env);
+	Token *varname = ((IdentifierExpression*) this->expressions->at(0))->stringToken;
+	Token *result = this->expressions->at(1)->eval(env);
 	Token *oldvariable = env->getVariable(varname->getContent());
 	if (oldvariable->getKillable()) {
 		oldvariable->ReduceReferences();
@@ -50,7 +50,7 @@ Token *LetExpression::eval(Environment *env) {
 }
 
 
-DefExpression::DefExpression(vector<Expression*> expr) {
+DefExpression::DefExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = DEF_EXPRESSION;
 }
@@ -61,8 +61,8 @@ DefExpression::~DefExpression() {
 
 Token *DefExpression::eval(Environment *env) {
 	Token *var =
-			dynamic_cast<IdentifierExpression*>(this->expressions[0])->stringToken;
-	Token *typeint = this->expressions[1]->eval(env);
+			dynamic_cast<IdentifierExpression*>(this->expressions->at(0))->stringToken;
+	Token *typeint = this->expressions->at(1)->eval(env);
 	Token *allready = env->getVariableInThisScope(var->getContent());
 
 	if (allready) {
@@ -74,7 +74,7 @@ Token *DefExpression::eval(Environment *env) {
 }
 
 
-CloneExpression::CloneExpression(vector<Expression*> expr) {
+CloneExpression::CloneExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = CLONE_EXPRESSION;
 }
@@ -84,7 +84,7 @@ CloneExpression::~CloneExpression() {
 }
 
 Token *CloneExpression::eval(Environment *env) {
-	Token *tok = this->expressions[0]->eval(env);
+	Token *tok = this->expressions->at(0)->eval(env);
 	return (tok->clone());
 }
 

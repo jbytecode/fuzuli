@@ -24,7 +24,7 @@ namespace fuzuli {
 
 using namespace std;
 
-IfExpression::IfExpression(vector<Expression*> expr) {
+IfExpression::IfExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = IF_EXPRESSION;
 }
@@ -36,17 +36,17 @@ IfExpression::~IfExpression() {
 Token *IfExpression::eval(Environment *env) {
 	Token *condition;
 	Token *result = Token::NULL_TOKEN;
-	if (this->expressions.size() == 2) { /* if then form*/
-		condition = this->expressions[0]->eval(env);
+	if (this->expressions->size() == 2) { /* if then form*/
+		condition = this->expressions->at(0)->eval(env);
 		if (condition->getIntValue() == 1) {
-			result = this->expressions[1]->eval(env);
+			result = this->expressions->at(1)->eval(env);
 		}
-	} else if (this->expressions.size() == 3) { /* if then form */
-		condition = this->expressions[0]->eval(env);
+	} else if (this->expressions->size() == 3) { /* if then form */
+		condition = this->expressions->at(0)->eval(env);
 		if (condition->getIntValue() == 1) {
-			result = this->expressions[1]->eval(env);
+			result = this->expressions->at(1)->eval(env);
 		} else {
-			result = this->expressions[2]->eval(env);
+			result = this->expressions->at(2)->eval(env);
 		}
 	} else {
 		cout << "Bad If Statement." << endl;
@@ -56,7 +56,7 @@ Token *IfExpression::eval(Environment *env) {
 
 
 
-SwitchExpression::SwitchExpression(vector<Expression*> expr){
+SwitchExpression::SwitchExpression(vector<Expression*> *expr){
 	this->expressions = expr;
 	this->type = SWITCH_EXPERSSION;
 }
@@ -66,19 +66,19 @@ SwitchExpression::~SwitchExpression(){
 }
 
 Token *SwitchExpression::eval(Environment *env){
-	Token *controlVar = this->expressions[0]->eval(env);
-	for (unsigned int i=1; i<this->expressions.size(); i++){
-		CaseExpression *ce = dynamic_cast<CaseExpression*> (this->expressions[i]);
-		Token *controlCEVar = ce->expressions[0]->eval(env);
+	Token *controlVar = this->expressions->at(0)->eval(env);
+	for (unsigned int i=1; i<this->expressions->size(); i++){
+		CaseExpression *ce = dynamic_cast<CaseExpression*> (this->expressions->at(i));
+		Token *controlCEVar = ce->expressions->at(0)->eval(env);
 		if(*controlVar == *controlCEVar){
-			ce->expressions[1]->eval(env);
+			ce->expressions->at(1)->eval(env);
 			break;
 		}
 	}
 	return(Token::NULL_TOKEN);
 }
 
-CaseExpression::CaseExpression(vector<Expression*> expr){
+CaseExpression::CaseExpression(vector<Expression*> *expr){
 	this->expressions = expr;
 	this->type = CASE_EXPRESSION;
 }
@@ -88,7 +88,7 @@ CaseExpression::~CaseExpression(){
 }
 
 Token *CaseExpression::eval(Environment *env){
-	this->expressions[1]->eval(env);
+	this->expressions->at(1)->eval(env);
 	return(Token::NULL_TOKEN);
 }
 

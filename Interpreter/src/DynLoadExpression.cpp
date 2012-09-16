@@ -26,7 +26,7 @@ namespace fuzuli {
 
 static vector<DynLoadExpression*> installedLibraries;
 
-DynLoadExpression::DynLoadExpression(vector<Expression*> expr) {
+DynLoadExpression::DynLoadExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->resultToken = new Token("@FuzuliDynamicLibrary", DLL);
 	this->type = DYNLOAD_EXPRESSION;
@@ -37,7 +37,7 @@ DynLoadExpression::~DynLoadExpression() {
 }
 
 Token *DynLoadExpression::eval(Environment *env) {
-	Token *dllName = this->expressions[0]->eval(env);
+	Token *dllName = this->expressions->at(0)->eval(env);
 	stringstream ss;
 	for (unsigned int i = 0; i < installedLibraries.size(); i++) {
 		if (strcmp(installedLibraries[i]->libraryName, dllName->getContent())
@@ -63,7 +63,7 @@ Token *DynLoadExpression::eval(Environment *env) {
 	return (resultToken);
 }
 
-CExpression::CExpression(vector<Expression*> expr) {
+CExpression::CExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->resultToken = Token::NULL_TOKEN;
 	this->type = C_EXPRESSION;
@@ -76,11 +76,11 @@ CExpression::~CExpression() {
 Token *CExpression::eval(Environment *env) {
 	typedef Token* (*Function)(Token*, Environment*);
 	DynLoadExpression *dynExpr =
-			dynamic_cast<DynLoadExpression*>(this->expressions[0]->eval(env)->expr);
-	Token *funcName = this->expressions[1]->eval(env);
+			dynamic_cast<DynLoadExpression*>(this->expressions->at(0)->eval(env)->expr);
+	Token *funcName = this->expressions->at(1)->eval(env);
 	Token *params = env->newToken("@LIST", LIST);
-	for (unsigned int i = 0; i < this->expressions.size() - 2; i++) {
-		Token *p = this->expressions[i + 2]->eval(env);
+	for (unsigned int i = 0; i < this->expressions->size() - 2; i++) {
+		Token *p = this->expressions->at(i + 2)->eval(env);
 		params->tokens.push_back(p);
 		//cout << "Adding "<<p->getContent()<<" to params"<<endl;
 	}

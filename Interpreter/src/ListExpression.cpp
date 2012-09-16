@@ -25,7 +25,7 @@ namespace fuzuli {
 
 using namespace std;
 
-ListExpression::ListExpression(vector<Expression*> expr) {
+ListExpression::ListExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = LIST_EXPRESSION;
 }
@@ -36,8 +36,8 @@ ListExpression::~ListExpression() {
 
 Token *ListExpression::eval(Environment *env) {
 	Token *result = env->newToken("@FuzuliList", LIST);
-	for (unsigned int i = 0; i < this->expressions.size(); i++) {
-		Token *temp = this->expressions[i]->eval(env);
+	for (unsigned int i = 0; i < this->expressions->size(); i++) {
+		Token *temp = this->expressions->at(i)->eval(env);
 		temp->IncreaseReferences();
 		if (temp->getType() == BREAKTOKEN) {
 			break;
@@ -48,7 +48,7 @@ Token *ListExpression::eval(Environment *env) {
 }
 
 
-LengthExpression::LengthExpression(vector<Expression*> expr) {
+LengthExpression::LengthExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = LENGTH_EXPRESSION;
 }
@@ -58,14 +58,14 @@ LengthExpression::~LengthExpression() {
 }
 
 Token *LengthExpression::eval(Environment *env) {
-	Token *tok = this->expressions[0]->eval(env);
+	Token *tok = this->expressions->at(0)->eval(env);
 	Token *result = env->newToken(0.0, INTEGER);
 	result->setIntValue(tok->tokens.size());
 	return (result);
 }
 
 
-NthExpression::NthExpression(vector<Expression*> expr) {
+NthExpression::NthExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = NTH_EXPRESSION;
 }
@@ -75,8 +75,8 @@ NthExpression::~NthExpression() {
 }
 
 Token *NthExpression::eval(Environment *env) {
-	Token *list = this->expressions[0]->eval(env);
-	Token *n = this->expressions[1]->eval(env);
+	Token *list = this->expressions->at(0)->eval(env);
+	Token *n = this->expressions->at(1)->eval(env);
 	if (((unsigned int) n->getIntValue()) >= list->tokens.size()) {
 		cout << "List index out of bounds of " << n->getContent() << endl;
 		exit(-3);
@@ -89,7 +89,7 @@ Token *NthExpression::eval(Environment *env) {
 }
 
 
-SetExpression::SetExpression(vector<Expression*> expr) {
+SetExpression::SetExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = SET_EXPRESSION;
 }
@@ -99,9 +99,9 @@ SetExpression::~SetExpression() {
 }
 
 Token *SetExpression::eval(Environment *env) {
-	Token *arr = this->expressions[0]->eval(env);
-	Token *n = this->expressions[1]->eval(env); /* n */
-	Token *newvalue = this->expressions[2]->eval(env);
+	Token *arr = this->expressions->at(0)->eval(env);
+	Token *n = this->expressions->at(1)->eval(env); /* n */
+	Token *newvalue = this->expressions->at(2)->eval(env);
 	int int_n = n->getIntValue();
 	arr->tokens[int_n]->ReduceReferences();
 	arr->tokens[int_n] = newvalue;
@@ -110,7 +110,7 @@ Token *SetExpression::eval(Environment *env) {
 }
 
 
-ExplodeExpression::ExplodeExpression(vector<Expression*> expr) {
+ExplodeExpression::ExplodeExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = EXPLODE_EXPRESSION;
 }
@@ -120,8 +120,8 @@ ExplodeExpression::~ExplodeExpression() {
 }
 
 Token *ExplodeExpression::eval(Environment *env) {
-	Token *source_str = this->expressions[0]->eval(env);
-	Token *delim = this->expressions[1]->eval(env);
+	Token *source_str = this->expressions->at(0)->eval(env);
+	Token *delim = this->expressions->at(1)->eval(env);
 	Token *result = env->newToken("@FuzuliList", LIST);
 
 	char *temp = (char*) malloc(strlen(source_str->getContent()));
@@ -138,7 +138,7 @@ Token *ExplodeExpression::eval(Environment *env) {
 	return (result);
 }
 
-ColonExpression::ColonExpression(vector<Expression*> expr) {
+ColonExpression::ColonExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = COLON_EXPRESSION;
 }
@@ -148,8 +148,8 @@ ColonExpression::~ColonExpression() {
 }
 
 Token *ColonExpression::eval(Environment *env) {
-	Token *num1 = this->expressions[0]->eval(env);
-	Token *num2 = this->expressions[1]->eval(env);
+	Token *num1 = this->expressions->at(0)->eval(env);
+	Token *num2 = this->expressions->at(1)->eval(env);
 	Token *result = env->newToken("@FuzuliList", LIST);
 	int start = num1->getIntValue();
 	int stop = num2->getIntValue();
@@ -160,7 +160,7 @@ Token *ColonExpression::eval(Environment *env) {
 	return (result);
 }
 
-AppendExpression::AppendExpression(vector<Expression*> expr) {
+AppendExpression::AppendExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = APPEND_EXPRESSION;
 }
@@ -170,14 +170,14 @@ AppendExpression::~AppendExpression() {
 }
 
 Token *AppendExpression::eval(Environment *env) {
-	Token *list = this->expressions[0]->eval(env); /* list name*/
-	Token *element = this->expressions[1]->eval(env);
+	Token *list = this->expressions->at(0)->eval(env); /* list name*/
+	Token *element = this->expressions->at(1)->eval(env);
 	list->tokens.push_back(element);
 	element->IncreaseReferences();
 	return (list);
 }
 
-PrependExpression::PrependExpression(vector<Expression*> expr) {
+PrependExpression::PrependExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = PREPEND_EXPRESSION;
 }
@@ -187,14 +187,14 @@ PrependExpression::~PrependExpression() {
 }
 
 Token *PrependExpression::eval(Environment *env) {
-	Token *list = this->expressions[0]->eval(env); /* list name*/
-	Token *element = this->expressions[1]->eval(env);
+	Token *list = this->expressions->at(0)->eval(env); /* list name*/
+	Token *element = this->expressions->at(1)->eval(env);
 	list->tokens.insert(list->tokens.begin(), element);
 	element->IncreaseReferences();
 	return (list);
 }
 
-RemoveExpression::RemoveExpression(vector<Expression*> expr) {
+RemoveExpression::RemoveExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = REMOVE_EXPRESSION;
 }
@@ -204,14 +204,14 @@ RemoveExpression::~RemoveExpression() {
 }
 
 Token *RemoveExpression::eval(Environment *env) {
-	Token *arr = this->expressions[0]->eval(env);
-	Token *n = this->expressions[1]->eval(env);
+	Token *arr = this->expressions->at(0)->eval(env);
+	Token *n = this->expressions->at(1)->eval(env);
 	arr->tokens[n->getIntValue()]->ReduceReferences();
 	arr->tokens.erase(arr->tokens.begin() + n->getIntValue());
 	return (arr);
 }
 
-FindExpression::FindExpression(vector<Expression*> expr) {
+FindExpression::FindExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = FIND_EXPRESSION;
 }
@@ -221,8 +221,8 @@ FindExpression::~FindExpression() {
 }
 
 Token *FindExpression::eval(Environment *env) {
-	Token *arr = this->expressions[0]->eval(env);
-	Token *what = this->expressions[1]->eval(env);
+	Token *arr = this->expressions->at(0)->eval(env);
+	Token *what = this->expressions->at(1)->eval(env);
 	for (unsigned int i = 0; i < arr->tokens.size(); i++) {
 		if (*arr->tokens[i] == *what) {
 			return (env->newToken(i, INTEGER));
@@ -231,7 +231,7 @@ Token *FindExpression::eval(Environment *env) {
 	return (Token::NULL_TOKEN);
 }
 
-FillExpression::FillExpression(vector<Expression*> expr) {
+FillExpression::FillExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = FILL_EXPRESSION;
 }
@@ -241,8 +241,8 @@ FillExpression::~FillExpression() {
 }
 
 Token* FillExpression::eval(Environment *env) {
-	Token *arr = this->expressions[0]->eval(env);
-	Token *val = this->expressions[1]->eval(env);
+	Token *arr = this->expressions->at(0)->eval(env);
+	Token *val = this->expressions->at(1)->eval(env);
 	if (arr->getType() == LIST) {
 		for (unsigned int i = 0; i < arr->tokens.size(); i++) {
 			arr->tokens[i]->setContent(val->getContent());
@@ -254,7 +254,7 @@ Token* FillExpression::eval(Environment *env) {
 	return (arr);
 }
 
-FirstExpression::FirstExpression(vector<Expression*> expr) {
+FirstExpression::FirstExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = FIRST_EXPRESSION;
 }
@@ -264,7 +264,7 @@ FirstExpression::~FirstExpression() {
 }
 
 Token *FirstExpression::eval(Environment *env) {
-	Token *arr = this->expressions[0]->eval(env);
+	Token *arr = this->expressions->at(0)->eval(env);
 	if (arr->getType() == LIST) {
 		return (arr->tokens[0]);
 	} else {
@@ -273,7 +273,7 @@ Token *FirstExpression::eval(Environment *env) {
 	return (Token::NULL_TOKEN);
 }
 
-LastExpression::LastExpression(vector<Expression*> expr) {
+LastExpression::LastExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = LAST_EXPRESSION;
 }
@@ -283,7 +283,7 @@ LastExpression::~LastExpression() {
 }
 
 Token *LastExpression::eval(Environment *env) {
-	Token *arr = this->expressions[0]->eval(env);
+	Token *arr = this->expressions->at(0)->eval(env);
 	if (arr->getType() == LIST) {
 		return (arr->tokens[arr->tokens.size() - 1]);
 	} else {

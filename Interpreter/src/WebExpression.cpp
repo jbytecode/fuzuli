@@ -50,7 +50,7 @@ Token *WebExpression::eval(Environment *env) {
 }
 
 
-RequestExpression::RequestExpression(vector<Expression*> expr) {
+RequestExpression::RequestExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->resultToken = Token::NULL_TOKEN;
 	this->type = REQUEST_EXPRESSION;
@@ -60,7 +60,7 @@ RequestExpression::~RequestExpression() {
 }
 
 Token *RequestExpression::eval(Environment *env) {
-	Token *var = this->expressions[0]->eval(env);
+	Token *var = this->expressions->at(0)->eval(env);
 	string allcookies = string(getenv("QUERY_STRING"));
 	stringstream ss(allcookies);
 	string empty = "";
@@ -119,7 +119,7 @@ Token *RequestExpression::eval(Environment *env) {
 	return (Token::NULL_TOKEN);
 }
 
-SetCookieExpression::SetCookieExpression(vector<Expression*> expr) {
+SetCookieExpression::SetCookieExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->resultToken = Token::NULL_TOKEN;
 	this->type = SETCOOKIE_EXPRESSION;
@@ -130,14 +130,14 @@ SetCookieExpression::~SetCookieExpression() {
 }
 
 Token *SetCookieExpression::eval(Environment *env) {
-	Token *var = ((IdentifierExpression*) this->expressions[0])->stringToken;
-	Token *val = this->expressions[1]->eval(env);
+	Token *var = ((IdentifierExpression*) this->expressions->at(0))->stringToken;
+	Token *val = this->expressions->at(1)->eval(env);
 	cout << "Set-Cookie: " << var->getContent() << "=" << val->getContent()
 			<< "\n";
 	return (this->resultToken);
 }
 
-GetCookieExpression::GetCookieExpression(vector<Expression*> expr) {
+GetCookieExpression::GetCookieExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = GETCOOKIE_EXPRESSION;
 }
@@ -147,7 +147,7 @@ GetCookieExpression::~GetCookieExpression() {
 }
 
 Token *GetCookieExpression::eval(Environment *env) {
-	Token *var = ((IdentifierExpression*) this->expressions[0])->stringToken;
+	Token *var = ((IdentifierExpression*) this->expressions->at(0))->stringToken;
 	string allcookies = string(getenv("HTTP_COOKIE"));
 	stringstream ss(allcookies);
 	string empty;
@@ -168,7 +168,7 @@ Token *GetCookieExpression::eval(Environment *env) {
 	return (env->newToken(result.c_str(), STRING));
 }
 
-IncludeExpression::IncludeExpression(vector<Expression*> expr) {
+IncludeExpression::IncludeExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->resultToken = Token::NULL_TOKEN;
 	this->type = INCLUDE_EXPRESSION;
@@ -179,7 +179,7 @@ IncludeExpression::~IncludeExpression() {
 }
 
 Token *IncludeExpression::eval(Environment *env) {
-	Token *file = this->expressions[0]->eval(env);
+	Token *file = this->expressions->at(0)->eval(env);
 	SourceCode *source = new SourceCode();
 	source->readFromFile(file->getContent());
 	AstBuilder *builder = new AstBuilder(source);
@@ -195,7 +195,7 @@ Token *IncludeExpression::eval(Environment *env) {
 	return (this->resultToken);
 }
 
-IssetExpression::IssetExpression(vector<Expression*> expr) {
+IssetExpression::IssetExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = ISSET_EXPRESSION;
 }
@@ -205,7 +205,7 @@ IssetExpression::~IssetExpression() {
 }
 
 Token *IssetExpression::eval(Environment *env) {
-	Token *varname = this->expressions[0]->eval(env);
+	Token *varname = this->expressions->at(0)->eval(env);
 	Token *result = env->newToken(0.0, INTEGER);
 	if (varname->getType() != NULLTOKEN) {
 		result->setIntValue(1);

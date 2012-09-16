@@ -34,7 +34,7 @@ AstBuilder::~AstBuilder() {
 
 Expression* AstBuilder::getNextExpression() {
 	Token *tok, *cmd;
-	vector<Expression*> exprlist;
+	vector<Expression*> *exprlist = new vector<Expression*>();
 	tok = this->code->getNextToken();
 	//cout << "AstBuilder:getNextExpression:Token: "<<tok->getContent()<<endl;
 	if (tok->getType() == EOP) {
@@ -59,25 +59,25 @@ Expression* AstBuilder::getNextExpression() {
 		}
 		if (tok->getType() == LPARENTH) {
 			this->code->pushBackToken();
-			exprlist.push_back(getNextExpression());
+			exprlist->push_back(getNextExpression());
 		} else if (tok->getType() == RPARENTH) {
 			break;
 		} else {
 			if (tok->getType() == INTEGER) {
 				IntegerExpression *ie = new IntegerExpression(tok);
-				exprlist.push_back(ie);
+				exprlist->push_back(ie);
 			} else if (tok->getType() == FLOAT) {
 				FloatExpression *ie = new FloatExpression(tok);
-				exprlist.push_back(ie);
+				exprlist->push_back(ie);
 			} else if (tok->getType() == STRING) {
 				StringExpression *ie = new StringExpression(tok);
-				exprlist.push_back(ie);
+				exprlist->push_back(ie);
 			} else if (tok->getType() == IDENTIFIER) {
 				IdentifierExpression *ie = new IdentifierExpression(tok);
-				exprlist.push_back(ie);
+				exprlist->push_back(ie);
 			} else if (tok->getType() == HTML) {
 				WebExpression *webexp = new WebExpression(tok->getContent());
-				exprlist.push_back(webexp);
+				exprlist->push_back(webexp);
 			}
 		}
 	}
@@ -85,7 +85,7 @@ Expression* AstBuilder::getNextExpression() {
 	return (callResult);
 }
 
-Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> expr) {
+Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 	if (tok->getType() == PLUS) {
 		PlusExpression *pe = new PlusExpression(expr);
 		return (pe);
@@ -363,7 +363,7 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> expr) {
 		return (pe);
 	}    else {
 		/* It may be a FuzuliFunction */
-		expr.insert(expr.begin(), new IdentifierExpression(tok));
+		expr->insert(expr->begin(), new IdentifierExpression(tok));
 		FunctionCallExpression *pe = new FunctionCallExpression(expr);
 		return (pe);
 	}

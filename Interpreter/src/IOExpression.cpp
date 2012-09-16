@@ -47,7 +47,7 @@ void __PrintToken(stringstream *ss, Token *tok) {
 	}
 }
 
-PrintExpression::PrintExpression(vector<Expression*> expr) {
+PrintExpression::PrintExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = PRINT_EXPRESSION;
 }
@@ -58,8 +58,8 @@ PrintExpression::~PrintExpression() {
 
 Token *PrintExpression::eval(Environment *env) {
 	stringstream ss;
-	for (unsigned int i = 0; i < this->expressions.size(); i++) {
-		Token *tok = this->expressions[i]->eval(env);
+	for (unsigned int i = 0; i < this->expressions->size(); i++) {
+		Token *tok = this->expressions->at(i)->eval(env);
 		__PrintToken(&ss, tok);
 	}
 	cout << ss.str().c_str();
@@ -67,7 +67,7 @@ Token *PrintExpression::eval(Environment *env) {
 }
 
 
-PrintlnExpression::PrintlnExpression(vector<Expression*> expr) {
+PrintlnExpression::PrintlnExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = PRINTLN_EXPRESSION;
 }
@@ -77,8 +77,8 @@ PrintlnExpression::~PrintlnExpression() {
 
 Token *PrintlnExpression::eval(Environment *env) {
 	stringstream ss;
-	for (unsigned int i = 0; i < this->expressions.size(); i++) {
-		Token *tok = this->expressions[i]->eval(env);
+	for (unsigned int i = 0; i < this->expressions->size(); i++) {
+		Token *tok = this->expressions->at(i)->eval(env);
 		__PrintToken(&ss, tok);
 	}
 	cout << ss.str().c_str() << endl;
@@ -86,7 +86,7 @@ Token *PrintlnExpression::eval(Environment *env) {
 }
 
 
-RequireExpression::RequireExpression(vector<Expression*> expr) {
+RequireExpression::RequireExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->resultToken = new Token("FuzuliPackage", PACKAGE);
 	this->type = REQUIRE_EXPRESSION;
@@ -97,7 +97,7 @@ RequireExpression::~RequireExpression() {
 }
 
 Token *RequireExpression::eval(Environment *env) {
-	Token *libName = this->expressions[0]->eval(env);
+	Token *libName = this->expressions->at(0)->eval(env);
 	string name = string(libName->getContent());
 	for (unsigned int i = 0; i < RequireExpression::installedPackages.size();
 			i++) {
