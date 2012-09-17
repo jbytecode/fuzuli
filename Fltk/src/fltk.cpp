@@ -211,14 +211,14 @@ void default_callback(Fl_Widget* widget, void* p) {
 	source->object = widget;
 	details->tokens.push_back(source);
 
-	vector<Expression*> v;
-	v.push_back(new IdentifierExpression(funcname));
-	vector<Expression*> vl;
+	vector<Expression*> *v = new vector<Expression*>();
+	v->push_back(new IdentifierExpression(funcname));
+	vector<Expression*> *vl = new vector<Expression*>();
 	for (unsigned int i = 0; i < details->tokens.size(); i++) {
-		vl.push_back(new StringExpression(details->tokens[i]));
+		vl->push_back(new StringExpression(details->tokens[i]));
 	}
 	ListExpression *lst = new ListExpression(vl);
-	v.push_back(lst);
+	v->push_back(lst);
 	FunctionCallExpression *fce = new FunctionCallExpression(v);
 	fce->eval(env);
 }
@@ -237,14 +237,14 @@ void draw_callback(Fl_Widget* widget, void* p) {
 	source->object = widget;
 	details->tokens.push_back(source);
 
-	vector<Expression*> v;
-	v.push_back(new IdentifierExpression(funcname));
-	vector<Expression*> vl;
+	vector<Expression*> *v = new vector<Expression*>();
+	v->push_back(new IdentifierExpression(funcname));
+	vector<Expression*> *vl = new vector<Expression*>();
 	for (unsigned int i = 0; i < details->tokens.size(); i++) {
-		vl.push_back(new StringExpression(details->tokens[i]));
+		vl->push_back(new StringExpression(details->tokens[i]));
 	}
 	ListExpression *lst = new ListExpression(vl);
-	v.push_back(lst);
+	v->push_back(lst);
 	FunctionCallExpression *fce = new FunctionCallExpression(v);
 	fce->eval(env);
 }
