@@ -36,8 +36,8 @@ void FuzuliRunnable::CreateThread(const char *fname, Environment *env){
 	this->env = env;
 	string strfname = string(fname) + "0";
 	this->func = env->getFunction(strfname.c_str());
-	vector<Expression*> vect;
-	vect.push_back(new IdentifierExpression(env->newToken(fname, IDENTIFIER)));
+	vector<Expression*> *vect = new vector<Expression*>();
+	vect->push_back(new IdentifierExpression(env->newToken(fname, IDENTIFIER)));
 	this->fcallexpr = new FunctionCallExpression(vect);
 	this->t =  boost::thread(&FuzuliRunnable::run, this);
 }
