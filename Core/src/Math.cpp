@@ -145,7 +145,7 @@ Token *expd(Token *params, Environment *env) {
 }
 
 Token *isinfd(Token *params, Environment *env) {
-	int res = isinf(params->tokens[0]->getFloatValue());
+	int res = std::isinf(params->tokens[0]->getFloatValue());
 	return (env->newToken(res, INTEGER));
 }
 
