@@ -172,9 +172,6 @@ int Token::operator==(Token& other){
 
 }
 
-int Token::operator!=(Token& other){
-	return(! (this->getFloatValue() == other.getFloatValue()));
-}
 
 int Token::operator<(Token& other){
 	return(this->getFloatValue() < other.getFloatValue());

@@ -67,28 +67,28 @@ void Environment::registerGlobals() {
 }
 
 Token *Environment::newToken(const char *val, enum TokenType type) {
-	Token *tok = new(nothrow) Token(val, type);
+	Token *tok = new (nothrow) Token(val, type);
 	this->garbage.push_back(tok);
 	return (tok);
 }
 
 Token *Environment::newToken(double val, enum TokenType type) {
-		Token *tok = new(nothrow) Token(val, type);
-		this->garbage.push_back(tok);
-		return (tok);
+	Token *tok = new (nothrow) Token(val, type);
+	this->garbage.push_back(tok);
+	return (tok);
 }
 
-void Environment::preventGC(bool p){
+void Environment::preventGC(bool p) {
 	this->prevent_garbage_collection = p;
 }
 
-bool Environment::preventGC(){
-	return(this->prevent_garbage_collection);
+bool Environment::preventGC() {
+	return (this->prevent_garbage_collection);
 }
 
 int Environment::GC() {
 	int numdeleted = 0;
-	for (unsigned int i=0;i<this->subenvironments.size();i++){
+	for (unsigned int i = 0; i < this->subenvironments.size(); i++) {
 		numdeleted += this->subenvironments[i]->GC();
 	}
 	//cout << "Deleting "<<this->garbage.size()<< " garbages "<<endl;
@@ -103,9 +103,9 @@ int Environment::GC() {
 			numdeleted++;
 		}
 	}
-	for (unsigned int i=0; i< this->subenvironments.size();i++){
+	for (unsigned int i = 0; i < this->subenvironments.size(); i++) {
 		Environment *tempe = this->subenvironments[i];
-		if(tempe->fuzuliFunctions.size() == 0 && !tempe->preventGC()){
+		if (tempe->fuzuliFunctions.size() == 0 && !tempe->preventGC()) {
 			this->subenvironments.erase(this->subenvironments.begin() + i);
 			delete tempe;
 			i--;
@@ -114,22 +114,24 @@ int Environment::GC() {
 	return (numdeleted);
 }
 
-int Environment::doAutomaticGC(){
-	if(Environment::isAutomaticGC && this->prevent_garbage_collection==false){
+int Environment::doAutomaticGC() {
+	if (Environment::isAutomaticGC
+			&& this->prevent_garbage_collection == false) {
 		return this->GC();
-	}else{
+	} else {
 		return -1;
 	}
 }
 
-int Environment::doAutomaticGCwithProtection(Token *tok){
-	if(Environment::isAutomaticGC && this->prevent_garbage_collection==false){
+int Environment::doAutomaticGCwithProtection(Token *tok) {
+	if (Environment::isAutomaticGC
+			&& this->prevent_garbage_collection == false) {
 		int numGC = 0;
 		tok->IncreaseReferences();
 		numGC = this->GC();
 		tok->ReduceReferences();
-		return(numGC);
-	}else{
+		return (numGC);
+	} else {
 		return -1;
 	}
 }
@@ -172,21 +174,20 @@ Environment* Environment::setVariable(const char *name, Token *value) {
 
 Token *Environment::getVariable(const char *name) {
 	string sname = string(name);
-	if (this->variables.find(sname) != this->variables.end()){
+	if (this->variables.find(sname) != this->variables.end()) {
 		return (this->variables[sname]);
 	} else {
 		Environment *env = this->searchBackEnvironments(name);
 		if (env) {
-			return(env->variables[sname]);
+			return (env->variables[sname]);
 		} else {
 			return (Token::NULL_TOKEN);
 		}
 	}
 }
 
-
 Environment *Environment::createNext() {
-	Environment *envir = new(nothrow) Environment(this);
+	Environment *envir = new (nothrow) Environment(this);
 	envir->deep = this->deep + 1;
 	this->subenvironments.push_back(envir);
 	return (envir);
@@ -220,7 +221,7 @@ void Environment::setVariableForFunctionParams(const char* name, Token *value) {
 }
 
 FuzuliFunction *Environment::getFunction(const char *name) {
-	return(searchFuncBackEnvironments(name));
+	return (searchFuncBackEnvironments(name));
 }
 
 void Environment::setArgcArgv(int argc, char **argv) {
@@ -233,17 +234,30 @@ void Environment::setArgcArgv(int argc, char **argv) {
 }
 
 void Environment::dump() {
-	cout << "*** Environment ***"<< endl;
-	cout << "Deep: "<<this->deep << endl;
-	cout << "Sub Environments: "<< this->subenvironments.size() << endl;
-	cout << "Functions: "<< this->fuzuliFunctions.size() << endl;
-	cout << "Variables: "<< this->variables.size() << endl;
+	map<string, FuzuliFunction*>::iterator ff_it;
+	map<string, Token*>::iterator tok_it;
+
+	cout << "*** Environment ***" << endl;
+	cout << "Deep: " << this->deep << endl;
+	cout << "Sub Environments: " << this->subenvironments.size() << endl;
+
+	cout << "Functions: " << this->fuzuliFunctions.size() << endl;
+	for (ff_it = this->fuzuliFunctions.begin();
+			ff_it != this->fuzuliFunctions.end(); ff_it++) {
+		cout << "\t" << ff_it->second->getStringName() << endl;
+	}
+	cout << "Variables: " << this->variables.size() << endl;
+
+	for (tok_it = variables.begin(); tok_it != variables.end(); tok_it++) {
+		cout << "\t" << tok_it->first.c_str() << ": "
+				<< tok_it->second->getContent() << endl;
+	}
 	Token *tok = Token::NULL_TOKEN;
 	tok->toString();
 }
 
 bool Environment::variableExists(const char *name) {
-	if(this->variables.find(string(name)) != this->variables.end()){
+	if (this->variables.find(string(name)) != this->variables.end()) {
 		return true;
 	}
 	return (false);
@@ -275,16 +289,16 @@ GCExpression::~GCExpression() {
 Token *GCExpression::eval(Environment *env) {
 	int num = 0;
 	Token *result = new Token(num, FLOAT);
-	if(this->expressions->size() == 0){
+	if (this->expressions->size() == 0) {
 		num = env->GC();
 		result->setFloatValue(num);
-	}else if (this->expressions->size() == 1){
+	} else if (this->expressions->size() == 1) {
 		Token *onoffparam = this->expressions->at(0)->eval(env);
-		if(onoffparam->getFloatValue() == 1.0){
+		if (onoffparam->getFloatValue() == 1.0) {
 			Environment::isAutomaticGC = true;
 			result->setFloatValue(1.0);
 			//cout << "Garbage Collector set to on"<<endl;
-		}else if(onoffparam->getFloatValue() == 0.0){
+		} else if (onoffparam->getFloatValue() == 0.0) {
 			Environment::isAutomaticGC = false;
 			//cout << "Garbage Collector set to off"<<endl;
 			result->setFloatValue(0.0);

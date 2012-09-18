@@ -765,7 +765,6 @@ public:
 	void setIntValue(const int i);
 
 	int operator==(Token &other);
-	int operator!=(Token &other);
 	int operator<(Token &other);
 	int operator<=(Token &other);
 	int operator>(Token &other);
