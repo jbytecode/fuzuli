@@ -10,7 +10,7 @@
 	(block
 		(def i INTEGER) (def j INTEGER)(def tmp INTEGER)
 		(def pivot INTEGER)
-		(let i left) (let j right)
+		(let i (clone left)) (let j (clone right))
 	 
 		(let pivot (nth arr (/ (+ left right) 2)))
 		
