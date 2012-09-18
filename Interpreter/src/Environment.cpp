@@ -136,6 +136,7 @@ int Environment::doAutomaticGCwithProtection(Token *tok){
 
 void Environment::setVariableInThisScope(const char*name, Token*value) {
 	this->variables[string(name)] = value;
+	value->environment = this;
 }
 
 Token *Environment::getVariableInThisScope(const char *name) {
@@ -161,15 +162,17 @@ Environment* Environment::setVariable(const char *name, Token *value) {
 	Environment *env = searchBackEnvironments(name);
 	if (env) {
 		env->variables[string(name)] = value;
+		value->environment = env;
 		return (env);
 	} else {
 		this->variables[string(name)] = value;
+		value->environment = this;
 		return (this);
 	}
 }
 
 Token *Environment::getVariable(const char *name) {
-	if (this->variableExists(name)) {
+	if (this->variableExists(name)){
 		return (this->variables[string(name)]);
 	} else {
 		Environment *env = this->searchBackEnvironments(name);
@@ -216,6 +219,7 @@ void Environment::setFunction(const char *name, FuzuliFunction *value) {
 
 void Environment::setVariableForFunctionParams(const char* name, Token *value) {
 	this->variables[name] = value;
+	value->environment = this;
 }
 
 FuzuliFunction *Environment::getFunction(const char *name) {

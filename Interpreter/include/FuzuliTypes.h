@@ -466,6 +466,8 @@ public:
 	virtual ~IdentifierExpression();
 	Token *eval(Environment *env);
 	Token *stringToken;
+	const char* id;
+	Environment *last_envir;
 };
 
 class IfExpression: public Expression {
