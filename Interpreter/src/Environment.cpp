@@ -136,12 +136,12 @@ int Environment::doAutomaticGCwithProtection(Token *tok){
 
 void Environment::setVariableInThisScope(const char*name, Token*value) {
 	this->variables[string(name)] = value;
-	value->environment = this;
 }
 
 Token *Environment::getVariableInThisScope(const char *name) {
-	if (this->variables.find(string(name)) != this->variables.end()) {
-		return (this->variables[string(name)]);
+	string sname = string(name);
+	if (this->variables.find(sname) != this->variables.end()) {
+		return (this->variables[sname]);
 	} else {
 		return (NULL);
 	}
@@ -159,14 +159,13 @@ Environment *Environment::searchBackEnvironments(const char *name) {
 }
 
 Environment* Environment::setVariable(const char *name, Token *value) {
+	string sname = string(name);
 	Environment *env = searchBackEnvironments(name);
 	if (env) {
-		env->variables[string(name)] = value;
-		value->environment = env;
+		env->variables[sname] = value;
 		return (env);
 	} else {
-		this->variables[string(name)] = value;
-		value->environment = this;
+		this->variables[sname] = value;
 		return (this);
 	}
 }
@@ -178,8 +177,7 @@ Token *Environment::getVariable(const char *name) {
 	} else {
 		Environment *env = this->searchBackEnvironments(name);
 		if (env) {
-			Token *tok = env->variables[string(name)];
-			return (tok);
+			return(env->variables[sname]);
 		} else {
 			return (Token::NULL_TOKEN);
 		}
@@ -195,8 +193,7 @@ Environment *Environment::createNext() {
 }
 
 FuzuliFunction *Environment::searchFuncBackEnvironments(const char *name) {
-	FuzuliFunction *func = NULL;
-	func = this->fuzuliFunctions[string(name)];
+	FuzuliFunction *func = this->fuzuliFunctions[string(name)];
 	if (!func) {
 		if (!this->isFirst()) {
 			func = this->previous->searchFuncBackEnvironments(name);
@@ -220,12 +217,10 @@ void Environment::setFunction(const char *name, FuzuliFunction *value) {
 
 void Environment::setVariableForFunctionParams(const char* name, Token *value) {
 	this->variables[name] = value;
-	value->environment = this;
 }
 
 FuzuliFunction *Environment::getFunction(const char *name) {
-	FuzuliFunction *tok = searchFuncBackEnvironments(name);
-	return (tok);
+	return(searchFuncBackEnvironments(name));
 }
 
 void Environment::setArgcArgv(int argc, char **argv) {
