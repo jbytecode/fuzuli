@@ -140,7 +140,7 @@ void Environment::setVariableInThisScope(const char*name, Token*value) {
 }
 
 Token *Environment::getVariableInThisScope(const char *name) {
-	if (this->variableExists(name)) {
+	if (this->variables.find(string(name)) != this->variables.end()) {
 		return (this->variables[string(name)]);
 	} else {
 		return (NULL);
@@ -150,7 +150,7 @@ Token *Environment::getVariableInThisScope(const char *name) {
 Environment *Environment::searchBackEnvironments(const char *name) {
 	Environment *env = this;
 	while (env) {
-		if (env->variableExists(name)) {
+		if (env->variables.find(string(name)) != env->variables.end()) {
 			return (env);
 		}
 		env = env->previous;
@@ -248,8 +248,7 @@ void Environment::dump() {
 }
 
 bool Environment::variableExists(const char *name) {
-	map<string, Token*>::iterator it = this->variables.find(string(name));
-	if(it != this->variables.end()){
+	if(this->variables.find(string(name)) != this->variables.end()){
 		return true;
 	}
 	return (false);
