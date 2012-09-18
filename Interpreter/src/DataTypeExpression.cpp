@@ -98,6 +98,8 @@ IdentifierExpression::IdentifierExpression(Token *tok) {
 	this->stringToken = tok;
 	tok->setKillable(false);
 	this->type = IDENTIFIER_EXPRESSION;
+	this->id = tok->getContent();
+	this->last_envir = NULL;
 }
 
 IdentifierExpression::~IdentifierExpression() {
@@ -105,7 +107,11 @@ IdentifierExpression::~IdentifierExpression() {
 }
 
 Token *IdentifierExpression::eval(Environment *env){
-	Token *result = env->getVariable(this->stringToken->getContent());
+	if(this->last_envir){
+		return env->getVariable(id);
+	}
+	Token *result = env->getVariable(id);
+	this->last_envir = result->environment;
 	return(result);
 }
 
