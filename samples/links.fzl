@@ -43,8 +43,9 @@
 (def part STRING)
 (def i INTEGER)
 
+
 # Parsing loaded content
-(for (let i 0) (< i len) (inc i)
+(dotimes i len
    (let part (substr html i (+ i 7)))
    (if (= part "<a href")
       (block

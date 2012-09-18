@@ -237,7 +237,7 @@ NotEqualsExpression::~NotEqualsExpression() {
 Token *NotEqualsExpression::eval(Environment *env) {
 	Token *tok1 = this->expressions->at(0)->eval(env);
 	Token *tok2 = this->expressions->at(1)->eval(env);
-	return (env->newToken(*tok1 != *tok2,INTEGER));
+	return (env->newToken( !(*tok1 == *tok2) ,INTEGER));
 }
 
 LessExpression::LessExpression(vector<Expression*> *expr) {
