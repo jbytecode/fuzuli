@@ -172,8 +172,9 @@ Environment* Environment::setVariable(const char *name, Token *value) {
 }
 
 Token *Environment::getVariable(const char *name) {
-	if (this->variableExists(name)){
-		return (this->variables[string(name)]);
+	string sname = string(name);
+	if (this->variables.find(sname) != this->variables.end()){
+		return (this->variables[sname]);
 	} else {
 		Environment *env = this->searchBackEnvironments(name);
 		if (env) {
@@ -247,11 +248,9 @@ void Environment::dump() {
 }
 
 bool Environment::variableExists(const char *name) {
-	map<string, Token*>::iterator it;
-	for (it = this->variables.begin(); it != this->variables.end(); it++) {
-		if (it->first == string(name)) {
-			return (true);
-		}
+	map<string, Token*>::iterator it = this->variables.find(string(name));
+	if(it != this->variables.end()){
+		return true;
 	}
 	return (false);
 }
