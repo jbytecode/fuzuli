@@ -5,7 +5,7 @@
 (print mylist "\n")
 
 (for (let i 0) (< i (length mylist)) (++ i)
-	(for (let j i) (< j (length mylist)) (++ j)
+	(for (let j (clone i)) (< j (length mylist)) (++ j)
 		(if (> (nth mylist i) (nth mylist j))
 			(block
 			(let temp (nth mylist i))
