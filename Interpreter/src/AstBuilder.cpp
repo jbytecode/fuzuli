@@ -64,10 +64,10 @@ Expression* AstBuilder::getNextExpression() {
 			break;
 		} else {
 			if (tok->getType() == INTEGER) {
-				IntegerExpression *ie = new IntegerExpression(tok);
+				IntegerConstantExpression *ie = new IntegerConstantExpression(tok);
 				exprlist->push_back(ie);
 			} else if (tok->getType() == FLOAT) {
-				FloatExpression *ie = new FloatExpression(tok);
+				FloatConstantExpression *ie = new FloatConstantExpression(tok);
 				exprlist->push_back(ie);
 			} else if (tok->getType() == STRING) {
 				StringExpression *ie = new StringExpression(tok);

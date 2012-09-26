@@ -117,6 +117,8 @@ enum ExpressionType {
 	STRING_EXPRESSION,
 	INTEGER_EXPRESSION,
 	FLOAT_EXPRESSION,
+	INTEGERCONSTANT_EXPRESSION,
+	FLOATCONSTANT_EXPRESSION,
 	VARIABLE_EXPRESSION,
 	TYPEOF_EXPRESSION,
 	TYPE_EXPRESSION,
@@ -499,6 +501,30 @@ public:
 private:
 	Token *token;
 };
+
+class IntegerConstantExpression: public Expression{
+public:
+	IntegerConstantExpression();
+	IntegerConstantExpression(Token *tok);
+	virtual ~IntegerConstantExpression();
+	Token* eval(Environment *env);
+	int integerValue;
+
+private:
+	Token *token;
+};
+
+class FloatConstantExpression: public Expression {
+public:
+	FloatConstantExpression();
+	FloatConstantExpression(Token *tok);
+	virtual ~FloatConstantExpression();
+	Token* eval(Environment *env);
+	double floatValue;
+private:
+	Token *token;
+};
+
 
 class DefExpression: public Expression {
 public:
