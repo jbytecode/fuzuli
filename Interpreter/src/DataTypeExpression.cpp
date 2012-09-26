@@ -50,6 +50,34 @@ Token *IntegerExpression::eval(Environment *env){
 }
 
 
+IntegerConstantExpression::IntegerConstantExpression() {
+
+}
+
+IntegerConstantExpression::IntegerConstantExpression(Token *tok) {
+	this->token = tok;
+	if(strchr(tok->getContent(), 'x')>0){
+		int x;
+		stringstream ss;
+		ss<< std::hex << tok->getContent();
+		ss>>x;
+		tok->setIntValue( x );
+	}
+	this->integerValue = this->token->getIntValue();
+	this->token->setKillable(false);
+	this->type = INTEGERCONSTANT_EXPRESSION;
+}
+
+IntegerConstantExpression::~IntegerConstantExpression() {
+	// TODO Auto-generated destructor stub
+}
+
+Token *IntegerConstantExpression::eval(Environment *env){
+	return this->token;
+}
+
+
+
 FloatExpression::FloatExpression() {
 
 }
@@ -66,6 +94,26 @@ FloatExpression::~FloatExpression() {
 }
 
 Token *FloatExpression::eval(Environment *env){
+	return(this->token);
+}
+
+
+FloatConstantExpression::FloatConstantExpression() {
+
+}
+
+FloatConstantExpression::FloatConstantExpression(Token *tok) {
+	this->token = tok;
+	this->floatValue = tok->getFloatValue();
+	this->token->setKillable(false);
+	this->type = FLOATCONSTANT_EXPRESSION;
+}
+
+FloatConstantExpression::~FloatConstantExpression() {
+	// TODO Auto-generated destructor stub
+}
+
+Token *FloatConstantExpression::eval(Environment *env){
 	return(this->token);
 }
 

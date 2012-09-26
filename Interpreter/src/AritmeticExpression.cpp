@@ -148,22 +148,15 @@ IncExpression::~IncExpression() {
 
 Token *IncExpression::eval(Environment *env) {
 	Token *val = this->expressions->at(0)->eval(env);
-		Token *result = NULL;
-		const char *name =
-				((IdentifierExpression*) this->expressions->at(0))->id;
-		Environment *varenv = env->searchBackEnvironments(name);
-		result = env->newToken(val->getFloatValue() + 1.0, FLOAT);
-		val->ReduceReferences();
-		result->IncreaseReferences();
-		varenv->setVariableInThisScope(name, result);
-		return (result);
+	val->setFloatValue(val->getFloatValue() + 1.0);
+	return (val);
 }
 
 // MinusMinus Expression
 // i--
 DecExpression::DecExpression(vector<Expression*> *expr) {
-this->expressions = expr;
-this->type = DEC_EXPRESSION;
+	this->expressions = expr;
+	this->type = DEC_EXPRESSION;
 }
 
 DecExpression::~DecExpression() {
@@ -172,20 +165,13 @@ DecExpression::~DecExpression() {
 
 Token *DecExpression::eval(Environment *env) {
 	Token *val = this->expressions->at(0)->eval(env);
-		Token *result = NULL;
-		const char *name =
-				((IdentifierExpression*) this->expressions->at(0))->id;
-		Environment *varenv = env->searchBackEnvironments(name);
-		result = env->newToken(val->getFloatValue() - 1.0, FLOAT);
-		val->ReduceReferences();
-		result->IncreaseReferences();
-		varenv->setVariableInThisScope(name, result);
-		return (result);
+	val->setFloatValue(val->getFloatValue() - 1.0);
+	return (val);
 }
 
 SubtractionExpression::SubtractionExpression(vector<Expression*> *expr) {
-this->expressions = expr;
-this->type = SUBTRACTION_EXPRESSION;
+	this->expressions = expr;
+	this->type = SUBTRACTION_EXPRESSION;
 }
 
 SubtractionExpression::~SubtractionExpression() {
@@ -193,16 +179,16 @@ SubtractionExpression::~SubtractionExpression() {
 }
 
 Token *SubtractionExpression::eval(Environment *env) {
-double diff = expressions->at(0)->eval(env)->getFloatValue();
-for (unsigned int i = 1; i < this->expressions->size(); i++) {
-	diff -= expressions->at(i)->eval(env)->getFloatValue();
-}
-return (env->newToken(diff, FLOAT));
+	double diff = expressions->at(0)->eval(env)->getFloatValue();
+	for (unsigned int i = 1; i < this->expressions->size(); i++) {
+		diff -= expressions->at(i)->eval(env)->getFloatValue();
+	}
+	return (env->newToken(diff, FLOAT));
 }
 
 EqualsExpression::EqualsExpression(vector<Expression*> *expr) {
-this->expressions = expr;
-this->type = EQUALS_EXPRESSION;
+	this->expressions = expr;
+	this->type = EQUALS_EXPRESSION;
 }
 
 EqualsExpression::~EqualsExpression() {
@@ -210,14 +196,14 @@ EqualsExpression::~EqualsExpression() {
 }
 
 Token *EqualsExpression::eval(Environment *env) {
-Token *tok1 = this->expressions->at(0)->eval(env);
-Token *tok2 = this->expressions->at(1)->eval(env);
-return (env->newToken(*tok1 == *tok2, FLOAT));
+	Token *tok1 = this->expressions->at(0)->eval(env);
+	Token *tok2 = this->expressions->at(1)->eval(env);
+	return (env->newToken(*tok1 == *tok2, FLOAT));
 }
 
 NotEqualsExpression::NotEqualsExpression(vector<Expression*> *expr) {
-this->expressions = expr;
-this->type = NOTEQUALS_EXPRESSION;
+	this->expressions = expr;
+	this->type = NOTEQUALS_EXPRESSION;
 }
 
 NotEqualsExpression::~NotEqualsExpression() {
@@ -225,14 +211,14 @@ NotEqualsExpression::~NotEqualsExpression() {
 }
 
 Token *NotEqualsExpression::eval(Environment *env) {
-Token *tok1 = this->expressions->at(0)->eval(env);
-Token *tok2 = this->expressions->at(1)->eval(env);
-return (env->newToken(!(*tok1 == *tok2), INTEGER));
+	Token *tok1 = this->expressions->at(0)->eval(env);
+	Token *tok2 = this->expressions->at(1)->eval(env);
+	return (env->newToken(!(*tok1 == *tok2), INTEGER));
 }
 
 LessExpression::LessExpression(vector<Expression*> *expr) {
-this->expressions = expr;
-this->type = LESS_EXPRESSION;
+	this->expressions = expr;
+	this->type = LESS_EXPRESSION;
 }
 
 LessExpression::~LessExpression() {
@@ -240,14 +226,14 @@ LessExpression::~LessExpression() {
 }
 
 Token *LessExpression::eval(Environment *env) {
-Token *first = this->expressions->at(0)->eval(env);
-Token *second = this->expressions->at(1)->eval(env);
-return (env->newToken(*first < *second, INTEGER));
+	Token *first = this->expressions->at(0)->eval(env);
+	Token *second = this->expressions->at(1)->eval(env);
+	return (env->newToken(*first < *second, INTEGER));
 }
 
 LessOrEqualExpression::LessOrEqualExpression(vector<Expression*> *expr) {
-this->expressions = expr;
-this->type = LESSOREQUAL_EXPRESSION;
+	this->expressions = expr;
+	this->type = LESSOREQUAL_EXPRESSION;
 }
 
 LessOrEqualExpression::~LessOrEqualExpression() {
@@ -255,14 +241,14 @@ LessOrEqualExpression::~LessOrEqualExpression() {
 }
 
 Token *LessOrEqualExpression::eval(Environment *env) {
-Token *first = this->expressions->at(0)->eval(env);
-Token *second = this->expressions->at(1)->eval(env);
-return (env->newToken(*first <= *second, INTEGER));
+	Token *first = this->expressions->at(0)->eval(env);
+	Token *second = this->expressions->at(1)->eval(env);
+	return (env->newToken(*first <= *second, INTEGER));
 }
 
 BiggerExpression::BiggerExpression(vector<Expression*> *expr) {
-this->expressions = expr;
-this->type = BIGGER_EXPRESSION;
+	this->expressions = expr;
+	this->type = BIGGER_EXPRESSION;
 }
 
 BiggerExpression::~BiggerExpression() {
@@ -270,14 +256,14 @@ BiggerExpression::~BiggerExpression() {
 }
 
 Token *BiggerExpression::eval(Environment *env) {
-Token *first = this->expressions->at(0)->eval(env);
-Token *second = this->expressions->at(1)->eval(env);
-return (env->newToken(*first > *second, INTEGER));
+	Token *first = this->expressions->at(0)->eval(env);
+	Token *second = this->expressions->at(1)->eval(env);
+	return (env->newToken(*first > *second, INTEGER));
 }
 
 BigOrEqualExpression::BigOrEqualExpression(vector<Expression*> *expr) {
-this->expressions = expr;
-this->type = BIGOREQUAL_EXPRESSION;
+	this->expressions = expr;
+	this->type = BIGOREQUAL_EXPRESSION;
 }
 
 BigOrEqualExpression::~BigOrEqualExpression() {
@@ -285,14 +271,14 @@ BigOrEqualExpression::~BigOrEqualExpression() {
 }
 
 Token *BigOrEqualExpression::eval(Environment *env) {
-Token *first = this->expressions->at(0)->eval(env);
-Token *second = this->expressions->at(1)->eval(env);
-return (env->newToken(*first >= *second, INTEGER));
+	Token *first = this->expressions->at(0)->eval(env);
+	Token *second = this->expressions->at(1)->eval(env);
+	return (env->newToken(*first >= *second, INTEGER));
 }
 
 ModulaExpression::ModulaExpression(vector<Expression*> *expr) {
-this->expressions = expr;
-this->type = MODULA_EXPRESSION;
+	this->expressions = expr;
+	this->type = MODULA_EXPRESSION;
 }
 
 ModulaExpression::~ModulaExpression() {
@@ -300,15 +286,15 @@ ModulaExpression::~ModulaExpression() {
 }
 
 Token *ModulaExpression::eval(Environment *env) {
-Token *first = this->expressions->at(0)->eval(env);
-Token *second = this->expressions->at(1)->eval(env);
-return (env->newToken(fmod(first->getFloatValue(), second->getFloatValue()),
-		FLOAT));
+	Token *first = this->expressions->at(0)->eval(env);
+	Token *second = this->expressions->at(1)->eval(env);
+	return (env->newToken(fmod(first->getFloatValue(), second->getFloatValue()),
+			FLOAT));
 }
 
 BitAndExpression::BitAndExpression(vector<Expression*> *expr) {
-this->expressions = expr;
-this->type = BITAND_EXPRESSION;
+	this->expressions = expr;
+	this->type = BITAND_EXPRESSION;
 }
 
 BitAndExpression::~BitAndExpression() {
@@ -316,14 +302,14 @@ BitAndExpression::~BitAndExpression() {
 }
 
 Token *BitAndExpression::eval(Environment *env) {
-Token *val1 = this->expressions->at(0)->eval(env);
-Token *val2 = this->expressions->at(1)->eval(env);
-return (env->newToken(val1->getIntValue() & val2->getIntValue(), INTEGER));
+	Token *val1 = this->expressions->at(0)->eval(env);
+	Token *val2 = this->expressions->at(1)->eval(env);
+	return (env->newToken(val1->getIntValue() & val2->getIntValue(), INTEGER));
 }
 
 BitNotExpression::BitNotExpression(vector<Expression*> *expr) {
-this->expressions = expr;
-this->type = BITNOT_EXPRESSION;
+	this->expressions = expr;
+	this->type = BITNOT_EXPRESSION;
 }
 
 BitNotExpression::~BitNotExpression() {
@@ -331,13 +317,13 @@ BitNotExpression::~BitNotExpression() {
 }
 
 Token *BitNotExpression::eval(Environment *env) {
-Token *val1 = this->expressions->at(0)->eval(env);
-return (env->newToken(~val1->getIntValue(), INTEGER));
+	Token *val1 = this->expressions->at(0)->eval(env);
+	return (env->newToken(~val1->getIntValue(), INTEGER));
 }
 
 BitOrExpression::BitOrExpression(vector<Expression*> *expr) {
-this->expressions = expr;
-this->type = BITOR_EXPRESSION;
+	this->expressions = expr;
+	this->type = BITOR_EXPRESSION;
 }
 
 BitOrExpression::~BitOrExpression() {
@@ -345,14 +331,14 @@ BitOrExpression::~BitOrExpression() {
 }
 
 Token *BitOrExpression::eval(Environment *env) {
-Token *val1 = this->expressions->at(0)->eval(env);
-Token *val2 = this->expressions->at(1)->eval(env);
-return (env->newToken(val1->getIntValue() | val2->getIntValue(), INTEGER));
+	Token *val1 = this->expressions->at(0)->eval(env);
+	Token *val2 = this->expressions->at(1)->eval(env);
+	return (env->newToken(val1->getIntValue() | val2->getIntValue(), INTEGER));
 }
 
 BitXORExpression::BitXORExpression(vector<Expression*> *expr) {
-this->expressions = expr;
-this->type = BITXOR_EXPRESSION;
+	this->expressions = expr;
+	this->type = BITXOR_EXPRESSION;
 }
 
 BitXORExpression::~BitXORExpression() {
@@ -360,14 +346,14 @@ BitXORExpression::~BitXORExpression() {
 }
 
 Token *BitXORExpression::eval(Environment *env) {
-Token *val1 = this->expressions->at(0)->eval(env);
-Token *val2 = this->expressions->at(1)->eval(env);
-return (env->newToken(val1->getIntValue() ^ val2->getIntValue(), INTEGER));
+	Token *val1 = this->expressions->at(0)->eval(env);
+	Token *val2 = this->expressions->at(1)->eval(env);
+	return (env->newToken(val1->getIntValue() ^ val2->getIntValue(), INTEGER));
 }
 
 BitShiftLeftExpression::BitShiftLeftExpression(vector<Expression*> *expr) {
-this->expressions = expr;
-this->type = BITSHIFTLEFT_EXPRESSION;
+	this->expressions = expr;
+	this->type = BITSHIFTLEFT_EXPRESSION;
 }
 
 BitShiftLeftExpression::~BitShiftLeftExpression() {
@@ -375,14 +361,14 @@ BitShiftLeftExpression::~BitShiftLeftExpression() {
 }
 
 Token *BitShiftLeftExpression::eval(Environment *env) {
-Token *val1 = this->expressions->at(0)->eval(env);
-Token *val2 = this->expressions->at(1)->eval(env);
-return (env->newToken(val1->getIntValue() << val2->getIntValue(), INTEGER));
+	Token *val1 = this->expressions->at(0)->eval(env);
+	Token *val2 = this->expressions->at(1)->eval(env);
+	return (env->newToken(val1->getIntValue() << val2->getIntValue(), INTEGER));
 }
 
 BitShiftRightExpression::BitShiftRightExpression(vector<Expression*> *expr) {
-this->expressions = expr;
-this->type = BITSHIFTRIGHT_EXPERSSION;
+	this->expressions = expr;
+	this->type = BITSHIFTRIGHT_EXPERSSION;
 }
 
 BitShiftRightExpression::~BitShiftRightExpression() {
@@ -390,14 +376,14 @@ BitShiftRightExpression::~BitShiftRightExpression() {
 }
 
 Token *BitShiftRightExpression::eval(Environment *env) {
-Token *val1 = this->expressions->at(0)->eval(env);
-Token *val2 = this->expressions->at(1)->eval(env);
-return (env->newToken(val1->getIntValue() >> val2->getIntValue(), INTEGER));
+	Token *val1 = this->expressions->at(0)->eval(env);
+	Token *val2 = this->expressions->at(1)->eval(env);
+	return (env->newToken(val1->getIntValue() >> val2->getIntValue(), INTEGER));
 }
 
 SetPrecisionExpression::SetPrecisionExpression(vector<Expression*> *expr) {
-this->expressions = expr;
-this->type = SETPRECISION_EXPRESSION;
+	this->expressions = expr;
+	this->type = SETPRECISION_EXPRESSION;
 }
 
 SetPrecisionExpression::~SetPrecisionExpression() {
@@ -405,14 +391,14 @@ SetPrecisionExpression::~SetPrecisionExpression() {
 }
 
 Token *SetPrecisionExpression::eval(Environment *env) {
-Token *param = this->expressions->at(0)->eval(env);
-Token::doubleprecision = param->getIntValue();
-return (Token::NULL_TOKEN);
+	Token *param = this->expressions->at(0)->eval(env);
+	Token::doubleprecision = param->getIntValue();
+	return (Token::NULL_TOKEN);
 }
 
 SetEpsilonExpression::SetEpsilonExpression(vector<Expression*> *expr) {
-this->expressions = expr;
-this->type = SETEPSILON_EXPRESSION;
+	this->expressions = expr;
+	this->type = SETEPSILON_EXPRESSION;
 }
 
 SetEpsilonExpression::~SetEpsilonExpression() {
@@ -420,9 +406,9 @@ SetEpsilonExpression::~SetEpsilonExpression() {
 }
 
 Token *SetEpsilonExpression::eval(Environment *env) {
-Token *param = this->expressions->at(0)->eval(env);
-Token::epsilon = atof(param->getContent());
-return (Token::NULL_TOKEN);
+	Token *param = this->expressions->at(0)->eval(env);
+	Token::epsilon = atof(param->getContent());
+	return (Token::NULL_TOKEN);
 }
 
 } /* namespace fuzuli */

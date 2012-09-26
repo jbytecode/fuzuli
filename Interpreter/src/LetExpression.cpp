@@ -38,6 +38,9 @@ LetExpression::~LetExpression() {
 Token *LetExpression::eval(Environment *env) {
 	Token *varname = ((IdentifierExpression*) this->expressions->at(0))->stringToken;
 	Token *result = this->expressions->at(1)->eval(env);
+	if(this->expressions->at(1)->type == FLOATCONSTANT_EXPRESSION || this->expressions->at(1)->type == INTEGERCONSTANT_EXPRESSION){
+		result = result->clone();
+	}
 	Token *oldvariable = env->getVariable(varname->getContent());
 	if (oldvariable->getKillable()) {
 		oldvariable->ReduceReferences();
