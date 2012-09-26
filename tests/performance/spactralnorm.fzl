@@ -1,0 +1,70 @@
+# Spactral norm 
+(require "/usr/lib/fuzuli/nfl/math.nfl")
+
+(function A (params i j)
+	(return
+		(/ 1.0 (+ (>> (* (+ i j) (+ i j 1)) 1) i 1))
+	)
+)
+
+(function Av (params n v)
+	(block
+	(let Av (clone tpl))
+	(def i INTEGER)
+	(for (let i 0)(< i n)(++i)
+		(let sum 0.0)
+		(foreach j in v
+			(let sum (+ sum (* (A i j) j)))
+		)
+		(set Av i sum)
+	)
+	(return Av)	
+	)
+)
+
+(function Atv (params n v)
+	(block
+		(let Atv (clone tpl))
+	(def i INTEGER)
+		(for (let i 0)(< i n)(++i)
+			(let sum 0.0)
+			(foreach j in v
+				(let sum (+ sum (* sum (A j i) j)))
+			)
+			(set Atv i sum)
+		)
+		(return Atv)
+	)
+)
+
+
+(function AtAv (params n v)
+	(block
+		(let tmp (Av n v))
+		(return (Atv n tmp))
+	)
+)
+
+
+(let n 1)
+(let u (: 0 n))(fill u 0)
+(let v (: 0 n))(fill u 0)
+(let tpl (: 0 n))(fill tpl 0)
+(for (let i 0)(< i 10)(++ i)
+	(println "Doing for i "i)
+	(let v (AtAv n u))
+	(let u (AtAv n v))
+)
+
+(println "After all v is " v " and u is " u)
+(let vBv 0.0)
+(let vv 0.0)
+(let i 0)
+(foreach val in v
+	(let vBv (+ vBv (* (nth u i) val)))
+	(let vv (+ vv (* val val)))
+	(++i)
+)
+
+(println vBv " " vv " : "(sqrt (/ vBv vv)))
+
