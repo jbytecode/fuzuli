@@ -213,6 +213,7 @@ void Environment::setFunction(const char *name, FuzuliFunction *value) {
 		existing->environment = value->environment;
 		existing->name = value->name;
 		existing->params = value->params;
+		existing->body = value->body;
 	}
 }
 

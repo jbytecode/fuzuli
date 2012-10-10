@@ -18,7 +18,7 @@
 		(for (let i 0) (< i 10000) (inc i)
 			(fl_color (* (rnd) 256))
 			(fl_circle (* (rnd) 400) (* (rnd) 400) (* (rnd) 50))
-		) (dump)
+		) 
 	)
 )
 (let form1 (window_new 400 400 "Circles"))
