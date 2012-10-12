@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #ifndef SERIALIZATION_H_
 #define SERIALIZATION_H_
 
@@ -31,13 +30,20 @@ class Serializer {
 public:
 	Serializer();
 	~Serializer();
-	void serializeFile(string infile, ostream& channel);
-	void serializeExpression (Expression *expr, ostream& channel);
-	static void IntToChars(int value, ostream& channel);
-	static void DoubleToChars(double value, ostream& channel);
+	void serializeFile(string infile, stringstream& channel);
+	void serializeExpression(Expression *expr, stringstream& channel);
+	void setByteCode(char* bc);
+	char *getByteCode();
+	Expression* getNextExpression();
+	static void IntToChars(int value, stringstream& channel);
+	static void DoubleToChars(double value, stringstream& channel);
+	static void StringToChars(string value, stringstream& channel);
+	static void CharArrayToChars(const char *value, stringstream& channel);
 private:
 	SourceCode *code;
 	AstBuilder *builder;
+	char *bytecode;
+	unsigned int code_index;
 };
 
 } /* end of namespace fuzuli */

@@ -33,26 +33,52 @@ Serializer::~Serializer() {
 
 }
 
-void Serializer::IntToChars(int value, ostream& channel){
+void Serializer::IntToChars(int value, stringstream& channel) {
 	char *p = (char*) &value;
 	unsigned int i_size = sizeof(int);
-	for (unsigned int i=0; i < i_size; i++){
-		channel << *p;
+	for (unsigned int i = 0; i < i_size; i++) {
+		channel << (int)(*p);
+		if(i != i_size-1) { channel << ", ";}
 		p++;
 	}
+	channel << ", ";
 }
 
-void Serializer::DoubleToChars(double value, ostream& channel){
+void Serializer::DoubleToChars(double value, stringstream& channel) {
 	char *p = (char*) &value;
 	unsigned int i_size = sizeof(double);
-	for (unsigned int i=0; i < i_size; i++){
-		channel << *p;
+	for (unsigned int i = 0; i < i_size; i++) {
+		channel << (int)(*p);
+		if(i != i_size-1) { channel << ", ";}
 		p++;
 	}
+	channel << ", ";
 }
 
+void Serializer::StringToChars(string value, stringstream& channel) {
+	char *p = (char*) value.c_str();
+	unsigned int i_size = sizeof(double);
+	for (unsigned int i = 0; i < i_size; i++) {
+		channel << (int)(*p);
+		if(i != i_size-1) { channel << ", ";}
+		p++;
+	}
+	channel << ", ";
+}
 
-void Serializer::serializeFile(string infile, ostream& channel) {
+void Serializer::CharArrayToChars (const char* value, stringstream& channel) {
+	const char *p = value;
+	unsigned int i_size = sizeof(double);
+	for (unsigned int i = 0; i < i_size; i++) {
+		channel << (int)(*p);
+		if(i != i_size-1) { channel << ", ";}
+		p++;
+	}
+	channel << ", ";
+}
+
+void Serializer::serializeFile(string infile, stringstream& channel) {
+	channel << "char char_code[] = {";
 	this->code = new SourceCode();
 	this->code->readFromFile(infile.c_str());
 	this->builder = new AstBuilder(this->code);
@@ -64,38 +90,65 @@ void Serializer::serializeFile(string infile, ostream& channel) {
 		}
 		this->serializeExpression(expr, channel);
 	}
+	channel << "0};"<<endl;
 }
 
-void Serializer::serializeExpression(Expression *expr, ostream& channel) {
+
+
+void Serializer::serializeExpression(Expression *expr, stringstream& channel) {
 	Serializer::IntToChars(expr->type, channel);
 	switch (expr->type) {
 	case INTEGER_EXPRESSION:
-		Serializer::IntToChars( dynamic_cast<IntegerExpression*>(expr)->integerValue, channel);
+		Serializer::IntToChars(
+				dynamic_cast<IntegerExpression*>(expr)->integerValue, channel);
 		break;
 	case INTEGERCONSTANT_EXPRESSION:
-		Serializer::IntToChars(dynamic_cast<IntegerConstantExpression*>(expr)->integerValue, channel);
+		Serializer::IntToChars(
+				dynamic_cast<IntegerConstantExpression*>(expr)->integerValue,
+				channel);
 		break;
 	case FLOAT_EXPRESSION:
-		Serializer::DoubleToChars(dynamic_cast<FloatExpression*>(expr)->floatValue, channel);
+		Serializer::DoubleToChars(
+				dynamic_cast<FloatExpression*>(expr)->floatValue, channel);
 		break;
 	case FLOATCONSTANT_EXPRESSION:
-		Serializer::DoubleToChars(dynamic_cast<FloatConstantExpression*>(expr)->floatValue, channel);
+		Serializer::DoubleToChars(
+				dynamic_cast<FloatConstantExpression*>(expr)->floatValue,
+				channel);
 		break;
 	case STRING_EXPRESSION:
-		Serializer::IntToChars(dynamic_cast<StringExpression*>(expr)->stringValue.length(), channel);
-		channel << dynamic_cast<StringExpression*>(expr)->stringValue.c_str();
+		Serializer::IntToChars(
+				dynamic_cast<StringExpression*>(expr)->stringValue.length(),
+				channel);
+		Serializer::StringToChars(
+				dynamic_cast<StringExpression*>(expr)->stringValue, channel);
 		break;
 	case IDENTIFIER_EXPRESSION:
-		Serializer::IntToChars( strlen (dynamic_cast<IdentifierExpression*>(expr)->id), channel);
-		channel << dynamic_cast<IdentifierExpression*>(expr)->id;
+		Serializer::IntToChars(
+				strlen(dynamic_cast<IdentifierExpression*>(expr)->id), channel);
+		Serializer::CharArrayToChars(
+				dynamic_cast<IdentifierExpression*>(expr)->id, channel);
 		break;
 	default:
 		Serializer::IntToChars(expr->expressions->size(), channel);
-		for (unsigned int i=0;i<expr->expressions->size();i++){
+		for (unsigned int i = 0; i < expr->expressions->size(); i++) {
 			serializeExpression(expr->expressions->at(i), channel);
 		}
 		break;
 	}
+}
+
+void Serializer::setByteCode(char *bc) {
+	this->bytecode = bc;
+	this->code_index = 0;
+}
+
+char *Serializer::getByteCode() {
+	return (this->bytecode);
+}
+
+Expression *Serializer::getNextExpression() {
+	return NULL;
 }
 
 } /* end of namespace fuzuli */
