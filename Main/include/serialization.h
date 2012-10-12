@@ -33,6 +33,8 @@ public:
 	~Serializer();
 	void serializeFile(string infile, ostream& channel);
 	void serializeExpression (Expression *expr, ostream& channel);
+	static void IntToChars(int value, ostream& channel);
+	static void DoubleToChars(double value, ostream& channel);
 private:
 	SourceCode *code;
 	AstBuilder *builder;

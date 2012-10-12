@@ -23,6 +23,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "FuzuliTypes.h"
+#include "../include/serialization.h"
 
 using namespace std;
 using namespace fuzuli;
@@ -30,6 +31,16 @@ using namespace fuzuli;
 static int a_argc;
 static char **a_argv;
 
+void doRepl();
+int calculateNumberOfParanthesis(const char *);
+void doSerialize(char *);
+
+
+void doSerialize(char *filename){
+	cout << "Serializing " << filename << endl;
+	Serializer *s = new Serializer();
+	s->serializeFile(filename, cout);
+}
 
 int calculateNumberOfParanthesis(const char *c){
 	int num = 0;
@@ -103,9 +114,13 @@ int main(int argc, char** argv) {
 		cout << "usage:" << endl;
 		cout << " fuzuli source" << endl;
 		cout << " fuzuli --repl" << endl;
+		cout << " fuzuli --serialize source" << endl;
 		exit(0);
 	} else if (argc == 2 && strcmp(argv[1], "--repl") == 0) {
 		doRepl();
+		exit(0);
+	} else if(argc == 3 && strcmp(argv[1], "--serialize") == 0){
+		doSerialize(argv[2]);
 		exit(0);
 	}
 	SourceCode *s = new SourceCode();

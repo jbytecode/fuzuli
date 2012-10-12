@@ -33,8 +33,28 @@ Serializer::~Serializer() {
 
 }
 
+void Serializer::IntToChars(int value, ostream& channel){
+	char *p = (char*) &value;
+	unsigned int i_size = sizeof(int);
+	for (unsigned int i=0; i < i_size; i++){
+		channel << *p;
+		p++;
+	}
+}
+
+void Serializer::DoubleToChars(double value, ostream& channel){
+	char *p = (char*) &value;
+	unsigned int i_size = sizeof(double);
+	for (unsigned int i=0; i < i_size; i++){
+		channel << *p;
+		p++;
+	}
+}
+
+
 void Serializer::serializeFile(string infile, ostream& channel) {
 	this->code = new SourceCode();
+	this->code->readFromFile(infile.c_str());
 	this->builder = new AstBuilder(this->code);
 	this->code->reset();
 	while (true) {
@@ -47,36 +67,30 @@ void Serializer::serializeFile(string infile, ostream& channel) {
 }
 
 void Serializer::serializeExpression(Expression *expr, ostream& channel) {
+	Serializer::IntToChars(expr->type, channel);
 	switch (expr->type) {
 	case INTEGER_EXPRESSION:
-		channel << expr->type;
-		channel << dynamic_cast<IntegerExpression*>(expr)->integerValue;
+		Serializer::IntToChars( dynamic_cast<IntegerExpression*>(expr)->integerValue, channel);
 		break;
 	case INTEGERCONSTANT_EXPRESSION:
-		channel << expr->type;
-		channel << dynamic_cast<IntegerConstantExpression*>(expr)->integerValue;
+		Serializer::IntToChars(dynamic_cast<IntegerConstantExpression*>(expr)->integerValue, channel);
 		break;
 	case FLOAT_EXPRESSION:
-		channel << expr->type;
-		channel << dynamic_cast<FloatExpression*>(expr)->floatValue;
+		Serializer::DoubleToChars(dynamic_cast<FloatExpression*>(expr)->floatValue, channel);
 		break;
 	case FLOATCONSTANT_EXPRESSION:
-		channel << expr->type;
-		channel << dynamic_cast<FloatConstantExpression*>(expr)->floatValue;
+		Serializer::DoubleToChars(dynamic_cast<FloatConstantExpression*>(expr)->floatValue, channel);
 		break;
 	case STRING_EXPRESSION:
-		channel << expr->type;
-		channel << dynamic_cast<StringExpression*>(expr)->stringValue.length();
+		Serializer::IntToChars(dynamic_cast<StringExpression*>(expr)->stringValue.length(), channel);
 		channel << dynamic_cast<StringExpression*>(expr)->stringValue.c_str();
 		break;
 	case IDENTIFIER_EXPRESSION:
-		channel << expr->type;
-		channel << strlen (dynamic_cast<IdentifierExpression*>(expr)->id);
+		Serializer::IntToChars( strlen (dynamic_cast<IdentifierExpression*>(expr)->id), channel);
 		channel << dynamic_cast<IdentifierExpression*>(expr)->id;
 		break;
 	default:
-		channel << expr->type;
-		channel << expr->expressions->size();
+		Serializer::IntToChars(expr->expressions->size(), channel);
 		for (unsigned int i=0;i<expr->expressions->size();i++){
 			serializeExpression(expr->expressions->at(i), channel);
 		}
