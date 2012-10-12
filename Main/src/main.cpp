@@ -17,6 +17,7 @@
  */
 
 #include <iostream>
+#include <fstream>
 #include <sstream>
 #include <stdlib.h>
 #include <cstring>
@@ -37,10 +38,12 @@ void doSerialize(char *);
 
 
 void doSerialize(char *filename){
-	cout << "Serializing " << filename << endl;
 	Serializer *s = new Serializer();
-	s->serializeFile(filename, cout);
+	stringstream channel;
+	s->serializeFile(filename, channel);
+	cout << channel.str().c_str()<<endl;
 }
+
 
 int calculateNumberOfParanthesis(const char *c){
 	int num = 0;
