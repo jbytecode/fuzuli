@@ -19,41 +19,16 @@
 package Interpreter;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 
-/**
- *
- * @author hako
- */
-public class Environment {
-  
-    public Dictionary<String,FValue> variables;
-    public Environment topEnvironment;
-    public Environment subEnvironment;
-    
-    public Environment( Environment top){
-        this.topEnvironment = top;
+public class LetExpression extends Expression {
+
+    public LetExpression (ArrayList<Expression> ex){
+        this.exprs = ex;
     }
     
-    public FValue getVariableInThisEnvironment(String name){
-        return (this.variables.get(name));
+    @Override
+    public FValue eval(Environment e) {
+        throw new RuntimeException("Let is not implemented yet");
     }
     
-    public FValue findVariable(String name){
-        FValue val = this.variables.get(name);
-        if(val == null){
-            val = this.subEnvironment.findVariable(name);
-        }
-        return(val);
-    }
-    
-    public void setVariable(String name, FValue val){
-        if(this.topEnvironment == null){
-            this.variables.put(name, val);
-            return;
-        }else{
-          /* continue */  
-        }
-    }
-   
 }

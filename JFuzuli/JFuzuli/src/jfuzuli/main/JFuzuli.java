@@ -49,7 +49,7 @@ public class JFuzuli {
 
                 FValue o = null;
                 try {
-                    o = e.eval(new Environment());
+                    o = e.eval(new Environment(null));
                 } catch (Exception exc) {
                     System.out.println("Runtime Error: " + exc.toString());
                 }
