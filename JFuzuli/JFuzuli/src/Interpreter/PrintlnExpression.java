@@ -18,10 +18,25 @@
 
 package Interpreter;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author hako
  */
-public class Environment {
+public class PrintlnExpression  extends Expression {
+    
+     public PrintlnExpression(ArrayList<Expression> e){
+        this.exprs = e;
+    }
+    
+    @Override
+    public FValue eval(Environment e) {
+        for (int i=0;i<this.exprs.size();i++){
+            System.out.print(exprs.get(i).eval(e).getObject().toString());
+        }
+        System.out.println();
+        return(FValue.ZERO);
+    }
     
 }

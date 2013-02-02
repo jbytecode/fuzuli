@@ -15,13 +15,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Interpreter;
 
-/**
- *
- * @author hako
- */
-public class Environment {
+public class StringExpression extends Expression {
+
+    FValue val;
+    
+    public StringExpression(String s){
+        val = new FValue(s);
+    }
+
+    @Override
+    public FValue eval(Environment e) {
+        return(val);
+    }
+    
     
 }

@@ -18,10 +18,26 @@
 
 package Interpreter;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author hako
  */
-public class Environment {
-    
+public class MinusExpression extends Expression {
+
+    public ArrayList<Expression> expr;
+
+    public MinusExpression(ArrayList<Expression> expr) {
+        this.expr = expr;
+    }
+
+    @Override
+    public FValue eval(Environment e) {
+        Double sum = this.expr.get(0).eval(e).getAsDouble();
+        for (int i = 1; i < expr.size(); i++) {
+            sum -= expr.get(i).eval(e).getAsDouble();
+        }
+        return (new FValue(sum));
+    }
 }
