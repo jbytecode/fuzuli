@@ -15,45 +15,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Interpreter;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 
-/**
- *
- * @author hako
- */
-public class Environment {
-  
-    public Dictionary<String,FValue> variables;
-    public Environment topEnvironment;
-    public Environment subEnvironment;
+public class ConstantNumberExpression extends Expression{
     
-    public Environment( Environment top){
-        this.topEnvironment = top;
+     double d;
+    
+    public ConstantNumberExpression(ArrayList<Expression> e){
+        this.exprs = e;
     }
     
-    public FValue getVariableInThisEnvironment(String name){
-        return (this.variables.get(name));
+    public ConstantNumberExpression(double d){
+        this.d = d;
     }
     
-    public FValue findVariable(String name){
-        FValue val = this.variables.get(name);
-        if(val == null){
-            val = this.subEnvironment.findVariable(name);
-        }
-        return(val);
+
+    @Override
+    public FValue eval(Environment e) {
+        return( new FValue(d) );
     }
-    
-    public void setVariable(String name, FValue val){
-        if(this.topEnvironment == null){
-            this.variables.put(name, val);
-            return;
-        }else{
-          /* continue */  
-        }
-    }
-   
+
 }

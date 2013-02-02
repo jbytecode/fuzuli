@@ -179,7 +179,7 @@ public class Parser {
         } else if (tok.type == Token.TokenType.RPARAN) {
             return (null);
         } else if (tok.type == Token.TokenType.DOUBLE) {
-            NumberExpression dexpr = new NumberExpression(Double.parseDouble(tok.content));
+            ConstantNumberExpression dexpr = new ConstantNumberExpression(Double.parseDouble(tok.content));
             return (dexpr);
         } else if (tok.type == Token.TokenType.PLUS) {
             exprs = getExpressionList();
@@ -196,6 +196,9 @@ public class Parser {
             } else if (tok.content.equals("println")) {
                 exprs = getExpressionList();
                 return (new PrintlnExpression(exprs));
+            }else if (tok.content.equals("let")) {
+                exprs = getExpressionList();
+                return (new LetExpression(exprs));
             }
         }
         throw new RuntimeException("Fuzuli function " + tok.content + " is not defined");
