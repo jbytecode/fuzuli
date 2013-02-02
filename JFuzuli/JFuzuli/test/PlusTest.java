@@ -4,11 +4,11 @@
  */
 
 import java.util.ArrayList;
-import Interpreter.DoubleExpression;
+import Interpreter.NumberExpression;
 import Interpreter.Environment;
-import Interpreter.IntegerExpression;
 import Interpreter.PlusExpression;
 import Interpreter.Expression;
+import Interpreter.FValue;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -49,10 +49,10 @@ public class PlusTest {
     @Test
     public void testPlusExpression(){
         ArrayList<Expression> ae = new ArrayList<>();                
-        ae.add(new DoubleExpression(7.5));
-        ae.add(new IntegerExpression(5));
+        ae.add(new NumberExpression(7.5));
+        ae.add(new NumberExpression(5));
         PlusExpression pe = new PlusExpression(ae);
-        Object result = pe.eval(new Environment());
-        System.out.println(((Expression)result).getNumericValue());
+        FValue result = pe.eval(new Environment());
+        System.out.println(result.getAsDouble());
     }
 }

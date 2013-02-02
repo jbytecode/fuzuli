@@ -15,13 +15,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Interpreter;
 
-/**
- *
- * @author hako
- */
-public class Environment {
+import java.util.ArrayList;
+
+
+public class PrintExpression extends Expression {
+    
+    public PrintExpression(ArrayList<Expression> e){
+        this.exprs = e;
+    }
+    
+    @Override
+    public FValue eval(Environment e) {
+        for (int i=0;i<this.exprs.size();i++){
+            System.out.print(exprs.get(i).eval(e).getObject().toString());
+        }
+        return(FValue.ZERO);
+    }
+    
     
 }

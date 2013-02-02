@@ -15,13 +15,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Interpreter;
+
+import java.util.ArrayList;
 
 /**
  *
  * @author hako
  */
-public class Environment {
+public class NumberExpression extends Expression{
     
+    FValue val;
+    
+    public NumberExpression(ArrayList<Expression> e){
+        this.exprs = e;
+    }
+    
+    public NumberExpression(double d){
+        val = new FValue(d);
+    }
+    
+
+    @Override
+    public FValue eval(Environment e) {
+        return(val);
+    }
+
+   
 }
