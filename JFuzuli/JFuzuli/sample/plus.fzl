@@ -1,19 +1,5 @@
-(let passed "PASSED!\n")
-(let error "ERROR\n")
-
-(let myList (list 1 2 3 4 5 6 7 8 9 10))
-(let result 0)
-
-#(if (= (length myList) 10) (inc result))
-#(println "length of mylist " (length myList))
-
-(set myList 9 888)
-#(if (= (nth myList 9) 888) (inc result))
-
-#(println "9. eleman: " (nth myList 9))
-(println "9. eleman 888 mi? " (= (nth myList 9) 888.0))
-
-
-
-(if (= result 2) (print passed) (print error))
+(let mylist (: 0 1000000))
+(for (let i 0) (< i (length mylist)) (++ i)
+	(println (nth mylist i))
+)
 

@@ -155,6 +155,10 @@ public class Parser {
             tok.content = "-";
             tok.type = Token.TokenType.MINUS;
             return (tok);
+        } else if (current == '/'){
+            tok.content = "/";
+            tok.type = Token.TokenType.DIVISION;
+            return(tok);
         } else if (current == '='){
             tok.content = "=";
             tok.type = Token.TokenType.EQUALS;
@@ -284,7 +288,10 @@ public class Parser {
         } else if (tok.type == Token.TokenType.MINUS) {
             exprs = getExpressionList();
             return (new MinusExpression(exprs));
-        } else if (tok.type == Token.TokenType.EQUALS) {
+        } else if (tok.type == Token.TokenType.DIVISION) {
+            exprs = getExpressionList();
+            return (new DivisionExpression(exprs));
+        }  else if (tok.type == Token.TokenType.EQUALS) {
             exprs = getExpressionList();
             return (new EqualsExpression(exprs));
         } else if (tok.type == Token.TokenType.NOTEQUAL) {
@@ -353,6 +360,9 @@ public class Parser {
             }else if (tok.content.equals("for")){
                 exprs = getExpressionList();
                 return (new ForExpression(exprs));
+            }else if (tok.content.equals("foreach")){
+                exprs = getExpressionList();
+                return (new ForEachExpression(exprs));
             }else if (tok.content.equals("def")){
                 exprs = getExpressionList();
                 return (new DefExpression(exprs));
@@ -395,6 +405,9 @@ public class Parser {
             }else if (tok.content.equals("last")){
                 exprs = getExpressionList();
                 return (new LastExpression(exprs));
+            }else if (tok.content.equals("setprecision")){
+                exprs = getExpressionList();
+                return (new SetPrecisionExpression(exprs));
             }else{
                 return(new IdentifierExpression(tok.content));
             }

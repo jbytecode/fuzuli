@@ -15,48 +15,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Interpreter;
 
-/**
- *
- * @author hako
- */
-public class Token {
-    String content;
-    TokenType type;
-    public static double epsilon = 0.000001;
-    public static double precision = 30;
-    
-    enum TokenType {
-        INTEGER,
-        DOUBLE,
-        PLUS,
-        PLUSPLUS,
-        MINUS,
-        MINUSMINUS,
-        DIVISION,
-        LPARAN,
-        RPARAN,
-        OBJECT,
-        IDENTIFIER,
-        STRING,
-        EQUALS,
-        LESS,
-        BIGGER,
-        LESSOREQUAL,
-        BIGGEROREQUAL,
-        NOTEQUAL,
-        EXCLAMATION,
-        BITAND,
-        BITOR,
-        BITNOT,
-        BITXOR,
-        BITSHIFTRIGHT,
-        BITSHIFTLEFT,
-        COLON,
-        UNKNOWN,
-        EOP,
-    }
-}
+import java.util.ArrayList;
 
+
+public class SetPrecisionExpression extends Expression {
+
+    public SetPrecisionExpression(ArrayList<Expression> expr){
+        this.exprs = expr;
+    }
+    
+    @Override
+    public FValue eval(Environment e) {
+        double precis = this.exprs.get(0).eval(e).getAsDouble();
+        Token.precision = precis;
+        return(FValue.ZERO);
+    }
+    
+}
