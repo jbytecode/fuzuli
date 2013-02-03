@@ -47,8 +47,8 @@ public class Environment implements Serializable {
     public FValue findVariable(String name) {
         if(variables.containsKey(name)){
             return(variables.get(name));
-        }else if (this.topEnvironment !=null && this.topEnvironment.variables.containsKey(name)){
-            return(topEnvironment.variables.get(name));
+        }else if (this.topEnvironment !=null){
+            return(topEnvironment.findVariable(name));
         }else{
             return(FValue.NULL);
         }

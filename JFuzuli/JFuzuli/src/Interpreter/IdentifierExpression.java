@@ -32,7 +32,7 @@ public class IdentifierExpression extends Expression {
     public FValue eval(Environment e) {  
         FValue val = e.findVariable(iden);
         if(val.equals(FValue.NULL)){
-            throw new RuntimeException("Variable "+iden+" is NULL");
+            throw new RuntimeException("Variable "+iden+" is NULL : Environment:\n"+e.toString());
         }
         return(val);
     }
