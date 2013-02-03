@@ -29,8 +29,12 @@ public class IdentifierExpression extends Expression {
     }
     
     @Override
-    public FValue eval(Environment e) {        
-        return (e.findVariable(iden));
+    public FValue eval(Environment e) {  
+        FValue val = e.findVariable(iden);
+        if(val.equals(FValue.NULL)){
+            throw new RuntimeException("Variable "+iden+" is NULL");
+        }
+        return(val);
     }
     
 }

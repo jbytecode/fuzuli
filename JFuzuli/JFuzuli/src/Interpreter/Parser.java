@@ -323,6 +323,18 @@ public class Parser {
             }else if (tok.content.equals("setepsilon")){
                 exprs = getExpressionList();
                 return (new SetEpsilonExpression(exprs));
+            }else if (tok.content.equals("typeof")){
+                exprs = getExpressionList();
+                return (new TypeOfExpression(exprs));
+            }else if (tok.content.equals("for")){
+                exprs = getExpressionList();
+                return (new ForExpression(exprs));
+            }else if (tok.content.equals("def")){
+                exprs = getExpressionList();
+                return (new DefExpression(exprs));
+            }else if (tok.content.equals("inc")){
+                exprs = getExpressionList();
+                return (new IncExpression(exprs));
             }else{
                 return(new IdentifierExpression(tok.content));
             }

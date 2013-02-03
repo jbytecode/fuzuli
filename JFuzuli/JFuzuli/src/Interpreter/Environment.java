@@ -35,6 +35,9 @@ public class Environment implements Serializable {
     public Environment(Environment top) {
         this.topEnvironment = top;
         this.variables = new HashMap<String, FValue>();
+        if (top==null){
+            this.variables.put("NULL", FValue.NULL);
+        }
     }
 
     public FValue getVariableInThisEnvironment(String name) {
@@ -44,14 +47,24 @@ public class Environment implements Serializable {
     public FValue findVariable(String name) {
         if(variables.containsKey(name)){
             return(variables.get(name));
+        }else if (this.topEnvironment !=null && this.topEnvironment.variables.containsKey(name)){
+            return(topEnvironment.variables.get(name));
         }else{
-            System.out.println("ooppps findvariable cannot find "+name);
-            return null;
+            return(FValue.NULL);
         }
     }
 
     public void setVariable(String name, FValue val) {
         this.variables.put(name, val);
+    }
+    
+    public String toString(){
+        StringBuffer buf = new StringBuffer();
+        if (this.topEnvironment!=null){
+            buf.append(this.topEnvironment.toString());
+        }
+        buf.append(this.variables.toString());  
+        return(buf.toString());
     }
 }
 
