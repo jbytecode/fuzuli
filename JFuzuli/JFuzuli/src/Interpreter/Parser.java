@@ -92,7 +92,7 @@ public class Parser {
             tok.type = Token.TokenType.EOP;
             tok.content = "End of Program";
             return (tok);
-        } else if (current == ' ' || current == '\t' || current == '\n' || current == '\r') {
+        } else if (current == ' ' || current == '\t' || current == '\n' || current == '\r' || Character.isSpaceChar(current)) {
             return (getNextToken());
         } else if (current == '#'){
             while(true){
@@ -130,6 +130,17 @@ public class Parser {
             tok.type = Token.TokenType.PLUS;
             return (tok);
         } else if (current == '-') {
+            char next = consume();
+            if(Character.isDigit(next)){
+                putBackChar();
+                Token t = this.getNextToken();
+                buf.append("-");
+                buf.append(t.content);
+                tok.content = buf.toString();
+                tok.type = Token.TokenType.DOUBLE;
+                return(tok);
+            }
+            putBackChar();
             tok.content = "-";
             tok.type = Token.TokenType.MINUS;
             return (tok);
@@ -138,13 +149,59 @@ public class Parser {
             tok.type = Token.TokenType.EQUALS;
             return(tok);
         }else if (current == '<'){
+            char next = consume();
+            if(next=='<'){
+                tok.content = "<<";
+                tok.type = Token.TokenType.BITSHIFTLEFT;
+                return(tok);
+            }else {
+                putBackChar();
+            }
             tok.content = "<";
             tok.type = Token.TokenType.LESS;
             return(tok);
         }else if (current == '>'){
+            char next = consume();
+            if(next=='>'){
+                tok.content = ">>";
+                tok.type = Token.TokenType.BITSHIFTRIGHT;
+                return(tok);
+            }else {
+                putBackChar();
+            }
             tok.content = ">";
             tok.type = Token.TokenType.BIGGER;
             return(tok);
+        }else if (current == '&'){
+            tok.content = "&";
+            tok.type = Token.TokenType.BITAND;
+            return(tok);
+        }else if (current == '|'){
+            tok.content = "|";
+            tok.type = Token.TokenType.BITOR;
+            return(tok);
+        }else if (current == '~'){
+            tok.content = "~";
+            tok.type = Token.TokenType.BITNOT;
+            return(tok);
+        }else if (current == '^'){
+            tok.content = "^";
+            tok.type = Token.TokenType.BITXOR;
+            return(tok);
+        }else if (current == '!'){
+            buf.append(current);
+            current = consume();
+            if(current == '=') {
+                buf.append(current);
+                tok.content = buf.toString();
+                tok.type = Token.TokenType.NOTEQUAL;
+                return(tok);
+            }else{
+                putBackChar();
+            }
+           tok.content = "!";
+           tok.type = Token.TokenType.EXCLAMATION;
+           return(tok);
         }else if (Character.isLetter(current)) {
             buf.append(current);
             while (true) {
@@ -161,6 +218,13 @@ public class Parser {
         } else if (current == '"') {
             while (true) {
                 current = consume();
+                if (current == '\\'){
+                    current = consume();
+                    if (current == 'n'){
+                        buf.append("\n");
+                    }
+                    current = consume();
+                }
                 if (current == '"') {
                     break;
                 }
@@ -208,12 +272,36 @@ public class Parser {
         } else if (tok.type == Token.TokenType.EQUALS) {
             exprs = getExpressionList();
             return (new EqualsExpression(exprs));
+        } else if (tok.type == Token.TokenType.NOTEQUAL) {
+            exprs = getExpressionList();
+            return (new NotEqualsExpression(exprs));
         } else if (tok.type == Token.TokenType.LESS) {
             exprs = getExpressionList();
             return (new LessExpression(exprs));
         }  else if (tok.type == Token.TokenType.BIGGER) {
             exprs = getExpressionList();
             return (new BiggerExpression(exprs));
+        } else if (tok.type == Token.TokenType.EXCLAMATION) {
+            exprs = getExpressionList();
+            return (new BitNotExpression(exprs));
+        }else if (tok.type == Token.TokenType.BITAND) {
+            exprs = getExpressionList();
+            return (new BitAndExpression(exprs));
+        }else if (tok.type == Token.TokenType.BITOR) {
+            exprs = getExpressionList();
+            return (new BitOrExpression(exprs));
+        }else if (tok.type == Token.TokenType.BITNOT) {
+            exprs = getExpressionList();
+            return (new BitNotExpression(exprs));
+        }else if (tok.type == Token.TokenType.BITXOR) {
+            exprs = getExpressionList();
+            return (new BitXorExpression(exprs));
+        }else if (tok.type == Token.TokenType.BITSHIFTLEFT) {
+            exprs = getExpressionList();
+            return (new BitShiftLeftExpression(exprs));
+        }else if (tok.type == Token.TokenType.BITSHIFTRIGHT) {
+            exprs = getExpressionList();
+            return (new BitShiftRightExpression(exprs));
         }else if (tok.type == Token.TokenType.STRING){
             return (new StringExpression(tok.content));
         }else if (tok.type == Token.TokenType.IDENTIFIER) {
@@ -229,6 +317,9 @@ public class Parser {
             }else if (tok.content.equals("if")){
                 exprs = getExpressionList();
                 return (new IfExpression(exprs));
+            }else if (tok.content.equals("setepsilon")){
+                exprs = getExpressionList();
+                return (new SetEpsilonExpression(exprs));
             }else{
                 return(new IdentifierExpression(tok.content));
             }

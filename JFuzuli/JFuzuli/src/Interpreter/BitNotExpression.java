@@ -19,27 +19,18 @@ package Interpreter;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author hako
- */
-public class EqualsExpression extends Expression{
-    
-    public EqualsExpression (ArrayList<Expression> expr){
+
+public class BitNotExpression extends Expression {
+
+    public BitNotExpression(ArrayList<Expression> expr){
         this.exprs = expr;
     }
 
     @Override
     public FValue eval(Environment e) {
-        double allequal = 1.0;
-        FValue first = this.exprs.get(0).eval(e);
-        for (int i=1;i< this.exprs.size();i++){
-            if (!FValue.Equals(this.exprs.get(i).eval(e), first)){
-                allequal = 0.0;
-                break;
-            }
-        }
-        return(new FValue(allequal));
+        FValue f1 = this.exprs.get(0).eval(e);
+        long result =  ~(long)f1.getAsDouble();
+        return (new FValue(result));
     }
     
     

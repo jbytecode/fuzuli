@@ -19,28 +19,22 @@ package Interpreter;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author hako
- */
-public class EqualsExpression extends Expression{
-    
-    public EqualsExpression (ArrayList<Expression> expr){
+
+public class NotEqualsExpression extends Expression {
+
+    public NotEqualsExpression(ArrayList<Expression> expr){
         this.exprs = expr;
     }
-
+    
     @Override
     public FValue eval(Environment e) {
-        double allequal = 1.0;
-        FValue first = this.exprs.get(0).eval(e);
-        for (int i=1;i< this.exprs.size();i++){
-            if (!FValue.Equals(this.exprs.get(i).eval(e), first)){
-                allequal = 0.0;
-                break;
-            }
+        FValue d1 = this.exprs.get(0).eval(e);
+        FValue d2 = this.exprs.get(1).eval(e);
+        if (!FValue.Equals(d1, d2)){
+            return(new FValue(1.0));
+        }else{
+            return(new FValue(0.0));
         }
-        return(new FValue(allequal));
     }
-    
     
 }

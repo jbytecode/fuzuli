@@ -1,3 +1,3 @@
 #!/bin/bash
-java -cp dist/JFuzuli.jar:dist.jar  Compiler.SerRunner
+java -cp dist/JFuzuli.jar:$1  Compiler.SerRunner
 

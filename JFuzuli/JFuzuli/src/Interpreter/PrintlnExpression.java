@@ -20,14 +20,11 @@ package Interpreter;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author hako
- */
 public class PrintlnExpression  extends Expression {
     
      public PrintlnExpression(ArrayList<Expression> e){
         this.exprs = e;
+        System.out.println(this);
     }
     
     @Override

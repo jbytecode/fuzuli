@@ -40,6 +40,7 @@ public class IfExpression extends Expression {
                 return (this.exprs.get(2).eval(e));
             }
         }else{
+            System.out.println("Criteria: "+criterian.getAsDouble());
             throw new RuntimeException("Bad if statement");
         }
         return(FValue.ZERO);

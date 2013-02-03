@@ -32,4 +32,14 @@ public abstract class Expression implements Serializable {
     
     public abstract FValue eval (Environment e);
     
+    public String toString(){
+        StringBuffer buf = new StringBuffer();
+        buf.append(this.getClass().getCanonicalName()+ "{\n");
+        for (int i=0;i<exprs.size();i++){
+            buf.append("\t"+exprs.get(i).getClass().getCanonicalName());
+            buf.append(",\n");
+        }
+        buf.append("}\n");
+        return(buf.toString());
+    }
 }
