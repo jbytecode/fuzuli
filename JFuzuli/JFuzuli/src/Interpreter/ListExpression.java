@@ -19,22 +19,18 @@
 
 package Interpreter;
 
+import java.util.ArrayList;
 
-public class IdentifierExpression extends Expression {
-
-    String iden;
+public class ListExpression extends Expression {
     
-    public IdentifierExpression(String iden){
-        this.iden = iden;
+    public ListExpression (ArrayList<Expression> expr){
+        this.exprs = expr;
     }
-    
+
     @Override
-    public FValue eval(Environment e) {  
-        FValue val = e.findVariable(iden);
-        if(val.equals(FValue.NULL)){
-            throw new RuntimeException("Variable '"+iden+"' is NULL : Environment:\n"+e.toString());
-        }
-        return(val);
+    public FValue eval(Environment e) {
+        FValue result = new FValue(this.exprs);
+        return (result);
     }
     
 }

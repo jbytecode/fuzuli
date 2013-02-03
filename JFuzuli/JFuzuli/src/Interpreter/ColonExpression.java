@@ -16,25 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package Interpreter;
 
+import java.util.ArrayList;
 
-public class IdentifierExpression extends Expression {
-
-    String iden;
+public class ColonExpression extends Expression{
     
-    public IdentifierExpression(String iden){
-        this.iden = iden;
+    public ColonExpression(ArrayList<Expression> expr){
+        this.exprs = expr;
     }
     
     @Override
-    public FValue eval(Environment e) {  
-        FValue val = e.findVariable(iden);
-        if(val.equals(FValue.NULL)){
-            throw new RuntimeException("Variable '"+iden+"' is NULL : Environment:\n"+e.toString());
+    public FValue eval(Environment e) {
+        ArrayList<Expression> colonex = new ArrayList<Expression>();
+        int i1 = (int)this.exprs.get(0).eval(e).getAsDouble();
+        int i2 = (int)this.exprs.get(1).eval(e).getAsDouble();
+        for (int i=i1; i<=i2; i++){
+            colonex.add(new NumberExpression(i));
         }
-        return(val);
+        return(new FValue(colonex));
     }
     
 }
