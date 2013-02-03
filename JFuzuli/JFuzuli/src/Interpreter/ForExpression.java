@@ -28,7 +28,20 @@ public class ForExpression extends Expression {
     
     @Override
     public FValue eval(Environment e) {
-        throw new RuntimeException("For not implemented yet");
+        e.subEnvironment = new Environment(e);
+        Environment env = e.subEnvironment;
+        
+        this.exprs.get(0).eval(env);
+        while(true){
+            if(this.exprs.get(1).eval(env).getAsDouble() == 0.0){
+                break;
+            }
+            for (int i=3;i<this.exprs.size();i++){
+                this.exprs.get(i).eval(env);
+            }
+            this.exprs.get(2).eval(env);
+        }
+        return(FValue.ZERO);
     }
     
 }
