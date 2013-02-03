@@ -18,29 +18,24 @@
 
 package Interpreter;
 
-/**
- *
- * @author hako
- */
-public class Token {
-    String content;
-    TokenType type;
-    
-    enum TokenType {
-        INTEGER,
-        DOUBLE,
-        PLUS,
-        MINUS,
-        LPARAN,
-        RPARAN,
-        OBJECT,
-        IDENTIFIER,
-        STRING,
-        EQUALS,
-        LESS,
-        BIGGER,
-        UNKNOWN,
-        EOP,
-    }
-}
+import java.util.ArrayList;
 
+
+public class BiggerExpression extends Expression{
+
+    public BiggerExpression(ArrayList<Expression>expr){
+        this.exprs = expr;
+    }
+    
+    @Override
+    public FValue eval(Environment e) {
+        FValue val1 = this.exprs.get(0).eval(e);
+        FValue val2 = this.exprs.get(1).eval(e);
+        if(val1.getAsDouble()>val2.getAsDouble()){
+            return (new FValue(1.0));
+        }else{
+            return (new FValue(0.0));
+        }
+    }
+    
+}

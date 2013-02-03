@@ -33,6 +33,7 @@ public class JFuzuli {
 
     public static void main(String[] args) {
         if (args.length == 1) {
+            Environment globalEnvironment = new Environment(null);
             Parser parser = new Parser(new File(args[0]));
             Expression e = null;
             while (true) {
@@ -49,9 +50,11 @@ public class JFuzuli {
 
                 FValue o = null;
                 try {
-                    o = e.eval(new Environment(null));
+                    o = e.eval(globalEnvironment);
                 } catch (Exception exc) {
                     System.out.println("Runtime Error: " + exc.toString());
+                    exc.printStackTrace();
+                    System.exit(-1);
                 }
             }
 

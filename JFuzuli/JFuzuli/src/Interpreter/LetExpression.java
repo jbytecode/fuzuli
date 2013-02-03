@@ -28,7 +28,10 @@ public class LetExpression extends Expression {
     
     @Override
     public FValue eval(Environment e) {
-        throw new RuntimeException("Let is not implemented yet");
+        String name = ((IdentifierExpression)(this.exprs.get(0))).iden;
+        FValue val = this.exprs.get(1).eval(e);
+        e.setVariable(name, val);
+        return(val);
     }
     
 }

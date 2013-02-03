@@ -18,29 +18,32 @@
 
 package Interpreter;
 
-/**
- *
- * @author hako
- */
-public class Token {
-    String content;
-    TokenType type;
-    
-    enum TokenType {
-        INTEGER,
-        DOUBLE,
-        PLUS,
-        MINUS,
-        LPARAN,
-        RPARAN,
-        OBJECT,
-        IDENTIFIER,
-        STRING,
-        EQUALS,
-        LESS,
-        BIGGER,
-        UNKNOWN,
-        EOP,
-    }
-}
+import java.util.ArrayList;
 
+public class IfExpression extends Expression {
+    
+    public IfExpression(ArrayList<Expression> expr){
+        this.exprs = expr;
+    }
+
+    @Override
+    public FValue eval(Environment e) {
+        FValue criterian = this.exprs.get(0).eval(e);
+        if(this.exprs.size() == 2){
+            if(criterian.getAsDouble() == 1.0){
+                return (this.exprs.get(1).eval(e));
+            }
+        }else if (this.exprs.size() == 3){
+            if(criterian.getAsDouble() == 1.0){
+                return (this.exprs.get(1).eval(e));
+            }else{
+                return (this.exprs.get(2).eval(e));
+            }
+        }else{
+            throw new RuntimeException("Bad if statement");
+        }
+        return(FValue.ZERO);
+    }
+    
+    
+}

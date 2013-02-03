@@ -15,32 +15,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Interpreter;
+
+import java.util.ArrayList;
 
 /**
  *
  * @author hako
  */
-public class Token {
-    String content;
-    TokenType type;
+public class EqualsExpression extends Expression{
     
-    enum TokenType {
-        INTEGER,
-        DOUBLE,
-        PLUS,
-        MINUS,
-        LPARAN,
-        RPARAN,
-        OBJECT,
-        IDENTIFIER,
-        STRING,
-        EQUALS,
-        LESS,
-        BIGGER,
-        UNKNOWN,
-        EOP,
+    public EqualsExpression (ArrayList<Expression> expr){
+        this.exprs = expr;
     }
-}
 
+    @Override
+    public FValue eval(Environment e) {
+        double allequal = 1.0;
+        double first = this.exprs.get(0).eval(e).getAsDouble();
+        for (int i=1;i< this.exprs.size();i++){
+            if (this.exprs.get(i).eval(e).getAsDouble() != first){
+                allequal = 0.0;
+                break;
+            }
+        }
+        return(new FValue(allequal));
+    }
+    
+    
+}

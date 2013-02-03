@@ -15,45 +15,42 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Interpreter;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
 
 /**
  *
  * @author hako
  */
 public class Environment {
-  
-    public Dictionary<String,FValue> variables;
+
+    public HashMap<String, FValue> variables;
     public Environment topEnvironment;
     public Environment subEnvironment;
-    
-    public Environment( Environment top){
+
+    public Environment(Environment top) {
         this.topEnvironment = top;
+        this.variables = new HashMap<String, FValue>();
     }
-    
-    public FValue getVariableInThisEnvironment(String name){
+
+    public FValue getVariableInThisEnvironment(String name) {
         return (this.variables.get(name));
     }
-    
-    public FValue findVariable(String name){
-        FValue val = this.variables.get(name);
-        if(val == null){
-            val = this.subEnvironment.findVariable(name);
-        }
-        return(val);
-    }
-    
-    public void setVariable(String name, FValue val){
-        if(this.topEnvironment == null){
-            this.variables.put(name, val);
-            return;
+
+    public FValue findVariable(String name) {
+        if(variables.containsKey(name)){
+            return(variables.get(name));
         }else{
-          /* continue */  
+            System.out.println("ooppps findvariable cannot find "+name);
+            return null;
         }
     }
-   
+
+    public void setVariable(String name, FValue val) {
+        this.variables.put(name, val);
+    }
 }
+
