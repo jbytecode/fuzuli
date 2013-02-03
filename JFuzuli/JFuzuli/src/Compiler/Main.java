@@ -4,15 +4,45 @@ package Compiler;
 import Interpreter.Expression;
 import Interpreter.Parser;
 import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
 
 
 public class Main {
+    
+   
+    public byte[] getBytesOfClass (String classurl){
+        try{
+            String t=this.getClass().getResource(classurl).toString();
+            System.out.println(t);
+            InputStream is = this.getClass().getResourceAsStream(classurl);
+           
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            OutputStreamWriter writer = new OutputStreamWriter(baos);
+            while(true){
+                int b = is.read();
+                if (b == -1 )break;
+                writer.write((byte)b);
+            }
+            writer.flush();
+            byte[] bytes =baos.toByteArray();
+            bytes[0] = (byte)0xCA;
+            bytes[1] = (byte)0xFE;
+            bytes[2] = (byte)0xBA;
+            bytes[3] = (byte)0xBE;
+            return(bytes);
+   
+        }catch (Exception e){
+            System.out.println("Get Bytes of Class: "+e.toString());
+        }
+        return null;
+    }
     
     public byte[] getBytes (Object o){
         try{
@@ -20,9 +50,9 @@ public class Main {
             ObjectOutputStream oos = new ObjectOutputStream(baos);
             oos.writeObject(o);
             oos.flush();
-            return baos.toByteArray();
+            return(baos.toByteArray());
         }catch (Exception e){
-            System.out.println(e.toString());
+            System.out.println("GetBytes:" + e.toString());
         }
         return null;
     }
@@ -45,15 +75,33 @@ public class Main {
             scheme.expr.add(exp);
         }
        
-        System.out.println("Converting "+filename + " to bytecode");
+        //System.out.println("Converting "+filename + " to bytecode");
         objectBytes = getBytes(scheme);
         
         try{
-            System.out.println("Creating dist.jar");
-            JarOutputStream jar = new JarOutputStream(new FileOutputStream("dist.jar"));
+            int dotindex = sourcefile.getName().lastIndexOf(".");
+            String distname = sourcefile.getName().substring(0,dotindex)+".jar";
+            System.out.println("Creating "+distname);
+            JarOutputStream jar = new JarOutputStream(new FileOutputStream(distname));
+            
             jar.putNextEntry(new ZipEntry("jbytecode.ser"));
             jar.write(objectBytes);
             jar.closeEntry();
+            
+            jar.putNextEntry(new ZipEntry("Compiler/"));
+            jar.closeEntry();
+            
+            
+            jar.putNextEntry(new ZipEntry("META-INF/"));
+            jar.closeEntry();
+            
+            jar.putNextEntry(new ZipEntry("META-INF/MANIFEST.MF"));
+            jar.write("Manifest-Version: 1.0\n".getBytes());
+            jar.write("Main-Class: Compiler.SerRunner\n".getBytes());
+            jar.write("Class-Path: JFuzuli.jar\n".getBytes());
+            jar.closeEntry();
+            
+            jar.flush();
             jar.close();
         }catch (Exception e){
             System.out.println(e.toString());
