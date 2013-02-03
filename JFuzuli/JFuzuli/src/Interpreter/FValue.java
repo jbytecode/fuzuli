@@ -27,6 +27,7 @@ import java.io.Serializable;
 public class FValue implements Serializable {
     
     static FValue ZERO = new FValue(0);
+    static FValue NaN =new FValue(Double.NaN);
     Object obj = null;
     
     public FValue(int i){
