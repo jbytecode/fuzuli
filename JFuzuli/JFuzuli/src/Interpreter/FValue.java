@@ -65,6 +65,9 @@ public class FValue implements Serializable {
             return (f1.obj == f2.obj);
         }
     }
-    
+
+    public String toString(){
+        return(this.obj.toString());
+    }
     
 }
