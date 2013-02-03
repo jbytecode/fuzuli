@@ -18,11 +18,13 @@
 
 package Interpreter;
 
+import java.io.Serializable;
+
 /**
  *
  * @author hako
  */
-public class FValue {
+public class FValue implements Serializable {
     
     static FValue ZERO = new FValue(0);
     Object obj = null;

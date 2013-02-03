@@ -145,11 +145,11 @@ public class Parser {
             tok.content = ">";
             tok.type = Token.TokenType.BIGGER;
             return(tok);
-        }else if (Character.isAlphabetic(current)) {
+        }else if (Character.isLetter(current)) {
             buf.append(current);
             while (true) {
                 current = consume();
-                if (!Character.isAlphabetic(current)) {
+                if (!Character.isLetter(current)) {
                     putBackChar();
                     break;
                 }

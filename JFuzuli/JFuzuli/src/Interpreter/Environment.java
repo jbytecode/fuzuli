@@ -17,6 +17,7 @@
  */
 package Interpreter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ import java.util.HashMap;
  *
  * @author hako
  */
-public class Environment {
+public class Environment implements Serializable {
 
     public HashMap<String, FValue> variables;
     public Environment topEnvironment;
