@@ -57,7 +57,7 @@
 # test 5 - remove
 (let mylist (list "A" "B" "C" "D" "E" "F"))
 (let newlist (remove mylist 2))
-(if (= (nth mylist 2) "D")
+(if (= (nth newlist 2) "D")
 	(print passed)
 	(print error)
 )

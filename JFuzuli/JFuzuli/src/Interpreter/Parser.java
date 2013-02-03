@@ -199,6 +199,10 @@ public class Parser {
             tok.content = "^";
             tok.type = Token.TokenType.BITXOR;
             return(tok);
+        }else if (current == ':'){
+            tok.content = ":";
+            tok.type = Token.TokenType.COLON;
+            return(tok);
         }else if (current == '!'){
             buf.append(current);
             current = consume();
@@ -313,6 +317,9 @@ public class Parser {
         }else if (tok.type == Token.TokenType.BITSHIFTRIGHT) {
             exprs = getExpressionList();
             return (new BitShiftRightExpression(exprs));
+        }else if (tok.type == Token.TokenType.COLON) {
+            exprs = getExpressionList();
+            return (new ColonExpression(exprs));
         }else if (tok.content.equals("++")){
                 exprs = getExpressionList();
                 return (new IncExpression(exprs));
@@ -355,6 +362,39 @@ public class Parser {
             }else if (tok.content.equals("dec")){
                 exprs = getExpressionList();
                 return (new DecExpression(exprs));
+            }else if (tok.content.equals("list")){
+                exprs = getExpressionList();
+                return (new ListExpression(exprs));
+            }else if (tok.content.equals("nth")){
+                exprs = getExpressionList();
+                return (new NthExpression(exprs));
+            }else if (tok.content.equals("length")){
+                exprs = getExpressionList();
+                return (new LengthExpression(exprs));
+            }else if (tok.content.equals("set")){
+                exprs = getExpressionList();
+                return (new SetExpression(exprs));
+            }else if (tok.content.equals("remove")){
+                exprs = getExpressionList();
+                return (new RemoveExpression(exprs));
+            }else if (tok.content.equals("find")){
+                exprs = getExpressionList();
+                return (new FindExpression(exprs));
+            }else if (tok.content.equals("append")){
+                exprs = getExpressionList();
+                return (new AppendExpression(exprs));
+            }else if (tok.content.equals("prepend")){
+                exprs = getExpressionList();
+                return (new PrependExpression(exprs));
+            }else if (tok.content.equals("fill")){
+                exprs = getExpressionList();
+                return (new FillExpression(exprs));
+            }else if (tok.content.equals("first")){
+                exprs = getExpressionList();
+                return (new FirstExpression(exprs));
+            }else if (tok.content.equals("last")){
+                exprs = getExpressionList();
+                return (new LastExpression(exprs));
             }else{
                 return(new IdentifierExpression(tok.content));
             }

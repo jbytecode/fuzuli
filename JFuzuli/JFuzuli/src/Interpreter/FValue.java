@@ -51,18 +51,23 @@ public class FValue implements Serializable {
         if (obj instanceof Number){
             Number n = (Number) obj;
             return (n.doubleValue());
-        }else{
-            throw new RuntimeException(obj+" is not a number");
+        }else {
+            try{
+                return (Double.parseDouble(String.valueOf(obj)));
+            }catch (Exception e){
+                throw new RuntimeException(obj+" can not convert to number");    
+            }
         }
     }
     
     public static boolean Equals (FValue f1, FValue f2){
+        
         if(f1.obj instanceof Number && f2.obj instanceof Number){
             return (f1.getAsDouble() == f2.getAsDouble());
-        }else if (f1.obj instanceof String){
+        }else if (f1.obj instanceof String && f2.obj  instanceof String){
             return (f1.obj.equals(f2.obj.toString()));
         }else {
-            return (f1.obj == f2.obj);
+            return ( String.valueOf(f2.obj).equals(String.valueOf(f1.obj)));
         }
     }
 

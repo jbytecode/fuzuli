@@ -16,25 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package Interpreter;
 
+import java.util.ArrayList;
 
-public class IdentifierExpression extends Expression {
+public class FirstExpression extends Expression{
 
-    String iden;
-    
-    public IdentifierExpression(String iden){
-        this.iden = iden;
+    public FirstExpression (ArrayList<Expression> expr){
+        this.exprs = expr;
     }
     
     @Override
-    public FValue eval(Environment e) {  
-        FValue val = e.findVariable(iden);
-        if(val.equals(FValue.NULL)){
-            throw new RuntimeException("Variable '"+iden+"' is NULL : Environment:\n"+e.toString());
-        }
-        return(val);
+    public FValue eval(Environment e) {
+        ArrayList<Expression> list = (ArrayList<Expression>)this.exprs.get(0).eval(e).getObject();
+        return (new FValue(list.get(0).eval(e)));
     }
     
 }

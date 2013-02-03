@@ -52,6 +52,7 @@ public class Token {
         BITXOR,
         BITSHIFTRIGHT,
         BITSHIFTLEFT,
+        COLON,
         UNKNOWN,
         EOP,
     }

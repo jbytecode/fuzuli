@@ -41,6 +41,7 @@ public class JFuzuli {
                     e = parser.getNextExpression();
                 } catch (Exception exc) {
                     System.out.println("Parsing Error: " + exc.getMessage());
+                    exc.printStackTrace();
                     System.exit(-1);
                 }
 

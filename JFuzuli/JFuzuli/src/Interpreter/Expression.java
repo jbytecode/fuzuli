@@ -34,12 +34,16 @@ public abstract class Expression implements Serializable {
     
     public String toString(){
         StringBuffer buf = new StringBuffer();
-        buf.append(this.getClass().getCanonicalName()+ "{\n");
+        buf.append(this.getClass().getCanonicalName()+ "{");
+        if(exprs!=null){
         for (int i=0;i<exprs.size();i++){
-            buf.append("\t"+exprs.get(i).getClass().getCanonicalName());
-            buf.append(",\n");
+            if(exprs.get(i) != null){
+                buf.append("\t"+exprs.get(i).getClass().getCanonicalName());
+            }
+            buf.append(",");
         }
-        buf.append("}\n");
+        }
+        buf.append("}");
         return(buf.toString());
     }
 }
