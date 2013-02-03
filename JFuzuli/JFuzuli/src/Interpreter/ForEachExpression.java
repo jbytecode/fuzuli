@@ -28,7 +28,19 @@ public class ForEachExpression extends Expression {
     
     @Override
     public FValue eval(Environment e) {
-        throw new UnsupportedOperationException("ForEach Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        e.subEnvironment = new Environment(e);
+        Environment env = e.subEnvironment;
+        
+        String iden = ((IdentifierExpression)this.exprs.get(0)).iden;
+        String in  = ((IdentifierExpression)this.exprs.get(1)).iden;
+        ArrayList<Expression> list = (ArrayList<Expression>)this.exprs.get(2).eval(env).obj;
+        for (int i=0;i<list.size();i++){
+            env.setVariable(iden, list.get(i).eval(env));
+            for (int j=3;j<this.exprs.size();j++){
+                this.exprs.get(j).eval(env);
+            }
+        }
+        return(FValue.ZERO);
     }
     
 }

@@ -55,7 +55,12 @@ public class Environment implements Serializable {
     }
 
     public void setVariable(String name, FValue val) {
-        this.variables.put(name, val);
+        FValue oldval = findVariable(name);
+        if(oldval==FValue.NULL){
+            this.variables.put(name, val);
+        }else{
+            oldval.obj = val.obj;
+        }
     }
     
     public String toString(){
