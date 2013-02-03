@@ -18,6 +18,7 @@
 
 package Interpreter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -25,7 +26,7 @@ import java.util.ArrayList;
  *
  * @author hako
  */
-public abstract class Expression {
+public abstract class Expression implements Serializable {
         
     ArrayList<Expression> exprs;
     
