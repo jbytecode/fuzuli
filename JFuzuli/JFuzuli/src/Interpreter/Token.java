@@ -25,6 +25,7 @@ package Interpreter;
 public class Token {
     String content;
     TokenType type;
+    public static double epsilon = 0.000001;
     
     enum TokenType {
         INTEGER,
@@ -39,6 +40,16 @@ public class Token {
         EQUALS,
         LESS,
         BIGGER,
+        LESSOREQUAL,
+        BIGGEROREQUAL,
+        NOTEQUAL,
+        EXCLAMATION,
+        BITAND,
+        BITOR,
+        BITNOT,
+        BITXOR,
+        BITSHIFTRIGHT,
+        BITSHIFTLEFT,
         UNKNOWN,
         EOP,
     }

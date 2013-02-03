@@ -53,4 +53,14 @@ public class FValue implements Serializable {
             throw new RuntimeException(obj+" is not a number");
         }
     }
+    
+    public static boolean Equals (FValue f1, FValue f2){
+        if(f1.obj instanceof Number && f2.obj instanceof Number){
+            return (f1.getAsDouble() == f2.getAsDouble());
+        }else if (f1.obj instanceof String){
+            return (f1.obj.equals(f2.obj.toString()));
+        }else {
+            return (f1.obj == f2.obj);
+        }
+    }
 }

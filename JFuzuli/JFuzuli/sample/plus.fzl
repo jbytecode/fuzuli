@@ -1,5 +1,14 @@
-(let a 3)
-(let b 7)
-(println "Sum of " a " and " b " is " (+ a b))
+
+# TEST 14
+(let a "astring")
+(let b "astring")
+
+(println (!= a b))
 
 
+(if (= (!= a b) 0)
+    (print  "passed")
+    (print "error")
+)
+
+      
