@@ -126,6 +126,13 @@ public class Parser {
             tok.type = Token.TokenType.DOUBLE;
             return (tok);
         } else if (current == '+') {
+            char next = consume();
+            if (next == '+'){
+                tok.content ="++";
+                tok.type = Token.TokenType.PLUSPLUS;
+                return(tok);
+            }
+            putBackChar();
             tok.content = "+";
             tok.type = Token.TokenType.PLUS;
             return (tok);
@@ -138,6 +145,10 @@ public class Parser {
                 buf.append(t.content);
                 tok.content = buf.toString();
                 tok.type = Token.TokenType.DOUBLE;
+                return(tok);
+            }else if (next == '-'){
+                tok.content ="--";
+                tok.type = Token.TokenType.MINUSMINUS;
                 return(tok);
             }
             putBackChar();
@@ -302,6 +313,12 @@ public class Parser {
         }else if (tok.type == Token.TokenType.BITSHIFTRIGHT) {
             exprs = getExpressionList();
             return (new BitShiftRightExpression(exprs));
+        }else if (tok.content.equals("++")){
+                exprs = getExpressionList();
+                return (new IncExpression(exprs));
+        }else if (tok.content.equals("--")){
+                exprs = getExpressionList();
+                return (new DecExpression(exprs));
         }else if (tok.type == Token.TokenType.STRING){
             return (new StringExpression(tok.content));
         }else if (tok.type == Token.TokenType.IDENTIFIER) {
@@ -335,6 +352,9 @@ public class Parser {
             }else if (tok.content.equals("inc")){
                 exprs = getExpressionList();
                 return (new IncExpression(exprs));
+            }else if (tok.content.equals("dec")){
+                exprs = getExpressionList();
+                return (new DecExpression(exprs));
             }else{
                 return(new IdentifierExpression(tok.content));
             }

@@ -18,42 +18,21 @@
 
 package Interpreter;
 
-/**
- *
- * @author hako
- */
-public class Token {
-    String content;
-    TokenType type;
-    public static double epsilon = 0.000001;
-    
-    enum TokenType {
-        INTEGER,
-        DOUBLE,
-        PLUS,
-        PLUSPLUS,
-        MINUS,
-        MINUSMINUS,
-        LPARAN,
-        RPARAN,
-        OBJECT,
-        IDENTIFIER,
-        STRING,
-        EQUALS,
-        LESS,
-        BIGGER,
-        LESSOREQUAL,
-        BIGGEROREQUAL,
-        NOTEQUAL,
-        EXCLAMATION,
-        BITAND,
-        BITOR,
-        BITNOT,
-        BITXOR,
-        BITSHIFTRIGHT,
-        BITSHIFTLEFT,
-        UNKNOWN,
-        EOP,
-    }
-}
+import java.util.ArrayList;
 
+
+public class DecExpression extends Expression {
+
+    public DecExpression(ArrayList<Expression> expr){
+        this.exprs = expr;
+    }
+    
+    @Override
+    public FValue eval(Environment e) {
+        FValue result = this.exprs.get(0).eval(e);
+        result.obj = result.getAsDouble() - 1;
+        return(result);
+    }
+    
+    
+}
