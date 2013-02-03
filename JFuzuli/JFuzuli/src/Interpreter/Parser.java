@@ -317,6 +317,9 @@ public class Parser {
             }else if (tok.content.equals("if")){
                 exprs = getExpressionList();
                 return (new IfExpression(exprs));
+            }else if (tok.content.equals("block")){
+                exprs = getExpressionList();
+                return (new BlockExpression(exprs));
             }else if (tok.content.equals("setepsilon")){
                 exprs = getExpressionList();
                 return (new SetEpsilonExpression(exprs));

@@ -20,19 +20,22 @@ package Interpreter;
 
 import java.util.ArrayList;
 
-public class PrintlnExpression  extends Expression {
-    
-     public PrintlnExpression(ArrayList<Expression> e){
-        this.exprs = e;
+public class BlockExpression extends Expression{
+
+    public BlockExpression(ArrayList<Expression> expr){
+        this.exprs = expr;
     }
     
     @Override
     public FValue eval(Environment e) {
+        e.subEnvironment = new Environment(e);
+        Environment currentEnv = e.subEnvironment;
+        
         for (int i=0;i<this.exprs.size();i++){
-            System.out.print(exprs.get(i).eval(e).getObject().toString());
+            this.exprs.get(i).eval(currentEnv);
         }
-        System.out.println();
         return(FValue.ZERO);
     }
+
     
 }

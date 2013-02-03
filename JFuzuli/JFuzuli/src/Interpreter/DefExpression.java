@@ -20,18 +20,16 @@ package Interpreter;
 
 import java.util.ArrayList;
 
-public class PrintlnExpression  extends Expression {
-    
-     public PrintlnExpression(ArrayList<Expression> e){
-        this.exprs = e;
+public class DefExpression extends Expression{
+
+    public DefExpression(ArrayList<Expression> expr){
+        this.exprs = expr;
     }
     
     @Override
     public FValue eval(Environment e) {
-        for (int i=0;i<this.exprs.size();i++){
-            System.out.print(exprs.get(i).eval(e).getObject().toString());
-        }
-        System.out.println();
+        String iden = ((IdentifierExpression) this.exprs.get(0)).iden;
+        e.setVariable(iden, FValue.NaN);
         return(FValue.ZERO);
     }
     

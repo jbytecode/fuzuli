@@ -1,14 +1,4 @@
+(let a 10)
+(println a)
+(println b)
 
-# TEST 14
-(let a "astring")
-(let b "astring")
-
-(println (!= a b))
-
-
-(if (= (!= a b) 0)
-    (print  "passed")
-    (print "error")
-)
-
-      
