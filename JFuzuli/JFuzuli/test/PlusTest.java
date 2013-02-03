@@ -52,7 +52,7 @@ public class PlusTest {
         ae.add(new NumberExpression(7.5));
         ae.add(new NumberExpression(5));
         PlusExpression pe = new PlusExpression(ae);
-        FValue result = pe.eval(new Environment());
+        FValue result = pe.eval(new Environment(null));
         System.out.println(result.getAsDouble());
     }
 }

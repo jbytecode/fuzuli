@@ -94,7 +94,13 @@ public class Parser {
             return (tok);
         } else if (current == ' ' || current == '\t' || current == '\n' || current == '\r') {
             return (getNextToken());
-        } else if (current == '(') {
+        } else if (current == '#'){
+            while(true){
+                current = consume();
+                if (current == '\n') break;
+            }
+          return (getNextToken());
+        }else if (current == '(') {
             tok.content = "(";
             tok.type = Token.TokenType.LPARAN;
             return (tok);
@@ -127,7 +133,19 @@ public class Parser {
             tok.content = "-";
             tok.type = Token.TokenType.MINUS;
             return (tok);
-        } else if (Character.isAlphabetic(current)) {
+        } else if (current == '='){
+            tok.content = "=";
+            tok.type = Token.TokenType.EQUALS;
+            return(tok);
+        }else if (current == '<'){
+            tok.content = "<";
+            tok.type = Token.TokenType.LESS;
+            return(tok);
+        }else if (current == '>'){
+            tok.content = ">";
+            tok.type = Token.TokenType.BIGGER;
+            return(tok);
+        }else if (Character.isAlphabetic(current)) {
             buf.append(current);
             while (true) {
                 current = consume();
@@ -153,7 +171,7 @@ public class Parser {
             return(tok);
         }
 
-        return (new Token());
+        throw new RuntimeException("Unknow character: '"+current+"'");
     }
 
     public ArrayList<Expression> getExpressionList() {
@@ -187,7 +205,16 @@ public class Parser {
         } else if (tok.type == Token.TokenType.MINUS) {
             exprs = getExpressionList();
             return (new MinusExpression(exprs));
-        } else if (tok.type == Token.TokenType.STRING){
+        } else if (tok.type == Token.TokenType.EQUALS) {
+            exprs = getExpressionList();
+            return (new EqualsExpression(exprs));
+        } else if (tok.type == Token.TokenType.LESS) {
+            exprs = getExpressionList();
+            return (new LessExpression(exprs));
+        }  else if (tok.type == Token.TokenType.BIGGER) {
+            exprs = getExpressionList();
+            return (new BiggerExpression(exprs));
+        }else if (tok.type == Token.TokenType.STRING){
             return (new StringExpression(tok.content));
         }else if (tok.type == Token.TokenType.IDENTIFIER) {
             if (tok.content.equals("print")) {
@@ -199,6 +226,11 @@ public class Parser {
             }else if (tok.content.equals("let")) {
                 exprs = getExpressionList();
                 return (new LetExpression(exprs));
+            }else if (tok.content.equals("if")){
+                exprs = getExpressionList();
+                return (new IfExpression(exprs));
+            }else{
+                return(new IdentifierExpression(tok.content));
             }
         }
         throw new RuntimeException("Fuzuli function " + tok.content + " is not defined");

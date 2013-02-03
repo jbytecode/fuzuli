@@ -16,31 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 package Interpreter;
 
-/**
- *
- * @author hako
- */
-public class Token {
-    String content;
-    TokenType type;
-    
-    enum TokenType {
-        INTEGER,
-        DOUBLE,
-        PLUS,
-        MINUS,
-        LPARAN,
-        RPARAN,
-        OBJECT,
-        IDENTIFIER,
-        STRING,
-        EQUALS,
-        LESS,
-        BIGGER,
-        UNKNOWN,
-        EOP,
-    }
-}
 
+public class IdentifierExpression extends Expression {
+
+    String iden;
+    
+    public IdentifierExpression(String iden){
+        this.iden = iden;
+    }
+    
+    @Override
+    public FValue eval(Environment e) {        
+        return (e.findVariable(iden));
+    }
+    
+}
