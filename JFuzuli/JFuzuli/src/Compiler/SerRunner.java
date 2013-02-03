@@ -8,7 +8,7 @@ public class SerRunner {
     
     public SerRunner(){
         try{
-            ObjectInputStream ois = new ObjectInputStream(this.getClass().getResourceAsStream("jbytecode.ser"));
+            ObjectInputStream ois = new ObjectInputStream(this.getClass().getResourceAsStream("/jbytecode.ser"));
             FuzuliScheme fs = (FuzuliScheme)ois.readObject();
             fs.run();
         }catch(Exception e){

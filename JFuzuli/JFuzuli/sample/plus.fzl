@@ -1,2 +1,5 @@
-(print "Hello world!")
+(let a 3)
+(let b 7)
+(println "Sum of " a " and " b " is " (+ a b))
+
 
