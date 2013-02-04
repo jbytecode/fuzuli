@@ -29,10 +29,12 @@ public class Environment implements Serializable {
     public HashMap<String, FValue> variables;
     public Environment topEnvironment;
     public Environment subEnvironment;
+    public HashMap<String, FunctionExpression> functions;
 
     public Environment(Environment top) {
         this.topEnvironment = top;
         this.variables = new HashMap<String, FValue>();
+        this.functions = new HashMap<String, FunctionExpression>();
         if (top==null){
             this.variables.put("NULL", FValue.NULL);
         }
@@ -68,6 +70,10 @@ public class Environment implements Serializable {
         }
         buf.append(this.variables.toString());  
         return(buf.toString());
+    }
+    
+    public void registerFunction(String name, FunctionExpression f){
+        this.functions.put(name, f);
     }
 }
 
