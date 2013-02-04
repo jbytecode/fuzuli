@@ -370,6 +370,12 @@ public class Parser {
             }else if (tok.content.equals("foreach")){
                 exprs = getExpressionList();
                 return (new ForEachExpression(exprs));
+            }else if (tok.content.equals("while")){
+                exprs = getExpressionList();
+                return (new WhileExpression(exprs));
+            }else if (tok.content.equals("break")){
+                exprs = getExpressionList();
+                return (new BreakExpression(exprs));
             }else if (tok.content.equals("def")){
                 exprs = getExpressionList();
                 return (new DefExpression(exprs));
