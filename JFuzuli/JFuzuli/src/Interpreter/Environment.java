@@ -18,8 +18,6 @@
 package Interpreter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 
 /**
@@ -64,7 +62,7 @@ public class Environment implements Serializable {
     }
     
     public String toString(){
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         if (this.topEnvironment!=null){
             buf.append(this.topEnvironment.toString());
         }

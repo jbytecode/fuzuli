@@ -22,14 +22,14 @@
 (def i INTEGER)(def a INTEGER)(def toplam INTEGER)
 (def h INTEGER)(def j INTEGER)
 
+
 (let a 100)
 
 # One For. 
-(for (let i  0) (< i 10) (let i (+ 1 i))
+(for (let i 0) (< i 10) (inc i)
 		(inc a)
-		(println "in for a is " a " and i is " i)
 )
-(println "Finally a is " a )
+
 (if (= a 110) 
 	(print passed) 
 	(print error)

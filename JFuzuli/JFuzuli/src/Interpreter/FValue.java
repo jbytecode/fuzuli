@@ -29,6 +29,8 @@ public class FValue implements Serializable {
     static FValue ZERO = new FValue(0);
     static FValue NaN =new FValue(Double.NaN);
     static FValue NULL = new FValue("NULL");
+    static FValue NOTSET = new FValue("NOTSET");
+    
     Object obj = null;
     
     public FValue(int i){
