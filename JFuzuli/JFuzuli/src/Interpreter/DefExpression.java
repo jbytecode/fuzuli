@@ -29,7 +29,7 @@ public class DefExpression extends Expression{
     @Override
     public FValue eval(Environment e) {
         String iden = ((IdentifierExpression) this.exprs.get(0)).iden;
-        e.setVariable(iden, FValue.ZERO);
+        e.setVariable(iden, new FValue(0.0));
         return(FValue.ZERO);
     }
     

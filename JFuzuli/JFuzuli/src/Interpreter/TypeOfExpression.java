@@ -12,11 +12,13 @@ public class TypeOfExpression extends Expression {
     
     @Override
     public FValue eval(Environment e) {
-        FValue val = this.exprs.get(0).eval(e);
-        String type = val.obj.getClass().getCanonicalName();
-        if(val.obj.equals("NULL")){
-            type = "NULL";
+        FValue val = null;
+        try{
+            val = this.exprs.get(0).eval(e);
+        }catch (Exception ex){
+            return (FValue.ZERO);
         }
+        String type = val.obj.getClass().getCanonicalName();
         return( new FValue(type));
     }
     
