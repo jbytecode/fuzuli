@@ -1,0 +1,18 @@
+(let passed "PASSED!\n")
+(let error "ERROR\n")
+
+(function f (params x)
+  (block
+    (return (- x 6))
+  )
+)
+
+# TEST 1
+(let result1 (- (f 10) (f 11))  )
+(if (= result1 -1)
+	(print passed)
+	(print error)
+)
+
+
+
