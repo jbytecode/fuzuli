@@ -1,0 +1,117 @@
+#
+# fuzuli : A general purpose interpreter
+# Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+(let passed "PASSED!\n")
+(let error "ERROR\n")
+# test 1
+(let myList (list 1 2 3 4 5 6 7 8 9 10))
+(let result 0)
+(if (= (length myList) 10) (inc result))
+(set myList 9 888)
+(if (= (nth myList 9) 888) (inc result))
+(if (= result 2) (print passed) (print error))
+
+
+
+
+# test 2 - length
+(let myList (list 1 2 3 4 5 6 7 8 9 10))
+(let result 0)
+(if (= (length myList) 10) (inc result))
+(set myList 9 888)
+(if (= (nth myList 9) 888) (inc result))
+(if (= result 2) (print passed) (print error))
+
+
+# test 3 - nth
+(let b (list 1 2 3 4 5))
+(let sum (+ (nth b 0) (nth b 1) (nth b 2) (nth b 3) (nth b 4)))
+(if (= sum 15) (print passed) (print error))
+
+
+# test 4 - nth
+(let a (list 1 2 3 4 5 6 7 8 10))
+(let b (nth a 0))
+(if (= b 1)
+	(print passed)
+	(print error)
+)
+
+
+
+# test 5 - remove
+(let mylist (list "A" "B" "C" "D" "E" "F"))
+(let newlist (remove mylist 2))
+(if (= (nth newlist 2) "D")
+	(print passed)
+	(print error)
+)
+
+# test 6  - find
+(let mylist (list "A" "B" "C"))
+(let f (find mylist "C"))
+(if (= f 2)
+	(print passed)
+	(print error)
+)
+
+# test 7 - append
+(let mylist (list "A" "B"))
+(append mylist "C")
+(if (= (nth mylist 2) "C")
+	(print passed)
+	(print error)
+)
+
+# test 8 - prepend
+(let mylist (list "B" "C"))
+(prepend mylist "A")
+(if (= (nth mylist 0) "A")
+    (print passed)
+    (print error)
+)
+
+
+# test 9 - fill
+(let mylist (: 0 100))
+(fill mylist 0)
+(let sum 0.0)
+(for (let i 0)(< i (length mylist)) (++i)
+	(let sum (nth mylist i))
+)
+(if (= sum 0)
+	(print passed)
+	(print error)
+)
+
+# test 10 - first
+(let mylist (: -10 100))
+(let f (first mylist))
+(if (= f -10)
+	(print passed)
+	(print error)
+)
+
+# test 11 - last
+(let mylist (: -10 100))
+(let l (last mylist))
+(if (= l 100)
+	(print passed)
+	(print error)
+)
+
