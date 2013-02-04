@@ -159,7 +159,11 @@ public class Parser {
             tok.content = "/";
             tok.type = Token.TokenType.DIVISION;
             return(tok);
-        } else if (current == '='){
+        } else if (current == '*'){
+            tok.content = "*";
+            tok.type = Token.TokenType.ASTERIX;
+            return(tok);
+        }else if (current == '='){
             tok.content = "=";
             tok.type = Token.TokenType.EQUALS;
             return(tok);
@@ -291,6 +295,9 @@ public class Parser {
         } else if (tok.type == Token.TokenType.DIVISION) {
             exprs = getExpressionList();
             return (new DivisionExpression(exprs));
+        } else if (tok.type == Token.TokenType.ASTERIX) {
+            exprs = getExpressionList();
+            return (new AsterixExpression(exprs));
         }  else if (tok.type == Token.TokenType.EQUALS) {
             exprs = getExpressionList();
             return (new EqualsExpression(exprs));

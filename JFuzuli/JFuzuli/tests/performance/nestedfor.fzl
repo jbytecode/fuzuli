@@ -1,0 +1,19 @@
+(println (timing
+
+(let num 0)
+(let n 10)
+
+(for (let a 0) (< a n) (++a)
+	(for (let b 0) (< b n) (++b)
+		(for (let c 0)(< c n) (++c)
+			(for (let d 0) (< d n) (++d)
+				(for (let e 0) (< e n) (++e)
+					(++ num)
+				)
+			)
+		)
+	)
+)
+
+)
+)
