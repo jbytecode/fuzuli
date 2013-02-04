@@ -15,49 +15,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Interpreter;
+
+import Interpreter.Environment;
+import java.util.ArrayList;
 
 /**
  *
  * @author hako
  */
-public class Token {
-    String content;
-    TokenType type;
-    public static double epsilon = 0.000001;
-    public static double precision = 30;
-    
-    enum TokenType {
-        INTEGER,
-        DOUBLE,
-        PLUS,
-        PLUSPLUS,
-        MINUS,
-        MINUSMINUS,
-        ASTERIX,
-        DIVISION,
-        LPARAN,
-        RPARAN,
-        OBJECT,
-        IDENTIFIER,
-        STRING,
-        EQUALS,
-        LESS,
-        BIGGER,
-        LESSOREQUAL,
-        BIGGEROREQUAL,
-        NOTEQUAL,
-        EXCLAMATION,
-        BITAND,
-        BITOR,
-        BITNOT,
-        BITXOR,
-        BITSHIFTRIGHT,
-        BITSHIFTLEFT,
-        COLON,
-        UNKNOWN,
-        EOP,
+public class AsterixExpression extends Expression {
+
+    public AsterixExpression(ArrayList<Expression> expr) {
+        this.exprs = expr;
+    }
+
+    @Override
+    public FValue eval(Environment e) {
+        Double sum = 1.0;
+        for (Expression exp : exprs) {
+            FValue f = exp.eval(e);
+
+            sum *= exp.eval(e).getAsDouble();
+        }
+        return (new FValue(sum));
     }
 }
-

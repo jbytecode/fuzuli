@@ -1,0 +1,15 @@
+(function factorial (params x)
+        (if (<= x 1)
+                (return 1)
+                (return (* x (factorial (- x 1))))
+        )
+)
+
+(print
+        (timing
+                (for (let i 0) (< i 1000) (inc i)
+                        (factorial 25)
+                )
+        )
+)
+
