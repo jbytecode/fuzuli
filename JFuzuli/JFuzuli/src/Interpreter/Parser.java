@@ -355,6 +355,12 @@ public class Parser {
             }else if (tok.content.equals("if")){
                 exprs = getExpressionList();
                 return (new IfExpression(exprs));
+            }else if (tok.content.equals("switch")){
+                exprs = getExpressionList();
+                return (new SwitchExpression(exprs));
+            }else if (tok.content.equals("case")){
+                exprs = getExpressionList();
+                return (new CaseExpression(exprs));
             }else if (tok.content.equals("block")){
                 exprs = getExpressionList();
                 return (new BlockExpression(exprs));
