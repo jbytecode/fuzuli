@@ -1,0 +1,153 @@
+#
+# fuzuli : A general purpose interpreter
+# Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+(let io_lib (dynload "FuzuliCore"))
+
+(function fopen (params file mode)
+		(return (C io_lib "fopend" file mode))
+)
+
+(function fclose (params file)
+		(return (C io_lib "fclosed" file))
+)
+
+(function feof (params file)
+		(return (C io_lib "feofd" file))
+)
+
+(function fwrite (params file obj)
+		(return (C io_lib "fwrited" file obj))
+)
+
+
+(function fread (params file obj)
+		(return (C io_lib "freadd" file obj))
+)
+
+
+(function fflush (params file)
+		(return (C io_lib "fflushd" file))
+)
+
+(function chdir (params x)
+		(return (C io_lib x))
+) 
+
+(function getpwd (params)
+		(return (C io_lib "getpwd"))
+)
+
+(function dir (params x)
+		(return (C io_lib "dir" x))
+)
+
+(function unlink (params x)
+		(return (C io_lib "unlinkd" x))
+)
+
+(function rename (params x y)
+		(return (C io_lib "renamed" x y))
+)
+
+
+(function tmpfile (params)
+		(return (C io_lib "tmpfiled"))
+)
+
+
+(function tmpnam (params)
+		(return (C io_lib "tmpnamed"))
+)
+
+
+(function datetime (params)
+		(return (C io_lib "datetime"))
+)
+
+
+(function asctime (params)
+		(return (C io_lib "asctimed"))
+)
+
+(function sleep (params x)
+		(return (C io_lib "sleepd" x))
+)
+
+
+(function getenv (params var)
+		(return (C io_lib "getenvd" var))
+)
+
+(function setenv (params var val changeflag)
+		(return (C io_lib "setenvd" var val changeflag))
+)
+
+
+(function rnd (params)
+		(return (C io_lib "rnd"))
+)
+
+(function print_r (params alist)
+		(return (C io_lib "print_r" alist))
+)
+
+(function popen (params process mode)
+		(return (C io_lib "popend" process mode))
+)
+
+(function pclose (params process)
+		(return (C io_lib "pclosed" process))
+)
+
+(function exit (params code)
+		(return (C io_lib "exitd" code))
+)
+
+(function is_dir (params dir)
+		(return (C io_lib "is_dir" dir))
+)
+
+
+(function time (params)
+		(return (C io_lib "timed"))
+)
+
+(function randomize (params seed)
+		(return (C io_lib "randomize" seed))
+)
+
+
+(function puts (params text)
+		(return (C io_lib "putsd" text))
+)
+
+(function fputs (params file text)
+		(return (C io_lib "fputsd" file text))
+)
+
+(function fgetc (params file)
+		(return (C io_lib "fgetcd" file))
+)
+
+(function ftell (params file)
+		(return (C io_lib "ftelld" file))
+)
+
+(function readline (params)
+		(return (C io_lib "readlined"))
+)

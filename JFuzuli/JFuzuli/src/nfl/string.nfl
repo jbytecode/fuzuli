@@ -1,0 +1,152 @@
+#
+# fuzuli : A general purpose interpreter
+# Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+(let str_lib (dynload "FuzuliCore"))
+
+(function trim (params x)
+		(return  (rtrim (ltrim x)))
+)
+
+
+(function ltrim (params x)
+		(return (javastatic "Core.FStrings.ltrim" x))
+)
+
+(function rtrim (params x)
+		(return (javastatic "Core.FStrings.rtrim" x))
+)
+
+
+(function lcase (params x)
+	(return (javastatic "Core.FStrings.lcase" x))
+)
+
+(function ucase (params x)
+	(return (javastatic "Core.FStrings.ucase" x))
+)
+
+(function left (params x n)
+	(return (javastatic "Core.FStrings.left" x n))
+)
+
+
+(function right (params x n)
+	(return (javastatic "Core.FStrings.right" x n))
+)
+
+
+(function strcat (params alist)
+	(return (javastatic "Core.FStrings.strcat" alist))
+)
+
+
+(function strlen (params x)
+	(return (javastatic "Core.FStrings.strlen" x)) 
+)
+
+(function substr (params x a b)
+	(block
+		(return (javastatic "Core.FStrings.substr" x a b))
+	)
+)
+
+(function strreverse (params x)
+	(return (javastatic "Core.FStrings.strreverse" x))
+)
+
+
+
+(function instr (params text part)
+	(return (javastatic "Core.FStrings.instr" text part))
+)
+
+
+(function chr (params byte)
+	(return (javastatic "Core.FStrings.chr" byte))
+)
+
+(function ord (params character)
+	(return (javastatic "Core.FStrings.ord" character))
+)
+
+(function md5 (params text)
+	(return (javastatic "Core.FStrings.md5" text))
+)
+
+(function urldecode (params url)
+	(return (javastatic "Core.FStrings.urldecode" url))
+)
+
+(function levenshtein (params text1 text2)
+	(return (javastatic "Core.FStrings.levenshtein" text1 text2))
+)
+
+
+(function str_replace (params mainstr what to)
+		(return (javastatic "Core.FStrings.str_replace" mainstr what to))
+)
+
+(function str_shuffle (params str)
+		(return (javastatic "Core.FStrings.str_shuffle" str))
+
+)
+
+(function isdigit (params str)
+		(return (javastatic "Core.FStrings.isdigit" str))
+)
+
+(function isalpha (params str)
+		(return (javastatic "Core.FStrings.isalpha" str))
+)
+
+(function isalnum (params str)
+		(return (javastatic "Core.FStrings.isalnum" str))
+)
+
+(function isupper (params str)
+		(return (javastatic "Core.FStrings.isupper" str))
+)
+
+(function islower (params str)
+		(return (javastatic "Core.FStrings.islower" str))
+)
+
+(function iscntrl (params str)
+		(return (javastatic "Core.FStrings.iscntrl" str))
+)
+
+
+(function isgraph (params str)
+		(return (javastatic "Core.FStrings.isgraph" str))
+)
+
+
+(function isprint (params str)
+		(return (javastatic "Core.FStrings.isprint" str))
+)
+
+
+(function ispunct (params str)
+		(return (javastatic "Core.FStrings.ispunct" str))
+)
+
+(function isspace (params str)
+		(return (javastatic "Core.FStrings.isspace" str))
+)
+
+

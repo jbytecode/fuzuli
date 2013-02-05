@@ -20,6 +20,8 @@ package Interpreter;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
@@ -38,10 +40,9 @@ public class Parser {
         resetParser();
     }
 
-    public Parser(File file) {
+    private void read(BufferedReader reader) throws Exception {
         StringBuffer code = new StringBuffer();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
+         
             char[] chars = new char[1024];
             int result;
             while (true) {
@@ -55,8 +56,28 @@ public class Parser {
                 }
             }
             this.sourcecode = code.toString();
+        }
+    
+
+    public Parser(File file) {
+        StringBuffer code = new StringBuffer();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            this.read(reader);
         } catch (Exception e) {
             System.out.println("Error reading file:" + file.toString());
+            e.printStackTrace();
+        }
+        resetParser();
+    }
+    
+    public Parser(InputStream is){
+        StringBuffer code = new StringBuffer();
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            this.read(reader);
+        } catch (Exception e) {
+            System.out.println("Error reading stream:" + is.toString());
             e.printStackTrace();
         }
         resetParser();
@@ -255,7 +276,7 @@ public class Parser {
             buf.append(current);
             while (true) {
                 current = consume();
-                if (!Character.isLetter(current) && !Character.isDigit(current)) {
+                if (!Character.isLetter(current) && !Character.isDigit(current) && current!='_') {
                     putBackChar();
                     break;
                 }
@@ -488,6 +509,15 @@ public class Parser {
             }else if (tok.content.equals("timing")){
                 exprs = getExpressionList();
                 return (new TimingExpression(exprs));
+            }else if (tok.content.equals("require")){
+                exprs = getExpressionList();
+                return (new RequireExpression(exprs));
+            }else if (tok.content.equals("dynload")){
+                exprs = getExpressionList();
+                return (new DynLoadExpression(exprs));
+            }else if (tok.content.equals("javastatic")){
+                exprs = getExpressionList();
+                return (new JavaStaticExpression(exprs));
             }else{
                 String fname = tok.content;
                 if(this.getPreviousToken().type == Token.TokenType.LPARAN){                    
