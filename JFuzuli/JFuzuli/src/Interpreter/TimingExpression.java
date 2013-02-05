@@ -15,33 +15,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Interpreter;
 
 import java.util.ArrayList;
 
-public class BlockExpression extends Expression{
+public class TimingExpression extends Expression {
 
-    public BlockExpression(ArrayList<Expression> expr){
+    public TimingExpression(ArrayList<Expression> expr) {
         this.exprs = expr;
     }
-    
+
     @Override
     public FValue eval(Environment e) {
-        e.subEnvironment = new Environment(e);
-        Environment currentEnv = e.subEnvironment;
-        FValue val=null, returnval=FValue.ZERO;
-        
-        for (int i=0;i<this.exprs.size();i++){
-            val = this.exprs.get(i).eval(currentEnv);
-            if(val.getObject() instanceof ReturnExpression ){
-                ReturnExpression re =  (ReturnExpression)(val.getObject());
-                returnval = new FValue(re);
-                break;
-            }
-        }
-        return(returnval);
-    }
+        long time1, time2;
+        int size = this.exprs.size();
+        FValue result = null;
 
-    
+        time1 = System.currentTimeMillis();
+
+        for (int i = 0; i < size; i++) {
+            result = this.exprs.get(i).eval(e);
+        }
+
+        time2 = System.currentTimeMillis();
+
+        return (new FValue(time2 - time1));
+    }
 }

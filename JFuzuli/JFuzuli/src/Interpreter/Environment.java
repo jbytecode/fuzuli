@@ -43,6 +43,10 @@ public class Environment implements Serializable {
     public FValue getVariableInThisEnvironment(String name) {
         return (this.variables.get(name));
     }
+    
+    public void setVariableInThisEnvironment(String name, FValue val) {
+        this.variables.put(name, val);
+    }
 
     public FValue findVariable(String name) {
         if(variables.containsKey(name)){
@@ -74,6 +78,16 @@ public class Environment implements Serializable {
     
     public void registerFunction(String name, FunctionExpression f){
         this.functions.put(name, f);
+    }
+    
+     public FunctionExpression findFunction(String name) {
+        if(functions.containsKey(name)){
+            return(functions.get(name));
+        }else if (this.topEnvironment !=null){
+            return(topEnvironment.findFunction(name));
+        }else{
+            return(null);
+        }
     }
 }
 
