@@ -33,6 +33,7 @@ public class FunctionCallExpression extends Expression{
     public FValue eval(Environment e) {
         Environment env = new Environment(e);
         env.variables.clear();
+        int size;
         
         FValue returnval = null, val = null;
         
@@ -41,11 +42,13 @@ public class FunctionCallExpression extends Expression{
             throw new RuntimeException("Fuzuli function '"+fname+ "' is not defined");
         }
         
-        for (int i=0;i<exprs.size();i++){
+        size = exprs.size();
+        for (int i=0;i<size;i++){
             env.setVariableInThisEnvironment(func.params.get(i), this.exprs.get(i).eval(env));
         }
         
-        for (int i=0;i<func.body.size();i++){
+        size=func.body.size();
+        for (int i=0;i<size;i++){
             val = func.body.get(i).eval(env);
             //System.out.println("In Function, object is "+val.getObject().getClass().getCanonicalName());
             if(val.getObject() instanceof ReturnExpression ){
