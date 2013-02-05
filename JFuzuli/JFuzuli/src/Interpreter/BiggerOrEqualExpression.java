@@ -20,28 +20,22 @@ package Interpreter;
 
 import java.util.ArrayList;
 
-public class BlockExpression extends Expression{
 
-    public BlockExpression(ArrayList<Expression> expr){
+public class BiggerOrEqualExpression extends Expression{
+
+    public BiggerOrEqualExpression(ArrayList<Expression>expr){
         this.exprs = expr;
     }
     
     @Override
     public FValue eval(Environment e) {
-        e.subEnvironment = new Environment(e);
-        Environment currentEnv = e.subEnvironment;
-        FValue val=null, returnval=FValue.ZERO;
-        
-        for (int i=0;i<this.exprs.size();i++){
-            val = this.exprs.get(i).eval(currentEnv);
-            if(val.getObject() instanceof ReturnExpression ){
-                ReturnExpression re =  (ReturnExpression)(val.getObject());
-                returnval = new FValue(re);
-                break;
-            }
+        FValue val1 = this.exprs.get(0).eval(e);
+        FValue val2 = this.exprs.get(1).eval(e);
+        if(val1.getAsDouble()>=val2.getAsDouble()){
+            return (new FValue(1.0));
+        }else{
+            return (new FValue(0.0));
         }
-        return(returnval);
     }
-
     
 }

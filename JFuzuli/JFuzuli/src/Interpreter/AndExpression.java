@@ -15,33 +15,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Interpreter;
 
 import java.util.ArrayList;
 
-public class BlockExpression extends Expression{
+public class AndExpression extends Expression {
 
-    public BlockExpression(ArrayList<Expression> expr){
+    public AndExpression(ArrayList<Expression> expr) {
         this.exprs = expr;
     }
-    
+
     @Override
     public FValue eval(Environment e) {
-        e.subEnvironment = new Environment(e);
-        Environment currentEnv = e.subEnvironment;
-        FValue val=null, returnval=FValue.ZERO;
-        
         for (int i=0;i<this.exprs.size();i++){
-            val = this.exprs.get(i).eval(currentEnv);
-            if(val.getObject() instanceof ReturnExpression ){
-                ReturnExpression re =  (ReturnExpression)(val.getObject());
-                returnval = new FValue(re);
-                break;
+            Double current = this.exprs.get(i).eval(e).getAsDouble();
+            if(current != 1.0){
+                return(new FValue(0.0));
             }
-        }
-        return(returnval);
+        }        
+        return(new FValue(1.0));
     }
-
-    
 }

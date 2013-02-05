@@ -23,13 +23,39 @@ import java.util.ArrayList;
 
 public class FunctionCallExpression extends Expression{
 
+    String fname;
+    
     public FunctionCallExpression(ArrayList<Expression>expr){
         this.exprs = expr;
     }
     
     @Override
     public FValue eval(Environment e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Environment env = new Environment(e);
+        env.variables.clear();
+        
+        FValue returnval = null, val = null;
+        
+        FunctionExpression func = env.findFunction(fname);
+        if(func == null){
+            throw new RuntimeException("Fuzuli function '"+fname+ "' is not defined");
+        }
+        
+        for (int i=0;i<exprs.size();i++){
+            env.setVariableInThisEnvironment(func.params.get(i), this.exprs.get(i).eval(env));
+        }
+        
+        for (int i=0;i<func.body.size();i++){
+            val = func.body.get(i).eval(env);
+            //System.out.println("In Function, object is "+val.getObject().getClass().getCanonicalName());
+            if(val.getObject() instanceof ReturnExpression ){
+                ReturnExpression re =  (ReturnExpression)(val.getObject());
+                returnval = re.returnvalue;
+                break;
+            }
+        }
+        return(new FValue(returnval));
+        
     }
     
 }

@@ -19,30 +19,32 @@ package Interpreter;
 
 import java.util.ArrayList;
 
-
 public class WhileExpression extends Expression {
 
-    public WhileExpression(ArrayList<Expression> expr){
+    public WhileExpression(ArrayList<Expression> expr) {
         this.exprs = expr;
     }
-    
+
     @Override
     public FValue eval(Environment e) {
         e.subEnvironment = new Environment(e);
         Environment env = e.subEnvironment;
-        while(true){
-            if(this.exprs.get(0).eval(env).getAsDouble() == 0.0){
+        while (true) {
+            if (this.exprs.get(0).eval(env).getAsDouble() == 0.0) {
                 break;
             }
-            for (int i=1;i<this.exprs.size();i++){
+            for (int i = 1; i < this.exprs.size(); i++) {
                 Expression ex = this.exprs.get(i);
                 FValue result = ex.eval(env);
-                if (result.getObject() instanceof BreakExpression){
-                    return(result);
-                }                
+                if (result.getObject() instanceof BreakExpression) {
+                    return (result);
+                }
+                if (result.getObject() instanceof ReturnExpression) {
+                    ReturnExpression re = (ReturnExpression) (result.getObject());
+                    return (new FValue(re));
+                }
             }
         }
-        return(FValue.ZERO);
+        return (FValue.ZERO);
     }
-    
 }
