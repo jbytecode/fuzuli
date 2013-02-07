@@ -36,7 +36,6 @@ public class JFuzuli {
             Environment globalEnvironment = new Environment(null);
             globalEnvironment.setVariable("argc", args.length);
             globalEnvironment.setVariable("argv", args);
-            globalEnvironment.setVariable("NULL", 0);
             Parser parser = new Parser(new File(args[0]));
             Expression e = null;
             while (true) {
