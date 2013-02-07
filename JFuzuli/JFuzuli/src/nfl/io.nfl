@@ -16,7 +16,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-(let io_lib (dynload "FuzuliCore"))
 
 (function fopen (params file mode)
 		(return (C io_lib "fopend" file mode))

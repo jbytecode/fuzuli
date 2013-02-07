@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-(let str_lib (dynload "FuzuliCore"))
+
 
 (function trim (params x)
 		(return  (rtrim (ltrim x)))

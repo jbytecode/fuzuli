@@ -1,0 +1,139 @@
+#
+# fuzuli : A general purpose interpreter
+# Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
+(require "math.nfl")
+(let passed "PASSED!\n")
+(let error "ERROR\n")
+
+(let a (/ (* PI 3) 2.0))  # a=3*PI/2
+(let b (cos a))     # b=cos(a)
+
+
+# TEST 1 - abs and cos
+(if (< (abs (- b 0)) 0.0001) 
+	(print passed) 
+	(print error)
+)
+
+
+# TEST 2 - abs and sin
+(let a (/ PI 2.0))  # a=PI/2
+(let b (sin a))     # b=sin(a)
+(if (< (abs (- b 1)) 0.0001) 
+	(print passed) 
+	(print error)
+)
+
+
+
+# TEST 3 - Exp
+(let b (exp 1.0))     # b=exp(1.0)
+(if (< (abs (- b 2.71828)) 0.0001) 
+	(print passed) 
+	(print error)
+)
+
+
+# TEST 4 - Abs
+(let a -11.9)
+(let b (abs a))
+(if (= b 11.9) 
+	(print passed) 
+	(print error)
+)
+
+
+# TEST 5 - Abs
+(if (= (abs -3) 3) 
+	(print passed) 
+	(print error)
+)
+
+# TEST 6 - Atan2
+(let val (atan2 1 1))
+(if (<  (abs (- val 0.7853981634)) 0.0001)
+	(print passed)
+	(print error)
+)
+
+
+# TEST 7 - isinf
+(let val (pow 10 10000))
+(if (= (isinf val) 1)
+    (print passed)
+    (print error)
+)
+
+# TEST 8 - pow and isinf
+(let val (pow 10 1))
+(if (= (isinf val) 0)
+    (print passed)
+    (print error)
+)
+
+# TEST 9 - pow and isinf
+(let val (pow -10 100001))
+(if (= (isinf val) 1)
+    (print passed)
+    (print error)
+)
+
+# TEST 10 - log10
+(if (= (log10 10) 1)
+	(print passed)
+	(print error)
+)
+
+# TEST 11 - log2
+(if (= (log2 2) 1)
+	(print passed)
+	(print error)
+)
+
+# TEST 12 - sqrt
+(if (= (sqrt 100) 10)
+	(print passed)
+	(print error)
+)
+
+# TEST 13 - ceil
+(if (= (ceil 3.4) 4)
+	(print passed)
+	(print error)
+)
+
+# TEST 14 - round 
+(if (= (round 3.4) 3)
+	(print passed)
+	(print error)
+)
+
+# TEST 15 - round
+(if (= (round 3.5) 4)
+	(print passed)
+	(print error)
+)
+
+# TEST 16 - floor
+(if (= (floor 3.4) 3)
+	(print passed)
+	(print error)
+)
+
+
