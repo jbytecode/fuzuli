@@ -1,0 +1,40 @@
+#
+# fuzuli : A general purpose interpreter
+# Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+(let passed "PASSED!\n")
+(let error "ERROR\n")
+
+(let toplam 0.0)
+
+(for (let i 0) (< i 10) (let i (+ i 1))
+        (for (let j 0) (< j 10) (let j (+ j 1))
+                (for (let h 0) (< h 10) (let h (+ h 1))
+                		#(print i " " j " " h "\n")
+                        (let toplam (+ toplam 1.0))
+                        (if (= toplam 100) (break))
+                )
+                (if (= toplam 100) (break))
+        )
+        (if (= toplam 100) (break))
+)
+
+
+(if (= toplam 100)
+    (print passed)
+    (print error)
+)
+

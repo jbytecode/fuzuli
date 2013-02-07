@@ -37,8 +37,11 @@ public class ForExpression extends Expression {
                 break;
             }
             for (int i=3;i<this.exprs.size();i++){
-                this.exprs.get(i).eval(env);
-            }
+                Object result = this.exprs.get(i).eval(env);
+                if (result instanceof BreakExpression) {
+                    return (result);
+                }
+            } 
             this.exprs.get(2).eval(env);
         }
         return(FValue.ZERO);
