@@ -131,13 +131,13 @@ public class FStrings {
             byte[] bytes = s.getBytes("UTF-8");
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] cyrp = md.digest(bytes);
-            for (int i=0;i<cyrp.length;i++){
-                char c = (char)cyrp[i];
+            for (int i = 0; i < cyrp.length; i++) {
+                char c = (char) cyrp[i];
                 String part = Integer.toHexString(c);
-                if (part.length()==4){
-                    part=part.substring(2,4);
-                }else if (part.length()<2){
-                    part="0"+part;
+                if (part.length() == 4) {
+                    part = part.substring(2, 4);
+                } else if (part.length() < 2) {
+                    part = "0" + part;
                 }
                 sb.append(part);
             }
@@ -210,97 +210,97 @@ public class FStrings {
         }
         return (new String(cs));
     }
-    
+
     public static Double isdigit(FValue o, Environment env) {
         String str = String.valueOf(o);
-        if(Character.isDigit(str.charAt(0))){
+        if (Character.isDigit(str.charAt(0))) {
             return (1.0);
-        }else{
+        } else {
             return (0.0);
         }
     }
-    
+
     public static Double isalpha(FValue o, Environment env) {
         String str = String.valueOf(o);
-        if(Character.isLetter(str.charAt(0))){
+        if (Character.isLetter(str.charAt(0))) {
             return (1.0);
-        }else{
+        } else {
             return (0.0);
         }
     }
-    
+
     public static Double isalnum(FValue o, Environment env) {
         String str = String.valueOf(o);
-        if(Character.isLetter(str.charAt(0)) || Character.isDigit(str.charAt(0))){
+        if (Character.isLetter(str.charAt(0)) || Character.isDigit(str.charAt(0))) {
             return (1.0);
-        }else{
+        } else {
             return (0.0);
         }
     }
-    
+
     public static Double isupper(FValue o, Environment env) {
         String str = String.valueOf(o);
-        if(Character.isUpperCase(str.charAt(0))){
+        if (Character.isUpperCase(str.charAt(0))) {
             return (1.0);
-        }else{
+        } else {
             return (0.0);
         }
     }
-    
-     public static Double islower(FValue o, Environment env) {
+
+    public static Double islower(FValue o, Environment env) {
         String str = String.valueOf(o);
-        if(Character.isLowerCase(str.charAt(0))){
+        if (Character.isLowerCase(str.charAt(0))) {
             return (1.0);
-        }else{
+        } else {
             return (0.0);
         }
     }
-     
-     public static Double iscntrl(FValue o, Environment env) {
+
+    public static Double iscntrl(FValue o, Environment env) {
         String str = String.valueOf(o);
-        if(Character.isISOControl(str.charAt(0))){
+        if (Character.isISOControl(str.charAt(0))) {
             return (1.0);
-        }else{
+        } else {
             return (0.0);
         }
     }
-     
-     public static Double isgraph(FValue o, Environment env) {
+
+    public static Double isgraph(FValue o, Environment env) {
         String str = String.valueOf(o);
-        if(str.charAt(0)>=0x21 && str.charAt(0)<=0x7E){
+        if (str.charAt(0) >= 0x21 && str.charAt(0) <= 0x7E) {
             return (1.0);
-        }else{
+        } else {
             return (0.0);
         }
     }
-     
-     public static Double isprint(FValue o, Environment env) {
+
+    public static Double isprint(FValue o, Environment env) {
         String str = String.valueOf(o);
-        if(str.charAt(0)>0x07 ){
+        if (str.charAt(0) > 0x07) {
             return (1.0);
-        }else{
+        } else {
             return (0.0);
         }
     }
-     
-     public static Double ispunct(FValue o, Environment env) {
+
+    public static Double ispunct(FValue o, Environment env) {
         String str = String.valueOf(o);
         int type = Character.getType(str.charAt(0));
-        if(type == Character.CONNECTOR_PUNCTUATION || type == Character.END_PUNCTUATION
-                || type == Character.DASH_PUNCTUATION || type == Character.FINAL_QUOTE_PUNCTUATION 
+        if (type == Character.CONNECTOR_PUNCTUATION || type == Character.END_PUNCTUATION
+                || type == Character.DASH_PUNCTUATION || type == Character.FINAL_QUOTE_PUNCTUATION
                 || type == Character.INITIAL_QUOTE_PUNCTUATION || type == Character.OTHER_PUNCTUATION
-                || type == Character.START_PUNCTUATION){
+                || type == Character.START_PUNCTUATION) {
             return (1.0);
-        }else{
+        } else {
             return (0.0);
         }
     }
-     
-     public static Double isspace(FValue o, Environment env) {
+
+    public static Double isspace(FValue o, Environment env) {
         String str = String.valueOf(o);
-        if( Character.isSpaceChar(str.charAt(0)) ){
+        if (Character.isSpaceChar(str.charAt(0))) {
             return (1.0);
-        }else{
+        } else {
             return (0.0);
         }
     }
