@@ -56,6 +56,9 @@ public class Token {
         BITSHIFTRIGHT,
         BITSHIFTLEFT,
         COLON,
+        SLASHSLASHCOMMENT,
+        SLASH_ASTERIX_COMMENT_START,
+        SLASH_ASTERIX_COMMENT_END,
         UNKNOWN,
         EOP,
     }
