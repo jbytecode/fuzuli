@@ -195,6 +195,25 @@ public class Parser {
             tok.type = Token.TokenType.MINUS;
             return (tok);
         } else if (current == '/'){
+            char next = consume();
+            if (next == '/'){
+                while(true){
+                    char c = consume();
+                    if (c=='\n'){
+                        return(parseNextToken());
+                    }
+                }
+            }else if (next == '*'){
+                while(true){
+                    char c1 = consume();
+                    char c2 = consume();
+                    if (c1=='*' && c2=='/'){
+                        return(parseNextToken());
+                    }
+                    putBackChar();
+                }
+            }
+            putBackChar();
             tok.content = "/";
             tok.type = Token.TokenType.DIVISION;
             return(tok);
