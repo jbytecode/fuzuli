@@ -29,8 +29,8 @@ public class JavaStaticExpression extends Expression {
     }
     
     @Override
-    public FValue eval(Environment e) {
-        String fullmethod = this.exprs.get(0).eval(e).getObject().toString();
+    public Object eval(Environment e) {
+        String fullmethod = this.exprs.get(0).eval(e).toString();
         String classname = fullmethod.substring(0,fullmethod.lastIndexOf("."));
         String methodname = fullmethod.substring(fullmethod.lastIndexOf(".")+1);
         int paramscount = this.exprs.size()-1;
@@ -57,7 +57,7 @@ public class JavaStaticExpression extends Expression {
             throw new RuntimeException("Can not call static method "+classname+"."+methodname+": "+ex.toString());
         }
         
-        return(new FValue(result));
+        return(result);
     }
     
     public Method findMethod(Class cls, String methodname, int paramscount){

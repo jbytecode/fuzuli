@@ -27,9 +27,9 @@ public class PrintExpression extends Expression {
     }
     
     @Override
-    public FValue eval(Environment e) {
+    public Object eval(Environment e) {
         for (int i=0;i<this.exprs.size();i++){
-            System.out.print(exprs.get(i).eval(e).getObject().toString());
+            System.out.print(exprs.get(i).eval(e).toString());
         }
         return(FValue.ZERO);
     }

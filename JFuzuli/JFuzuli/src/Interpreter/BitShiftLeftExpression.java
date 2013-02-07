@@ -27,11 +27,11 @@ public class BitShiftLeftExpression extends Expression {
     }
 
     @Override
-    public FValue eval(Environment e) {
-        FValue f1 = this.exprs.get(0).eval(e);
-        FValue f2 = this.exprs.get(1).eval(e);
-        long result = (long)f1.getAsDouble() << (long)f2.getAsDouble();
-        return (new FValue(result));
+    public Object eval(Environment e) {
+        Object f1 = this.exprs.get(0).eval(e);
+        Object f2 = this.exprs.get(1).eval(e);
+        long result = (long)FValue.getAsDouble(f1) << (long)FValue.getAsDouble(f2);
+        return (result);
     }
     
     

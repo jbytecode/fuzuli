@@ -25,19 +25,19 @@ import java.util.ArrayList;
  */
 public class NumberExpression extends Expression{
     
-    FValue val;
+    Object val;
     
     public NumberExpression(ArrayList<Expression> e){
         this.exprs = e;
     }
     
     public NumberExpression(double d){
-        val = new FValue(d);
+        val = d;
     }
     
 
     @Override
-    public FValue eval(Environment e) {
+    public Object eval(Environment e) {
         return(val);
     }
 

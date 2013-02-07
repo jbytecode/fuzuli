@@ -32,14 +32,14 @@ public class FunctionExpression extends Expression {
     }
     
     @Override
-    public FValue eval(Environment e) {
+    public Object eval(Environment e) {
         this.fname = ((IdentifierExpression)this.exprs.get(0)).iden;
-        params = (ArrayList<String>)this.exprs.get(1).eval(e).getObject();
+        params = (ArrayList<String>)this.exprs.get(1).eval(e);
         for (int i=2;i<this.exprs.size();i++){
             this.body.add(this.exprs.get(i));
         }
         e.registerFunction(fname, this);
-        return(new FValue(this));
+        return(this);
     }
     
 }

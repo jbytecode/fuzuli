@@ -28,9 +28,13 @@ public class IncExpression extends Expression {
     }
     
     @Override
-    public FValue eval(Environment e) {
-        FValue result = this.exprs.get(0).eval(e);
-        result.obj = result.getAsDouble()+1;
+    public Object eval(Environment e) {
+        IdentifierExpression iden = (IdentifierExpression)this.exprs.get(0);
+        Environment env = e.findEnvironmentOfVariable(iden.iden);
+        String name = iden.iden;
+        Object val = env.getVariableInThisEnvironment(name);
+        double result = FValue.getAsDouble(val)+1.0;
+        env.setVariableInThisEnvironment(name, result);
         return(result);
     }
     

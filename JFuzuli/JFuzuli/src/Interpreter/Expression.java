@@ -30,15 +30,16 @@ public abstract class Expression implements Serializable {
         
     ArrayList<Expression> exprs;
     
-    public abstract FValue eval (Environment e);
+    public abstract Object eval (Environment e);
     
+    @Override
     public String toString(){
-        StringBuffer buf = new StringBuffer();
-        buf.append(this.getClass().getCanonicalName()+ "{");
+        StringBuilder buf = new StringBuilder();
+        buf.append(this.getClass().getCanonicalName()).append("{");
         if(exprs!=null){
         for (int i=0;i<exprs.size();i++){
             if(exprs.get(i) != null){
-                buf.append("\t"+exprs.get(i).getClass().getCanonicalName());
+                buf.append("\t").append(exprs.get(i).getClass().getCanonicalName());
             }
             buf.append(",");
         }

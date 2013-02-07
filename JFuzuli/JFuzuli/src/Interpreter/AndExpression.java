@@ -26,13 +26,13 @@ public class AndExpression extends Expression {
     }
 
     @Override
-    public FValue eval(Environment e) {
+    public Object eval(Environment e) {
         for (int i=0;i<this.exprs.size();i++){
-            Double current = this.exprs.get(i).eval(e).getAsDouble();
+            Double current = FValue.getAsDouble(this.exprs.get(i).eval(e));
             if(current != 1.0){
-                return(new FValue(0.0));
+                return(0.0);
             }
         }        
-        return(new FValue(1.0));
+        return(1.0);
     }
 }

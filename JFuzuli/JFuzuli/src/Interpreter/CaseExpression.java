@@ -26,16 +26,16 @@ public class CaseExpression extends Expression {
         this.exprs = expr;
     }
 
-    public FValue getKey (Environment e){
+    public Object getKey (Environment e){
         return (this.exprs.get(0).eval(e));
     }
     
     @Override
-    public FValue eval(Environment e) {
+    public Object eval(Environment e) {
         for (int i=1;i<this.exprs.size();i++){
             this.exprs.get(i).eval(e);
         }
-        return(FValue.ZERO);
+        return(0.0);
     }
     
     

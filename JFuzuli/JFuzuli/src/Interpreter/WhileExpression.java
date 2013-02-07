@@ -26,22 +26,22 @@ public class WhileExpression extends Expression {
     }
 
     @Override
-    public FValue eval(Environment e) {
+    public Object eval(Environment e) {
         e.subEnvironment = new Environment(e);
         Environment env = e.subEnvironment;
         while (true) {
-            if (this.exprs.get(0).eval(env).getAsDouble() == 0.0) {
+            if (FValue.getAsDouble(this.exprs.get(0).eval(env)) == 0.0) {
                 break;
             }
             for (int i = 1; i < this.exprs.size(); i++) {
                 Expression ex = this.exprs.get(i);
-                FValue result = ex.eval(env);
-                if (result.getObject() instanceof BreakExpression) {
+                Object result = ex.eval(env);
+                if (result instanceof BreakExpression) {
                     return (result);
                 }
-                if (result.getObject() instanceof ReturnExpression) {
-                    ReturnExpression re = (ReturnExpression) (result.getObject());
-                    return (new FValue(re));
+                if (result instanceof ReturnExpression) {
+                    ReturnExpression re = (ReturnExpression) (result);
+                    return (re);
                 }
             }
         }

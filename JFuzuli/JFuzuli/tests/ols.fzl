@@ -1,0 +1,108 @@
+#
+# fuzuli : A general purpose interpreter
+# Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Linear Regression 
+(require "math.nfl")
+(require "io.nfl")
+
+# Test Definitions
+(let passed "PASSED!\n")
+(let error "ERROR\n")
+
+(function sum (params alist)
+	(block
+		(let s 0.0)
+		(for (let i 0) (< i (length alist)) (inc i)
+			(block
+				(let s (+ s (nth alist i)))
+			)
+		)
+		(return s)
+	)
+)
+
+(function mean (params alist)
+	(block
+		(return (/ (sum alist) (length alist) ))
+	)
+)
+
+(function variance (params alist)
+	(block
+		(let m (mean alist))
+		(let result 0.0)
+		(for (let i 0) (<i (length alist)) (inc i)
+			(let result (+ result (pow (- (nth alist i) m) 2.0)))
+		)
+		(return (/ result (- (length alist) 1.0)))
+	)
+)
+
+
+(function covariance (params x y)
+	(block
+		(let mx (mean x))
+		(let my (mean y))
+		(let result 0.0)
+		(for (let i 0) (< i (length x)) (inc i)
+			(block
+				(let d (* (- (nth x i) mx) (- (nth y i) my)))
+				#(print i "] " (nth x i) "  " (- (nth x i) mx) " & " (nth y i ) " "(- (nth y i) my) "\n")
+				(let result (+ result d))
+			)
+		)
+		(return (/ result (- (length x) 1.0)))
+	)
+)
+
+(function leastsquares (params x y)
+	(block
+		(let mycov (covariance x y))
+		(let myvar (variance x))
+		(let beta1 (/ mycov myvar))
+		(let my (mean y))
+		(let mx (mean x))
+		(let beta0 (- my (* beta1 mx)))
+		(return (list beta0 beta1))		
+	)
+)
+
+(let x (list 1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 10.0))
+(let y (list 2.0 4.0 6.0 8.0 10.0 12.0 14.0 16.0 18.0 20.0))
+
+
+(let ols (leastsquares x y))
+#(println "OLS IS: "  ols)
+#(println "TYPE of OLS is " (typeof ols))
+
+(let beta0 (nth ols 0))
+(let beta1 (nth ols 1))
+
+# Test 1 
+# Intercept is 0
+(if (= beta0 0)
+	(print passed)
+	(print error)
+)
+
+
+# Test 2 
+# Slope is 2
+(if (= beta1 2)
+	(print passed)
+	(print error)
+)

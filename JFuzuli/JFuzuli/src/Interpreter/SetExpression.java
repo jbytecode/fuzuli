@@ -27,12 +27,12 @@ public class SetExpression extends Expression{
     }
     
     @Override
-    public FValue eval(Environment e) {
-        ArrayList<Expression> list = (ArrayList<Expression>)this.exprs.get(0).eval(e).obj;
-        int index = (int) this.exprs.get(1).eval(e).getAsDouble();
-        Expression obj = this.exprs.get(2);
+    public Object eval(Environment e) {
+        ArrayList list = (ArrayList)this.exprs.get(0).eval(e);
+        int index = (int) FValue.getAsDouble(this.exprs.get(1).eval(e));
+        Object obj = this.exprs.get(2).eval(e);
         list.set(index, obj);
-        return(FValue.ZERO);
+        return(obj);
     }
     
 }

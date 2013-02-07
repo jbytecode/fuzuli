@@ -27,9 +27,9 @@ public class FirstExpression extends Expression{
     }
     
     @Override
-    public FValue eval(Environment e) {
-        ArrayList<Expression> list = (ArrayList<Expression>)this.exprs.get(0).eval(e).getObject();
-        return (new FValue(list.get(0).eval(e)));
+    public Object eval(Environment e) {
+        ArrayList<Expression> list = (ArrayList<Expression>)this.exprs.get(0).eval(e);
+        return (list.get(0).eval(e));
     }
     
 }

@@ -26,10 +26,10 @@ public class TimingExpression extends Expression {
     }
 
     @Override
-    public FValue eval(Environment e) {
+    public Object eval(Environment e) {
         long time1, time2;
         int size = this.exprs.size();
-        FValue result = null;
+        Object result = null;
 
         time1 = System.currentTimeMillis();
 
@@ -39,6 +39,6 @@ public class TimingExpression extends Expression {
 
         time2 = System.currentTimeMillis();
 
-        return (new FValue(time2 - time1));
+        return (time2 - time1);
     }
 }

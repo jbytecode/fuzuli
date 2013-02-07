@@ -19,14 +19,14 @@ package Interpreter;
 
 public class StringExpression extends Expression {
 
-    FValue val;
+    String val;
     
     public StringExpression(String s){
-        val = new FValue(s);
+        val = s;
     }
 
     @Override
-    public FValue eval(Environment e) {
+    public Object eval(Environment e) {
         return(val);
     }
     

@@ -31,13 +31,13 @@ public class AsterixExpression extends Expression {
     }
 
     @Override
-    public FValue eval(Environment e) {
+    public Object eval(Environment e) {
         Double sum = 1.0;
         for (Expression exp : exprs) {
-            FValue f = exp.eval(e);
+            Object f = exp.eval(e);
 
-            sum *= exp.eval(e).getAsDouble();
+            sum *= FValue.getAsDouble(exp.eval(e));
         }
-        return (new FValue(sum));
+        return (sum);
     }
 }

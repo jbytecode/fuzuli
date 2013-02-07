@@ -33,11 +33,11 @@ public class MinusExpression extends Expression {
     }
 
     @Override
-    public FValue eval(Environment e) {
-        Double sum = this.expr.get(0).eval(e).getAsDouble();
+    public Object eval(Environment e) {
+        Double sum = FValue.getAsDouble(this.expr.get(0).eval(e));
         for (int i = 1; i < expr.size(); i++) {
-            sum -= expr.get(i).eval(e).getAsDouble();
+            sum -= FValue.getAsDouble(expr.get(i).eval(e));
         }
-        return (new FValue(sum));
+        return (sum);
     }
 }

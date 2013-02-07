@@ -28,7 +28,7 @@ public class DynLoadExpression extends Expression{
     }
     
     @Override
-    public FValue eval(Environment e) {
+    public Object eval(Environment e) {
         System.out.println("Dynload is not implemented yet");
         return(FValue.NOTSET);
     }

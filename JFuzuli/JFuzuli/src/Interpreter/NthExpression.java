@@ -27,10 +27,11 @@ public class NthExpression extends Expression{
     }
     
     @Override
-    public FValue eval(Environment e) {
-        ArrayList<Expression> list = (ArrayList<Expression>)this.exprs.get(0).eval(e).getObject();
-        int index = (int)this.exprs.get(1).eval(e).getAsDouble();
-        return (new FValue(list.get(index).eval(e)));
+    public Object eval(Environment e) {
+        ArrayList<Object> list;
+        list = (ArrayList<Object>)this.exprs.get(0).eval(e);
+        int index =  (int)  FValue.getAsDouble(this.exprs.get(1).eval(e));
+        return (list.get(index));
     }
     
 }

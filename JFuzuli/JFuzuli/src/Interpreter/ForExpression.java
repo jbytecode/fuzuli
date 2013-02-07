@@ -27,13 +27,13 @@ public class ForExpression extends Expression {
     }
     
     @Override
-    public FValue eval(Environment e) {
+    public Object eval(Environment e) {
         e.subEnvironment = new Environment(e);
         Environment env = e.subEnvironment;
         
         this.exprs.get(0).eval(env);
         while(true){
-            if(this.exprs.get(1).eval(env).getAsDouble() == 0.0){
+            if(FValue.getAsDouble(this.exprs.get(1).eval(env)) == 0.0){
                 break;
             }
             for (int i=3;i<this.exprs.size();i++){

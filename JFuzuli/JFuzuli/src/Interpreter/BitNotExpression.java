@@ -27,10 +27,10 @@ public class BitNotExpression extends Expression {
     }
 
     @Override
-    public FValue eval(Environment e) {
-        FValue f1 = this.exprs.get(0).eval(e);
-        long result =  ~(long)f1.getAsDouble();
-        return (new FValue(result));
+    public Object eval(Environment e) {
+        Object f1 = this.exprs.get(0).eval(e);
+        long result =  ~(long)FValue.getAsDouble(f1);
+        return (result);
     }
     
     

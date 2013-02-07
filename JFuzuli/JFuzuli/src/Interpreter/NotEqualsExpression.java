@@ -27,13 +27,13 @@ public class NotEqualsExpression extends Expression {
     }
     
     @Override
-    public FValue eval(Environment e) {
-        FValue d1 = this.exprs.get(0).eval(e);
-        FValue d2 = this.exprs.get(1).eval(e);
+    public Object eval(Environment e) {
+        Object d1 = this.exprs.get(0).eval(e);
+        Object d2 = this.exprs.get(1).eval(e);
         if (!FValue.Equals(d1, d2)){
-            return(new FValue(1.0));
+            return(1.0);
         }else{
-            return(new FValue(0.0));
+            return(0.0);
         }
     }
     

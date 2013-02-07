@@ -27,14 +27,14 @@ public class FillExpression extends Expression{
     }
     
     @Override
-    public FValue eval(Environment e) {
-        ArrayList<Expression> list = (ArrayList<Expression>)this.exprs.get(0).eval(e).obj;
-        Expression item = this.exprs.get(1);
+    public Object eval(Environment e) {
+        ArrayList list = (ArrayList)this.exprs.get(0).eval(e);
+        Object item = this.exprs.get(1).eval(e);
       
         for (int i=0;i<list.size();i++){
            list.set(i, item);
         }
-        return (FValue.NULL);
+        return (item);
     }
     
 }

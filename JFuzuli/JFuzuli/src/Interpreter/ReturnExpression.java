@@ -23,17 +23,16 @@ import java.util.ArrayList;
 
 public class ReturnExpression extends Expression {
 
-    FValue returnvalue;
+    Object returnvalue;
     
     public ReturnExpression(ArrayList<Expression> expr){
         this.exprs = expr;
     }
     
     @Override
-    public FValue eval(Environment e) {
+    public Object eval(Environment e) {
         returnvalue = this.exprs.get(0).eval(e);
-        //System.out.println("Return called with "+returnvalue);
-        return(new FValue(this));
+        return(this);
     }
     
 }

@@ -27,16 +27,16 @@ public class RemoveExpression extends Expression{
     }
     
     @Override
-    public FValue eval(Environment e) {
-        ArrayList<Expression> list = (ArrayList<Expression>)this.exprs.get(0).eval(e).obj;
+    public Object eval(Environment e) {
+        ArrayList<Expression> list = (ArrayList<Expression>)this.exprs.get(0).eval(e);
         ArrayList<Expression> newlist = new ArrayList<Expression>();
-        int index = (int)this.exprs.get(1).eval(e).getAsDouble();
+        int index = (int) FValue.getAsDouble(this.exprs.get(1).eval(e));
         for (int i=0;i<list.size();i++){
             if (i != index){
                 newlist.add(list.get(i));
             }
         }
-        return (new FValue (newlist));
+        return (newlist);
     }
     
 }

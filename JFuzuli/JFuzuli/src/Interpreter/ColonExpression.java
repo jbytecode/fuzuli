@@ -27,14 +27,14 @@ public class ColonExpression extends Expression{
     }
     
     @Override
-    public FValue eval(Environment e) {
+    public Object eval(Environment e) {
         ArrayList<Expression> colonex = new ArrayList<Expression>();
-        int i1 = (int)this.exprs.get(0).eval(e).getAsDouble();
-        int i2 = (int)this.exprs.get(1).eval(e).getAsDouble();
+        int i1 = (int)   FValue.getAsDouble(this.exprs.get(0).eval(e));
+        int i2 = (int)   FValue.getAsDouble(this.exprs.get(1).eval(e));
         for (int i=i1; i<=i2; i++){
             colonex.add(new NumberExpression(i));
         }
-        return(new FValue(colonex));
+        return(colonex);
     }
     
 }

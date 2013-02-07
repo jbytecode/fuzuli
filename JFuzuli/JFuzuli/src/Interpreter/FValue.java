@@ -26,30 +26,17 @@ import java.io.Serializable;
  */
 public class FValue implements Serializable {
     
-    static FValue ZERO = new FValue(0);
-    static FValue NaN =new FValue(Double.NaN);
-    static FValue NULL = new FValue("NULL");
-    static FValue NOTSET = new FValue("NOTSET");
+    static Object ZERO = 0.0;
+    static Object NaN = Double.NaN;
+    static Object NULL = "NULL";
+    static Object NOTSET = "NOTSET";
     
     Object obj = null;
     
-    public FValue(int i){
-        obj = new Integer(i);
-    }
+   
     
-    public FValue (double d){
-        obj = new Double(d);
-    }
     
-    public FValue (Object o){
-        obj = o;
-    }
-    
-    public Object getObject(){
-        return(obj);
-    }
-    
-    public double getAsDouble(){
+    public static double getAsDouble(Object obj){
         if (obj instanceof Number){
             Number n = (Number) obj;
             return (n.doubleValue());
@@ -62,14 +49,18 @@ public class FValue implements Serializable {
         }
     }
     
-    public static boolean Equals (FValue f1, FValue f2){
+    public static boolean Equals (Object f1, Object f2){
         
-        if(f1.obj instanceof Number && f2.obj instanceof Number){
-            return (f1.getAsDouble() == f2.getAsDouble());
-        }else if (f1.obj instanceof String && f2.obj  instanceof String){
-            return (f1.obj.equals(f2.obj.toString()));
+        if(f1 instanceof Number && f2 instanceof Number){
+            Number n1 = (Number)f1;
+            Number n2 = (Number)f2;
+            return (n1.doubleValue() == n2.doubleValue());
+        }else if (f1 instanceof String && f2  instanceof String){
+            String s1 = (String)f1;
+            String s2 = (String)f2;
+            return (s1.equals(s2.toString()));
         }else {
-            return ( String.valueOf(f2.obj).equals(String.valueOf(f1.obj)));
+            return ( String.valueOf(f2).equals(String.valueOf(f1)));
         }
     }
 
