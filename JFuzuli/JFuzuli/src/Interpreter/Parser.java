@@ -148,6 +148,25 @@ public class Parser {
             tok.type = Token.TokenType.RPARAN;
             return (tok);
         } else if (Character.isDigit(current)) {
+            if(current == '0'){
+                char next = consume();
+                if (next == 'x'){
+                    while(true){
+                        current = consume();
+                        if(Character.isDigit(current) || (current>= 'a' && current<='f') || (current>= 'A' && current<='F')){
+                            buf.append(current);
+                        }else{
+                            break;
+                        }
+                    }
+                    putBackChar();
+                    tok.content = String.valueOf(Long.parseLong(buf.toString(), 16));
+                    tok.type = Token.TokenType.DOUBLE;
+                    return(tok);
+                }else{
+                    putBackChar();
+                }
+            }
             buf.append(current);
             while (true) {
                 current = consume();
