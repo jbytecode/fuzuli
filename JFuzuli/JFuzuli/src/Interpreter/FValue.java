@@ -59,6 +59,10 @@ public class FValue implements Serializable {
             String s1 = (String)f1;
             String s2 = (String)f2;
             return (s1.equals(s2.toString()));
+        } else if (f1 instanceof Boolean && f2 instanceof Boolean){
+            Boolean b1 = (Boolean) f1;
+            Boolean b2 = (Boolean) f2;
+            return (b1.booleanValue() == b2.booleanValue());
         }else {
             return ( String.valueOf(f2).equals(String.valueOf(f1)));
         }

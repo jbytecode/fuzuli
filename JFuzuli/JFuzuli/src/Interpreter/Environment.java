@@ -37,6 +37,10 @@ public class Environment implements Serializable {
         this.functions = new HashMap<String, FunctionExpression>();
         if (top==null){
             this.variables.put("NULL", FValue.NULL);
+            this.variables.put("true", Boolean.TRUE);
+            this.variables.put("false", Boolean.FALSE);
+            this.variables.put("NULL", 0);
+            this.variables.put("null", null);
         }
     }
 
