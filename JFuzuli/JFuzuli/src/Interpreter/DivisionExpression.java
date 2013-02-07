@@ -33,11 +33,11 @@ public class DivisionExpression extends Expression {
     }
 
     @Override
-    public FValue eval(Environment e) {
+    public Object eval(Environment e) {
         Double sum = 0.0;
-        double d1 = this.exprs.get(0).eval(e).getAsDouble();
-        double d2 = this.exprs.get(1).eval(e).getAsDouble();
-        return (new FValue(d1/d2));
+        double d1 = FValue.getAsDouble(this.exprs.get(0).eval(e));
+        double d2 = FValue.getAsDouble(this.exprs.get(1).eval(e));
+        return (d1/d2);
     }
 }
 

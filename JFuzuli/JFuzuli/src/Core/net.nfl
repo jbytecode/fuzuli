@@ -15,22 +15,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+(let net_lib (dynload "FuzuliSocket"))
 
-(let passed "PASSED!\n")
-(let error "ERROR\n")
-
-(let i 10)
-(inc i)
-(if (= i 11)
-	(print passed)
-	(print error)
+(function fsockopen (params host port)
+	(return (C net_lib "fsockopen" host port))
 )
 
-(-- i)
-(if (= i 10)
-        (print passed)
-        (print error)
+(function fsockwrite (params socket what)
+	(return (C net_lib "fsockwrite" socket what))
 )
 
+(function fsockread (params socket howmany)
+	(return (C net_lib "fsockread" socket howmany))
+)
 
+(function fsockclose (params socket)
+	(return (C net_lib "fsockclose" socket))
+)
 
+(function fsocklisten (params port)
+	(return (C net_lib "fsocklisten" port))
+)

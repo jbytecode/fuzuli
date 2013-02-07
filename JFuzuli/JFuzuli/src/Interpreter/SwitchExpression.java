@@ -27,15 +27,15 @@ public class SwitchExpression extends Expression {
     }
 
     @Override
-    public FValue eval(Environment e) {
+    public Object eval(Environment e) {
         e.subEnvironment = new Environment(e);
         Environment env = e.subEnvironment;
         
-        FValue key = this.exprs.get(0).eval(env);
+        Object key = this.exprs.get(0).eval(env);
         
         for (int i=1;i<this.exprs.size();i++){
             CaseExpression caze = (CaseExpression)(this.exprs.get(i));
-            FValue caseKey = caze.getKey(env);
+            Object caseKey = caze.getKey(env);
             if (FValue.Equals(caseKey, key)){
                 return(caze.eval(env));
             }

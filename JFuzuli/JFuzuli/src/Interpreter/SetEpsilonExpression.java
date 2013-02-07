@@ -28,8 +28,8 @@ public class SetEpsilonExpression extends Expression {
     }
     
     @Override
-    public FValue eval(Environment e) {
-        Token.epsilon = this.exprs.get(0).eval(e).getAsDouble();
+    public Object eval(Environment e) {
+        Token.epsilon = FValue.getAsDouble(this.exprs.get(0).eval(e));
         return(FValue.ZERO);
     }
     

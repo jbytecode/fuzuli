@@ -27,8 +27,8 @@ import java.util.Arrays;
 
 public class FStrings {
 
-    public static String ltrim(FValue o, Environment env) {
-        String s = o.getObject().toString();
+    public static String ltrim(Object o, Environment env) {
+        String s = o.toString();
         StringBuilder sb = new StringBuilder();
         int i;
         for (i = 0; i < s.length(); i++) {
@@ -40,8 +40,8 @@ public class FStrings {
         return (sb.toString());
     }
 
-    public static String rtrim(FValue o, Environment env) {
-        String s = String.valueOf(o.getObject().toString());
+    public static String rtrim(Object o, Environment env) {
+        String s = String.valueOf(o.toString());
         StringBuilder sb = new StringBuilder();
         int i;
         for (i = s.length() - 1; i >= 0; i--) {
@@ -53,78 +53,77 @@ public class FStrings {
         return (sb.toString());
     }
 
-    public static String left(FValue o, FValue i, Environment env) {
+    public static String left(Object o, Object i, Environment env) {
         String s = String.valueOf(o);
-        int index = (int) i.getAsDouble();
+        int index = (int) FValue.getAsDouble(i);
         return (s.substring(0, index));
     }
 
-    public static String right(FValue o, FValue i, Environment env) {
+    public static String right(Object o, Object i, Environment env) {
         String s = String.valueOf(o);
-        int index = (int) i.getAsDouble();
+        int index = (int) FValue.getAsDouble(i);
         return (s.substring(s.length() - index));
     }
 
-    public static String strcat(FValue o, Environment env) {
+    public static String strcat(Object o, Environment env) {
         StringBuilder sb = new StringBuilder();
-        ArrayList<Expression> a = (ArrayList<Expression>) o.getObject();
+        ArrayList a = (ArrayList) o;
         for (int i = 0; i < a.size(); i++) {
-            Expression exp = a.get(i);
-            FValue result = exp.eval(env);
-            sb.append(result.getObject().toString());
+            Object exp = a.get(i);
+            sb.append(exp.toString());
         }
         return sb.toString();
     }
 
-    public static String substr(FValue o, FValue start, FValue end, Environment env) {
+    public static String substr(Object o, Object start, Object end, Environment env) {
         String s = String.valueOf(o);
-        int i1 = (int) start.getAsDouble();
-        int i2 = (int) end.getAsDouble();
+        int i1 = (int) FValue.getAsDouble(start);
+        int i2 = (int) FValue.getAsDouble(end);
         return (s.substring(i1, i2));
     }
 
-    public static String strreverse(FValue o, Environment env) {
+    public static String strreverse(Object o, Environment env) {
         String s = String.valueOf(o);
         StringBuilder sb = new StringBuilder(s);
         return (sb.reverse().toString());
     }
 
-    public static Double strlen(FValue o, Environment env) {
+    public static Double strlen(Object o, Environment env) {
         String s = String.valueOf(o);
         return (new Double(s.length()));
     }
 
-    public static String ucase(FValue o, Environment env) {
+    public static String ucase(Object o, Environment env) {
         String s = String.valueOf(o);
         return (s.toUpperCase());
     }
 
-    public static String lcase(FValue o, Environment env) {
+    public static String lcase(Object o, Environment env) {
         String s = String.valueOf(o);
         return (s.toLowerCase());
     }
 
-    public static Double instr(FValue o, FValue other, Environment env) {
+    public static Double instr(Object o, Object other, Environment env) {
         String s = String.valueOf(o);
         String s1 = String.valueOf(other);
         return (new Double(s.indexOf(s1)));
     }
 
-    public static String chr(FValue o, Environment env) {
-        Double d = o.getAsDouble();
+    public static String chr(Object o, Environment env) {
+        Double d = FValue.getAsDouble(o);
         int i = d.intValue();
         char c = (char) i;
         return (String.valueOf(c));
     }
 
-    public static Double ord(FValue o, Environment env) {
+    public static Double ord(Object o, Environment env) {
         String s = String.valueOf(o);
         char c = s.charAt(0);
         int i = (int) c;
         return (new Double(c));
     }
 
-    public static String md5(FValue o, Environment env) {
+    public static String md5(Object o, Environment env) {
         String s = String.valueOf(o);
         StringBuilder sb = new StringBuilder();
         try {
@@ -147,7 +146,7 @@ public class FStrings {
         return (sb.toString());
     }
 
-    public static String urldecode(FValue o, Environment env) {
+    public static String urldecode(Object o, Environment env) {
         String s = String.valueOf(o);
         String result;
         try {
@@ -164,7 +163,7 @@ public class FStrings {
         return (m);
     }
 
-    public static Double levenshtein(FValue o, FValue a, Environment env) {
+    public static Double levenshtein(Object o, Object a, Environment env) {
         String str1 = String.valueOf(o);
         String str2 = String.valueOf(a);
         int m = str1.length();
@@ -191,14 +190,14 @@ public class FStrings {
 
     }
 
-    public static String str_replace(FValue o, FValue find, FValue replace, Environment env) {
+    public static String str_replace(Object o, Object find, Object replace, Environment env) {
         String s = String.valueOf(o);
         String s1 = String.valueOf(find);
         String s2 = String.valueOf(replace);
         return (s.replace(s1, s2));
     }
 
-    public static String str_shuffle(FValue o, Environment env) {
+    public static String str_shuffle(Object o, Environment env) {
         String str = String.valueOf(o);
         char[] cs = str.toCharArray();
         for (int i = 0; i < str.length(); i++) {
@@ -211,7 +210,7 @@ public class FStrings {
         return (new String(cs));
     }
 
-    public static Double isdigit(FValue o, Environment env) {
+    public static Double isdigit(Object o, Environment env) {
         String str = String.valueOf(o);
         if (Character.isDigit(str.charAt(0))) {
             return (1.0);
@@ -220,7 +219,7 @@ public class FStrings {
         }
     }
 
-    public static Double isalpha(FValue o, Environment env) {
+    public static Double isalpha(Object o, Environment env) {
         String str = String.valueOf(o);
         if (Character.isLetter(str.charAt(0))) {
             return (1.0);
@@ -229,7 +228,7 @@ public class FStrings {
         }
     }
 
-    public static Double isalnum(FValue o, Environment env) {
+    public static Double isalnum(Object o, Environment env) {
         String str = String.valueOf(o);
         if (Character.isLetter(str.charAt(0)) || Character.isDigit(str.charAt(0))) {
             return (1.0);
@@ -238,7 +237,7 @@ public class FStrings {
         }
     }
 
-    public static Double isupper(FValue o, Environment env) {
+    public static Double isupper(Object o, Environment env) {
         String str = String.valueOf(o);
         if (Character.isUpperCase(str.charAt(0))) {
             return (1.0);
@@ -247,7 +246,7 @@ public class FStrings {
         }
     }
 
-    public static Double islower(FValue o, Environment env) {
+    public static Double islower(Object o, Environment env) {
         String str = String.valueOf(o);
         if (Character.isLowerCase(str.charAt(0))) {
             return (1.0);
@@ -256,7 +255,7 @@ public class FStrings {
         }
     }
 
-    public static Double iscntrl(FValue o, Environment env) {
+    public static Double iscntrl(Object o, Environment env) {
         String str = String.valueOf(o);
         if (Character.isISOControl(str.charAt(0))) {
             return (1.0);
@@ -265,7 +264,7 @@ public class FStrings {
         }
     }
 
-    public static Double isgraph(FValue o, Environment env) {
+    public static Double isgraph(Object o, Environment env) {
         String str = String.valueOf(o);
         if (str.charAt(0) >= 0x21 && str.charAt(0) <= 0x7E) {
             return (1.0);
@@ -274,7 +273,7 @@ public class FStrings {
         }
     }
 
-    public static Double isprint(FValue o, Environment env) {
+    public static Double isprint(Object o, Environment env) {
         String str = String.valueOf(o);
         if (str.charAt(0) > 0x07) {
             return (1.0);
@@ -283,7 +282,7 @@ public class FStrings {
         }
     }
 
-    public static Double ispunct(FValue o, Environment env) {
+    public static Double ispunct(Object o, Environment env) {
         String str = String.valueOf(o);
         int type = Character.getType(str.charAt(0));
         if (type == Character.CONNECTOR_PUNCTUATION || type == Character.END_PUNCTUATION
@@ -296,7 +295,7 @@ public class FStrings {
         }
     }
 
-    public static Double isspace(FValue o, Environment env) {
+    public static Double isspace(Object o, Environment env) {
         String str = String.valueOf(o);
         if (Character.isSpaceChar(str.charAt(0))) {
             return (1.0);

@@ -27,8 +27,8 @@ public class BreakExpression extends Expression {
     }
 
     @Override
-    public FValue eval(Environment e) {
-        return (new FValue(this));
+    public Object eval(Environment e) {
+        return (this);
     }
     
     

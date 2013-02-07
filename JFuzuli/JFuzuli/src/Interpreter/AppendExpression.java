@@ -27,11 +27,11 @@ public class AppendExpression extends Expression{
     }
     
     @Override
-    public FValue eval(Environment e) {
-        ArrayList<Expression> list = (ArrayList<Expression>)this.exprs.get(0).eval(e).obj;
-        Expression element = this.exprs.get(1);
+    public Object eval(Environment e) {
+        ArrayList list = (ArrayList)this.exprs.get(0).eval(e);
+        Object element = this.exprs.get(1).eval(e);
         list.add(element);
-        return (new FValue (element));
+        return (element);
     }
     
 }

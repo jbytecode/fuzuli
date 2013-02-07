@@ -27,16 +27,16 @@ public class BlockExpression extends Expression{
     }
     
     @Override
-    public FValue eval(Environment e) {
+    public Object eval(Environment e) {
         e.subEnvironment = new Environment(e);
         Environment currentEnv = e.subEnvironment;
-        FValue val=null, returnval=FValue.ZERO;
+        Object val=null, returnval=0;
         
         for (int i=0;i<this.exprs.size();i++){
             val = this.exprs.get(i).eval(currentEnv);
-            if(val.getObject() instanceof ReturnExpression ){
-                ReturnExpression re =  (ReturnExpression)(val.getObject());
-                returnval = new FValue(re);
+            if(val instanceof ReturnExpression ){
+                ReturnExpression re =  (ReturnExpression)val;
+                returnval = re;
                 break;
             }
         }

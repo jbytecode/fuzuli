@@ -1,5 +1,5 @@
-(require "/usr/lib/fuzuli/nfl/io.nfl")
-(require "/usr/lib/fuzuli/nfl/math.nfl")
+(require "io.nfl")
+(require "math.nfl")
 
 (print "Please enter a b and c for parabola ax^2 + bx + c\n")
 (print "Enter a:")

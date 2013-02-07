@@ -27,9 +27,9 @@ public class LengthExpression extends Expression{
     }
     
     @Override
-    public FValue eval(Environment e) {
-        ArrayList<Expression> list = (ArrayList<Expression>) this.exprs.get(0).eval(e).getObject();
-        return(new FValue(list.size()));
+    public Object eval(Environment e) {
+        ArrayList<Expression> list = (ArrayList<Expression>) this.exprs.get(0).eval(e);
+        return(list.size());
     }
     
 }

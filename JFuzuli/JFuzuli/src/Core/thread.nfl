@@ -16,21 +16,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-(let passed "PASSED!\n")
-(let error "ERROR\n")
+(let thread_library (dynload "FuzuliThread"))
 
-(let i 10)
-(inc i)
-(if (= i 11)
-	(print passed)
-	(print error)
+(function thread (params func)
+	(return (C thread_library "thread" func))
 )
 
-(-- i)
-(if (= i 10)
-        (print passed)
-        (print error)
+(function thread_sleep (params milliseconds)
+	(return (C thread_library "thread_sleep" milliseconds))
 )
 
+(function thread_yield (params)
+	(return (C thread_library "yield"))
+)
+
+(function thread_join (params athread)
+	(return (C thread_library "join" athread))
+)
 
 

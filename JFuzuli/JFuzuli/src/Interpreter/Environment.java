@@ -26,44 +26,46 @@ import java.util.HashMap;
  */
 public class Environment implements Serializable {
 
-    public HashMap<String, FValue> variables;
+    public HashMap<String, Object> variables;
     public Environment topEnvironment;
     public Environment subEnvironment;
     public HashMap<String, FunctionExpression> functions;
 
     public Environment(Environment top) {
         this.topEnvironment = top;
-        this.variables = new HashMap<String, FValue>();
+        this.variables = new HashMap<String, Object>();
         this.functions = new HashMap<String, FunctionExpression>();
         if (top==null){
             this.variables.put("NULL", FValue.NULL);
         }
     }
 
-    public FValue getVariableInThisEnvironment(String name) {
+    public Object getVariableInThisEnvironment(String name) {
         return (this.variables.get(name));
     }
     
-    public void setVariableInThisEnvironment(String name, FValue val) {
+    public void setVariableInThisEnvironment(String name, Object val) {
         this.variables.put(name, val);
     }
 
-    public FValue findVariable(String name) {
+    public Environment findEnvironmentOfVariable(String name) {
         if(variables.containsKey(name)){
-            return(variables.get(name));
+            return(this);
         }else if (this.topEnvironment !=null){
-            return(topEnvironment.findVariable(name));
+            return(topEnvironment.findEnvironmentOfVariable(name));
         }else{
-            return(FValue.NULL);
+            return(null);
         }
     }
+    
+    
 
-    public void setVariable(String name, FValue val) {
-        FValue oldval = findVariable(name);
-        if(oldval==FValue.NULL){
+    public void setVariable(String name, Object val) {
+        Environment env = findEnvironmentOfVariable(name);
+        if(env==null){
             this.variables.put(name, val);
         }else{
-            oldval.obj = val.obj;
+            env.setVariableInThisEnvironment(name, val);
         }
     }
     

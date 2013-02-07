@@ -28,8 +28,12 @@ public class ListExpression extends Expression {
     }
 
     @Override
-    public FValue eval(Environment e) {
-        FValue result = new FValue(this.exprs);
+    public Object eval(Environment e) {
+        ArrayList<Object> values = new ArrayList<Object>(this.exprs.size());
+        for (int i=0;i<this.exprs.size();i++){
+            values.add( this.exprs.get(i).eval(e));
+        }
+        Object result = values;
         return (result);
     }
     

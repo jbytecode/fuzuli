@@ -21,78 +21,79 @@ package Core;
 import Interpreter.Environment;
 import Interpreter.FValue;
 
-public class FMath {
 
+public class FMath {
+    
     public static Double pi(Environment env) {
         return Math.PI;
     }
 
-    public static double abs(FValue o, Environment env) {
-        return Math.abs(o.getAsDouble());
+    public static double abs(Object o, Environment env) {
+        return Math.abs(FValue.getAsDouble(o));
     }
 
-    public static double cos(FValue o, Environment env) {
-        return Math.cos(o.getAsDouble());
+    public static double cos(Object o, Environment env) {
+        return Math.cos(FValue.getAsDouble(o));
     }
 
-    public static double sin(FValue o, Environment env) {
-        return Math.sin(o.getAsDouble());
+    public static double sin(Object o, Environment env) {
+        return Math.sin(FValue.getAsDouble(o));
     }
 
-    public static double tan(FValue o, Environment env) {
-        return Math.tan(o.getAsDouble());
+    public static double tan(Object o, Environment env) {
+        return Math.tan(FValue.getAsDouble(o));
     }
 
-    public static double atan(FValue o, Environment env) {
-        return Math.atan(o.getAsDouble());
+    public static double atan(Object o, Environment env) {
+        return Math.atan(FValue.getAsDouble(o));
     }
 
-    public static double atan2(FValue o1, FValue o2, Environment env) {
-        return Math.atan2(o1.getAsDouble(), o2.getAsDouble());
+    public static double atan2(Object o1, Object o2, Environment env) {
+        return Math.atan2(FValue.getAsDouble(o1), FValue.getAsDouble(o2));
     }
 
-    public static double exp(FValue o, Environment env) {
-        return Math.exp(o.getAsDouble());
+    public static double exp(Object o, Environment env) {
+        return Math.exp(FValue.getAsDouble(o));
     }
 
-    public static double log(FValue o, Environment env) {
-        return Math.log(o.getAsDouble());
+    public static double log(Object o, Environment env) {
+        return Math.log(FValue.getAsDouble(o));
     }
 
-    public static double log10(FValue o, Environment env) {
-        return Math.log10(o.getAsDouble());
+    public static double log10(Object o, Environment env) {
+        return Math.log10(FValue.getAsDouble(o));
     }
 
-    public static double log2(FValue o, Environment env) {
-        double d = o.getAsDouble();
+    public static double log2(Object o, Environment env) {
+        double d = FValue.getAsDouble(o);
         return (Math.log10(d) / Math.log10(d));
     }
 
-    public static double pow(FValue d, FValue p, Environment env) {
-        return Math.pow(d.getAsDouble(), p.getAsDouble());
+    public static double pow(Object d, Object p, Environment env) {
+        return Math.pow(FValue.getAsDouble(d), FValue.getAsDouble(p));
     }
 
-    public static double isinf(FValue o, Environment env) {
-        if (Double.isInfinite(o.getAsDouble())) {
+    public static double isinf(Object o, Environment env) {
+        if (Double.isInfinite(FValue.getAsDouble(o))) {
             return 1.0;
         } else {
             return 0.0;
         }
     }
 
-    public static double sqrt(FValue d, Environment env) {
-        return Math.sqrt(d.getAsDouble());
+    public static double sqrt(Object d, Environment env) {
+        return Math.sqrt(FValue.getAsDouble(d));
     }
 
-    public static double ceil(FValue d, Environment env) {
-        return Math.ceil(d.getAsDouble());
+    public static double ceil(Object d, Environment env) {
+        return Math.ceil(FValue.getAsDouble(d));
     }
 
-    public static double round(FValue d, Environment env) {
-        return Math.round(d.getAsDouble());
+    public static double round(Object d, Environment env) {
+        return Math.round(FValue.getAsDouble(d));
     }
 
-    public static double floor(FValue d, Environment env) {
-        return Math.floor(d.getAsDouble());
+    public static double floor(Object d, Environment env) {
+        return Math.floor(FValue.getAsDouble(d));
     }
 }

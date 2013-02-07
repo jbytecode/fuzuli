@@ -27,20 +27,20 @@ public class IfExpression extends Expression {
     }
 
     @Override
-    public FValue eval(Environment e) {
-        FValue criterian = this.exprs.get(0).eval(e);
+    public Object eval(Environment e) {
+        Object criterian = this.exprs.get(0).eval(e);
         if(this.exprs.size() == 2){
-            if(criterian.getAsDouble() == 1.0){
+            if(FValue.getAsDouble(criterian) == 1.0){
                 return (this.exprs.get(1).eval(e));
             }
         }else if (this.exprs.size() == 3){
-            if(criterian.getAsDouble() == 1.0){
+            if(FValue.getAsDouble(criterian) == 1.0){
                 return (this.exprs.get(1).eval(e));
             }else{
                 return (this.exprs.get(2).eval(e));
             }
         }else{
-            System.out.println("Criteria: "+criterian.getAsDouble());
+            System.out.println("Criteria: "+FValue.getAsDouble(criterian));
             throw new RuntimeException("Bad if statement");
         }
         return(FValue.ZERO);

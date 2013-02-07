@@ -27,14 +27,14 @@ public class FindExpression extends Expression{
     }
     
     @Override
-    public FValue eval(Environment e) {
-        ArrayList<Expression> list = (ArrayList<Expression>)this.exprs.get(0).eval(e).obj;
-        FValue item = this.exprs.get(1).eval(e);
+    public Object eval(Environment e) {
+        ArrayList list = (ArrayList)this.exprs.get(0).eval(e);
+        Object item = this.exprs.get(1).eval(e);
         
         for (int i=0;i<list.size();i++){
-            FValue vv = list.get(i).eval(e);
+            Object vv = list.get(i);
             if (FValue.Equals(vv, item)){
-                return(new FValue(i));
+                return(i);
             }
         }
         return (FValue.NULL);

@@ -27,8 +27,8 @@ public class SetPrecisionExpression extends Expression {
     }
     
     @Override
-    public FValue eval(Environment e) {
-        double precis = this.exprs.get(0).eval(e).getAsDouble();
+    public Object eval(Environment e) {
+        double precis = FValue.getAsDouble(this.exprs.get(0).eval(e));
         Token.precision = precis;
         return(FValue.ZERO);
     }

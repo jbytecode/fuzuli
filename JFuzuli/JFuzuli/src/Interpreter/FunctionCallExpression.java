@@ -30,12 +30,12 @@ public class FunctionCallExpression extends Expression{
     }
     
     @Override
-    public FValue eval(Environment e) {
+    public Object eval(Environment e) {
         Environment env = new Environment(e);
         env.variables.clear();
         int size;
         
-        FValue returnval = null, val = null;
+        Object returnval = null, val = null;
         
         FunctionExpression func = env.findFunction(fname);
         if(func == null){
@@ -51,13 +51,13 @@ public class FunctionCallExpression extends Expression{
         for (int i=0;i<size;i++){
             val = func.body.get(i).eval(env);
             //System.out.println("In Function, object is "+val.getObject().getClass().getCanonicalName());
-            if(val.getObject() instanceof ReturnExpression ){
-                ReturnExpression re =  (ReturnExpression)(val.getObject());
+            if(val instanceof ReturnExpression ){
+                ReturnExpression re =  (ReturnExpression)(val);
                 returnval = re.returnvalue;
                 break;
             }
         }
-        return(new FValue(returnval));
+        return(returnval);
         
     }
     

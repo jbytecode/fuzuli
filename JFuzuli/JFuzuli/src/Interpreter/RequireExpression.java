@@ -27,8 +27,8 @@ public class RequireExpression extends Expression {
     }
 
     @Override
-    public FValue eval(Environment env) {
-        String filename = String.valueOf(this.exprs.get(0).eval(env).getObject());
+    public Object eval(Environment env) {
+        String filename = String.valueOf(this.exprs.get(0).eval(env));
         Parser parser;
         if (filename.indexOf("/") != -1 || filename.indexOf("\\") != -1) {
             parser = new Parser(new File(filename));
@@ -49,7 +49,7 @@ public class RequireExpression extends Expression {
                 break;
             }
 
-            FValue o = null;
+            Object o = null;
             try {
                 o = e.eval(env);
             } catch (Exception exc) {

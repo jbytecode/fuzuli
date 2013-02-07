@@ -31,13 +31,13 @@ public class LessExpression extends Expression{
     }
     
     @Override
-    public FValue eval(Environment e) {
-        FValue val1 = this.exprs.get(0).eval(e);
-        FValue val2 = this.exprs.get(1).eval(e);
-        if(val1.getAsDouble()<val2.getAsDouble()){
-            return (new FValue(1.0));
+    public Object eval(Environment e) {
+        Object val1 = this.exprs.get(0).eval(e);
+        Object val2 = this.exprs.get(1).eval(e);
+        if(FValue.getAsDouble(val1) < FValue.getAsDouble(val2)){
+            return (1.0);
         }else{
-            return (new FValue(0.0));
+            return (0.0);
         }
     }
     

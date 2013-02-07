@@ -33,8 +33,12 @@ public class ConstantNumberExpression extends Expression{
     
 
     @Override
-    public FValue eval(Environment e) {
-        return( new FValue(d) );
+    public Object eval(Environment e) {
+        return( d);
+    }
+    
+    public String toString(){
+        return("Const("+this.d+")");
     }
 
 }

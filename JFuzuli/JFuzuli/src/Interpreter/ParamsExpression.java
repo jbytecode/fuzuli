@@ -34,8 +34,8 @@ public class ParamsExpression extends Expression {
     }
     
     @Override
-    public FValue eval(Environment e) {
-        return(new FValue(paramNames));
+    public Object eval(Environment e) {
+        return(paramNames);
     }
     
 }
