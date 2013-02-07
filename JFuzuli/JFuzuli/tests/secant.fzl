@@ -1,0 +1,33 @@
+(require "math.nfl")
+
+(let passed "PASSED!\n")
+(let error "ERROR\n")
+
+(function f (params x)
+	(block
+		(return (- (pow x 2.0) 612.0))
+	)
+)
+
+(def x1 FLOAT)(def x2 FLOAT)
+(let x1 10.0)
+(let x2 30.0)
+(let x 0.0)
+
+(for (let i 0) (< i 20) (++ i)
+	(let x (- x1 (* (f x1) (/ (- x1 x2) (- (f x1) (f x2))))))
+	#(print "x is " x "\n")
+	(if (= x x1) 
+			(break)
+	)
+	(let temp x1)
+	(let x1 x)
+	(let x2 temp)
+)
+
+
+(if (<  (abs (- x 24.73863375)) 0.0001)
+	(print passed)
+	(print error)
+)
+
