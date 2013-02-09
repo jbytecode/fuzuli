@@ -556,6 +556,9 @@ public class Parser {
             }else if (tok.content.equals("internal")){
                 exprs = getExpressionList();
                 return (new InternalExpression(exprs));
+            }else if (tok.content.equals("javastatic")){
+                exprs = getExpressionList();
+                return (new JavaStaticExpression(exprs));
             }else{
                 String fname = tok.content;
                 if(this.getPreviousToken().type == Token.TokenType.LPARAN){                    
