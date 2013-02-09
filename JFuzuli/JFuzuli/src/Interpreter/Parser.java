@@ -182,6 +182,9 @@ public class Parser {
             }
             tok.content = buf.toString();
             tok.type = Token.TokenType.DOUBLE;
+            if(!tok.content.contains(".")){
+                tok.type = Token.TokenType.LONG;
+            }
             return (tok);
         } else if (current == '+') {
             char next = consume();
@@ -385,6 +388,9 @@ public class Parser {
         } else if (tok.type == Token.TokenType.DOUBLE) {
             ConstantNumberExpression dexpr = new ConstantNumberExpression(Double.parseDouble(tok.content));
             return (dexpr);
+        }else if (tok.type == Token.TokenType.LONG) {
+            ConstantNumberExpression dexpr = new ConstantNumberExpression(Long.parseLong(tok.content));
+            return (dexpr);
         } else if (tok.type == Token.TokenType.PLUS) {
             exprs = getExpressionList();
             return (new PlusExpression(exprs));
@@ -559,6 +565,9 @@ public class Parser {
             }else if (tok.content.equals("javastatic")){
                 exprs = getExpressionList();
                 return (new JavaStaticExpression(exprs));
+            }else if (tok.content.equals("javanew")){
+                exprs = getExpressionList();
+                return (new JavaNewExpression(exprs));
             }else{
                 String fname = tok.content;
                 if(this.getPreviousToken().type == Token.TokenType.LPARAN){                    
