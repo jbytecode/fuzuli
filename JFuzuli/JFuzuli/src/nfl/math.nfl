@@ -28,89 +28,89 @@
 
 
 
-(let PI (javastatic "Core.FMath.pi"))
+(let PI (internal "Core.FMath.pi"))
 
 
 (function sin (params x)
-	(return (javastatic "Core.FMath.sin" x))
+	(return (internal "Core.FMath.sin" x))
 )
 
 (function cos (params x)
-	(return (javastatic "Core.FMath.cos" x) )
+	(return (internal "Core.FMath.cos" x) )
 )
 
 (function tan (params x)
-	(return (javastatic "Core.FMath.tan" x) )
+	(return (internal "Core.FMath.tan" x) )
 )
 
 (function abs (params x)
-	(return  (javastatic "Core.FMath.abs" x) )
+	(return  (internal "Core.FMath.abs" x) )
 )
 
 (function sqrt (params x)
-	(return (javastatic "Core.FMath.sqrt" x) )
+	(return (internal "Core.FMath.sqrt" x) )
 )
 
 (function exp (params x)
-	(return  (javastatic "Core.FMath.exp" x) )
+	(return  (internal "Core.FMath.exp" x) )
 )
 
 (function log (params x)
-	(return (javastatic "Core.FMath.log" x) )
+	(return (internal "Core.FMath.log" x) )
 )
 
 (function log10 (params x)
-	(return  (javastatic "Core.FMath.log10" x) )
+	(return  (internal "Core.FMath.log10" x) )
 )
 
 (function log2 (params x)
-	(return  (javastatic "Core.FMath.log2" x) )
+	(return  (internal "Core.FMath.log2" x) )
 )
 
 (function cosh (params x)
-	(return (javastatic "Core.FMath.cosh" x) )
+	(return (internal "Core.FMath.cosh" x) )
 )
 
 (function sinh (params x)
-	(return (javastatic "Core.FMath.sinh" x) )
+	(return (internal "Core.FMath.sinh" x) )
 )
 
 (function tanh (params x)
-	(return (javastatic "Core.FMath.tanh" x) )
+	(return (internal "Core.FMath.tanh" x) )
 )
 
 (function asin (params x)
-	(return (javastatic "Core.FMath.asin" x) )
+	(return (internal "Core.FMath.asin" x) )
 )
 
 (function acos (params x)
-	(return (javastatic "Core.FMath.acos" x) )
+	(return (internal "Core.FMath.acos" x) )
 )
 
 (function atan (params x)
-	(return (javastatic "Core.FMath.atan" x) )
+	(return (internal "Core.FMath.atan" x) )
 )
 
 (function atan2 (params a b)
-	(return (javastatic "Core.FMath.atan2" a b) )
+	(return (internal "Core.FMath.atan2" a b) )
 )
 
 (function pow (params x p)
-	(return (javastatic "Core.FMath.pow" x p))
+	(return (internal "Core.FMath.pow" x p))
 )
 
 (function isinf (params x )
-	(return (javastatic "Core.FMath.isinf" x))
+	(return (internal "Core.FMath.isinf" x))
 )
 
 (function ceil (params x )
-	(return (javastatic "Core.FMath.ceil" x))
+	(return (internal "Core.FMath.ceil" x))
 )
 
 (function round (params x )
-	(return (javastatic "Core.FMath.round" x))
+	(return (internal "Core.FMath.round" x))
 )
 
 (function floor (params x )
-	(return (javastatic "Core.FMath.floor" x))
+	(return (internal "Core.FMath.floor" x))
 )

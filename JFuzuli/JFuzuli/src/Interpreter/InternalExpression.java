@@ -20,9 +20,9 @@ package Interpreter;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-public class JavaStaticExpression extends Expression {
+public class InternalExpression extends Expression {
 
-    public JavaStaticExpression(ArrayList<Expression> expr) {
+    public InternalExpression(ArrayList<Expression> expr) {
         this.exprs = expr;
     }
 
