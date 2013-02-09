@@ -18,135 +18,135 @@
 
 
 (function fopen (params file mode)
-		(return (javastatic "Core.FIO.fopen" file mode))
+		(return (internal "Core.FIO.fopen" file mode))
 )
 
 (function fclose (params file)
-		(return (javastatic "Core.FIO.fclose" file))
+		(return (internal "Core.FIO.fclose" file))
 )
 
 (function feof (params file)
-		(return (javastatic "Core.FIO.feof" file))
+		(return (internal "Core.FIO.feof" file))
 )
 
 (function fwrite (params file obj)
-		(return (javastatic "Core.FIO.fwrite" file obj))
+		(return (internal "Core.FIO.fwrite" file obj))
 )
 
 
 (function fread (params file obj)
-		(return (javastatic "Core.FIO.fread" file obj))
+		(return (internal "Core.FIO.fread" file obj))
 )
 
 
 (function fflush (params file)
-		(return (javastatic "Core.FIO.fflush" file))
+		(return (internal "Core.FIO.fflush" file))
 )
 
 (function chdir (params x)
-		(return (javastatic "Core.FIO.chdir" x))
+		(return (internal "Core.FIO.chdir" x))
 ) 
 
 (function getpwd (params)
-		(return (javastatic "Core.FIO.getpwd"))
+		(return (internal "Core.FIO.getpwd"))
 )
 
 (function dir (params x)
-		(return (javastatic "Core.FIO.dir" x))
+		(return (internal "Core.FIO.dir" x))
 )
 
 (function unlink (params x)
-		(return (javastatic "Core.FIO.unlink" x))
+		(return (internal "Core.FIO.unlink" x))
 )
 
 (function rename (params x y)
-		(return (javastatic "Core.FIO.rename" x y))
+		(return (internal "Core.FIO.rename" x y))
 )
 
 
 (function tmpfile (params)
-		(return (javastatic "Core.FIO.tmpfile"))
+		(return (internal "Core.FIO.tmpfile"))
 )
 
 
 (function tmpnam (params)
-		(return (javastatic "Core.FIO.tmpname"))
+		(return (internal "Core.FIO.tmpname"))
 )
 
 
 (function datetime (params)
-		(return (javastatic "Core.FIO.datetime"))
+		(return (internal "Core.FIO.datetime"))
 )
 
 
 (function asctime (params)
-		(return (javastatic "Core.FIO.asctime"))
+		(return (internal "Core.FIO.asctime"))
 )
 
 (function sleep (params x)
-		(return (javastatic "Core.FIO.sleep" x))
+		(return (internal "Core.FIO.sleep" x))
 )
 
 
 (function getenv (params var)
-		(return (javastatic "Core.FIO.getenv" var))
+		(return (internal "Core.FIO.getenv" var))
 )
 
 (function setenv (params var val changeflag)
-		(return (javastatic "Core.FIO.setenv" var val changeflag))
+		(return (internal "Core.FIO.setenv" var val changeflag))
 )
 
 
 (function rnd (params)
-		(return (javastatic "Core.FIO.rnd"))
+		(return (internal "Core.FIO.rnd"))
 )
 
 (function print_r (params alist)
-		(return (javastatic "Core.FIO.print_r" alist))
+		(return (internal "Core.FIO.print_r" alist))
 )
 
 (function popen (params process mode)
-		(return (javastatic "Core.FIO.popen" process mode))
+		(return (internal "Core.FIO.popen" process mode))
 )
 
 (function pclose (params process)
-		(return (javastatic "Core.FIO.pclose" process))
+		(return (internal "Core.FIO.pclose" process))
 )
 
 (function exit (params code)
-		(return (javastatic "Core.FIO.exit" code))
+		(return (internal "Core.FIO.exit" code))
 )
 
 (function is_dir (params dir)
-		(return (javastatic "Core.FIO.is_dir" dir))
+		(return (internal "Core.FIO.is_dir" dir))
 )
 
 
 (function time (params)
-		(return (javastatic "Core.FIO.time"))
+		(return (internal "Core.FIO.time"))
 )
 
 (function randomize (params seed)
-		(return (javastatic "Core.FIO.randomize" seed))
+		(return (internal "Core.FIO.randomize" seed))
 )
 
 
 (function puts (params text)
-		(return (javastatic "Core.FIO.puts" text))
+		(return (internal "Core.FIO.puts" text))
 )
 
 (function fputs (params file text)
-		(return (javastatic "Core.FIO.fputs" file text))
+		(return (internal "Core.FIO.fputs" file text))
 )
 
 (function fgetc (params file)
-		(return (javastatic "Core.FIO.fgetc" file))
+		(return (internal "Core.FIO.fgetc" file))
 )
 
 (function ftell (params file)
-		(return (javastatic "Core.FIO.ftell" file))
+		(return (internal "Core.FIO.ftell" file))
 )
 
 (function readline (params)
-		(return (javastatic "Core.FIO.readline"))
+		(return (internal "Core.FIO.readline"))
 )
