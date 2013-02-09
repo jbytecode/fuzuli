@@ -568,6 +568,9 @@ public class Parser {
             }else if (tok.content.equals("javanew")){
                 exprs = getExpressionList();
                 return (new JavaNewExpression(exprs));
+            }else if (tok.content.equals("javacall")){
+                exprs = getExpressionList();
+                return (new JavaCallExpression(exprs));
             }else{
                 String fname = tok.content;
                 if(this.getPreviousToken().type == Token.TokenType.LPARAN){                    
