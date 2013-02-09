@@ -30,6 +30,7 @@ public class Token {
     
     enum TokenType {
         INTEGER,
+        LONG,
         DOUBLE,
         PLUS,
         PLUSPLUS,

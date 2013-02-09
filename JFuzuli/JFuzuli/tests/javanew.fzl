@@ -20,36 +20,17 @@
 
 
 #TEST1
-(let cos0 (javastatic "java.lang.Math.cos" 0.0))
-(if (= cos0 1.0)
+(let s (javanew "java.lang.String" "Hello JFuzuli!"))
+(if (= s "Hello JFuzuli!")
 	(print passed)
 	(print error)
 )
+
 
 #TEST2
-(let ab (javastatic "java.lang.Math.abs" -1.0))
-(if (= ab 1)
+(let s (javanew "java.util.ArrayList" (javanew "java.lang.Integer" "10") ))
+(if (= s "[]")
 	(print passed)
 	(print error)
 )
 
-#TEST3
-(let s (javastatic "java.lang.String.valueOf" 9.0))
-(if (= (typeof s) "java.lang.String")
-	(print passed)
-	(print error)
-)
-
-
-#TEST4
-(let a (javastatic "java.util.Calendar.getInstance"))
-(let atype (typeof a))
-(if (= atype "java.util.GregorianCalendar")
-	(print passed)
-	(print error)
-)
-
-
-
-
-          
