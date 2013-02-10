@@ -58,7 +58,7 @@ public class JFuzuli {
                     System.out.println("Runtime Error: " + exc.toString());
                     exc.printStackTrace();
                     System.exit(-1);
-                }
+                } 
             }
 
         }
