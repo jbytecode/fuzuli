@@ -41,6 +41,14 @@ public class Environment implements Serializable {
             this.variables.put("false", Boolean.FALSE);
             this.variables.put("NULL", 0);
             this.variables.put("null", null);
+            this.variables.put("INTEGER", java.lang.Integer.class.getCanonicalName());
+            this.variables.put("DOUBLE", java.lang.Double.class.getCanonicalName());
+            this.variables.put("FLOAT", java.lang.Float.class.getCanonicalName());
+            this.variables.put("SHORT", java.lang.Short.class.getCanonicalName());
+            this.variables.put("LONG", java.lang.Long.class.getCanonicalName());
+            this.variables.put("BYTE", java.lang.Byte.class.getCanonicalName());
+            this.variables.put("BOOLEAN", java.lang.Boolean.class.getCanonicalName());
+            this.variables.put("CHAR", java.lang.Character.class.getCanonicalName());
         }
     }
 

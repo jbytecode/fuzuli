@@ -15,24 +15,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-(let net_lib (dynload "FuzuliSocket"))
+# (let net_lib (dynload "FuzuliSocket"))
 
 (function fsockopen (params host port)
-	(return (C net_lib "fsockopen" host port))
+	(return (internal "Core.FNet.fsockopen" host port))
 )
 
 (function fsockwrite (params socket what)
-	(return (C net_lib "fsockwrite" socket what))
+	(return (internal "Core.FNet.fsockwrite" socket what))
 )
 
 (function fsockread (params socket howmany)
-	(return (C net_lib "fsockread" socket howmany))
+	(return (internal "Core.FNet.fsockread" socket howmany))
 )
 
 (function fsockclose (params socket)
-	(return (C net_lib "fsockclose" socket))
+	(return (internal "Core.FNet.fsockclose" socket))
 )
 
 (function fsocklisten (params port)
-	(return (C net_lib "fsocklisten" port))
+	(return (internal "Core.FNet.fsocklisten" port))
 )
