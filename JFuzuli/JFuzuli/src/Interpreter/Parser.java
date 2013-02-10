@@ -41,7 +41,7 @@ public class Parser {
     }
 
     private void read(BufferedReader reader) throws Exception {
-        StringBuffer code = new StringBuffer();
+        StringBuilder code = new StringBuilder();
          
             char[] chars = new char[1024];
             int result;
@@ -60,7 +60,7 @@ public class Parser {
     
 
     public Parser(File file) {
-        StringBuffer code = new StringBuffer();
+        StringBuilder code = new StringBuilder();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             this.read(reader);
@@ -72,7 +72,7 @@ public class Parser {
     }
     
     public Parser(InputStream is){
-        StringBuffer code = new StringBuffer();
+        StringBuilder code = new StringBuilder();
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             this.read(reader);
@@ -574,6 +574,12 @@ public class Parser {
             }else if (tok.content.equals("explode")){
                 exprs = getExpressionList();
                 return (new ExplodeExpression(exprs));
+            }else if (tok.content.equals("eval")){
+                exprs = getExpressionList();
+                return (new EvalExpression(exprs));
+            }else if (tok.content.equals("expression")){
+                exprs = getExpressionList();
+                return (new ExpressionExpression(exprs));
             }else{
                 String fname = tok.content;
                 if(this.getPreviousToken().type == Token.TokenType.LPARAN){                    
