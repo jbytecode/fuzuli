@@ -333,13 +333,15 @@ public class Parser {
                     current = consume();
                     if (current == 'n'){
                         buf.append("\n");
+                    }else{
+                        buf.append(current);
                     }
-                    current = consume();
                 }
-                if (current == '"') {
+                else if (current == '"') {
                     break;
+                }else{
+                    buf.append(current);
                 }
-                buf.append(current);
             }
             tok.type = Token.TokenType.STRING;
             tok.content = buf.toString();

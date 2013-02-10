@@ -15,28 +15,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-
-(require "/usr/lib/fuzuli/nfl/math.nfl")
-
 (let passed "PASSED!\n")
 (let error "ERROR\n")
 
-(let a "3.14")
-(let b a)
-(type b FLOAT)
+(require "net.nfl")
+(require "string.nfl")
+(require "io.nfl")
 
-(if (and (= b 3.14) (= (typeof b) FLOAT))
-	(print passed)
-	(print error)
+(let con (fsockopen "google.com" 80))
+(fsockwrite con "GET /\n\n")
+
+(def html STRING)
+(def content LIST)
+
+(let content (list "."))
+(while 1
+      (let html (fsockread con 100)) #read 1 bytes
+      (if (= html -1.0) (break))	
+      (append content html)
 )
-
-
-
-(let h PI)
-(type h INTEGER)
-
-(if (and (= h 3) (= (typeof h) INTEGER))
+(fsockclose con) 
+(let strcontent (strcat content))
+(if (> (instr strcontent "Content") 0)
 	(print passed)
 	(print error)
 )
