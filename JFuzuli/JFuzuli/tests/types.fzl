@@ -16,19 +16,28 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-(function shuffle (params alist)
-		(return (internal "Core.FUtils.shuffle" alist))
+
+(require "/usr/lib/fuzuli/nfl/math.nfl")
+
+(let passed "PASSED!\n")
+(let error "ERROR\n")
+
+(let a "3.14")
+(let b a)
+(type b FLOAT)
+
+(if (and (= b 3.14) (= (typeof b) FLOAT))
+	(print passed)
+	(print error)
 )
 
-(function sorta (params alist)
-		(return (internal "Core.FUtils.sorta" alist))
+
+
+(let h PI)
+(type h INTEGER)
+
+(if (and (= h 3) (= (typeof h) INTEGER))
+	(print passed)
+	(print error)
 )
-
-(function sortd (params alist)
-		(return (internal "Core.FUtils.sortd" alist))
-)
-
-
-
-
 

@@ -16,19 +16,41 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-(function shuffle (params alist)
-		(return (internal "Core.FUtils.shuffle" alist))
+
+(require "utils.nfl")
+(require "io.nfl")
+
+(let passed "PASSED!\n")
+(let error "ERROR\n")
+
+(let a (list 3 5 4 3 2 1))
+(let sorted1 (sorta a))
+
+(if (and
+		(= (nth sorted1 0) 1)
+		(= (nth sorted1 1) 2)
+		(= (nth sorted1 2) 3)
+		(= (nth sorted1 3) 3)
+		(= (nth sorted1 4) 4)
+		(= (nth sorted1 5) 5)
+	)
+	(print passed)
+	(print error)
 )
 
-(function sorta (params alist)
-		(return (internal "Core.FUtils.sorta" alist))
+
+
+(let sorted2 (sortd a))
+
+(if (and
+        (= (nth sorted2 0) 5)
+        (= (nth sorted2 1) 4)
+        (= (nth sorted2 2) 3)
+        (= (nth sorted2 3) 3)
+        (= (nth sorted2 4) 2)
+        (= (nth sorted2 5) 1)
+    )
+    (print passed)
+    (print error)
 )
-
-(function sortd (params alist)
-		(return (internal "Core.FUtils.sortd" alist))
-)
-
-
-
-
 
