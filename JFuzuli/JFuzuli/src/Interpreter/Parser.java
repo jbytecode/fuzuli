@@ -39,6 +39,14 @@ public class Parser {
         this.sourcecode = code;
         resetParser();
     }
+    
+    public String getSourceCode(){
+        return(this.sourcecode);
+    }
+    
+    public void setSourceCode(String s){
+        this.sourcecode = s;
+    }
 
     private void read(BufferedReader reader) throws Exception {
         StringBuilder code = new StringBuilder();
@@ -50,11 +58,12 @@ public class Parser {
                 if (result == -1) {
                     break;
                 }
-                code.append(chars);
+                code.append(chars,0,result);
                 for (int i = 0; i < chars.length; i++) {
                     chars[i] = '\0';
                 }
             }
+            code.append("\n");
             this.sourcecode = code.toString();
         }
     
