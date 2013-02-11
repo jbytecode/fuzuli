@@ -15,29 +15,25 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# (let net_lib (dynload "FuzuliSocket"))
 
-(function fsockopen (params host port)
-	(return (internal "Core.FNet.fsockopen" host port))
+(require "net.nfl")
+
+(let passed "PASSED!\n")
+(let error "ERROR\n")
+
+
+#TEST1 (Exception for wrong URL)
+
+(let data 
+  (try 
+    (httpdownload "http://www.fuzuli project.org")
+  )
 )
 
-(function fsockwrite (params socket what)
-	(return (internal "Core.FNet.fsockwrite" socket what))
+(let type (typeof data))
+(if (= type "Interpreter.FuzuliException")
+	(print passed)
+	(print error)
 )
 
-(function fsockread (params socket howmany)
-	(return (internal "Core.FNet.fsockread" socket howmany))
-)
-
-(function fsockclose (params socket)
-	(return (internal "Core.FNet.fsockclose" socket))
-)
-
-(function fsocklisten (params port)
-	(return (internal "Core.FNet.fsocklisten" port))
-)
-
-(function httpdownload (params url)
-        (return (internal "Core.FNet.httpdownload" url))
-)
 

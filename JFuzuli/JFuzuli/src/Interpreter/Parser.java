@@ -582,6 +582,12 @@ public class Parser {
             }else if (tok.content.equals("expression")){
                 exprs = getExpressionList();
                 return (new ExpressionExpression(exprs));
+            }else if (tok.content.equals("try")){
+                exprs = getExpressionList();
+                return (new TryExpression(exprs));
+            }else if (tok.content.equals("dotimes")){
+                exprs = getExpressionList();
+                return (new DoTimesExpression(exprs));
             }else{
                 String fname = tok.content;
                 if(this.getPreviousToken().type == Token.TokenType.LPARAN){                    
