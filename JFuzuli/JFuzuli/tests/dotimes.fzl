@@ -15,29 +15,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# (let net_lib (dynload "FuzuliSocket"))
+(let passed "PASSED!\n")
+(let error "ERROR\n")
 
-(function fsockopen (params host port)
-	(return (internal "Core.FNet.fsockopen" host port))
+(def summ INTEGER)
+(let summ 0)
+(dotimes i 10
+	(let summ (+ summ i)) 
 )
 
-(function fsockwrite (params socket what)
-	(return (internal "Core.FNet.fsockwrite" socket what))
-)
 
-(function fsockread (params socket howmany)
-	(return (internal "Core.FNet.fsockread" socket howmany))
-)
-
-(function fsockclose (params socket)
-	(return (internal "Core.FNet.fsockclose" socket))
-)
-
-(function fsocklisten (params port)
-	(return (internal "Core.FNet.fsocklisten" port))
-)
-
-(function httpdownload (params url)
-        (return (internal "Core.FNet.httpdownload" url))
+(if (= summ (/ (* 9 10) 2))
+	(print passed)
+	(print error)
 )
 

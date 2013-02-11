@@ -20,7 +20,10 @@ package Core;
 
 import Interpreter.Environment;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.Socket;
+import java.net.URL;
 import java.net.UnknownHostException;
 
 public class FNet {
@@ -57,5 +60,29 @@ public class FNet {
     
     public static void fsockclose (Socket socket, Environment env) throws IOException{
         socket.close();
+    }
+    
+    
+    public static void clearBytes(byte[] b){
+        for (int i=0;i<b.length;i++){
+            b[i]=0;
+        }
+    }
+    
+    public static Object httpdownload (String url, Environment env)  throws Exception {
+        URL u = new URL(url);
+        HttpURLConnection con = (HttpURLConnection)u.openConnection();
+        InputStream is = con.getInputStream();
+        byte[] bytes = new byte[1024];
+        StringBuilder buf = new StringBuilder();
+        while(true){
+            int result = is.read(bytes);
+            if(result == -1){
+                break;
+            }
+            buf.append(new String(bytes));
+            clearBytes(bytes);
+        }
+        return(buf.toString());
     }
 }
