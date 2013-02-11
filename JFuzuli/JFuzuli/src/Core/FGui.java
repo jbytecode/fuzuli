@@ -25,4 +25,8 @@ public class FGui {
     public static void msgbox (String text, Environment env){
         javax.swing.JOptionPane.showMessageDialog(null, text);
     }
+    
+    public static Object inputbox (String message, Environment env){
+        return (javax.swing.JOptionPane.showInputDialog(message));
+    }
 }

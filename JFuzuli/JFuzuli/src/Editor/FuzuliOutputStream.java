@@ -5,9 +5,7 @@
 package Editor;
 
 import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.io.StringWriter;
 import javax.swing.JTextArea;
 
@@ -25,8 +23,6 @@ public class FuzuliOutputStream {
     public void setPrintWriter(PrintStream printStream){
         this.printStream = printStream;
     }
-    
-    
     
     public String readText(){
         return (new String(baos.toByteArray()));

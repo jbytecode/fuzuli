@@ -23,6 +23,7 @@ import Interpreter.Parser;
 import java.awt.Dimension;
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.JTextPane;
 
 /*
  * Icon Library:
@@ -34,11 +35,16 @@ public class MainFrame extends javax.swing.JFrame {
     Parser parser;
     Environment globalEnvironment;
     FuzuliOutputStream fos;
+    FuzuliColorizer colorizer;
 
+    public JTextPane getTextPane(){
+        return (this.jTextPane1);
+    }
     public MainFrame() {
         initComponents();
         globalEnvironment = new Environment(null);
         fos = new FuzuliOutputStream(this.jTextArea1);
+        colorizer = new FuzuliColorizer(this);
         System.setOut(fos.getPrintStream());
         System.setErr(fos.getPrintStream());
         this.setSize(new Dimension(800, 600));
@@ -52,6 +58,10 @@ public class MainFrame extends javax.swing.JFrame {
         this.jTextArea1.setText(this.jTextArea1.getText() + s + "\n");
         this.jTextArea1.setSelectionStart(this.jTextArea1.getText().length() - 2);
         this.jTextArea1.setSelectionEnd(this.jTextArea1.getText().length() - 1);
+    }
+    
+    public void updateOutput(){
+        output(fos.readText());
     }
 
     /**
@@ -69,10 +79,10 @@ public class MainFrame extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jEditorPane1 = new javax.swing.JEditorPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Fuzuli Editor");
@@ -134,32 +144,31 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton5);
 
-        jEditorPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jEditorPane1.setFont(new java.awt.Font("Courier New", 1, 15)); // NOI18N
-        jEditorPane1.setForeground(new java.awt.Color(0, 0, 0));
-        jEditorPane1.setText("(println \"Hello World!\")\n");
-        jEditorPane1.setOpaque(false);
-        jScrollPane1.setViewportView(jEditorPane1);
-
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
+
+        jTextPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jTextPane1.setForeground(new java.awt.Color(0, 0, 0));
+        jTextPane1.setDoubleBuffered(true);
+        jTextPane1.setMargin(new java.awt.Insets(8, 8, 8, 8));
+        jScrollPane3.setViewportView(jTextPane1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
             .addComponent(jScrollPane2)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -167,7 +176,7 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        jEditorPane1.setText("");
+        jTextPane1.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -179,7 +188,7 @@ public class MainFrame extends javax.swing.JFrame {
             this.currentFilename = file.toString();
             this.setCaption(this.currentFilename);
             parser = new Parser(file);
-            this.jEditorPane1.setText(parser.getSourceCode());
+            this.jTextPane1.setText(parser.getSourceCode());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -188,7 +197,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        String code = this.jEditorPane1.getText();
+        String code = this.jTextPane1.getText();
         Expression expr;
         Object result;
 
@@ -271,10 +280,10 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JEditorPane jEditorPane1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }
