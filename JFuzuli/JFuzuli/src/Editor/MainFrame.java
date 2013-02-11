@@ -15,22 +15,43 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Editor;
+
+import Interpreter.Environment;
+import Interpreter.Expression;
+import Interpreter.Parser;
+import java.awt.Dimension;
+import java.io.File;
+import javax.swing.JFileChooser;
 
 /*
  * Icon Library:
  * http://www.iconfinder.com/search/?q=iconset%3Aonebit
  */
-
-
 public class MainFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainFrame
-     */
+    String currentFilename;
+    Parser parser;
+    Environment globalEnvironment;
+    FuzuliOutputStream fos;
+
     public MainFrame() {
         initComponents();
+        globalEnvironment = new Environment(null);
+        fos = new FuzuliOutputStream(this.jTextArea1);
+        System.setOut(fos.getPrintStream());
+        System.setErr(fos.getPrintStream());
+        this.setSize(new Dimension(800, 600));
+    }
+
+    public void setCaption(String s) {
+        this.setTitle("Fuzuli Editor: " + s);
+    }
+
+    public void output(String s) {
+        this.jTextArea1.setText(this.jTextArea1.getText() + s + "\n");
+        this.jTextArea1.setSelectionStart(this.jTextArea1.getText().length() - 2);
+        this.jTextArea1.setSelectionEnd(this.jTextArea1.getText().length() - 1);
     }
 
     /**
@@ -54,6 +75,7 @@ public class MainFrame extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Fuzuli Editor");
 
         jToolBar1.setRollover(true);
 
@@ -112,7 +134,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton5);
 
-        jEditorPane1.setFont(new java.awt.Font("Courier New", 0, 15)); // NOI18N
+        jEditorPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jEditorPane1.setFont(new java.awt.Font("Courier New", 1, 15)); // NOI18N
+        jEditorPane1.setForeground(new java.awt.Color(0, 0, 0));
+        jEditorPane1.setText("(println \"Hello World!\")\n");
+        jEditorPane1.setOpaque(false);
         jScrollPane1.setViewportView(jEditorPane1);
 
         jTextArea1.setColumns(20);
@@ -141,11 +167,20 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        jEditorPane1.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        JFileChooser filer = new JFileChooser();
+        int result = filer.showOpenDialog(this);
+        File file = null;
+        if (result == 0) {
+            file = filer.getSelectedFile();
+            this.currentFilename = file.toString();
+            this.setCaption(this.currentFilename);
+            parser = new Parser(file);
+            this.jEditorPane1.setText(parser.getSourceCode());
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -153,6 +188,42 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String code = this.jEditorPane1.getText();
+        Expression expr;
+        Object result;
+
+        try {
+            if (this.parser == null) {
+                parser = new Parser(code);
+                parser.resetParser();
+            } else {
+                parser.setSourceCode(code);
+                parser.resetParser();
+            }
+        } catch (Exception e) {
+            output(e.toString());
+        }
+
+        Thread th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Expression expr = parser.getNextExpression();
+                        if (expr == null) {
+                            break;
+                        }
+                        expr.eval(globalEnvironment);
+                        output(MainFrame.this.fos.readText());
+                    } catch (Exception e) {
+                        output(e.toString());
+                        break;
+                    }
+                }
+            }
+        }
+                );
+        th.start();
         
     }//GEN-LAST:event_jButton4ActionPerformed
 
