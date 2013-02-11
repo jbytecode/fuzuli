@@ -25,7 +25,7 @@
     )
 )
 
-(for (let i 0) (< i 100) (++ i)
-	(println "i=" i " and fib(" i ") is " (fibonacci i))
-)
+	(for (let i 0) (< i 30) (++ i)
+		(println "i=" i " and fib(" i ") is " (fibonacci i))
+	)
 
