@@ -23,7 +23,10 @@ import Interpreter.NumberExpression;
 import Interpreter.Environment;
 import Interpreter.Expression;
 import Interpreter.Parser;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.util.Scanner;
 
 /**
  *
@@ -31,9 +34,8 @@ import java.io.File;
  */
 public class JFuzuli {
 
-    public static void main(String[] args) {
-        if (args.length == 1) {
-            Environment globalEnvironment = new Environment(null);
+    public static void runSingleFile(String[] args){
+        Environment globalEnvironment = new Environment(null);
             globalEnvironment.setVariable("argc", args.length);
             globalEnvironment.setVariable("argv", args);
             Parser parser = new Parser(new File(args[0]));
@@ -60,7 +62,35 @@ public class JFuzuli {
                     System.exit(-1);
                 } 
             }
-
+    }
+    
+    public static void repl(String[] args){
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        Parser parser = new Parser("(+ 2 2)\n");
+        Environment topEnvironment = new Environment(null);
+        String input;
+        while(true){
+            try{
+                System.out.print("F: ");
+                input = reader.readLine();
+                parser.setSourceCode(input);
+                parser.resetParser();
+                Expression expr = parser.getNextExpression();
+                Object result = expr.eval(topEnvironment);
+                System.out.println(result);
+            }catch (Exception e){
+                System.out.println(e.toString());
+            }
+        }
+    }
+    
+    public static void main(String[] args) {
+        if (args.length == 1) {
+            if(args[0].equals("--repl")){
+                repl(args);
+            }else{
+                runSingleFile(args);
+            }
         }
     }
 }

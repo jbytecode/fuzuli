@@ -140,4 +140,8 @@ public class FIO {
         System.setProperty(var, String.valueOf(value));
         return(value);
     }
+    
+    public static void puts (String text, Environment env){
+        System.out.println(text);
+    }
 }
