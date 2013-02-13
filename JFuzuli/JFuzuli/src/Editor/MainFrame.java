@@ -69,7 +69,10 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     public void updateOutput(){
-        output(fos.readText());
+        String text = fos.readText();
+        if (text.length()>0){
+            output(fos.readText());
+        }
     }
 
     /**
