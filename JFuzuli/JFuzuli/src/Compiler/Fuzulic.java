@@ -13,7 +13,7 @@ import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
 
 
-public class Main {
+public class Fuzulic {
     
    
     public byte[] getBytesOfClass (String classurl){
@@ -56,8 +56,10 @@ public class Main {
         return null;
     }
     
-    public Main(String[] args){
-        String filename = args[0];
+    public File compile (String singleFile){
+        String filename = singleFile;
+        String distname="";
+        File outputFile = null;
         byte[] objectBytes;
         System.out.println("Compiling "+filename);
 
@@ -79,10 +81,10 @@ public class Main {
         
         try{
             int dotindex = sourcefile.getName().lastIndexOf(".");
-            String distname = sourcefile.getName().substring(0,dotindex)+".jar";
+            distname = sourcefile.getName().substring(0,dotindex)+".jar";
             System.out.println("Creating "+distname);
-            JarOutputStream jar = new JarOutputStream(new FileOutputStream(distname));
-            
+            outputFile = new File(distname);
+            JarOutputStream jar = new JarOutputStream(new FileOutputStream(outputFile));
             jar.putNextEntry(new ZipEntry("jbytecode.ser"));
             jar.write(objectBytes);
             jar.closeEntry();
@@ -105,6 +107,13 @@ public class Main {
         }catch (Exception e){
             System.out.println(e.toString());
         }
+        
+        return(outputFile);
+    }
+    
+    
+    public Fuzulic(String[] args){
+        compile (args[0]);
     }
     
     public static void main (String[] args){
@@ -115,6 +124,6 @@ public class Main {
             System.out.println("java -jar JFuzuli.jar Compiler.Main fzlfile");
             System.exit(0);
         }
-        new Main(args);
+        new Fuzulic(args);
     }
 }
