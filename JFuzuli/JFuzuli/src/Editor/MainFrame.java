@@ -22,6 +22,7 @@ import Interpreter.Expression;
 import Interpreter.Parser;
 import java.awt.Dimension;
 import java.io.File;
+import java.io.FileWriter;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -89,6 +90,7 @@ public class MainFrame extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -143,6 +145,17 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(jButton4);
+
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Editor/images/compile.png"))); // NOI18N
+        jButton6.setFocusable(false);
+        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton6);
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Editor/images/about.png"))); // NOI18N
         jButton5.setFocusable(false);
@@ -202,7 +215,32 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        File file = null;
+        if(this.currentFilename != null){
+            file = new File(this.currentFilename);
+        }else{
+            JFileChooser filechooser = new JFileChooser();
+            int result = filechooser.showSaveDialog(this);            
+            if (result == 0){
+                file = filechooser.getSelectedFile();
+                JOptionPane.showMessageDialog(this, file);
+            }else {
+                return;
+            }
+        }
+        
+        if(file != null){
+            try{
+                this.currentFilename = file.toString();
+                FileWriter writer = new FileWriter(file);
+                writer.write(this.jTextPane1.getText());
+                writer.flush();
+                writer.close();
+                output("File saved: "+this.currentFilename);
+            }catch (Exception e){
+                output(e.toString());
+            }
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -248,6 +286,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         aboutForm.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     
     public static void showSplashScreen(){
@@ -326,6 +368,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
