@@ -42,12 +42,19 @@ public class FuzuliException extends RuntimeException {
     @Override
     public String toString() {
         StringBuilder b = new StringBuilder();
+        String enter = "\n";
         b.append("********************************************************");
+        b.append(enter);
         b.append("* Program aborted:");
-        b.append("* "+ this.cause);
+        b.append(enter);
+        b.append("* ").append(this.cause);
+        b.append(enter);
         b.append("* Due to:");
-        b.append("* "+this.message);
+        b.append(enter);
+        b.append("* ").append(this.message);
+        b.append(enter);
         b.append("********************************************************");
+        b.append(enter);
         return (b.toString());
     }
     
