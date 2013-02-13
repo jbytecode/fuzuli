@@ -19,6 +19,7 @@
 package Interpreter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FillExpression extends Expression{
     
@@ -26,14 +27,22 @@ public class FillExpression extends Expression{
         this.exprs = expr;
     }
     
+    public static void fill (ArrayList list, Object value){
+        for (int i=0;i<list.size();i++){
+           if (value instanceof List){
+               fill ((ArrayList)list.get(i), value);
+           }else{
+            list.set(i, value);
+           }
+        }
+    }
+    
     @Override
     public Object eval(Environment e) {
         ArrayList list = (ArrayList)this.exprs.get(0).eval(e);
         Object item = this.exprs.get(1).eval(e);
       
-        for (int i=0;i<list.size();i++){
-           list.set(i, item);
-        }
+        
         return (item);
     }
     

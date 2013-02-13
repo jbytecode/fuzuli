@@ -1,0 +1,26 @@
+(class test extends Object
+	(let a 0)
+	(let b 0)
+
+	(function create (params x y)
+		(println "Create called with " x " and " y)
+		(let a x)
+		(let b y)
+	)
+
+	(function toString (params)
+		(println "a is " a  " and b is " b)
+	)
+	
+	(function next (params x y)
+		(println "Next called with " x " and " y)
+		(let h (new test))
+		(h.create x y)
+		(h.toString)
+	)
+)
+
+(let obj (new test))
+(obj.next 4 5)
+
+

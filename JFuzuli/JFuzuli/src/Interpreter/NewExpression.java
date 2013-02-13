@@ -35,6 +35,7 @@ public class NewExpression extends Expression{
         for (int i=3;i<clazz.exprs.size();i++){
             clazz.exprs.get(i).eval(objectEnvironment);
         }
+        
         return(objectEnvironment);
     }
     
