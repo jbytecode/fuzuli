@@ -20,6 +20,7 @@ package Editor;
 import Interpreter.Environment;
 import Interpreter.Expression;
 import Interpreter.Parser;
+import Compiler.Fuzulic;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.FileWriter;
@@ -29,6 +30,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
+
 
 /*
  * Icon Library:
@@ -43,6 +45,7 @@ public class MainFrame extends javax.swing.JFrame {
     FuzuliOutputStream fos;
     FuzuliColorizer colorizer;
     AboutForm aboutForm;
+    Fuzulic compiler;
     
     public JTextPane getTextPane(){
         return (this.jTextPane1);
@@ -52,10 +55,15 @@ public class MainFrame extends javax.swing.JFrame {
         globalEnvironment = new Environment(null);
         fos = new FuzuliOutputStream(this.jTextArea1);
         colorizer = new FuzuliColorizer(this);
-        System.setOut(fos.getPrintStream());
-        System.setErr(fos.getPrintStream());
         this.setSize(new Dimension(800, 600));
         aboutForm = new AboutForm(this, true);
+        
+        ImageIcon ii = new ImageIcon(this.getClass().getResource("/Editor/images/icon.png"));
+        this.setIconImage(ii.getImage());
+        
+        System.setOut(fos.getPrintStream());
+        System.setErr(fos.getPrintStream());
+        
         MainFrame.loaded = true;
     }
     
@@ -103,6 +111,7 @@ public class MainFrame extends javax.swing.JFrame {
         jToolBar1.setRollover(true);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Editor/images/new.png"))); // NOI18N
+        jButton1.setToolTipText("New");
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -114,6 +123,7 @@ public class MainFrame extends javax.swing.JFrame {
         jToolBar1.add(jButton1);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Editor/images/load.png"))); // NOI18N
+        jButton2.setToolTipText("Open");
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -125,6 +135,7 @@ public class MainFrame extends javax.swing.JFrame {
         jToolBar1.add(jButton2);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Editor/images/save.png"))); // NOI18N
+        jButton3.setToolTipText("Save");
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -136,6 +147,7 @@ public class MainFrame extends javax.swing.JFrame {
         jToolBar1.add(jButton3);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Editor/images/run.png"))); // NOI18N
+        jButton4.setToolTipText("Run");
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -147,6 +159,7 @@ public class MainFrame extends javax.swing.JFrame {
         jToolBar1.add(jButton4);
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Editor/images/compile.png"))); // NOI18N
+        jButton6.setToolTipText("Compile");
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -158,6 +171,7 @@ public class MainFrame extends javax.swing.JFrame {
         jToolBar1.add(jButton6);
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Editor/images/about.png"))); // NOI18N
+        jButton5.setToolTipText("About");
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -288,7 +302,17 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        if(this.currentFilename==null){
+            output("Please save your file first");
+            return;
+        }
+        String[] args= new String[]{this.currentFilename};
+        compiler = new Fuzulic(args);
+        output("Started to compiling "+currentFilename);
+        File JARFile = compiler.compile(currentFilename);
+        output("Compiled to "+JARFile.toURI());
+        this.updateOutput();
+        
     }//GEN-LAST:event_jButton6ActionPerformed
 
     
