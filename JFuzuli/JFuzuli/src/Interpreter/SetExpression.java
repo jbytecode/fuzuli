@@ -15,24 +15,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Interpreter;
 
 import java.util.ArrayList;
 
-public class SetExpression extends Expression{
+public class SetExpression extends Expression {
 
-    public SetExpression(ArrayList<Expression> expr){
+    public SetExpression(ArrayList<Expression> expr) {
         this.exprs = expr;
     }
-    
+
     @Override
     public Object eval(Environment e) {
-        ArrayList list = (ArrayList)this.exprs.get(0).eval(e);
+        ArrayList list = (ArrayList) this.exprs.get(0).eval(e);
         int index = (int) FValue.getAsDouble(this.exprs.get(1).eval(e));
+        
         Object obj = this.exprs.get(2).eval(e);
         list.set(index, obj);
-        return(obj);
+        return (obj);
     }
-    
 }
