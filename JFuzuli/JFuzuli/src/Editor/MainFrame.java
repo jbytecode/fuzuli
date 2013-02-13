@@ -22,7 +22,11 @@ import Interpreter.Expression;
 import Interpreter.Parser;
 import java.awt.Dimension;
 import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 
 /*
@@ -31,12 +35,14 @@ import javax.swing.JTextPane;
  */
 public class MainFrame extends javax.swing.JFrame {
 
+    public static boolean loaded = false;
     String currentFilename;
     Parser parser;
     Environment globalEnvironment;
     FuzuliOutputStream fos;
     FuzuliColorizer colorizer;
-
+    AboutForm aboutForm;
+    
     public JTextPane getTextPane(){
         return (this.jTextPane1);
     }
@@ -48,8 +54,10 @@ public class MainFrame extends javax.swing.JFrame {
         System.setOut(fos.getPrintStream());
         System.setErr(fos.getPrintStream());
         this.setSize(new Dimension(800, 600));
+        aboutForm = new AboutForm(this, true);
+        MainFrame.loaded = true;
     }
-
+    
     public void setCaption(String s) {
         this.setTitle("Fuzuli Editor: " + s);
     }
@@ -148,8 +156,6 @@ public class MainFrame extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
-        jTextPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextPane1.setForeground(new java.awt.Color(0, 0, 0));
         jTextPane1.setDoubleBuffered(true);
         jTextPane1.setMargin(new java.awt.Insets(8, 8, 8, 8));
         jScrollPane3.setViewportView(jTextPane1);
@@ -158,7 +164,7 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
             .addComponent(jScrollPane2)
             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
@@ -237,13 +243,50 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        aboutForm.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    
+    public static void showSplashScreen(){
+        ImageIcon ii = new ImageIcon(MainFrame.class.getResource("/Editor/images/jfuzuliblack.jpg"));
+        final JFrame splashform = new JFrame();
+        JButton but = new JButton(ii);
+        but.setContentAreaFilled(false);
+        splashform.add(but);
+        splashform.setUndecorated(true);
+        splashform.setSize(ii.getIconWidth(),ii.getIconHeight());
+        splashform.setLocationRelativeTo(null);
+        splashform.setVisible(true);
+        
+        try{
+            Thread.sleep(1000);
+        }catch(Exception e){
+            
+        }
+        
+        Thread th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i=0;i<1000;i++){
+                    try{
+                        Thread.sleep(100);
+                        if(MainFrame.loaded){
+                            break;
+                        }
+                    }catch (Exception e){
+                        
+                    }
+                }
+                splashform.dispose();
+            }
+        });
+        th.start();
+    }
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        showSplashScreen();
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
