@@ -15,37 +15,43 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package Interpreter;
 
 import java.util.ArrayList;
 
+public class ClassExpression extends Expression {
 
-public class ParamsExpression extends Expression {
-
-    ArrayList<String> paramNames;
+    Environment classEnvironment;
+    String className;
     
-    public ParamsExpression(ArrayList<Expression>expr){
-        this.exprs = expr;
-        paramNames = new ArrayList<String>();
-        for (int i=0;i<this.exprs.size();i++){
-            IdentifierExpression id = (IdentifierExpression)this.exprs.get(i);
-            paramNames.add(id.iden);
-        }
+    public Environment getClassEnvironment() {
+        return classEnvironment;
+    }
+
+    public void setClassEnvironment(Environment classEnvironment) {
+        this.classEnvironment = classEnvironment;
+    }
+    
+    
+    public ClassExpression (ArrayList<Expression> exprs){
+        this.exprs = exprs;
     }
     
     @Override
     public Object eval(Environment e) {
-        return(paramNames);
-    }
-    
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("(params ");
-        for (int i=0;i<this.exprs.size();i++){
-            sb.append(this.exprs.get(i).toString());
+        IdentifierExpression class_id = (IdentifierExpression)this.exprs.get(0);
+        className = class_id.iden;
+        
+        IdentifierExpression extends_id = (IdentifierExpression)this.exprs.get(1);
+        if(!extends_id.iden.equals("extends")){
+            throw new FuzuliException(null, "Keyword 'extends' required in class definition");
         }
-        sb.append(")");
-        return(sb.toString());
+        
+        classEnvironment = new Environment(null);
+        
+        e.registerClass(className, this);
+        return(null);
     }
     
 }

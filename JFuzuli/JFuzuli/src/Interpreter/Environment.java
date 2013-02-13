@@ -30,11 +30,13 @@ public class Environment implements Serializable {
     public Environment topEnvironment;
     public Environment subEnvironment;
     public HashMap<String, FunctionExpression> functions;
+    public HashMap<String, ClassExpression> classes;
 
     public Environment(Environment top) {
         this.topEnvironment = top;
         this.variables = new HashMap<String, Object>();
         this.functions = new HashMap<String, FunctionExpression>();
+        this.classes = new HashMap<String, ClassExpression>();
         if (top==null){
             this.variables.put("NULL", FValue.NULL);
             this.variables.put("true", Boolean.TRUE);
@@ -99,6 +101,20 @@ public class Environment implements Serializable {
             return(functions.get(name));
         }else if (this.topEnvironment !=null){
             return(topEnvironment.findFunction(name));
+        }else{
+            return(null);
+        }
+    }
+     
+     public void registerClass(String name, ClassExpression c){
+        this.classes.put(name, c);
+    }
+    
+     public ClassExpression findClass(String name) {
+        if(classes.containsKey(name)){
+            return(classes.get(name));
+        }else if (this.topEnvironment !=null){
+            return(topEnvironment.findClass(name));
         }else{
             return(null);
         }

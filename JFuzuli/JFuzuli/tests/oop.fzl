@@ -1,0 +1,68 @@
+#
+# fuzuli : A general purpose interpreter
+# Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+(require "string.nfl")
+(let passed "PASSED!\n")
+(let error "ERROR\n")
+
+(class Person extends Object
+		(def name STRING)
+		(def surname STRING)
+
+		(function getName (params)
+			(return name)
+		)
+
+		(function getSurname (params)
+			(return surname)
+		)
+
+		(function setName (params n)
+			(let name n)
+		)
+
+		(function setSurname (params s)
+			(let surname s)
+		)
+
+		(function toString (params)
+			(return (strcat (list name " " surname)))
+		)
+)
+
+
+#TEST1
+(let p1 (new Person))
+(p1.setName "Fuzuli")
+(p1.setSurname "Language")
+(if (= (p1.toString) "Fuzuli Language")
+	(print passed)
+	(print error)
+)
+
+
+#TEST2
+(p1.setName "Changed")
+(p1.setSurname "Changed")
+(if (= (p1.toString) "Changed Changed")
+	(print passed)
+	(print error)
+)
+
+
+
