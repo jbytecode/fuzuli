@@ -18,6 +18,7 @@
 package Core;
 
 import Interpreter.Environment;
+import Interpreter.FuzuliException;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -25,11 +26,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.CharBuffer;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -143,5 +147,69 @@ public class FIO {
     
     public static void puts (String text, Environment env){
         System.out.println(text);
+    }
+    
+    public static ArrayList dir(String text, Environment env){
+        ArrayList result = new ArrayList();
+        File file = new File(text);
+        if(file.isFile()){
+            result.add(file);
+            return(result);
+        }else if (file.isDirectory()){
+            File[] files = file.listFiles();
+            for (int i=0;i<files.length;i++){
+                result.add(files[i]);
+            }
+            return(result);
+        }else{
+            return(null);
+        }
+    }
+    
+    public static void rename (String name, String dest, Environment env){
+        File f = new File(name);
+        f.renameTo(new File(dest));
+    }
+    
+    public static Object tmpfile (Environment env){
+        File f = null;
+        try{
+            f = File.createTempFile("Fzl", "tmp");
+        }catch (Exception e){
+            throw new FuzuliException(e, "Can not create tmpfile");
+        }
+        return(f);
+    }
+    
+    public static String tmpnam (Environment env){
+        return (tmpfile(env).toString());
+    }
+    
+    public static String datetime (Environment env){
+        Date date = new Date();
+        return (date.toString());
+    }
+    
+    public static Object time (Environment env){
+        Date d = new Date();
+        return (d.getTime());
+    }
+    
+    public static String asctime (Environment env ) throws FuzuliException {
+        throw new FuzuliException(new RuntimeException("..."), "actime is not implemented yet");
+    }
+    
+    public static void print_r (Object list, Environment env){
+        System.out.println (list);
+    }
+    
+    public static String file_get_contents (String filename, Environment env) 
+            throws FileNotFoundException, IOException {
+    
+        File file = new File(filename);
+        FileReader reader = new FileReader(file);
+        char[] buf = new char[(int)file.length()];
+        reader.read(buf);
+        return(new String(buf));
     }
 }

@@ -150,3 +150,7 @@
 (function readline (params)
 		(return (internal "Core.FIO.readline"))
 )
+
+(function file_get_contents (params filename)
+    (return (internal "Core.FIO.file_get_contents" filename))
+)
