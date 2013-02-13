@@ -25,7 +25,9 @@ public class FuzuliOutputStream {
     }
     
     public String readText(){
-        return (new String(baos.toByteArray()));
+        String text = new String(baos.toByteArray());
+        baos.reset();
+        return(text);
     }
     
     public FuzuliOutputStream(JTextArea text){

@@ -130,8 +130,5 @@ public class FuzuliColorizer implements DocumentListener {
 
     @Override
     public void changedUpdate(DocumentEvent e) {
-        
-        
-        
     }
 }
