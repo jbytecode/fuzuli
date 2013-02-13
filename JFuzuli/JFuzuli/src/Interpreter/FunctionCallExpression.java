@@ -29,8 +29,46 @@ public class FunctionCallExpression extends Expression{
         this.exprs = expr;
     }
     
+    
+    public Object evalClass(Environment e) {
+        String ObjectName = fname.substring(0, fname.indexOf('.'));
+        String FunctionName = fname.substring(fname.indexOf('.')+1);
+        Environment e1 = e.findEnvironmentOfVariable(ObjectName);
+        Environment env = (Environment)e1.getVariableInThisEnvironment(ObjectName);
+        
+        int size;
+        
+        Object returnval = null, val = null;
+        
+        FunctionExpression func = env.findFunction(FunctionName);
+        if(func == null){
+            throw new RuntimeException("Fuzuli function '"+FunctionName+ "' is not defined in object "+ObjectName);
+        }
+        
+        size = exprs.size();
+        for (int i=0;i<size;i++){
+            env.setVariableInThisEnvironment(func.params.get(i), this.exprs.get(i).eval(env));
+        }
+        
+        size=func.body.size();
+        for (int i=0;i<size;i++){
+            val = func.body.get(i).eval(env);
+            //System.out.println("In Function, object is "+val.getObject().getClass().getCanonicalName());
+            if(val instanceof ReturnExpression ){
+                ReturnExpression re =  (ReturnExpression)(val);
+                returnval = re.returnvalue;
+                break;
+            }
+        }
+        return(returnval);
+        
+    }
+    
     @Override
     public Object eval(Environment e) {
+        if(fname.contains(".")){
+            return evalClass(e);
+        }
         Environment env = new Environment(e);
         env.variables.clear();
         int size;
@@ -38,6 +76,7 @@ public class FunctionCallExpression extends Expression{
         Object returnval = null, val = null;
         
         FunctionExpression func = env.findFunction(fname);
+        
         if(func == null){
             throw new RuntimeException("Fuzuli function '"+fname+ "' is not defined");
         }
@@ -60,5 +99,7 @@ public class FunctionCallExpression extends Expression{
         return(returnval);
         
     }
+    
+    
     
 }

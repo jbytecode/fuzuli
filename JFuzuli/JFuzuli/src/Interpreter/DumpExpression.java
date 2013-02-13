@@ -34,6 +34,7 @@ public class DumpExpression extends Expression{
     }
     
     public final void dumpEnvironment (Environment e){
+        System.out.println(e.classes);
         System.out.println(e.functions);
         System.out.println(e.variables);
         if(e.topEnvironment!=null){

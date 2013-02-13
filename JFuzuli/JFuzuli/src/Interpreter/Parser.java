@@ -132,7 +132,7 @@ public class Parser {
     }
     
     public Token parseNextToken() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         Token tok = new Token();
         char current;
         current = consume();
@@ -326,7 +326,7 @@ public class Parser {
             buf.append(current);
             while (true) {
                 current = consume();
-                if (!Character.isLetter(current) && !Character.isDigit(current) && current!='_') {
+                if (!Character.isLetter(current) && !Character.isDigit(current) && current!='_' && current!='.') {
                     putBackChar();
                     break;
                 }
@@ -603,6 +603,12 @@ public class Parser {
             }else if (tok.content.equals("dump")){
                 exprs = getExpressionList();
                 return (new DumpExpression(exprs));
+            }else if (tok.content.equals("class")){
+                exprs = getExpressionList();
+                return (new ClassExpression(exprs));
+            }else if (tok.content.equals("new")){
+                exprs = getExpressionList();
+                return (new NewExpression(exprs));
             }else{
                 String fname = tok.content;
                 if(this.getPreviousToken().type == Token.TokenType.LPARAN){                    

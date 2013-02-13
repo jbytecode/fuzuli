@@ -15,37 +15,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package Interpreter;
 
 import java.util.ArrayList;
 
 
-public class ParamsExpression extends Expression {
+public class NewExpression extends Expression{
 
-    ArrayList<String> paramNames;
-    
-    public ParamsExpression(ArrayList<Expression>expr){
-        this.exprs = expr;
-        paramNames = new ArrayList<String>();
-        for (int i=0;i<this.exprs.size();i++){
-            IdentifierExpression id = (IdentifierExpression)this.exprs.get(i);
-            paramNames.add(id.iden);
-        }
+    public NewExpression(ArrayList<Expression> exprs) {
+        this.exprs = exprs;
     }
     
     @Override
     public Object eval(Environment e) {
-        return(paramNames);
-    }
-    
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("(params ");
-        for (int i=0;i<this.exprs.size();i++){
-            sb.append(this.exprs.get(i).toString());
+        String classname = ((IdentifierExpression)this.exprs.get(0)).iden;
+        Environment objectEnvironment = new Environment(e);
+        ClassExpression clazz = e.findClass(classname);
+        for (int i=3;i<clazz.exprs.size();i++){
+            clazz.exprs.get(i).eval(objectEnvironment);
         }
-        sb.append(")");
-        return(sb.toString());
+        return(objectEnvironment);
     }
     
 }

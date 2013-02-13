@@ -39,12 +39,12 @@ public abstract class Expression implements Serializable {
         if(exprs!=null){
         for (int i=0;i<exprs.size();i++){
             if(exprs.get(i) != null){
-                buf.append("\t").append(exprs.get(i).getClass().getCanonicalName());
+                buf.append(exprs.get(i).toString());
             }
             buf.append(",");
         }
         }
-        buf.append("}");
+        buf.append("}\n");
         return(buf.toString());
     }
 }
