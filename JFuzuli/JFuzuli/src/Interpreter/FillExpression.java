@@ -32,7 +32,7 @@ public class FillExpression extends Expression{
            if (value instanceof List){
                fill ((ArrayList)list.get(i), value);
            }else{
-            list.set(i, value);
+               list.set(i, value);
            }
         }
     }
@@ -41,8 +41,7 @@ public class FillExpression extends Expression{
     public Object eval(Environment e) {
         ArrayList list = (ArrayList)this.exprs.get(0).eval(e);
         Object item = this.exprs.get(1).eval(e);
-      
-        
+        fill(list,item);
         return (item);
     }
     

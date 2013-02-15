@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package Core;
+package Core.Gui;
 
 import Interpreter.Environment;
 
-public class FGui {
+public class FBasics {
 
     public static void msgbox (String text, Environment env){
         javax.swing.JOptionPane.showMessageDialog(null, text);
