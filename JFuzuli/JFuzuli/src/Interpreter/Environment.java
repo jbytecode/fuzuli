@@ -20,10 +20,7 @@ package Interpreter;
 import java.io.Serializable;
 import java.util.HashMap;
 
-/**
- *
- * @author hako
- */
+
 public class Environment implements Serializable {
 
     public HashMap<String, Object> variables;
