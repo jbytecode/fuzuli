@@ -39,7 +39,11 @@ public class JavaNewExpression extends Expression {
         Class cls = null;
         
         try{
-            cls = Class.forName(String.valueOf(ClassName));
+            if(ClassName instanceof Class){
+                cls = (Class)ClassName;
+            }else{
+                cls = Class.forName(String.valueOf(ClassName));
+            }
         }catch (Exception clsex){
             throw new RuntimeException("javanew: Can not find class " + ClassName + ": " + clsex.toString());
         }

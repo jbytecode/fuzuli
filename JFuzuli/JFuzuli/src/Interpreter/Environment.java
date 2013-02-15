@@ -31,7 +31,7 @@ public class Environment implements Serializable {
     public Environment subEnvironment;
     public HashMap<String, FunctionExpression> functions;
     public HashMap<String, ClassExpression> classes;
-
+    
     public Environment(Environment top) {
         this.topEnvironment = top;
         this.variables = new HashMap<String, Object>();
