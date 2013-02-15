@@ -15,22 +15,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Interpreter;
 
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+public class DynLoadExpression extends Expression {
 
-public class DynLoadExpression extends Expression{
-
-    public DynLoadExpression(ArrayList<Expression>expr){
-        this.exprs=expr;
+    public DynLoadExpression(ArrayList<Expression> expr) {
+        this.exprs = expr;
     }
-    
+
     @Override
     public Object eval(Environment e) {
-        System.out.println("Dynload is not implemented yet");
-        return(FValue.NOTSET);
+        String str = this.exprs.get(0).eval(e).toString();
+        String cls = this.exprs.get(1).eval(e).toString();
+        URL u = null;
+        Class c = null;
+        try {
+            u = new URL(str);
+        } catch (Exception ee) {
+            throw new FuzuliException(ee, "DynLoad can not load library "+str);
+        }
+        URLClassLoader l = URLClassLoader.newInstance(new URL[]{u});
+        try {
+            c = l.loadClass(cls);
+        } catch (ClassNotFoundException ex) {
+            throw new FuzuliException(ex, "Dynload can not load class "+cls+" from library "+str);
+        }
+        return (c);
     }
-    
 }
