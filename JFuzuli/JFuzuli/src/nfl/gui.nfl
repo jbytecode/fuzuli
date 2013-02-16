@@ -23,4 +23,8 @@
     (return (internal "Core.Gui.FBasics.inputbox" text))
 )
 
+(function registerEvent (params obj func)
+    (return (internal "Core.Gui.FBasics.registerEvent" obj func))
+)
+
 

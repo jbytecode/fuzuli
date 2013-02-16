@@ -1,0 +1,16 @@
+(require "gui.nfl")
+(let form (javanew "javax.swing.JFrame"))
+(let button (javanew "Core.Gui.FButton" "Click me"))
+
+(println (typeof form))
+
+(javacall form "add" button)
+(javacall form "setVisible" true)
+(javacall form "setSize" (javanew "java.lang.Integer" "100")  (javanew "java.lang.Integer" "100"))
+
+(registerEvent button 
+	(function event (params e)
+		(println "Called")
+	)
+)
+

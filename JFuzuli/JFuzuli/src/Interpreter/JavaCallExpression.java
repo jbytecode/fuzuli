@@ -57,11 +57,10 @@ public class JavaCallExpression extends Expression{
             if (m[i].getName().equals(methodname) && m[i].getGenericParameterTypes().length == paramscount) {
                 int allEquals = 0;
                 for (int j =0 ; j< paramscount; j++){
-                    String type1 = convertPrimitiveTypeToClass( m[i].getParameterTypes()[j].getCanonicalName() );
-                    String type2 = convertPrimitiveTypeToClass( params[j].getClass().getCanonicalName() );
-                    if(type1.equals(type2) || type1.equals("java.lang.Object") || type2.equals("java.lang.Object")){
+                    if(areRelated(m[i].getParameterTypes()[j].getSuperclass(), params[j].getClass())){
                         allEquals++;
                     }
+                    
                 }
                 if (allEquals == paramscount){
                     return (m[i]);
@@ -69,6 +68,23 @@ public class JavaCallExpression extends Expression{
             }
         }
         throw new RuntimeException("javacall: Can not find method " + methodname +" with "+(paramscount) +" parameters in class " + o.getClass().getCanonicalName());
+    }
+    
+    public static boolean areRelated(Class c1, Class c2){
+        if(c1==null || c2==null){
+            return true;
+        }
+        try{
+            c1.asSubclass(c2);
+        }catch (Exception e1){
+            
+            try{
+                c2.asSubclass(c1);
+            }catch (Exception e2){
+                return(false);
+            }
+        }
+        return(true);
     }
     
     
