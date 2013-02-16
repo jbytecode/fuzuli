@@ -66,7 +66,6 @@ public class FunctionCallExpression extends Expression{
     
     @Override
     public Object eval(Environment e) {
-        String fname = this.exprs.get(0).eval(e).toString();
         if(fname.contains(".")){
             return evalClass(e);
         }
