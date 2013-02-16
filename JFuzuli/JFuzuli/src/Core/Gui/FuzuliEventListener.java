@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Interpreter.FunctionCallExpression;
 import Interpreter.FunctionExpression;
+import Interpreter.JavaObjectExpression;
 import java.util.ArrayList;
 import java.util.EventObject;
 
@@ -26,7 +27,7 @@ public class FuzuliEventListener implements
     
     public void FunctionCall(EventObject evt){
         params.clear();
-        params.add(evt);
+        params.add(new JavaObjectExpression(evt));
         fcall = new FunctionCallExpression(params);
         fcall.EvalWithoutName(func, envir);
     }
