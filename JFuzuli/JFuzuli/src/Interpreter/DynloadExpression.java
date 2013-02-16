@@ -17,28 +17,31 @@
  */
 package Interpreter;
 
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 
-public class TimingExpression extends Expression {
+public class DynloadExpression extends Expression{
 
-    public TimingExpression(ArrayList<Expression> expr) {
-        this.exprs = expr;
+    FuzuliClassLoader classLoader;
+    
+    public DynloadExpression (ArrayList<Expression> exprs){
+        this.exprs = exprs;
+        this.classLoader = new FuzuliClassLoader();
     }
-
+    
     @Override
     public Object eval(Environment e) {
-        long time1, time2;
-        int size = this.exprs.size();
-        Object result = null;
-
-        time1 = System.currentTimeMillis();
-
-        for (int i = 0; i < size; i++) {
-            result = this.exprs.get(i).eval(e);
+        String surl = this.exprs.get(0).eval(e).toString();
+        URL url = null;
+        try{
+            url = new URL(surl);
+        }catch (Exception ex){
+            throw new FuzuliException(ex, "Error loading jar "+surl);
         }
-
-        time2 = System.currentTimeMillis();
-
-        return (new Double(time2 - time1));
+        classLoader.addJarFile(url);
+        return(url); 
     }
+    
 }
+

@@ -21,5 +21,6 @@
 
 (let cls (dynload "jar:file:FuzuliTest.jar!/" "fuzulitest.FuzuliTest"))
 (let object (javanew cls))
+# Writes PASSED if the method call is success
 (print (javacall object "getTest"))
 

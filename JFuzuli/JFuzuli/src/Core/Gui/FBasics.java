@@ -19,6 +19,8 @@
 package Core.Gui;
 
 import Interpreter.Environment;
+import Interpreter.FunctionExpression;
+import java.awt.Component;
 
 public class FBasics {
 
@@ -28,5 +30,11 @@ public class FBasics {
     
     public static Object inputbox (String message, Environment env){
         return (javax.swing.JOptionPane.showInputDialog(message));
+    }
+    
+    public static void registerEvent (Object object, FunctionExpression func, Environment env){
+        FuzuliEventListener listen = new FuzuliEventListener(func, env);
+        FuzuliEventHandler fev = (FuzuliEventHandler)object;
+        fev.setEventListener(listen);
     }
 }

@@ -1,54 +1,39 @@
 
 package Core.Gui;
 
+import Interpreter.Environment;
+import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import Interpreter.FunctionCallExpression;
+import Interpreter.FunctionExpression;
+import java.util.ArrayList;
+import java.util.EventObject;
 
 public class FuzuliEventListener implements 
-        ActionListener, MouseListener,
-        MouseMotionListener {
+        ActionListener {
 
+    FunctionExpression func = null;
+    FunctionCallExpression fcall = null;
+    Environment envir;
+    ArrayList params;
+    
+    public FuzuliEventListener(FunctionExpression func, Environment env){
+        this.envir = env;
+        this.func = func;
+        params = new ArrayList();
+    }
+    
+    public void FunctionCall(EventObject evt){
+        params.clear();
+        params.add(evt);
+        fcall = new FunctionCallExpression(params);
+        fcall.EvalWithoutName(func, envir);
+    }
+    
     @Override
     public void actionPerformed(ActionEvent ae) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mousePressed(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseExited(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        FunctionCall(ae);
     }
     
 }

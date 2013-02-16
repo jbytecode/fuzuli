@@ -66,6 +66,7 @@ public class FunctionCallExpression extends Expression{
     
     @Override
     public Object eval(Environment e) {
+        String fname = this.exprs.get(0).eval(e).toString();
         if(fname.contains(".")){
             return evalClass(e);
         }
@@ -76,6 +77,38 @@ public class FunctionCallExpression extends Expression{
         Object returnval = null, val = null;
         
         FunctionExpression func = env.findFunction(fname);
+        
+        if(func == null){
+            throw new RuntimeException("Fuzuli function '"+fname+ "' is not defined");
+        }
+        
+        size = exprs.size();
+        for (int i=0;i<size;i++){
+            env.setVariableInThisEnvironment(func.params.get(i), this.exprs.get(i).eval(env));
+        }
+        
+        size=func.body.size();
+        for (int i=0;i<size;i++){
+            val = func.body.get(i).eval(env);
+            //System.out.println("In Function, object is "+val.getObject().getClass().getCanonicalName());
+            if(val instanceof ReturnExpression ){
+                ReturnExpression re =  (ReturnExpression)(val);
+                returnval = re.returnvalue;
+                break;
+            }
+        }
+        return(returnval);
+        
+    }
+    
+    public Object EvalWithoutName(FunctionExpression funct, Environment e){
+        Environment env = new Environment(e);
+        env.variables.clear();
+        int size;
+        
+        Object returnval = null, val = null;
+        
+        FunctionExpression func = funct;
         
         if(func == null){
             throw new RuntimeException("Fuzuli function '"+fname+ "' is not defined");
