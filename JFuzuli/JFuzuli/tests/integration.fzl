@@ -1,0 +1,47 @@
+#
+# fuzuli : A general purpose interpreter
+# Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+(require "math.nfl")
+
+
+(let passed "PASSED!\n")
+(let error "ERROR\n")
+
+(let pi 3.141592)
+
+(function integrate (params func a b)
+	(let epsilon 0.0001)
+	(let integral 0.0)
+	(for (let x a) (< x b) (let x (+ x epsilon))
+		(let val (eval func))
+		(let integral (+ integral (* val epsilon)))		
+	)
+	(return integral)
+)
+
+
+(let func (expression  (* (/ 1 (sqrt (* 2 pi))) (exp (* -0.5 (pow x 2) )))))
+(let result (integrate func -1 1))
+
+(if (<= (- result 0.68) 0.01)
+	(print passed)
+	(print error)
+)
+
+
+
+
