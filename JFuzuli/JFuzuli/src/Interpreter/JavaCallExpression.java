@@ -42,10 +42,10 @@ public class JavaCallExpression extends Expression{
         
         Method m = findMethod(obj, methodname, params);
         
-        try{
+        try{ 
             result = m.invoke(obj, params);
         }catch (Exception ex){
-            throw new RuntimeException("javacall: Method "+methodname+"can not be called: "+ex.toString());
+            throw new RuntimeException("javacall: Method "+methodname+" can not be called: "+ex.toString());
         }
         return(result);
     }
@@ -53,11 +53,13 @@ public class JavaCallExpression extends Expression{
     public Method findMethod(Object o, String methodname, Object[] params) {
         int paramscount = params.length;
         Method[] m = o.getClass().getMethods();
+        Method lucky = null;
         for (int i = 0; i < m.length; i++) {
             if (m[i].getName().equals(methodname) && m[i].getGenericParameterTypes().length == paramscount) {
                 int allEquals = 0;
+                lucky = m[i];
                 for (int j =0 ; j< paramscount; j++){
-                    if(areRelated(m[i].getParameterTypes()[j].getSuperclass(), params[j].getClass())){
+                    if(areRelated(m[i].getParameterTypes()[j].getSuperclass(), getObjectClass(params[j]))){
                         allEquals++;
                     }
                     
@@ -67,7 +69,9 @@ public class JavaCallExpression extends Expression{
                 }
             }
         }
-        throw new RuntimeException("javacall: Can not find method " + methodname +" with "+(paramscount) +" parameters in class " + o.getClass().getCanonicalName());
+        //System.out.println("* Selected "+lucky+ " as lucky" );
+        return lucky;
+        //throw new RuntimeException("javacall: Can not find method " + methodname +" with "+(paramscount) +" parameters in class " + o.getClass().getCanonicalName());
     }
     
     public static boolean areRelated(Class c1, Class c2){
@@ -88,4 +92,11 @@ public class JavaCallExpression extends Expression{
     }
     
     
+    public static Class getObjectClass(Object o){
+        if (o == null){
+            return null;
+        }else{
+            return o.getClass();
+        }
+    }
 }
