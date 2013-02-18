@@ -27,13 +27,13 @@ public class Environment implements Serializable {
     public Environment topEnvironment;
     public Environment subEnvironment;
     public HashMap<String, FunctionExpression> functions;
-    public HashMap<String, ClassExpression> classes;
+    public static HashMap<String, ClassExpression> classes = new HashMap<String, ClassExpression>();
     
     public Environment(Environment top) {
         this.topEnvironment = top;
         this.variables = new HashMap<String, Object>();
         this.functions = new HashMap<String, FunctionExpression>();
-        this.classes = new HashMap<String, ClassExpression>();
+        //this.classes = new HashMap<String, ClassExpression>();
         if (top==null){
             this.variables.put("NULL", FValue.NULL);
             this.variables.put("true", Boolean.TRUE);
@@ -48,6 +48,8 @@ public class Environment implements Serializable {
             this.variables.put("BYTE", java.lang.Byte.class.getCanonicalName());
             this.variables.put("BOOLEAN", java.lang.Boolean.class.getCanonicalName());
             this.variables.put("CHAR", java.lang.Character.class.getCanonicalName());
+        }else{
+            top.subEnvironment = this;
         }
     }
 
@@ -83,7 +85,7 @@ public class Environment implements Serializable {
     public String toString(){
         StringBuilder buf = new StringBuilder();
         if (this.topEnvironment!=null){
-            buf.append(this.topEnvironment.toString());
+            //buf.append(this.topEnvironment.toString());
         }
         buf.append(this.variables.toString());  
         return(buf.toString());
@@ -110,8 +112,6 @@ public class Environment implements Serializable {
      public ClassExpression findClass(String name) {
         if(classes.containsKey(name)){
             return(classes.get(name));
-        }else if (this.topEnvironment !=null){
-            return(topEnvironment.findClass(name));
         }else{
             return(null);
         }

@@ -58,8 +58,9 @@
 #TEST1
 (let p1 (new Person))
 (let p2 (p1.createDefault))
-
-(if (= (p2.toString) "Default Name Default Surname")
+(let sum (strcat (list (p1.toString) "-" (p2.toString))))
+(println sum)
+(if (= sum "Default Name-Default Surname")
 	(print passed)
 	(print error)
 )

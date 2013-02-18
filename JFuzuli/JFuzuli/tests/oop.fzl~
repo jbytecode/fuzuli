@@ -21,8 +21,6 @@
 (let error "ERROR\n")
 
 (class Person extends Object
-		
-		(require "string.nfl")
 		(def name STRING)
 		(def surname STRING)
 
@@ -45,21 +43,23 @@
 		(function toString (params)
 			(return (strcat (list name " " surname)))
 		)
-		
-		(function createDefault (params)
-			(let k (new Person))
-			(k.setName "Default Name")
-			(k.setSurname "Default Surname")
-			(return k)
-		)
 )
 
 
 #TEST1
 (let p1 (new Person))
-(let p2 (p1.createDefault))
+(p1.setName "Fuzuli")
+(p1.setSurname "Language")
+(if (= (p1.toString) "Fuzuli Language")
+	(print passed)
+	(print error)
+)
 
-(if (= (p2.toString) "Default Name Default Surname")
+
+#TEST2
+(p1.setName "Changed")
+(p1.setSurname "Changed")
+(if (= (p1.toString) "Changed Changed")
 	(print passed)
 	(print error)
 )
