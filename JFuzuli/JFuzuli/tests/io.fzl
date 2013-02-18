@@ -23,12 +23,12 @@
 (let error "ERROR\n")
 
 # TEST 1
-(let f (fopen "/tmp/kek.txt" "w"))
+(let f (fopen "testio.txt" "w"))
 (let liste (list 1 2 3 4 5 6 7 8 9 10 11 12 13 14))
 (fwrite f liste)
 (fclose f)
 
-(let dd (fopen "/tmp/kek.txt"  "r"))
+(let dd (fopen "testio.txt"  "r"))
 (let a 0)
 (let mysum 0)
 (for (let i 0) (< i 5) (inc i)
@@ -40,7 +40,7 @@
 	 (print passed)
 	 (print error)
 )
-(unlink "/tmp/kek.txt")
+(unlink "testio.txt")
 
 
 

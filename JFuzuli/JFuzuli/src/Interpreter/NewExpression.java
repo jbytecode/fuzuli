@@ -32,10 +32,12 @@ public class NewExpression extends Expression{
         String classname = ((IdentifierExpression)this.exprs.get(0)).iden;
         Environment objectEnvironment = new Environment(e);
         ClassExpression clazz = e.findClass(classname);
+        if(clazz == null){
+            throw new FuzuliException(new RuntimeException(), "Class "+classname+" is not found");
+        }
         for (int i=3;i<clazz.exprs.size();i++){
             clazz.exprs.get(i).eval(objectEnvironment);
         }
-        
         return(objectEnvironment);
     }
     
