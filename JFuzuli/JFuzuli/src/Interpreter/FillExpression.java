@@ -29,7 +29,8 @@ public class FillExpression extends Expression{
     
     public static void fill (ArrayList list, Object value){
         for (int i=0;i<list.size();i++){
-           if (value instanceof List){
+            Object obj = list.get(i);
+           if (obj instanceof List){
                fill ((ArrayList)list.get(i), value);
            }else{
                list.set(i, value);
