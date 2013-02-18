@@ -21,6 +21,8 @@
 (let error "ERROR\n")
 
 (class Person extends Object
+		
+		(require "string.nfl")
 		(def name STRING)
 		(def surname STRING)
 

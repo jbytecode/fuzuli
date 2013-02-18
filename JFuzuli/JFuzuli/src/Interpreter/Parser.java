@@ -474,6 +474,9 @@ public class Parser {
             } else if (tok.content.equals("and")) {
                 exprs = getExpressionList();
                 return (new AndExpression(exprs));
+            }else if (tok.content.equals("or")) {
+                exprs = getExpressionList();
+                return (new OrExpression(exprs));
             }else if (tok.content.equals("let")) {
                 exprs = getExpressionList();
                 return (new LetExpression(exprs));

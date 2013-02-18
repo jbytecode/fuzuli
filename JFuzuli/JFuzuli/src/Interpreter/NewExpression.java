@@ -30,7 +30,7 @@ public class NewExpression extends Expression{
     @Override
     public Object eval(Environment e) {
         String classname = ((IdentifierExpression)this.exprs.get(0)).iden;
-        Environment objectEnvironment = new Environment(e);
+        Environment objectEnvironment = new Environment(null);
         ClassExpression clazz = e.findClass(classname);
         if(clazz == null){
             throw new FuzuliException(new RuntimeException(), "Class "+classname+" is not found");
@@ -38,6 +38,7 @@ public class NewExpression extends Expression{
         for (int i=3;i<clazz.exprs.size();i++){
             clazz.exprs.get(i).eval(objectEnvironment);
         }
+        
         return(objectEnvironment);
     }
     

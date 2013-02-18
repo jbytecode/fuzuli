@@ -34,25 +34,27 @@ public class FunctionCallExpression extends Expression{
         String ObjectName = fname.substring(0, fname.indexOf('.'));
         String FunctionName = fname.substring(fname.indexOf('.')+1);
         Environment e1 = e.findEnvironmentOfVariable(ObjectName);
-        Environment env = (Environment)e1.getVariableInThisEnvironment(ObjectName);
+        Environment object_env = (Environment)e1.getVariableInThisEnvironment(ObjectName);
+        Environment functEnv = new Environment(object_env);
+        
         
         int size;
         
         Object returnval = null, val = null;
         
-        FunctionExpression func = env.findFunction(FunctionName);
+        FunctionExpression func = object_env.findFunction(FunctionName);
         if(func == null){
             throw new RuntimeException("Fuzuli function '"+FunctionName+ "' is not defined in object "+ObjectName);
         }
         
         size = exprs.size();
         for (int i=0;i<size;i++){
-            env.setVariableInThisEnvironment(func.params.get(i), this.exprs.get(i).eval(env));
+            functEnv.setVariableInThisEnvironment(func.params.get(i), this.exprs.get(i).eval(e));
         }
         
         size=func.body.size();
         for (int i=0;i<size;i++){
-            val = func.body.get(i).eval(env);
+            val = func.body.get(i).eval(functEnv);
             //System.out.println("In Function, object is "+val.getObject().getClass().getCanonicalName());
             if(val instanceof ReturnExpression ){
                 ReturnExpression re =  (ReturnExpression)(val);

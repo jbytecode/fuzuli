@@ -18,14 +18,17 @@
 (require "math.nfl")
 
 (class Matrix extends Object
+		
+		(require "math.nfl")
 		(def data LIST)
-		(def n INTEGER)
-		(def m INTEGER)
+		(def n)
+		(def m)
 
 
 		(function create (params rows cols)
 				(let n rows)
 				(let m cols)
+				(def i)(def j)
 				(let data (: 1 rows))
 				(for (let i 0) (< i rows) (++ i)
 					(set data i (: 1 cols))
@@ -66,20 +69,19 @@
 				(let mat (new Matrix))
 				(mat.create n m)
 				(for (let i 0) (< i n) (++ i)
-          (for (let j 0) (< j m) (++ j)
-            (mat.setValue i j (get i j))
-          )
-        )
+					(for (let j 0) (< j m) (++ j)
+						(mat.setValue i j (get i j))
+					)
+				)
 				(return mat)
-			
 		)
 
 		(function echelon (params)
-			
 				(def temp LIST)
 				(let i 0)(let j 0)(let k 0)
 				(let temp (clonematrix))
 				(def pivot FLOAT)
+				(let cols m)
 				(for (let i 0)(< i n)(++i)
 					(for (let j (+ i 1))(< j m)(++j)
 						(let pivot (/ (* -1 (temp.get j i)) (temp.get i i)))
@@ -132,9 +134,8 @@
 		)
 
 		(function inverse (params)
-			
 				(let determinant (det))
-				(if (or (!= n m) (= det 0))
+				(if (or (!= n m) (= determinant 0))
 					(block
 						(print "Cannot invert matrix\n")
 						(return)
@@ -153,7 +154,7 @@
 				(let cofactor (cofactor.transpose))
 				(for (let i 0)(< i n)(++ i)
 					(for (let j 0)(< j m)(++ j)
-						(let val (/ (* (cofactor.get i j) (pow -1.0 (+ i j))) det))
+						(let val (/ (* (cofactor.get i j) (pow -1.0 (+ i j))) determinant))
 						(cofactor.setValue i j val)
 					)
 				)		
@@ -171,7 +172,6 @@
 (let a (new Matrix))
 (a.create 2 2)
 (a.setValue 0 0 1)(a.setValue 0 1 2)(a.setValue 1 0 3)(a.setValue 1 1 4)
-(println (a.getData))
 
 # TEST 1 - Transpose
 (let trans (a.transpose))
@@ -198,6 +198,7 @@
 
 # TEST 3 - Echelon
 (let echelon (a.echelon))
+#(println "Echelon is " (echelon.getData))
 (if (and (= (echelon.get 0 0) 1)
          (= (echelon.get 0 1) 2)
          (= (echelon.get 1 0) 0)
@@ -210,6 +211,7 @@
 
 # TEST 4 - Determinant
 (let det (a.det))
+#(println "Determinant is " det)
 (if (= det -2)
   (print passed)
   (print error)
@@ -218,6 +220,7 @@
 
 # TEST 5 - Minor
 (let minor (a.minor 0 0))
+#(println "Minor is " (minor.getData))
 (if (= (minor.get 0 0) 4)
 	(print passed)
 	(print error)
@@ -234,5 +237,4 @@
   (print passed)
   (print error)
 )
-
-#(print "Inverse: " (inverse.getData) "\n")
+#(println "Inverse: " (inverse.getData) "\n")
