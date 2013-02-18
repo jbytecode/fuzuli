@@ -15,31 +15,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Interpreter;
 
 import java.util.ArrayList;
 
-
-public class NewExpression extends Expression{
+public class NewExpression extends Expression {
 
     public NewExpression(ArrayList<Expression> exprs) {
         this.exprs = exprs;
     }
-    
+
     @Override
     public Object eval(Environment e) {
-        String classname = ((IdentifierExpression)this.exprs.get(0)).iden;
+        String classname = ((IdentifierExpression) this.exprs.get(0)).iden;
         Environment objectEnvironment = new Environment(null);
         ClassExpression clazz = e.findClass(classname);
-        if(clazz == null){
-            throw new FuzuliException(new RuntimeException(), "Class "+classname+" is not found");
+        if (clazz == null) {
+            throw new FuzuliException(new RuntimeException(), "Class " + classname + " is not found");
         }
-        for (int i=3;i<clazz.exprs.size();i++){
+
+        if (!clazz.extendsClassName.equals("Object")) {
+            ClassExpression class_extends = e.findClass(clazz.extendsClassName);
+            for (int i = 3; i < class_extends.exprs.size(); i++) {
+                class_extends.exprs.get(i).eval(objectEnvironment);
+            }
+        }
+
+        for (int i = 3; i < clazz.exprs.size(); i++) {
             clazz.exprs.get(i).eval(objectEnvironment);
         }
-        
-        return(objectEnvironment);
+
+        return (objectEnvironment);
     }
-    
 }
