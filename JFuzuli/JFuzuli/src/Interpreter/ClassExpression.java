@@ -24,6 +24,7 @@ public class ClassExpression extends Expression {
 
     Environment classEnvironment;
     String className;
+    String extendsClassName;
     
     public Environment getClassEnvironment() {
         return classEnvironment;
@@ -47,6 +48,9 @@ public class ClassExpression extends Expression {
         if(!extends_id.iden.equals("extends")){
             throw new FuzuliException(null, "Keyword 'extends' required in class definition");
         }
+        
+        IdentifierExpression extends_class = (IdentifierExpression)this.exprs.get(2);
+        this.extendsClassName = extends_class.iden;
         
         classEnvironment = new Environment(null);
         
