@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
+# Message and Input Boxes
 (function msgbox (params text)
     (return (internal "Core.Gui.FBasics.msgbox" text))
 )
@@ -27,4 +29,29 @@
     (return (internal "Core.Gui.FBasics.registerEvent" obj func))
 )
 
+# For all components
+(function show (params obj)
+    (return (internal "Core.Gui.FBasics.show" obj))
+)
+
+(function hide (params obj)
+    (return (internal "Core.Gui.FBasics.hide" obj))
+)
+
+
+
+
+
+# DrawingArea Functions
+(function createDrawingArea (params w h)
+    (return (internal "Core.Gui.FDrawingArea.createDrawingArea" w h))
+)
+
+(function getGraphicsOfDrawingArea (params da)
+    (return (internal "Core.Gui.FDrawingArea.getGraphicsOfDrawingArea" da))
+)
+
+(function refreshDrawingArea (params obj)
+    (return (internal "Core.Gui.FDrawingArea.refreshDrawingArea" obj))
+)
 

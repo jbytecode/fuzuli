@@ -1,7 +1,9 @@
 
 package Core.Gui;
 
+import java.awt.BorderLayout;
 import java.awt.GraphicsConfiguration;
+import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import javax.swing.JFrame;
 
@@ -9,6 +11,8 @@ public class FFrame extends JFrame implements FuzuliEventHandler {
 
     public FFrame() throws HeadlessException {
         super();
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(null);
     }
 
     public FFrame(GraphicsConfiguration gc) {
