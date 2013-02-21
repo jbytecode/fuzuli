@@ -1,0 +1,24 @@
+(require "gui.nfl")
+
+(let w (jint 500))
+(let h (jint 500))
+(let z (jint 0))
+
+(let window (javanew "Core.Gui.FFrame"))
+(javacall window "setSize" w h)
+
+(let da (createDrawingArea w h))
+(let g (getGraphicsOfDrawingArea da))
+
+(javacall window "add" da)
+(show window)
+
+(javacall g "setColor" (javanew "java.awt.Color" (jint 0)(jint 0)(jint 0)))
+(javacall g "fillRect" z z w h)
+(javacall g "setColor" (javanew "java.awt.Color" (jint 255) z z ))
+(javacall g "drawString" "Hello" (jint 100) (jint 100))
+
+(refreshDrawingArea da)
+
+
+

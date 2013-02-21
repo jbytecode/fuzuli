@@ -21,7 +21,6 @@ package Core.Gui;
 import Interpreter.Environment;
 import Interpreter.FunctionExpression;
 import java.awt.Component;
-import javax.swing.JFrame;
 
 public class FBasics {
 
@@ -38,4 +37,15 @@ public class FBasics {
         FuzuliEventHandler fev = (FuzuliEventHandler)object;
         fev.setEventListener(listen); 
     }
+    
+     public static void show(Component c, Environment e){
+        c.setVisible(true);
+    }
+    
+    public static void hide(Component c, Environment e){
+        c.setVisible(false);
+    }
+    
+    
+    
 }
