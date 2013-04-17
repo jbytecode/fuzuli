@@ -89,7 +89,7 @@ bool Environment::preventGC() {
 int Environment::GC() {
 	int numdeleted = 0;
 	for (unsigned int i = 0; i < this->subenvironments.size(); i++) {
-		numdeleted += this->subenvironments[i]->GC();
+		//numdeleted += this->subenvironments[i]->GC();
 	}
 	//cout << "Deleting "<<this->garbage.size()<< " garbages "<<endl;
 	list<Token*>::iterator it;
@@ -205,6 +205,7 @@ FuzuliFunction *Environment::searchFuncBackEnvironments(const char *name) {
 }
 
 void Environment::setFunction(const char *name, FuzuliFunction *value) {
+	/*
 	FuzuliFunction *existing = searchFuncBackEnvironments(name);
 	if (!existing) {
 		this->fuzuliFunctions[string(name)] = value;
@@ -215,6 +216,7 @@ void Environment::setFunction(const char *name, FuzuliFunction *value) {
 		existing->params = value->params;
 		existing->body = value->body;
 	}
+	*/
 }
 
 void Environment::setVariableForFunctionParams(const char* name, Token *value) {
@@ -235,35 +237,17 @@ void Environment::setArgcArgv(int argc, char **argv) {
 }
 
 void Environment::dump() {
-	map<string, FuzuliFunction*>::iterator ff_it;
-	map<string, Token*>::iterator tok_it;
-
-	cout << "*** Environment ***" << endl;
-	cout << "Deep: " << this->deep << endl;
-	cout << "Sub Environments: " << this->subenvironments.size() << endl;
-
-	cout << "Functions: " << this->fuzuliFunctions.size() << endl;
-	for (ff_it = this->fuzuliFunctions.begin();
-			ff_it != this->fuzuliFunctions.end(); ff_it++) {
-		cout << "\t" << ff_it->second->getStringName() << endl;
-	}
-	cout << "Variables: " << this->variables.size() << endl;
-
-	for (tok_it = variables.begin(); tok_it != variables.end(); tok_it++) {
-		cout << "\t" << tok_it->first.c_str() << ": "
-				<< tok_it->second->getContent() << endl;
-	}
-	Token *tok = Token::NULL_TOKEN;
-	tok->toString();
+	cout << "Environment::dump() is not implemented yet "<<endl;
 }
 
 bool Environment::variableExists(const char *name) {
 	if (this->variables.find(string(name)) != this->variables.end()) {
-		return true;
+		return (true);
 	}
 	return (false);
 }
 
+/*
 DumpExpression::DumpExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = DUMP_EXPRESSION;
@@ -331,5 +315,6 @@ Token *DeleteExpression::eval(Environment *env) {
 	}
 	return (Token::NULL_TOKEN);
 }
+*/
 
 } /* namespace fuzuli */

@@ -25,6 +25,7 @@ namespace fuzuli {
 
 using namespace std;
 
+/*
 LetExpression::LetExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	//this->resultToken = Token::NULL_TOKEN;
@@ -91,5 +92,5 @@ Token *CloneExpression::eval(Environment *env) {
 	return (tok->clone());
 }
 
-
+*/
 } /* namespace fuzuli */

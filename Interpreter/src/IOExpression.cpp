@@ -25,24 +25,24 @@
 
 
 namespace fuzuli {
+
 using namespace std;
 
-vector<string> RequireExpression::installedPackages;
+//vector<string> RequireExpression::installedPackages;
 
-void __PrintToken(stringstream *ss, Token *tok) {
-	if (tok->getType() == INTEGER || tok->getType()==FLOAT || tok->getType() ==STRING) {
-		*ss << tok->getContent();
-	} else if (tok->getType() == COBJECT) {
+void __PrintToken(stringstream *ss, FuzuliVariable &tok) {
+	if (tok.type == INTEGER){
+		*ss << tok.i;
+	} else if (tok.type == FLOAT){
+		*ss << tok.d;
+	} else if (tok.type == STRING){
+		*ss << tok.s;
+	}else if (tok.type == COBJECT) {
 		*ss << "@FuzuliNativeObject";
-		*ss << "[" << tok->getContent() << "]";
-	} else if (tok->getType() == LIST) {
+		*ss << "[" << tok.v << "]";
+	} else if (tok.type == LIST) {
 		*ss << "[";
-		for (unsigned int i = 0; i < tok->tokens.size(); i++) {
-			__PrintToken(ss, tok->tokens[i]);
-			if (i != tok->tokens.size() - 1) {
-				*ss << ", ";
-			}
-		}
+		*ss << "PRINT for list is not implemented yet";
 		*ss << "]";
 	}
 }
@@ -56,14 +56,15 @@ PrintExpression::~PrintExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *PrintExpression::eval(Environment *env) {
+FuzuliVariable PrintExpression::eval(Environment *env) {
 	stringstream ss;
 	for (unsigned int i = 0; i < this->expressions->size(); i++) {
-		Token *tok = this->expressions->at(i)->eval(env);
+		FuzuliVariable tok = this->expressions->at(i)->eval(env);
 		__PrintToken(&ss, tok);
 	}
 	cout << ss.str().c_str();
-	return (Token::NULL_TOKEN);
+	FuzuliVariable fv;fv.type=NULLTOKEN;fv.i=0;
+	return (fv);
 }
 
 
@@ -75,17 +76,18 @@ PrintlnExpression::PrintlnExpression(vector<Expression*> *expr) {
 PrintlnExpression::~PrintlnExpression() {
 }
 
-Token *PrintlnExpression::eval(Environment *env) {
+FuzuliVariable PrintlnExpression::eval(Environment *env) {
 	stringstream ss;
 	for (unsigned int i = 0; i < this->expressions->size(); i++) {
-		Token *tok = this->expressions->at(i)->eval(env);
+		FuzuliVariable tok = this->expressions->at(i)->eval(env);
 		__PrintToken(&ss, tok);
 	}
 	cout << ss.str().c_str() << endl;
-	return (Token::NULL_TOKEN);
+	FuzuliVariable fv;fv.type=NULLTOKEN;fv.i=0;
+	return (fv);
 }
 
-
+/*
 RequireExpression::RequireExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->resultToken = new Token("FuzuliPackage", PACKAGE);
@@ -122,5 +124,5 @@ Token *RequireExpression::eval(Environment *env) {
 	return (this->resultToken);
 }
 
-
+*/
 }

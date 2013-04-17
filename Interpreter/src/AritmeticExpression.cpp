@@ -26,26 +26,34 @@ namespace fuzuli {
 
 using namespace std;
 
+
 AndExpression::AndExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = AND_EXPRESSION;
 }
 
+
 AndExpression::~AndExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *AndExpression::eval(Environment *env) {
+
+FuzuliVariable AndExpression::eval(Environment *env) {
 	int allTrue = 1;
 	for (unsigned int i = 0; i < this->expressions->size(); i++) {
-		Token *tok = this->expressions->at(i)->eval(env);
-		if (tok->getIntValue() == 0) {
+		FuzuliVariable tok = this->expressions->at(i)->eval(env);
+		if (this->getIntValue(tok) == 0) {
 			allTrue = 0;
 			break;
 		}
 	}
-	return (env->newToken(allTrue, INTEGER));
+	FuzuliVariable result;
+	result.i = allTrue;
+	result.type = INTEGER;
+	return (result);
 }
+
+
 
 AsterixExpression::AsterixExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
@@ -56,12 +64,15 @@ AsterixExpression::~AsterixExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token * AsterixExpression::eval(Environment *env) {
+
+FuzuliVariable AsterixExpression::eval(Environment *env) {
 	double product = 1.0;
 	for (unsigned int i = 0; i < this->expressions->size(); i++) {
-		product *= expressions->at(i)->eval(env)->getFloatValue();
+		FuzuliVariable fv = expressions->at(i)->eval(env);
+		product *= this->getDoubleValue(fv);
 	}
-	return (env->newToken(product, FLOAT));
+	FuzuliVariable result; result.type = FLOAT; result.d = product;
+	return (result);
 }
 
 DivisionExpression::DivisionExpression(vector<Expression*> *expr) {
@@ -73,10 +84,12 @@ DivisionExpression::~DivisionExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *DivisionExpression::eval(Environment *env) {
-	Token *tok1 = this->expressions->at(0)->eval(env);
-	Token *tok2 = this->expressions->at(1)->eval(env);
-	return (env->newToken(tok1->getFloatValue() / tok2->getFloatValue(), FLOAT));
+FuzuliVariable DivisionExpression::eval(Environment *env) {
+	FuzuliVariable tok1 = this->expressions->at(0)->eval(env);
+	FuzuliVariable tok2 = this->expressions->at(1)->eval(env);
+	FuzuliVariable fv; fv.type=FLOAT;
+	fv.d= this->getDoubleValue(tok1) / this->getDoubleValue(tok2);
+	return (fv);
 }
 
 NotExpression::NotExpression(vector<Expression*> *expr) {
@@ -88,15 +101,16 @@ NotExpression::~NotExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *NotExpression::eval(Environment *env) {
-	Token *tok = this->expressions->at(0)->eval(env);
-	int intValue = tok->getIntValue();
+FuzuliVariable NotExpression::eval(Environment *env) {
+	FuzuliVariable tok = this->expressions->at(0)->eval(env);
+	int intValue = this->getIntValue(tok);
 	if (intValue == 0) {
 		intValue = 1;
 	} else {
 		intValue = 0;
 	}
-	return (env->newToken(intValue, INTEGER));
+	FuzuliVariable fv; fv.type = INTEGER; fv.i = intValue;
+	return (fv);
 }
 
 OrExpression::OrExpression(vector<Expression*> *expr) {
@@ -108,16 +122,17 @@ OrExpression::~OrExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *OrExpression::eval(Environment *env) {
+FuzuliVariable OrExpression::eval(Environment *env) {
 	int atLeastOneTrue = 0;
 	for (unsigned int i = 0; i < this->expressions->size(); i++) {
-		Token *tok = this->expressions->at(i)->eval(env);
-		if (tok->getIntValue() == 1) {
+		FuzuliVariable tok = this->expressions->at(i)->eval(env);
+		if (this->getIntValue(tok) == 1) {
 			atLeastOneTrue = 1;
 			break;
 		}
 	}
-	return (env->newToken(atLeastOneTrue, INTEGER));
+	FuzuliVariable fv; fv.type = INTEGER; fv.i = atLeastOneTrue;
+	return (fv);
 }
 
 PlusExpression::PlusExpression(vector<Expression*> *expr) {
@@ -129,12 +144,14 @@ PlusExpression::~PlusExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *PlusExpression::eval(Environment *env) {
+FuzuliVariable PlusExpression::eval(Environment *env) {
 	double sum = 0.0;
 	for (unsigned int i = 0; i < this->expressions->size(); i++) {
-		sum += expressions->at(i)->eval(env)->getFloatValue();
+		FuzuliVariable fv = expressions->at(i)->eval(env);
+		sum += this->getDoubleValue(fv);
 	}
-	return (env->newToken(sum, FLOAT));
+	FuzuliVariable result; result.type = FLOAT; result.d=sum;
+	return (result);
 }
 
 IncExpression::IncExpression(vector<Expression*> *expr) {
@@ -146,9 +163,10 @@ IncExpression::~IncExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *IncExpression::eval(Environment *env) {
-	Token *val = this->expressions->at(0)->eval(env);
-	val->setFloatValue(val->getFloatValue() + 1.0);
+FuzuliVariable IncExpression::eval(Environment *env) {
+	FuzuliVariable val = this->expressions->at(0)->eval(env);
+	val.d = this->getDoubleValue(val) + 1.0;
+	val.type = FLOAT;
 	return (val);
 }
 
@@ -163,9 +181,9 @@ DecExpression::~DecExpression() {
 // TODO Auto-generated destructor stub
 }
 
-Token *DecExpression::eval(Environment *env) {
-	Token *val = this->expressions->at(0)->eval(env);
-	val->setFloatValue(val->getFloatValue() - 1.0);
+FuzuliVariable DecExpression::eval(Environment *env) {
+	FuzuliVariable val = this->expressions->at(0)->eval(env);
+	val.d = this->getDoubleValue(val) - 1.0;
 	return (val);
 }
 
@@ -178,12 +196,15 @@ SubtractionExpression::~SubtractionExpression() {
 // TODO Auto-generated destructor stub
 }
 
-Token *SubtractionExpression::eval(Environment *env) {
-	double diff = expressions->at(0)->eval(env)->getFloatValue();
+FuzuliVariable SubtractionExpression::eval(Environment *env) {
+	FuzuliVariable fv = expressions->at(0)->eval(env);
+	double diff = this->getDoubleValue(fv);
 	for (unsigned int i = 1; i < this->expressions->size(); i++) {
-		diff -= expressions->at(i)->eval(env)->getFloatValue();
+		fv = expressions->at(i)->eval(env);
+		diff -= this->getDoubleValue( fv );
 	}
-	return (env->newToken(diff, FLOAT));
+	FuzuliVariable result; result.type = FLOAT; result.d=diff;
+	return(result);
 }
 
 EqualsExpression::EqualsExpression(vector<Expression*> *expr) {
@@ -195,10 +216,12 @@ EqualsExpression::~EqualsExpression() {
 // TODO Auto-generated destructor stub
 }
 
-Token *EqualsExpression::eval(Environment *env) {
-	Token *tok1 = this->expressions->at(0)->eval(env);
-	Token *tok2 = this->expressions->at(1)->eval(env);
-	return (env->newToken(*tok1 == *tok2, FLOAT));
+FuzuliVariable EqualsExpression::eval(Environment *env) {
+	FuzuliVariable tok1 = this->expressions->at(0)->eval(env);
+	FuzuliVariable tok2 = this->expressions->at(1)->eval(env);
+	FuzuliVariable result; result.type = FLOAT;
+	result.d= (this->getDoubleValue(tok1) == this->getDoubleValue(tok2));
+	return (result);
 }
 
 NotEqualsExpression::NotEqualsExpression(vector<Expression*> *expr) {
@@ -210,10 +233,12 @@ NotEqualsExpression::~NotEqualsExpression() {
 // TODO Auto-generated destructor stub
 }
 
-Token *NotEqualsExpression::eval(Environment *env) {
-	Token *tok1 = this->expressions->at(0)->eval(env);
-	Token *tok2 = this->expressions->at(1)->eval(env);
-	return (env->newToken(!(*tok1 == *tok2), INTEGER));
+FuzuliVariable NotEqualsExpression::eval(Environment *env) {
+	FuzuliVariable tok1 = this->expressions->at(0)->eval(env);
+	FuzuliVariable tok2 = this->expressions->at(1)->eval(env);
+	FuzuliVariable result; result.type = FLOAT;
+	result.d= (!(this->getDoubleValue(tok1) == this->getDoubleValue(tok2)));
+	return (result);
 }
 
 LessExpression::LessExpression(vector<Expression*> *expr) {
@@ -225,10 +250,12 @@ LessExpression::~LessExpression() {
 // TODO Auto-generated destructor stub
 }
 
-Token *LessExpression::eval(Environment *env) {
-	Token *first = this->expressions->at(0)->eval(env);
-	Token *second = this->expressions->at(1)->eval(env);
-	return (env->newToken(*first < *second, INTEGER));
+FuzuliVariable LessExpression::eval(Environment *env) {
+	FuzuliVariable first = this->expressions->at(0)->eval(env);
+	FuzuliVariable second = this->expressions->at(1)->eval(env);
+	FuzuliVariable result; result.type = FLOAT;
+	result.d= (this->getDoubleValue(first) < this->getDoubleValue(second));
+	return(result);
 }
 
 LessOrEqualExpression::LessOrEqualExpression(vector<Expression*> *expr) {
@@ -240,10 +267,12 @@ LessOrEqualExpression::~LessOrEqualExpression() {
 // TODO Auto-generated destructor stub
 }
 
-Token *LessOrEqualExpression::eval(Environment *env) {
-	Token *first = this->expressions->at(0)->eval(env);
-	Token *second = this->expressions->at(1)->eval(env);
-	return (env->newToken(*first <= *second, INTEGER));
+FuzuliVariable LessOrEqualExpression::eval(Environment *env) {
+	FuzuliVariable first = this->expressions->at(0)->eval(env);
+		FuzuliVariable second = this->expressions->at(1)->eval(env);
+		FuzuliVariable result; result.type = FLOAT;
+		result.d= (this->getDoubleValue(first) <= this->getDoubleValue(second));
+		return(result);
 }
 
 BiggerExpression::BiggerExpression(vector<Expression*> *expr) {
@@ -255,10 +284,12 @@ BiggerExpression::~BiggerExpression() {
 // TODO Auto-generated destructor stub
 }
 
-Token *BiggerExpression::eval(Environment *env) {
-	Token *first = this->expressions->at(0)->eval(env);
-	Token *second = this->expressions->at(1)->eval(env);
-	return (env->newToken(*first > *second, INTEGER));
+FuzuliVariable BiggerExpression::eval(Environment *env) {
+	FuzuliVariable first = this->expressions->at(0)->eval(env);
+		FuzuliVariable second = this->expressions->at(1)->eval(env);
+		FuzuliVariable result; result.type = FLOAT;
+		result.d= (this->getDoubleValue(first) > this->getDoubleValue(second));
+		return(result);
 }
 
 BigOrEqualExpression::BigOrEqualExpression(vector<Expression*> *expr) {
@@ -270,10 +301,12 @@ BigOrEqualExpression::~BigOrEqualExpression() {
 // TODO Auto-generated destructor stub
 }
 
-Token *BigOrEqualExpression::eval(Environment *env) {
-	Token *first = this->expressions->at(0)->eval(env);
-	Token *second = this->expressions->at(1)->eval(env);
-	return (env->newToken(*first >= *second, INTEGER));
+FuzuliVariable BigOrEqualExpression::eval(Environment *env) {
+	FuzuliVariable first = this->expressions->at(0)->eval(env);
+		FuzuliVariable second = this->expressions->at(1)->eval(env);
+		FuzuliVariable result; result.type = FLOAT;
+		result.d= (this->getDoubleValue(first) >= this->getDoubleValue(second));
+		return(result);
 }
 
 ModulaExpression::ModulaExpression(vector<Expression*> *expr) {
@@ -285,11 +318,12 @@ ModulaExpression::~ModulaExpression() {
 
 }
 
-Token *ModulaExpression::eval(Environment *env) {
-	Token *first = this->expressions->at(0)->eval(env);
-	Token *second = this->expressions->at(1)->eval(env);
-	return (env->newToken(fmod(first->getFloatValue(), second->getFloatValue()),
-			FLOAT));
+FuzuliVariable ModulaExpression::eval(Environment *env) {
+	FuzuliVariable first = this->expressions->at(0)->eval(env);
+		FuzuliVariable second = this->expressions->at(1)->eval(env);
+		FuzuliVariable result; result.type = FLOAT;
+		result.d= fmod(this->getDoubleValue(first) , this->getDoubleValue(second));
+		return(result);
 }
 
 BitAndExpression::BitAndExpression(vector<Expression*> *expr) {
@@ -301,10 +335,12 @@ BitAndExpression::~BitAndExpression() {
 
 }
 
-Token *BitAndExpression::eval(Environment *env) {
-	Token *val1 = this->expressions->at(0)->eval(env);
-	Token *val2 = this->expressions->at(1)->eval(env);
-	return (env->newToken(val1->getIntValue() & val2->getIntValue(), INTEGER));
+FuzuliVariable BitAndExpression::eval(Environment *env) {
+	FuzuliVariable first = this->expressions->at(0)->eval(env);
+		FuzuliVariable second = this->expressions->at(1)->eval(env);
+		FuzuliVariable result; result.type = INTEGER;
+		result.i= (this->getIntValue(first) & this->getIntValue(second));
+		return(result);
 }
 
 BitNotExpression::BitNotExpression(vector<Expression*> *expr) {
@@ -316,9 +352,11 @@ BitNotExpression::~BitNotExpression() {
 
 }
 
-Token *BitNotExpression::eval(Environment *env) {
-	Token *val1 = this->expressions->at(0)->eval(env);
-	return (env->newToken(~val1->getIntValue(), INTEGER));
+FuzuliVariable BitNotExpression::eval(Environment *env) {
+	FuzuliVariable first = this->expressions->at(0)->eval(env);
+		FuzuliVariable result; result.type = INTEGER;
+		result.i= ~ (this->getIntValue(first));
+		return(result);
 }
 
 BitOrExpression::BitOrExpression(vector<Expression*> *expr) {
@@ -330,10 +368,12 @@ BitOrExpression::~BitOrExpression() {
 
 }
 
-Token *BitOrExpression::eval(Environment *env) {
-	Token *val1 = this->expressions->at(0)->eval(env);
-	Token *val2 = this->expressions->at(1)->eval(env);
-	return (env->newToken(val1->getIntValue() | val2->getIntValue(), INTEGER));
+FuzuliVariable BitOrExpression::eval(Environment *env) {
+	FuzuliVariable first = this->expressions->at(0)->eval(env);
+		FuzuliVariable second = this->expressions->at(1)->eval(env);
+		FuzuliVariable result; result.type = INTEGER;
+		result.i= (this->getIntValue(first) | this->getIntValue(second));
+		return(result);
 }
 
 BitXORExpression::BitXORExpression(vector<Expression*> *expr) {
@@ -345,10 +385,12 @@ BitXORExpression::~BitXORExpression() {
 
 }
 
-Token *BitXORExpression::eval(Environment *env) {
-	Token *val1 = this->expressions->at(0)->eval(env);
-	Token *val2 = this->expressions->at(1)->eval(env);
-	return (env->newToken(val1->getIntValue() ^ val2->getIntValue(), INTEGER));
+FuzuliVariable BitXORExpression::eval(Environment *env) {
+	FuzuliVariable first = this->expressions->at(0)->eval(env);
+		FuzuliVariable second = this->expressions->at(1)->eval(env);
+		FuzuliVariable result; result.type = INTEGER;
+		result.i= (this->getIntValue(first) ^ this->getIntValue(second));
+		return(result);
 }
 
 BitShiftLeftExpression::BitShiftLeftExpression(vector<Expression*> *expr) {
@@ -360,10 +402,12 @@ BitShiftLeftExpression::~BitShiftLeftExpression() {
 
 }
 
-Token *BitShiftLeftExpression::eval(Environment *env) {
-	Token *val1 = this->expressions->at(0)->eval(env);
-	Token *val2 = this->expressions->at(1)->eval(env);
-	return (env->newToken(val1->getIntValue() << val2->getIntValue(), INTEGER));
+FuzuliVariable BitShiftLeftExpression::eval(Environment *env) {
+	FuzuliVariable first = this->expressions->at(0)->eval(env);
+		FuzuliVariable second = this->expressions->at(1)->eval(env);
+		FuzuliVariable result; result.type = INTEGER;
+		result.i= (this->getIntValue(first) << this->getIntValue(second));
+		return(result);
 }
 
 BitShiftRightExpression::BitShiftRightExpression(vector<Expression*> *expr) {
@@ -375,11 +419,15 @@ BitShiftRightExpression::~BitShiftRightExpression() {
 
 }
 
-Token *BitShiftRightExpression::eval(Environment *env) {
-	Token *val1 = this->expressions->at(0)->eval(env);
-	Token *val2 = this->expressions->at(1)->eval(env);
-	return (env->newToken(val1->getIntValue() >> val2->getIntValue(), INTEGER));
+FuzuliVariable BitShiftRightExpression::eval(Environment *env) {
+	FuzuliVariable first = this->expressions->at(0)->eval(env);
+		FuzuliVariable second = this->expressions->at(1)->eval(env);
+		FuzuliVariable result; result.type = INTEGER;
+		result.i= (this->getIntValue(first) >> this->getIntValue(second));
+		return(result);
 }
+
+/*
 
 SetPrecisionExpression::SetPrecisionExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
@@ -410,5 +458,6 @@ Token *SetEpsilonExpression::eval(Environment *env) {
 	Token::epsilon = atof(param->getContent());
 	return (Token::NULL_TOKEN);
 }
+*/
 
 } /* namespace fuzuli */

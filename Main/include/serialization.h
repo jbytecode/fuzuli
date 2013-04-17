@@ -26,6 +26,7 @@ using namespace std;
 
 namespace fuzuli {
 
+/*
 class Serializer {
 public:
 	Serializer();
@@ -46,6 +47,7 @@ private:
 	unsigned int code_index;
 };
 
+*/
 } /* end of namespace fuzuli */
 
 #endif /* SERIALIZATION_H_ */

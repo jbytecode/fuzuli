@@ -25,6 +25,7 @@ namespace fuzuli {
 
 using namespace std;
 
+
 Expression::Expression() {
 	this->resultToken = Token::NULL_TOKEN;
 	this->type = UNDEFINED_EXPRESSION;
@@ -35,16 +36,42 @@ Expression::~Expression() {
 }
 
 
-Token * Expression::eval(Environment *env){
-	return(this->resultToken);
+FuzuliVariable Expression::eval(Environment *env){
+	FuzuliVariable f;
+	f.i = 0;
+	f.type = INTEGER;
+	return(f);
 }
 
 const char* Expression::toString() {
 	stringstream ss;
-	for (unsigned int i = 0; i < this->expressions->size(); i++) {
-		ss << this->expressions->at(i)->toString() << endl;
-	}
+	ss << "Expression::toString() is not implemented yet";
 	return (ss.str().c_str());
+}
+
+
+double Expression::getDoubleValue(FuzuliVariable &v){
+	if(v.type == FLOAT){
+		return(v.d);
+	}else if (v.type == INTEGER){
+		return((double)v.i);
+	}else if (v.type == STRING){
+		return(atof(v.s));
+	}else{
+		return(0);
+	}
+}
+
+int Expression::getIntValue(FuzuliVariable &v){
+	if(v.type == FLOAT){
+		return((int)v.d);
+	}else if (v.type == INTEGER){
+		return(v.i);
+	}else if (v.type == STRING){
+		return(atoi(v.s));
+	}else{
+		return(0);
+	}
 }
 
 } /* namespace fuzuli */

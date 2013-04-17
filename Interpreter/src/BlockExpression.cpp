@@ -24,6 +24,7 @@ namespace fuzuli {
 
 using namespace std;
 
+/*
 BlockExpression::BlockExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = BLOCK_EXPRESSION;
@@ -81,5 +82,5 @@ Token *GroupExpression::eval(Environment *env) {
 	return (result);
 }
 
-
+*/
 } /* namespace fuzuli */

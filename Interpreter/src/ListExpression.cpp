@@ -23,6 +23,7 @@
 
 namespace fuzuli {
 
+/*
 using namespace std;
 
 ListExpression::ListExpression(vector<Expression*> *expr) {
@@ -100,7 +101,7 @@ SetExpression::~SetExpression() {
 
 Token *SetExpression::eval(Environment *env) {
 	Token *arr = this->expressions->at(0)->eval(env);
-	Token *n = this->expressions->at(1)->eval(env); /* n */
+	Token *n = this->expressions->at(1)->eval(env);
 	Token *newvalue = this->expressions->at(2)->eval(env);
 	int int_n = n->getIntValue();
 	arr->tokens[int_n]->ReduceReferences();
@@ -170,7 +171,7 @@ AppendExpression::~AppendExpression() {
 }
 
 Token *AppendExpression::eval(Environment *env) {
-	Token *list = this->expressions->at(0)->eval(env); /* list name*/
+	Token *list = this->expressions->at(0)->eval(env);
 	Token *element = this->expressions->at(1)->eval(env);
 	list->tokens.push_back(element);
 	element->IncreaseReferences();
@@ -187,7 +188,7 @@ PrependExpression::~PrependExpression() {
 }
 
 Token *PrependExpression::eval(Environment *env) {
-	Token *list = this->expressions->at(0)->eval(env); /* list name*/
+	Token *list = this->expressions->at(0)->eval(env);
 	Token *element = this->expressions->at(1)->eval(env);
 	list->tokens.insert(list->tokens.begin(), element);
 	element->IncreaseReferences();
@@ -293,5 +294,5 @@ Token *LastExpression::eval(Environment *env) {
 }
 
 
-
+*/
 } /* namespace fuzuli */

@@ -17,7 +17,7 @@
  */
 
 #include "FuzuliTypes.h"
-#include "../include/serialization.h"
+//#include "../include/serialization.h"
 #include <cstring>
 
 using namespace std;
@@ -25,6 +25,7 @@ using namespace fuzuli;
 
 namespace fuzuli {
 
+/*
 Serializer::Serializer() {
 
 }
@@ -151,4 +152,5 @@ Expression *Serializer::getNextExpression() {
 	return NULL;
 }
 
+*/
 } /* end of namespace fuzuli */

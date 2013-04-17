@@ -25,6 +25,7 @@
 
 namespace fuzuli {
 
+/*
 using namespace std;
 
 stringstream cgi_post_content;
@@ -215,5 +216,6 @@ Token *IssetExpression::eval(Environment *env) {
 	return (result);
 }
 
+*/
 }
 

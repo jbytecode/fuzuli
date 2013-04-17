@@ -23,6 +23,7 @@
 
 namespace fuzuli {
 
+
 IntegerExpression::IntegerExpression() {
 
 }
@@ -45,8 +46,11 @@ IntegerExpression::~IntegerExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *IntegerExpression::eval(Environment *env){
-	return this->token;
+
+
+FuzuliVariable IntegerExpression::eval(Environment *env){
+	FuzuliVariable fv; fv.type = INTEGER; fv.i = this->integerValue;
+	return(fv);
 }
 
 
@@ -72,8 +76,11 @@ IntegerConstantExpression::~IntegerConstantExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *IntegerConstantExpression::eval(Environment *env){
-	return this->token;
+FuzuliVariable IntegerConstantExpression::eval(Environment *env){
+	FuzuliVariable f;
+	f.type = INTEGER;
+	f.i = this->integerValue;
+	return(f);
 }
 
 
@@ -93,8 +100,11 @@ FloatExpression::~FloatExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *FloatExpression::eval(Environment *env){
-	return(this->token);
+FuzuliVariable FloatExpression::eval(Environment *env){
+	FuzuliVariable fv;
+	fv.type = FLOAT;
+	fv.d = this->floatValue;
+	return(fv);
 }
 
 
@@ -113,8 +123,11 @@ FloatConstantExpression::~FloatConstantExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *FloatConstantExpression::eval(Environment *env){
-	return(this->token);
+FuzuliVariable FloatConstantExpression::eval(Environment *env){
+	FuzuliVariable f;
+	f.type = FLOAT;
+	f.d = this->floatValue;
+	return(f);
 }
 
 
@@ -130,18 +143,15 @@ StringExpression::~StringExpression() {
 
 }
 
-Token *StringExpression::eval(Environment *env){
-	//this->stringToken->setContent(this->stringValue.c_str());
-	//this->stringToken->IncreaseReferences();
-	return this->stringToken;
-	//Token *tok = env->newToken(this->stringValue.c_str(), STRING);
-	//tok->setKillable(true);
-	//return(tok);
+FuzuliVariable StringExpression::eval(Environment *env){
+	FuzuliVariable result;
+	result.type = STRING;
+	result.s = this->stringValue.c_str();
+	return(result);
 }
 
 
-
-
+/*
 IdentifierExpression::IdentifierExpression(Token *tok) {
 	this->stringToken = tok;
 	tok->setKillable(false);
@@ -200,6 +210,6 @@ Token *TypeExpression::eval(Environment *env){
 	return(Token::NULL_TOKEN);
 }
 
-
+*/
 }
 /*namespace fuzuli */

@@ -38,10 +38,13 @@ void doSerialize(char *);
 
 
 void doSerialize(char *filename){
+	cout << "Serializer is not implemented yet"<< endl;
+	/*
 	Serializer *s = new Serializer();
 	stringstream channel;
 	s->serializeFile(filename, channel);
 	cout << channel.str().c_str()<<endl;
+	*/
 }
 
 
@@ -63,7 +66,7 @@ void doRepl() {
 	Environment *env = new Environment();
 	AstBuilder *ast;
 	Expression *expr;
-	Token *tok;
+	FuzuliVariable result;
 
 	env->setFirst();
 	env->setArgcArgv(a_argc, a_argv);
@@ -100,8 +103,14 @@ void doRepl() {
 				ss.str("");
 				break;
 			}
-			tok = expr->eval(env);
-			cout << tok->getContent() << endl;
+			result = expr->eval(env);
+			if(result.type == INTEGER){
+				cout << result.i << endl;
+			}else if(result.type == FLOAT){
+				cout << result.d << endl;
+			}else if(result.type == STRING){
+				cout << result.s << endl;
+			}
 			free(input);
 			ss.str("");
 		}
