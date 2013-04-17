@@ -22,7 +22,7 @@
 #include <sstream>
 
 namespace fuzuli {
-
+/**
 using namespace std;
 
 EvalExpression::EvalExpression(vector<Expression*> *expr) {
@@ -36,10 +36,10 @@ EvalExpression::~EvalExpression() {
 
 Token *EvalExpression::eval(Environment *env) {
 	Token *content = this->expressions->at(0)->eval(env);
-	/*
-	 * If x in (eval x) is string, x is parsed and being run.
-	 * Otherwise, x is a Fuzuli Expression.
-	 */
+	//
+	// If x in (eval x) is string, x is parsed and being run.
+	// Otherwise, x is a Fuzuli Expression.
+	//
 	if (content->getType() == STRING) {
 		SourceCode source;
 		string *s = new string(content->getContent());
@@ -66,9 +66,7 @@ Token *EvalExpression::eval(Environment *env) {
 			return (Token::NULL_TOKEN);
 		}
 	} else if (content->getType() == COBJECT) {
-		/*
-		 * Content is a Fuzuli Expression.
-		 */
+		 // Content is a Fuzuli Expression.
 		Expression *expr = static_cast<Expression*>(content->object);
 		Token *result = NULL;
 		for (unsigned int i=0;i<expr->expressions->size();i++){
@@ -95,5 +93,6 @@ Token *ExpressionExpression::eval(Environment *env) {
 	return (result);
 }
 
+*/
 } /* End of namspace Fuzuli */
 

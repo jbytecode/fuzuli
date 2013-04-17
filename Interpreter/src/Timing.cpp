@@ -21,6 +21,7 @@
 
 namespace fuzuli {
 
+/*
 using namespace std;
 
 TimingExpression::TimingExpression(vector<Expression*> *expr) {
@@ -44,4 +45,5 @@ Token *TimingExpression::eval(Environment *env) {
 	return (result);
 }
 
+*/
 } /* namespace fuzuli */

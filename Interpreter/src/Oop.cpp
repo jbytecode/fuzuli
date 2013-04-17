@@ -24,7 +24,9 @@
 
 namespace fuzuli {
 
+/*
 using namespace std;
+
 
 map<string, FuzuliClass*> FuzuliClass::all_classes;
 
@@ -119,6 +121,8 @@ Token *NewExpression::eval(Environment *env) {
 	obj->object = (void*) cls_env;
 	return (obj);
 }
+
+*/
 
 };
 

@@ -23,6 +23,7 @@
 
 namespace fuzuli {
 
+/*
 FunctionExpression::FunctionExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = FUNCTION_EXPRESSION;
@@ -166,7 +167,7 @@ Token *ParamsExpression::eval(Environment* env) {
 	return (Token::NULL_TOKEN);
 }
 
-/* Return Expression for Fuzuli Functions */
+// Return Expression for Fuzuli Functions
 ReturnExpression::ReturnExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = RETURN_EXPRESSION;
@@ -196,4 +197,5 @@ const char *FuzuliFunction::getStringName() {
 	return (token->getContent());
 }
 
+*/
 }

@@ -23,6 +23,7 @@
 
 namespace fuzuli {
 
+/*
 using namespace std;
 
 ForExpression::ForExpression(vector<Expression*> *expr) {
@@ -36,7 +37,7 @@ ForExpression::~ForExpression() {
 
 Token *ForExpression::eval(Environment *env) {
 	Environment *forEnvironment = env->createNext();
-	this->expressions->at(0)->eval(forEnvironment); /* Starter */
+	this->expressions->at(0)->eval(forEnvironment);
 	Token *condition;
 	Token *result = NULL;
 	unsigned int i=3;
@@ -193,6 +194,8 @@ Token *BreakExpression::eval(Environment *env) {
 	result->breakFlag = 1;
 	return (result);
 }
+
+*/
 
 } /* namespace fuzuli */
 

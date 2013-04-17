@@ -24,6 +24,7 @@
 
 namespace fuzuli {
 
+/*
 static vector<DynLoadExpression*> installedLibraries;
 
 DynLoadExpression::DynLoadExpression(vector<Expression*> *expr) {
@@ -97,5 +98,6 @@ Token *CExpression::eval(Environment *env) {
 	return (result);
 }
 
+*/
 }
 

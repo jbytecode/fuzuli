@@ -22,6 +22,8 @@
 
 namespace fuzuli {
 
+/*
+
 using namespace std;
 
 IfExpression::IfExpression(vector<Expression*> *expr) {
@@ -36,12 +38,14 @@ IfExpression::~IfExpression() {
 Token *IfExpression::eval(Environment *env) {
 	Token *condition;
 	Token *result = Token::NULL_TOKEN;
-	if (this->expressions->size() == 2) { /* if then form*/
+	// if then form
+	if (this->expressions->size() == 2) {
 		condition = this->expressions->at(0)->eval(env);
 		if (condition->getIntValue() == 1) {
 			result = this->expressions->at(1)->eval(env);
 		}
-	} else if (this->expressions->size() == 3) { /* if then form */
+		//if then form
+	} else if (this->expressions->size() == 3) {
 		condition = this->expressions->at(0)->eval(env);
 		if (condition->getIntValue() == 1) {
 			result = this->expressions->at(1)->eval(env);
@@ -91,5 +95,6 @@ Token *CaseExpression::eval(Environment *env){
 	this->expressions->at(1)->eval(env);
 	return(Token::NULL_TOKEN);
 }
+*/
 
 } /* namespace fuzuli */
