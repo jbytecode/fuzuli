@@ -73,8 +73,8 @@ Expression* AstBuilder::getNextExpression() {
 				StringExpression *ie = new StringExpression(tok);
 				exprlist->push_back(ie);
 			} else if (tok->getType() == IDENTIFIER) {
-				//IdentifierExpression *ie = new IdentifierExpression(tok);
-				//exprlist->push_back(ie);
+				IdentifierExpression *ie = new IdentifierExpression(tok);
+				exprlist->push_back(ie);
 			} else if (tok->getType() == HTML) {
 				//WebExpression *webexp = new WebExpression(tok->getContent());
 				//exprlist->push_back(webexp);
@@ -286,8 +286,8 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			//IncludeExpression *pe = new IncludeExpression(expr);
 			//return (pe);
 		} else if (strcmp(tok->getContent(), "dump") == 0) {
-			//DumpExpression *pe = new DumpExpression(expr);
-			//return (pe);
+			DumpExpression *pe = new DumpExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "gc") == 0) {
 			//GCExpression *pe = new GCExpression(expr);
 			//return (pe);

@@ -1,6 +1,6 @@
 /*
  * fuzuli : A general purpose interpreter
- * Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
+ * Copyright (C) 2012,2013 Mehmet Hakan Satman <mhsatman@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 #include "../include/FuzuliTypes.h"
 #include <cstdlib>
+#include <cstring>
 #include <sstream>
 #include <vector>
 #include <list>
@@ -29,179 +30,113 @@ using namespace std;
 bool Environment::isAutomaticGC = true;
 
 Environment::Environment() {
-	this->previous = NULL;
-	this->first = false;
-	this->preventGC(false);
+
 }
 
 Environment::Environment(Environment *base) {
-	this->previous = base;
-	this->first = false;
-	this->preventGC(base->preventGC());
+
 }
 
 Environment::~Environment() {
 
 }
 
-void Environment::setFirst() {
-	this->first = true;
-	this->deep = 0;
-	this->registerGlobals();
-	this->previous = NULL;
+FuzuliVariable Environment::newFuzuliVariableD(double d){
+	FuzuliVariable f;
+	f.type = FLOAT;
+	f.d = d;
+	return(f);
 }
 
-bool Environment::isFirst() {
-	return (this->first);
+FuzuliVariable Environment::newFuzuliVariableI(int d){
+	FuzuliVariable f;
+	f.type = INTEGER;
+	f.i = d;
+	return(f);
 }
+
 
 void Environment::registerGlobals() {
-	this->setVariable("INTEGER", new Token(1.0, INTEGER));
-	this->setVariable("FLOAT", new Token(2.0, INTEGER));
-	this->setVariable("STRING", new Token(3.0, INTEGER));
-	this->setVariable("LIST", new Token(4.0, LIST));
-	this->setVariable("NULL", new Token(5.0, NULLTOKEN));
-	this->setVariable("true", new Token(1.0, INTEGER));
-	this->setVariable("false", new Token(0.0, INTEGER));
+	FuzuliVariable intf1 = this->newFuzuliVariableI(1);
+	FuzuliVariable intf2 = this->newFuzuliVariableI(2);
+	FuzuliVariable intf3 = this->newFuzuliVariableI(3);
+	FuzuliVariable intf4 = this->newFuzuliVariableI(4);
+	FuzuliVariable intf5 = this->newFuzuliVariableI(5);
+
+	FuzuliVariable intf6 = this->newFuzuliVariableI(1);
+	FuzuliVariable intf7 = this->newFuzuliVariableI(0);
+
+	this->setVariable("INTEGER", intf1);
+	this->setVariable("FLOAT",   intf2);
+	this->setVariable("STRING",  intf3);
+	this->setVariable("LIST",    intf4);
+	this->setVariable("NULL",    intf5);
+	this->setVariable("true",    intf6);
+	this->setVariable("false",   intf7);
 	Token::NULL_TOKEN->setKillable(false);
 }
 
-Token *Environment::newToken(const char *val, enum TokenType type) {
-	Token *tok = new (nothrow) Token(val, type);
-	this->garbage.push_back(tok);
-	return (tok);
-}
 
-Token *Environment::newToken(double val, enum TokenType type) {
-	Token *tok = new (nothrow) Token(val, type);
-	this->garbage.push_back(tok);
-	return (tok);
-}
 
-void Environment::preventGC(bool p) {
-	this->prevent_garbage_collection = p;
-}
-
-bool Environment::preventGC() {
-	return (this->prevent_garbage_collection);
-}
-
-int Environment::GC() {
-	int numdeleted = 0;
-	for (unsigned int i = 0; i < this->subenvironments.size(); i++) {
-		//numdeleted += this->subenvironments[i]->GC();
+void Environment::setVariableInThisScope(const char*name, FuzuliVariable value) {
+	FuzuliVariable f = this->getVariable(name);
+	if (f.type == NULLTOKEN){
+		char *c = (char*)malloc(strlen(name));
+		strcpy (c, name);
+		value.name = c;
+		this->variables.push_back(value);
+	}else {
+		f = value;
 	}
-	//cout << "Deleting "<<this->garbage.size()<< " garbages "<<endl;
-	list<Token*>::iterator it;
-	for (it = this->garbage.begin(); it != this->garbage.end(); it++) {
-		Token *tok = *it;
-		if (tok->links <= 0 && tok->getKillable() == true) {
-			//cout << "Deleting "<<tok->getContent()<<endl;
-			this->garbage.erase(it);
-			delete tok;
-			it--;
-			numdeleted++;
+}
+
+FuzuliVariable Environment::getVariableInThisScope(const char *name) {
+	for (int i=this->variables.size()-1; i>=0; i--){
+		FuzuliVariable f = this->variables[i];
+		if(strcmp(f.name, "-") == 0){
+			break;
+		}else if (strcmp(f.name, name) == 0 ){
+			return(f);
 		}
+
 	}
-	for (unsigned int i = 0; i < this->subenvironments.size(); i++) {
-		Environment *tempe = this->subenvironments[i];
-		if (tempe->fuzuliFunctions.size() == 0 && !tempe->preventGC()) {
-			this->subenvironments.erase(this->subenvironments.begin() + i);
-			delete tempe;
-			i--;
+	FuzuliVariable result; result.type = NULLTOKEN;
+	return(result);
+}
+
+
+void  Environment::setVariable(const char *name, FuzuliVariable value) {
+	FuzuliVariable f = this->getVariable(name);
+	if (f.type ==  NULLTOKEN) {
+		char *c = (char*) malloc(strlen(name));
+		strcpy(c, name);
+		value.name = c;
+		this->variables.push_back(value);
+	}else{
+		f = value;
+	}
+}
+
+FuzuliVariable Environment::getVariable(const char *name) {
+	for (int i=this->variables.size()-1; i>=0; i--){
+			FuzuliVariable f = this->variables.at(i);
+			if (strcmp(f.name, name) == 0 ){
+				return(f);
+			}
 		}
-	}
-	return (numdeleted);
+	FuzuliVariable result; result.type = NULLTOKEN;
+	return(result);
 }
 
-int Environment::doAutomaticGC() {
-	if (Environment::isAutomaticGC
-			&& this->prevent_garbage_collection == false) {
-		return this->GC();
-	} else {
-		return -1;
-	}
-}
-
-int Environment::doAutomaticGCwithProtection(Token *tok) {
-	if (Environment::isAutomaticGC
-			&& this->prevent_garbage_collection == false) {
-		int numGC = 0;
-		tok->IncreaseReferences();
-		numGC = this->GC();
-		tok->ReduceReferences();
-		return (numGC);
-	} else {
-		return -1;
-	}
-}
-
-void Environment::setVariableInThisScope(const char*name, Token*value) {
-	this->variables[string(name)] = value;
-}
-
-Token *Environment::getVariableInThisScope(const char *name) {
-	string sname = string(name);
-	if (this->variables.find(sname) != this->variables.end()) {
-		return (this->variables[sname]);
-	} else {
-		return (NULL);
-	}
-}
-
-Environment *Environment::searchBackEnvironments(const char *name) {
-	Environment *env = this;
-	while (env) {
-		if (env->variables.find(string(name)) != env->variables.end()) {
-			return (env);
-		}
-		env = env->previous;
-	}
-	return (NULL);
-}
-
-Environment* Environment::setVariable(const char *name, Token *value) {
-	string sname = string(name);
-	Environment *env = searchBackEnvironments(name);
-	if (env) {
-		env->variables[sname] = value;
-		return (env);
-	} else {
-		this->variables[sname] = value;
-		return (this);
-	}
-}
-
-Token *Environment::getVariable(const char *name) {
-	string sname = string(name);
-	if (this->variables.find(sname) != this->variables.end()) {
-		return (this->variables[sname]);
-	} else {
-		Environment *env = this->searchBackEnvironments(name);
-		if (env) {
-			return (env->variables[sname]);
-		} else {
-			return (Token::NULL_TOKEN);
-		}
-	}
-}
-
-Environment *Environment::createNext() {
-	Environment *envir = new (nothrow) Environment(this);
-	envir->deep = this->deep + 1;
-	this->subenvironments.push_back(envir);
-	return (envir);
+ void Environment::createNext() {
+	FuzuliVariable f;
+	f.name = "-";
+	this->variables.push_back(f);
 }
 
 FuzuliFunction *Environment::searchFuncBackEnvironments(const char *name) {
-	FuzuliFunction *func = this->fuzuliFunctions[string(name)];
-	if (!func) {
-		if (!this->isFirst()) {
-			func = this->previous->searchFuncBackEnvironments(name);
-			return (func);
-		}
-	}
-	return (func);
+	cout << "Environment::searchFuncBackEnvironments is not implemented yet"<<endl;
+	return(NULL);
 }
 
 void Environment::setFunction(const char *name, FuzuliFunction *value) {
@@ -220,7 +155,7 @@ void Environment::setFunction(const char *name, FuzuliFunction *value) {
 }
 
 void Environment::setVariableForFunctionParams(const char* name, Token *value) {
-	this->variables[name] = value;
+	cout << "Environment::setVariableForFunctionParams is not implemented yet"<<endl;
 }
 
 FuzuliFunction *Environment::getFunction(const char *name) {
@@ -228,26 +163,38 @@ FuzuliFunction *Environment::getFunction(const char *name) {
 }
 
 void Environment::setArgcArgv(int argc, char **argv) {
-	this->setVariable("argc", new Token(argc, INTEGER));
-	Token *tok = new Token("@FuzuliList", LIST);
-	for (int i = 0; i < argc; i++) {
-		tok->tokens.push_back(new Token(argv[i], STRING));
-	}
+	FuzuliVariable fargc = this->newFuzuliVariableI(argc);
+	this->setVariable("argc", fargc);
+
+	FuzuliVariable tok;
+	tok.type = STRING;
+	tok.s = "ARGV is not implemented yet";
 	this->setVariable("argv", tok);
 }
 
 void Environment::dump() {
-	cout << "Environment::dump() is not implemented yet "<<endl;
+	for (int i=0;i< this->variables.size(); i++){
+		FuzuliVariable f = this->variables.at(i);
+		cout << i << ") " << f.name;
+		if(f.type == INTEGER){
+			cout << f.i;
+		}else if (f.type == FLOAT){
+			cout << f.d;
+		}
+		cout << endl;
+	}
 }
 
 bool Environment::variableExists(const char *name) {
-	if (this->variables.find(string(name)) != this->variables.end()) {
-		return (true);
+	FuzuliVariable f = this->getVariable(name);
+	if (f.type == NULLTOKEN){
+		return(true);
+	}else{
+		return(false);
 	}
-	return (false);
 }
 
-/*
+
 DumpExpression::DumpExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = DUMP_EXPRESSION;
@@ -257,11 +204,14 @@ DumpExpression::~DumpExpression() {
 
 }
 
-Token* DumpExpression::eval(Environment *env) {
+FuzuliVariable DumpExpression::eval(Environment *env) {
 	env->dump();
-	return (Token::NULL_TOKEN);
+	FuzuliVariable f;
+	f.type = INTEGER; f.i = env->variables.size();
+	return (f);
 }
 
+/*
 GCExpression::GCExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = GC_EXPRESSION;

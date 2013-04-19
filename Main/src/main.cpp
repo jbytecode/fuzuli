@@ -68,8 +68,8 @@ void doRepl() {
 	Expression *expr;
 	FuzuliVariable result;
 
-	env->setFirst();
 	env->setArgcArgv(a_argc, a_argv);
+	env->registerGlobals();
 
 	char* input;
 	stringstream ss;
@@ -143,12 +143,10 @@ int main(int argc, char** argv) {
 
 	AstBuilder *b = new AstBuilder(s);
 	Environment *globalEnvironment = new Environment();
-	globalEnvironment->setFirst();
 	globalEnvironment->setArgcArgv(argc, argv);
 	Expression *ex;
 
 	while (1) {
-		globalEnvironment->doAutomaticGC();
 		ex = b->getNextExpression();
 		if (!ex){
 			break;
