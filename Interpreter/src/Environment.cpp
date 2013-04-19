@@ -113,8 +113,18 @@ void  Environment::setVariable(const char *name, FuzuliVariable value) {
 		value.name = c;
 		this->variables.push_back(value);
 	}else{
-		f = value;
+		updateVariable(name, value);
 	}
+}
+
+void Environment::updateVariable(const char *name, FuzuliVariable value){
+	for (int i=this->variables.size()-1; i>=0; i--){
+				FuzuliVariable f = this->variables.at(i);
+				if (strcmp(f.name, name) == 0 ){
+					this->variables.at(i) = value;
+				}
+			}
+
 }
 
 FuzuliVariable Environment::getVariable(const char *name) {
@@ -128,11 +138,21 @@ FuzuliVariable Environment::getVariable(const char *name) {
 	return(result);
 }
 
- void Environment::createNext() {
+ void Environment::createLocal() {
 	FuzuliVariable f;
 	f.name = "-";
 	this->variables.push_back(f);
 }
+
+ void Environment::deleteLocal(){
+	 for (int i=this->variables.size()-1; i>=0; i--){
+		 FuzuliVariable f = this->variables.at(i);
+		 if(strcmp(f.name, "-") == 0){
+			 this->variables.resize(i);
+			 break;
+		 }
+	 }
+ }
 
 FuzuliFunction *Environment::searchFuncBackEnvironments(const char *name) {
 	cout << "Environment::searchFuncBackEnvironments is not implemented yet"<<endl;

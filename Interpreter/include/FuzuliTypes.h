@@ -46,6 +46,7 @@ struct FuzuliVariable {
 	};
 	int type;
 	const char *name;
+	bool breakFlag;
 };
 
 enum TokenType {
@@ -326,8 +327,10 @@ public:
 
 	void setVariable(const char *name, FuzuliVariable value);
 	FuzuliVariable getVariable(const char *name);
+	void updateVariable (const char *name, FuzuliVariable value);
 
-	void createNext();
+	void createLocal();
+	void deleteLocal();
 
 	FuzuliFunction *searchFuncBackEnvironments(const char *name);
 	void setFunction(const char *name, FuzuliFunction *value);
@@ -597,6 +600,23 @@ public:
 	FuzuliVariable eval(Environment *env);
 };
 
+class LetExpression: public Expression{
+public:
+	LetExpression(vector<Expression*> *expr);
+	virtual ~LetExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+
+
+class ForExpression: public Expression {
+public:
+	ForExpression(vector<Expression*> *expr);
+	virtual ~ForExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+
 /*
 
 class BlockExpression: public Expression {
@@ -640,13 +660,6 @@ public:
 };
 
 
-
-class ForExpression: public Expression {
-public:
-	ForExpression(vector<Expression*> *expr);
-	virtual ~ForExpression();
-	FuzuliVariable eval(Environment *env);
-};
 
 class ForEachExpression: public Expression {
 public:
@@ -764,12 +777,7 @@ public:
 	FuzuliVariable eval(Environment *env);
 };
 
-class LetExpression: public Expression{
-public:
-	LetExpression(vector<Expression*> *expr);
-	virtual ~LetExpression();
-	FuzuliVariable eval(Environment *env);
-};
+
 
 class EvalExpression: public Expression {
 public:

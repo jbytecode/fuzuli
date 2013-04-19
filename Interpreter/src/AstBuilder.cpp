@@ -163,8 +163,8 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			//IfExpression *pe = new IfExpression(expr);
 			//return (pe);
 		} else if (strcmp(tok->getContent(), "for") == 0) {
-			//ForExpression *pe = new ForExpression(expr);
-			//return (pe);
+			ForExpression *pe = new ForExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "foreach") == 0) {
 			//ForEachExpression *pe = new ForEachExpression(expr);
 			//return (pe);
@@ -193,8 +193,8 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			PrintlnExpression *pe = new PrintlnExpression(expr);
 			return (pe);
 		} else if (strcmp(tok->getContent(), "let") == 0) {
-			//LetExpression *pe = new LetExpression(expr);
-			//return (pe);
+			LetExpression *pe = new LetExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "def") == 0) {
 			//DefExpression *pe = new DefExpression(expr);
 			//return (pe);

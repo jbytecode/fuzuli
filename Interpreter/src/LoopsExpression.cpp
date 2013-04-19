@@ -23,7 +23,7 @@
 
 namespace fuzuli {
 
-/*
+
 using namespace std;
 
 ForExpression::ForExpression(vector<Expression*> *expr) {
@@ -35,35 +35,40 @@ ForExpression::~ForExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *ForExpression::eval(Environment *env) {
-	Environment *forEnvironment = env->createNext();
-	this->expressions->at(0)->eval(forEnvironment);
-	Token *condition;
-	Token *result = NULL;
+FuzuliVariable ForExpression::eval(Environment *env) {
+	env->createLocal();
+	env->dump();
+	this->expressions->at(0)->eval(env);
+	FuzuliVariable condition;
+	FuzuliVariable result;
 	unsigned int i=3;
 	while (1) {
-		condition = this->expressions->at(1)->eval(forEnvironment);
-		if (condition->getIntValue() == 0) {
+		condition = this->expressions->at(1)->eval(env);
+		if (this->getIntValue(condition) == 0) {
 			break;
 		}
 		i=3;
 		while (i < this->expressions->size()) {
-			result = this->expressions->at(i)->eval(forEnvironment);
-			if (result->breakFlag) {
-				result->breakFlag = 0;
-				forEnvironment->doAutomaticGCwithProtection(result);
+			result = this->expressions->at(i)->eval(env);
+			if (result.breakFlag) {
+				result.breakFlag = false;
 				return (result);
 				break;
 			}
 			i++;
 		}
-		this->expressions->at(2)->eval(forEnvironment);
+		this->expressions->at(2)->eval(env);
+		cout << "One loop:" << endl;
+		env->dump();
+		getchar();
 	}
-
-	forEnvironment->doAutomaticGC();
-	return (Token::NULL_TOKEN);
+	env->deleteLocal();
+	env->dump();
+	FuzuliVariable f; f.type = NULLTOKEN;
+	return (f);
 }
 
+/*
 ForEachExpression::ForEachExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = FOREACH_EXPRESSION;
