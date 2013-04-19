@@ -151,7 +151,7 @@ FuzuliVariable StringExpression::eval(Environment *env){
 }
 
 
-/*
+
 IdentifierExpression::IdentifierExpression(Token *tok) {
 	this->stringToken = tok;
 	tok->setKillable(false);
@@ -164,17 +164,13 @@ IdentifierExpression::~IdentifierExpression() {
 
 }
 
-Token *IdentifierExpression::eval(Environment *env){
-	if(this->last_envir){
-		return env->getVariable(id);
-	}
-	Token *result = env->getVariable(id);
-	this->last_envir = result->environment;
-	return(result);
+FuzuliVariable IdentifierExpression::eval(Environment *env){
+	FuzuliVariable f = env->getVariable(id);
+	return(f);
 }
 
 
-
+/*
 
 TypeofExpression::TypeofExpression(vector<Expression*> *expr){
 	this->expressions = expr;

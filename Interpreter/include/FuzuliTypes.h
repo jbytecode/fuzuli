@@ -45,6 +45,7 @@ struct FuzuliVariable {
 		void *v;
 	};
 	int type;
+	const char *name;
 };
 
 enum TokenType {
@@ -209,6 +210,7 @@ class Expression;
 
 using namespace std;
 
+
 class Expression {
 public:
 	Expression();
@@ -311,35 +313,21 @@ public:
 	Environment();
 	Environment(Environment *base);
 	virtual ~Environment();
-	map<string, Token*> variables;
+	vector<FuzuliVariable> variables;
 	map<string, FuzuliFunction*> fuzuliFunctions;
-	list<Token*> garbage;
-	vector<Environment*> subenvironments;
-	Environment *previous;
 
 	static bool isAutomaticGC;
-	bool isFirst();
-	void setFirst();
 	void registerGlobals();
 
-	Token *newToken(double val, TokenType type);
-	Token *newToken(const char* val, TokenType type);
-	int GC();
-	int doAutomaticGC();
-	int doAutomaticGCwithProtection(Token *tok);
-	void preventGC(bool p);
-	bool preventGC();
 	void dump();
 	bool variableExists(const char *name);
+	void setVariableInThisScope(const char*name, FuzuliVariable value);
+	FuzuliVariable getVariableInThisScope(const char*name);
 
-	void setVariableInThisScope(const char*name, Token *value);
-	Token *getVariableInThisScope(const char*name);
+	void setVariable(const char *name, FuzuliVariable value);
+	FuzuliVariable getVariable(const char *name);
 
-	Environment *searchBackEnvironments(const char *name);
-	Environment *setVariable(const char *name, Token *value);
-	Token *getVariable(const char *name);
-
-	Environment *createNext();
+	void createNext();
 
 	FuzuliFunction *searchFuncBackEnvironments(const char *name);
 	void setFunction(const char *name, FuzuliFunction *value);
@@ -347,10 +335,9 @@ public:
 	FuzuliFunction *getFunction(const char *name);
 	void setArgcArgv(int argc, char** argv);
 
-	int deep;
+	FuzuliVariable newFuzuliVariableD(double d);
+	FuzuliVariable newFuzuliVariableI(int d);
 private:
-	bool first;
-	bool prevent_garbage_collection;
 };
 
 
@@ -424,6 +411,15 @@ private:
 	Token *token;
 };
 
+class IdentifierExpression: public Expression {
+public:
+	IdentifierExpression(Token *tok);
+	virtual ~IdentifierExpression();
+	FuzuliVariable eval(Environment *env);
+	Token *stringToken;
+	const char* id;
+	Environment *last_envir;
+};
 
 class AndExpression: public Expression {
 public:
@@ -594,6 +590,13 @@ public:
 	FuzuliVariable eval(Environment *env);
 };
 
+class DumpExpression: public Expression {
+public:
+	DumpExpression(vector<Expression*> *expr);
+	virtual ~DumpExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
 /*
 
 class BlockExpression: public Expression {
@@ -617,12 +620,7 @@ public:
 	FuzuliVariable eval(Environment *env);
 };
 
-class DumpExpression: public Expression {
-public:
-	DumpExpression(vector<Expression*> *expr);
-	virtual ~DumpExpression();
-	FuzuliVariable eval(Environment *env);
-};
+
 
 class DynLoadExpression: public Expression {
 public:
@@ -735,15 +733,6 @@ public:
 	vector<string*> paramNames;
 };
 
-class IdentifierExpression: public Expression {
-public:
-	IdentifierExpression(Token *tok);
-	virtual ~IdentifierExpression();
-	FuzuliVariable eval(Environment *env);
-	Token *stringToken;
-	const char* id;
-	Environment *last_envir;
-};
 
 class IfExpression: public Expression {
 public:
