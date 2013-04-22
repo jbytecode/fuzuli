@@ -79,15 +79,12 @@ void Environment::registerGlobals() {
 
 
 void Environment::setVariableInThisScope(const char*name, FuzuliVariable value) {
-	FuzuliVariable f = this->getVariable(name);
-	if (f.type == NULLTOKEN){
+
 		char *c = (char*)malloc(strlen(name));
 		strcpy (c, name);
-		value.name = c;
+		value.name = (const char*)c;
 		this->variables.push_back(value);
-	}else {
-		f = value;
-	}
+
 }
 
 FuzuliVariable Environment::getVariableInThisScope(const char *name) {
@@ -110,7 +107,7 @@ void  Environment::setVariable(const char *name, FuzuliVariable value) {
 	if (f.type ==  NULLTOKEN) {
 		char *c = (char*) malloc(strlen(name));
 		strcpy(c, name);
-		value.name = c;
+		value.name = (const char*)c;
 		this->variables.push_back(value);
 	}else{
 		updateVariable(name, value);
@@ -121,7 +118,8 @@ void Environment::updateVariable(const char *name, FuzuliVariable value){
 	for (int i=this->variables.size()-1; i>=0; i--){
 				FuzuliVariable f = this->variables.at(i);
 				if (strcmp(f.name, name) == 0 ){
-					this->variables.at(i) = value;
+					this->variables[i] = value;
+					return;
 				}
 			}
 

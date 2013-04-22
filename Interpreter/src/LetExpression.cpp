@@ -20,6 +20,7 @@
 #include <vector>
 #include <sstream>
 #include <stdlib.h>
+#include <string.h>
 
 namespace fuzuli {
 
@@ -44,7 +45,7 @@ FuzuliVariable LetExpression::eval(Environment *env) {
 }
 
 
-/*
+
 DefExpression::DefExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = DEF_EXPRESSION;
@@ -54,21 +55,26 @@ DefExpression::~DefExpression() {
 
 }
 
-Token *DefExpression::eval(Environment *env) {
-	Token *var =
-			dynamic_cast<IdentifierExpression*>(this->expressions->at(0))->stringToken;
-	Token *typeint = this->expressions->at(1)->eval(env);
-	Token *allready = env->getVariableInThisScope(var->getContent());
+FuzuliVariable DefExpression::eval(Environment *env) {
+	const char* var =
+			dynamic_cast<IdentifierExpression*>(this->expressions->at(0))->id;
+	FuzuliVariable typeint = this->expressions->at(1)->eval(env);
+	FuzuliVariable allready = env->getVariableInThisScope(var);
 
-	if (allready) {
-		cout << var->getContent() << " is already defined" << endl;
+	if (allready.type != NULLTOKEN) {
+		cout << var << " is already defined" << endl;
 		exit(-1);
 	}
-	env->setVariableInThisScope(var->getContent(), typeint);
-	return (Token::NULL_TOKEN);
+	FuzuliVariable f; f.type = INTEGER; f.i = 0;
+	char *c = (char*) malloc (sizeof(char) * strlen(var));
+	strcpy (c, var);
+	f.name = (const char*)c;
+	cout << "DEF: "<< f.name << endl;
+	env->setVariableInThisScope(c, f);
+	return (f);
 }
 
-
+/*
 CloneExpression::CloneExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = CLONE_EXPRESSION;

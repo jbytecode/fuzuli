@@ -143,7 +143,9 @@ int main(int argc, char** argv) {
 
 	AstBuilder *b = new AstBuilder(s);
 	Environment *globalEnvironment = new Environment();
+
 	globalEnvironment->setArgcArgv(argc, argv);
+	globalEnvironment->registerGlobals();
 	Expression *ex;
 
 	while (1) {
