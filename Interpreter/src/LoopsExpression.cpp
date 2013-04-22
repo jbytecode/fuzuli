@@ -37,7 +37,6 @@ ForExpression::~ForExpression() {
 
 FuzuliVariable ForExpression::eval(Environment *env) {
 	env->createLocal();
-	env->dump();
 	this->expressions->at(0)->eval(env);
 	FuzuliVariable condition;
 	FuzuliVariable result;
@@ -52,18 +51,15 @@ FuzuliVariable ForExpression::eval(Environment *env) {
 			result = this->expressions->at(i)->eval(env);
 			if (result.breakFlag) {
 				result.breakFlag = false;
+				env->deleteLocal();
 				return (result);
 				break;
 			}
 			i++;
 		}
 		this->expressions->at(2)->eval(env);
-		cout << "One loop:" << endl;
-		env->dump();
-		getchar();
 	}
 	env->deleteLocal();
-	env->dump();
 	FuzuliVariable f; f.type = NULLTOKEN;
 	return (f);
 }

@@ -46,7 +46,7 @@ struct FuzuliVariable {
 	};
 	int type;
 	const char *name;
-	bool breakFlag;
+	bool breakFlag = false;
 };
 
 enum TokenType {
@@ -616,6 +616,20 @@ public:
 	FuzuliVariable eval(Environment *env);
 };
 
+class IfExpression: public Expression {
+public:
+	IfExpression(vector<Expression*> *expr);
+	virtual ~IfExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+class DefExpression: public Expression {
+public:
+	DefExpression(vector<Expression*> *expr);
+	~DefExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
 
 /*
 
@@ -747,21 +761,6 @@ public:
 };
 
 
-class IfExpression: public Expression {
-public:
-	IfExpression(vector<Expression*> *expr);
-	virtual ~IfExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
-
-
-class DefExpression: public Expression {
-public:
-	DefExpression(vector<Expression*> *expr);
-	~DefExpression();
-	FuzuliVariable eval(Environment *env);
-};
 
 class TypeofExpression: public Expression {
 public:

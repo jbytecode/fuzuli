@@ -19,16 +19,17 @@
 (let passed "PASSED!\n")
 (let error "ERROR\n")
 
-(def i INTEGER)(def a INTEGER)(def toplam INTEGER)
+(def i INTEGER)
+(def a INTEGER)
+(def toplam INTEGER)
 (def h INTEGER)(def j INTEGER)
 
+# TEST 1
 (let a 100)
-
-# One For. 
+(dump)
 (for (let i  0) (< i 10) (inc i)
 		(inc a)
 )
-
 (if (= a 110) 
 	(print passed) 
 	(print error)
@@ -36,7 +37,7 @@
 
 
 
-# Two nested for's
+# TEST 2
 (let toplam 0.0)
 (for (let i 0) (< i 10) (inc i)
         (for (let j 0) (< j 10) (inc j)
@@ -53,7 +54,7 @@
 
 
 
-# Three nested for's
+# TEST 3
 (let toplam 0.0)
 (for (let i 0) (< i 10) (inc i)
         (for (let j 0) (< j 10) (inc j)
@@ -72,7 +73,7 @@
 
 
 
-# for without block expression
+# TEST 4
 (let i 0)
 (for (let a 0) (< a 10) (inc a)
 	(inc i)

@@ -22,7 +22,6 @@
 
 namespace fuzuli {
 
-/*
 
 using namespace std;
 
@@ -35,19 +34,19 @@ IfExpression::~IfExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *IfExpression::eval(Environment *env) {
-	Token *condition;
-	Token *result = Token::NULL_TOKEN;
+FuzuliVariable IfExpression::eval(Environment *env) {
+	FuzuliVariable condition;
+	FuzuliVariable result;
 	// if then form
 	if (this->expressions->size() == 2) {
 		condition = this->expressions->at(0)->eval(env);
-		if (condition->getIntValue() == 1) {
+		if (this->getIntValue(condition) == 1) {
 			result = this->expressions->at(1)->eval(env);
 		}
 		//if then form
 	} else if (this->expressions->size() == 3) {
 		condition = this->expressions->at(0)->eval(env);
-		if (condition->getIntValue() == 1) {
+		if (this->getIntValue(condition) == 1) {
 			result = this->expressions->at(1)->eval(env);
 		} else {
 			result = this->expressions->at(2)->eval(env);
@@ -59,7 +58,7 @@ Token *IfExpression::eval(Environment *env) {
 }
 
 
-
+/*
 SwitchExpression::SwitchExpression(vector<Expression*> *expr){
 	this->expressions = expr;
 	this->type = SWITCH_EXPERSSION;
