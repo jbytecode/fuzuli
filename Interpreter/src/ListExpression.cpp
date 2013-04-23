@@ -23,7 +23,7 @@
 
 namespace fuzuli {
 
-/*
+
 using namespace std;
 
 ListExpression::ListExpression(vector<Expression*> *expr) {
@@ -35,15 +35,16 @@ ListExpression::~ListExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *ListExpression::eval(Environment *env) {
-	Token *result = env->newToken("@FuzuliList", LIST);
+FuzuliVariable ListExpression::eval(Environment *env) {
+	FuzuliVariable result = Expression::createNewList();
+	vector<FuzuliVariable> *v;
 	for (unsigned int i = 0; i < this->expressions->size(); i++) {
-		Token *temp = this->expressions->at(i)->eval(env);
-		temp->IncreaseReferences();
-		if (temp->getType() == BREAKTOKEN) {
+		FuzuliVariable temp = this->expressions->at(i)->eval(env);
+		if (temp.type == BREAKTOKEN) {
 			break;
 		}
-		result->tokens.push_back(temp);
+		v = (vector<FuzuliVariable>*)result.v;
+		v->push_back(temp);
 	}
 	return (result);
 }
@@ -58,10 +59,10 @@ LengthExpression::~LengthExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *LengthExpression::eval(Environment *env) {
-	Token *tok = this->expressions->at(0)->eval(env);
-	Token *result = env->newToken(0.0, INTEGER);
-	result->setIntValue(tok->tokens.size());
+FuzuliVariable LengthExpression::eval(Environment *env) {
+	FuzuliVariable tok = this->expressions->at(0)->eval(env);
+	vector<FuzuliVariable> *v = (vector<FuzuliVariable>*)tok.v;
+	FuzuliVariable result = Expression::createNewInt(v->size());
 	return (result);
 }
 
@@ -75,17 +76,16 @@ NthExpression::~NthExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *NthExpression::eval(Environment *env) {
-	Token *list = this->expressions->at(0)->eval(env);
-	Token *n = this->expressions->at(1)->eval(env);
-	if (((unsigned int) n->getIntValue()) >= list->tokens.size()) {
-		cout << "List index out of bounds of " << n->getContent() << endl;
+FuzuliVariable NthExpression::eval(Environment *env) {
+	FuzuliVariable list = this->expressions->at(0)->eval(env);
+	FuzuliVariable n = this->expressions->at(1)->eval(env);
+	vector <FuzuliVariable> *v = (vector<FuzuliVariable>*) list.v;
+
+	if ((unsigned int)Expression::getIntValue(n) > v->size()) {
+		cout << "List index out of bounds of " << Expression::getIntValue(n) << endl;
 		exit(-3);
 	}
-	Token *result = list->tokens[n->getIntValue()];
-	if (result == NULL) {
-		result = Token::NULL_TOKEN;
-	}
+	FuzuliVariable result = v->at(Expression::getIntValue(n));
 	return (result);
 }
 
@@ -99,15 +99,14 @@ SetExpression::~SetExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *SetExpression::eval(Environment *env) {
-	Token *arr = this->expressions->at(0)->eval(env);
-	Token *n = this->expressions->at(1)->eval(env);
-	Token *newvalue = this->expressions->at(2)->eval(env);
-	int int_n = n->getIntValue();
-	arr->tokens[int_n]->ReduceReferences();
-	arr->tokens[int_n] = newvalue;
-	newvalue->IncreaseReferences();
-	return (arr->tokens[int_n]);
+FuzuliVariable SetExpression::eval(Environment *env) {
+	FuzuliVariable arr = this->expressions->at(0)->eval(env);
+	FuzuliVariable n = this->expressions->at(1)->eval(env);
+	FuzuliVariable newvalue = this->expressions->at(2)->eval(env);
+	int int_n = Expression::getIntValue(n);
+	vector<FuzuliVariable> *r_arr = (vector<FuzuliVariable>*) arr.v;
+	r_arr->at(int_n) = newvalue;
+	return(newvalue);
 }
 
 
@@ -120,24 +119,26 @@ ExplodeExpression::~ExplodeExpression() {
 
 }
 
-Token *ExplodeExpression::eval(Environment *env) {
-	Token *source_str = this->expressions->at(0)->eval(env);
-	Token *delim = this->expressions->at(1)->eval(env);
-	Token *result = env->newToken("@FuzuliList", LIST);
+FuzuliVariable ExplodeExpression::eval(Environment *env) {
+	FuzuliVariable source_str = this->expressions->at(0)->eval(env);
+	FuzuliVariable delim = this->expressions->at(1)->eval(env);
+	FuzuliVariable result = Expression::createNewList();
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) result.v;
 
-	char *temp = (char*) malloc(strlen(source_str->getContent()));
-	strcpy(temp, source_str->getContent());
+	char *temp = (char*) malloc(strlen(source_str.s));
+	strcpy(temp, source_str.s);
 
-	char *p = strtok(temp, delim->getContent());
+	char *p = strtok(temp, delim.s);
 	while (p) {
-		Token *tok = env->newToken(p, STRING);
-		result->tokens.push_back(tok);
-		p = strtok(NULL, delim->getContent());
+		FuzuliVariable tok = Expression::createNewString(p);
+		vect->push_back(tok);
+		p = strtok(NULL, delim.s);
 	}
 
 	free(temp);
 	return (result);
 }
+
 
 ColonExpression::ColonExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
@@ -148,18 +149,21 @@ ColonExpression::~ColonExpression() {
 	cout << "ColonExpression Destructor" << endl;
 }
 
-Token *ColonExpression::eval(Environment *env) {
-	Token *num1 = this->expressions->at(0)->eval(env);
-	Token *num2 = this->expressions->at(1)->eval(env);
-	Token *result = env->newToken("@FuzuliList", LIST);
-	int start = num1->getIntValue();
-	int stop = num2->getIntValue();
+FuzuliVariable ColonExpression::eval(Environment *env) {
+	FuzuliVariable num1 = this->expressions->at(0)->eval(env);
+	FuzuliVariable num2 = this->expressions->at(1)->eval(env);
+	FuzuliVariable result = Expression::createNewList();
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) result.v;
+
+	int start = Expression::getIntValue(num1);
+	int stop =  Expression::getIntValue(num2);
 	for (int i = start; i <= stop; i++) {
-		Token *tok = env->newToken(i, FLOAT);
-		result->tokens.push_back(tok);
+		FuzuliVariable tok = Expression::createNewInt(i);
+		vect->push_back(tok);
 	}
 	return (result);
 }
+
 
 AppendExpression::AppendExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
@@ -170,12 +174,12 @@ AppendExpression::~AppendExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *AppendExpression::eval(Environment *env) {
-	Token *list = this->expressions->at(0)->eval(env);
-	Token *element = this->expressions->at(1)->eval(env);
-	list->tokens.push_back(element);
-	element->IncreaseReferences();
-	return (list);
+FuzuliVariable AppendExpression::eval(Environment *env) {
+	FuzuliVariable list = this->expressions->at(0)->eval(env);
+		FuzuliVariable element = this->expressions->at(1)->eval(env);
+		vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) list.v;
+		vect->push_back(element);
+		return (list);
 }
 
 PrependExpression::PrependExpression(vector<Expression*> *expr) {
@@ -187,14 +191,15 @@ PrependExpression::~PrependExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *PrependExpression::eval(Environment *env) {
-	Token *list = this->expressions->at(0)->eval(env);
-	Token *element = this->expressions->at(1)->eval(env);
-	list->tokens.insert(list->tokens.begin(), element);
-	element->IncreaseReferences();
+FuzuliVariable PrependExpression::eval(Environment *env) {
+	FuzuliVariable list = this->expressions->at(0)->eval(env);
+	FuzuliVariable element = this->expressions->at(1)->eval(env);
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) list.v;
+	vect->insert(vect->begin(), element);
 	return (list);
 }
 
+/*
 RemoveExpression::RemoveExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = REMOVE_EXPRESSION;

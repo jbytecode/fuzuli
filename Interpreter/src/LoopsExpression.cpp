@@ -64,7 +64,7 @@ FuzuliVariable ForExpression::eval(Environment *env) {
 	return (f);
 }
 
-/*
+
 ForEachExpression::ForEachExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = FOREACH_EXPRESSION;
@@ -79,33 +79,31 @@ ForEachExpression::~ForEachExpression() {
 
 }
 
-Token *ForEachExpression::eval(Environment *env) {
-	Environment *foreachenv = env->createNext();
-	Token *result = Token::NULL_TOKEN;
-	Token *iden = ((IdentifierExpression*) this->expressions->at(0))->stringToken;
-	Token *list = this->expressions->at(2)->eval(env);
+FuzuliVariable ForEachExpression::eval(Environment *env) {
+	env->createLocal();
+	FuzuliVariable result = Expression::createNewNull();
+	const char *iden = ((IdentifierExpression*) this->expressions->at(0))->id;
+	FuzuliVariable list = this->expressions->at(2)->eval(env);
 
-	list->IncreaseReferences();
-
-	for (unsigned int i = 0; i < list->tokens.size(); i++) {
-		foreachenv->setVariableInThisScope(iden->getContent(), list->tokens[i]);
+	vector<FuzuliVariable> *listVector = (vector<FuzuliVariable>*)list.v;
+	for (unsigned int i = 0; i < listVector->size(); i++) {
+		env->setVariableInThisScope(iden, listVector->at(i));
 
 		for (unsigned int u = 3; u < this->expressions->size(); u++) {
-			result = this->expressions->at(u)->eval(foreachenv);
-			if (result->breakFlag) {
-				result->breakFlag = 0;
-				list->ReduceReferences();
-				foreachenv->doAutomaticGCwithProtection(result);
+			result = this->expressions->at(u)->eval(env);
+			if (result.breakFlag) {
+				result.breakFlag = false;
+				env->deleteLocal();
 				return (result);
-				break;
 			}
 		}
 	}
-	list->ReduceReferences();
-	foreachenv->doAutomaticGCwithProtection(result);
+	env->deleteLocal();
 	return (result);
 }
 
+
+/*
 DoTimesExpression::DoTimesExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = DOTIMES_EXPRESSION;

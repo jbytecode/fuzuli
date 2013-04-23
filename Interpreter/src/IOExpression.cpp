@@ -42,7 +42,11 @@ void __PrintToken(stringstream *ss, FuzuliVariable &tok) {
 		*ss << "[" << tok.v << "]";
 	} else if (tok.type == LIST) {
 		*ss << "[";
-		*ss << "PRINT for list is not implemented yet";
+		vector<FuzuliVariable> *v = (vector<FuzuliVariable>*)tok.v;
+		for (unsigned int i=0; i< v->size();i++){
+			__PrintToken(ss, v->at(i));
+			*ss << " ";
+		}
 		*ss << "]";
 	}
 }
