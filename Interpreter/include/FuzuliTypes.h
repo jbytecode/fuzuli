@@ -229,6 +229,7 @@ public:
 	static FuzuliVariable createNewString(const char *c);
 	static FuzuliVariable createNewNull();
 	static FuzuliVariable createNewList();
+	static bool equalFuzuliVars(FuzuliVariable &f1, FuzuliVariable &f2);
 	static void setVariableName (const char *name, FuzuliVariable &f);
 
 private:
@@ -703,6 +704,42 @@ public:
 	FuzuliVariable eval(Environment *env);
 };
 
+class RemoveExpression: public Expression {
+public:
+	RemoveExpression(vector<Expression*> *expr);
+	virtual ~RemoveExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+class FindExpression: public Expression {
+public:
+	FindExpression(vector<Expression*> *expr);
+	virtual ~FindExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+class FillExpression: public Expression {
+public:
+	FillExpression(vector<Expression*> *expr);
+	virtual ~FillExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+class FirstExpression: public Expression {
+public:
+	FirstExpression(vector<Expression*> *expr);
+	virtual ~FirstExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+class LastExpression: public Expression {
+public:
+	LastExpression(vector<Expression*> *expr);
+	virtual ~LastExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+
 /*
 
 class BlockExpression: public Expression {
@@ -854,42 +891,6 @@ public:
 
 
 
-
-
-class RemoveExpression: public Expression {
-public:
-	RemoveExpression(vector<Expression*> *expr);
-	virtual ~RemoveExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
-class FindExpression: public Expression {
-public:
-	FindExpression(vector<Expression*> *expr);
-	virtual ~FindExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
-class FillExpression: public Expression {
-public:
-	FillExpression(vector<Expression*> *expr);
-	virtual ~FillExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
-class FirstExpression: public Expression {
-public:
-	FirstExpression(vector<Expression*> *expr);
-	virtual ~FirstExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
-class LastExpression: public Expression {
-public:
-	LastExpression(vector<Expression*> *expr);
-	virtual ~LastExpression();
-	FuzuliVariable eval(Environment *env);
-};
 
 
 

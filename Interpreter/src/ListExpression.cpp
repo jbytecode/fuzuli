@@ -23,7 +23,6 @@
 
 namespace fuzuli {
 
-
 using namespace std;
 
 ListExpression::ListExpression(vector<Expression*> *expr) {
@@ -43,12 +42,11 @@ FuzuliVariable ListExpression::eval(Environment *env) {
 		if (temp.type == BREAKTOKEN) {
 			break;
 		}
-		v = (vector<FuzuliVariable>*)result.v;
+		v = (vector<FuzuliVariable>*) result.v;
 		v->push_back(temp);
 	}
 	return (result);
 }
-
 
 LengthExpression::LengthExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
@@ -61,11 +59,10 @@ LengthExpression::~LengthExpression() {
 
 FuzuliVariable LengthExpression::eval(Environment *env) {
 	FuzuliVariable tok = this->expressions->at(0)->eval(env);
-	vector<FuzuliVariable> *v = (vector<FuzuliVariable>*)tok.v;
+	vector<FuzuliVariable> *v = (vector<FuzuliVariable>*) tok.v;
 	FuzuliVariable result = Expression::createNewInt(v->size());
 	return (result);
 }
-
 
 NthExpression::NthExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
@@ -79,16 +76,16 @@ NthExpression::~NthExpression() {
 FuzuliVariable NthExpression::eval(Environment *env) {
 	FuzuliVariable list = this->expressions->at(0)->eval(env);
 	FuzuliVariable n = this->expressions->at(1)->eval(env);
-	vector <FuzuliVariable> *v = (vector<FuzuliVariable>*) list.v;
+	vector<FuzuliVariable> *v = (vector<FuzuliVariable>*) list.v;
 
-	if ((unsigned int)Expression::getIntValue(n) > v->size()) {
-		cout << "List index out of bounds of " << Expression::getIntValue(n) << endl;
+	if ((unsigned int) Expression::getIntValue(n) > v->size()) {
+		cout << "List index out of bounds of " << Expression::getIntValue(n)
+				<< endl;
 		exit(-3);
 	}
 	FuzuliVariable result = v->at(Expression::getIntValue(n));
 	return (result);
 }
-
 
 SetExpression::SetExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
@@ -106,9 +103,8 @@ FuzuliVariable SetExpression::eval(Environment *env) {
 	int int_n = Expression::getIntValue(n);
 	vector<FuzuliVariable> *r_arr = (vector<FuzuliVariable>*) arr.v;
 	r_arr->at(int_n) = newvalue;
-	return(newvalue);
+	return (newvalue);
 }
-
 
 ExplodeExpression::ExplodeExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
@@ -139,7 +135,6 @@ FuzuliVariable ExplodeExpression::eval(Environment *env) {
 	return (result);
 }
 
-
 ColonExpression::ColonExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = COLON_EXPRESSION;
@@ -156,14 +151,13 @@ FuzuliVariable ColonExpression::eval(Environment *env) {
 	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) result.v;
 
 	int start = Expression::getIntValue(num1);
-	int stop =  Expression::getIntValue(num2);
+	int stop = Expression::getIntValue(num2);
 	for (int i = start; i <= stop; i++) {
 		FuzuliVariable tok = Expression::createNewInt(i);
 		vect->push_back(tok);
 	}
 	return (result);
 }
-
 
 AppendExpression::AppendExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
@@ -176,10 +170,10 @@ AppendExpression::~AppendExpression() {
 
 FuzuliVariable AppendExpression::eval(Environment *env) {
 	FuzuliVariable list = this->expressions->at(0)->eval(env);
-		FuzuliVariable element = this->expressions->at(1)->eval(env);
-		vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) list.v;
-		vect->push_back(element);
-		return (list);
+	FuzuliVariable element = this->expressions->at(1)->eval(env);
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) list.v;
+	vect->push_back(element);
+	return (list);
 }
 
 PrependExpression::PrependExpression(vector<Expression*> *expr) {
@@ -199,7 +193,6 @@ FuzuliVariable PrependExpression::eval(Environment *env) {
 	return (list);
 }
 
-/*
 RemoveExpression::RemoveExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = REMOVE_EXPRESSION;
@@ -209,11 +202,12 @@ RemoveExpression::~RemoveExpression() {
 
 }
 
-Token *RemoveExpression::eval(Environment *env) {
-	Token *arr = this->expressions->at(0)->eval(env);
-	Token *n = this->expressions->at(1)->eval(env);
-	arr->tokens[n->getIntValue()]->ReduceReferences();
-	arr->tokens.erase(arr->tokens.begin() + n->getIntValue());
+FuzuliVariable RemoveExpression::eval(Environment *env) {
+	FuzuliVariable arr = this->expressions->at(0)->eval(env);
+	FuzuliVariable n = this->expressions->at(1)->eval(env);
+	int int_n = Expression::getIntValue(n);
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) arr.v;
+	vect->erase(vect->begin() + int_n);
 	return (arr);
 }
 
@@ -226,15 +220,17 @@ FindExpression::~FindExpression() {
 
 }
 
-Token *FindExpression::eval(Environment *env) {
-	Token *arr = this->expressions->at(0)->eval(env);
-	Token *what = this->expressions->at(1)->eval(env);
-	for (unsigned int i = 0; i < arr->tokens.size(); i++) {
-		if (*arr->tokens[i] == *what) {
-			return (env->newToken(i, INTEGER));
+FuzuliVariable FindExpression::eval(Environment *env) {
+	FuzuliVariable arr = this->expressions->at(0)->eval(env);
+	FuzuliVariable what = this->expressions->at(1)->eval(env);
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) arr.v;
+	for (unsigned int i = 0; i < vect->size(); i++) {
+		FuzuliVariable current = vect->at(i);
+		if (Expression::equalFuzuliVars(current, what)) {
+			return (Expression::createNewInt(i));
 		}
 	}
-	return (Token::NULL_TOKEN);
+	return (Expression::createNewNull());
 }
 
 FillExpression::FillExpression(vector<Expression*> *expr) {
@@ -246,16 +242,16 @@ FillExpression::~FillExpression() {
 
 }
 
-Token* FillExpression::eval(Environment *env) {
-	Token *arr = this->expressions->at(0)->eval(env);
-	Token *val = this->expressions->at(1)->eval(env);
-	if (arr->getType() == LIST) {
-		for (unsigned int i = 0; i < arr->tokens.size(); i++) {
-			arr->tokens[i]->setContent(val->getContent());
+FuzuliVariable FillExpression::eval(Environment *env) {
+	FuzuliVariable arr = this->expressions->at(0)->eval(env);
+	FuzuliVariable val = this->expressions->at(1)->eval(env);
+	if (arr.type == LIST) {
+		vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) arr.v;
+		for (unsigned int i = 0; i < vect->size(); i++) {
+			vect->at(i) = val;
 		}
 	} else {
-		cout << "Non-array object can not be filled at line "
-				<< val->getLineNumber() << endl;
+		cout << "Non-array object can not be filled" << endl;
 	}
 	return (arr);
 }
@@ -269,14 +265,15 @@ FirstExpression::~FirstExpression() {
 
 }
 
-Token *FirstExpression::eval(Environment *env) {
-	Token *arr = this->expressions->at(0)->eval(env);
-	if (arr->getType() == LIST) {
-		return (arr->tokens[0]);
+FuzuliVariable FirstExpression::eval(Environment *env) {
+	FuzuliVariable arr = this->expressions->at(0)->eval(env);
+	if (arr.type == LIST) {
+		vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) arr.v;
+		return (vect->at(0));
 	} else {
 		cout << "Array is not a list in (first) expression" << endl;
 	}
-	return (Token::NULL_TOKEN);
+	return (Expression::createNewNull());
 }
 
 LastExpression::LastExpression(vector<Expression*> *expr) {
@@ -288,16 +285,15 @@ LastExpression::~LastExpression() {
 
 }
 
-Token *LastExpression::eval(Environment *env) {
-	Token *arr = this->expressions->at(0)->eval(env);
-	if (arr->getType() == LIST) {
-		return (arr->tokens[arr->tokens.size() - 1]);
+FuzuliVariable LastExpression::eval(Environment *env) {
+	FuzuliVariable arr = this->expressions->at(0)->eval(env);
+	if (arr.type == LIST) {
+		vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) arr.v;
+		return (vect->at(vect->size()-1));
 	} else {
 		cout << "Array is not a list in (first) expression" << endl;
 	}
-	return (Token::NULL_TOKEN);
+	return (Expression::createNewNull());
 }
 
-
-*/
 } /* namespace fuzuli */
