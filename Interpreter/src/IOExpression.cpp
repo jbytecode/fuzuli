@@ -28,7 +28,7 @@ namespace fuzuli {
 
 using namespace std;
 
-//vector<string> RequireExpression::installedPackages;
+vector<string> RequireExpression::installedPackages;
 
 void __PrintToken(stringstream *ss, FuzuliVariable &tok) {
 	if (tok.type == INTEGER){
@@ -91,7 +91,7 @@ FuzuliVariable PrintlnExpression::eval(Environment *env) {
 	return (fv);
 }
 
-/*
+
 RequireExpression::RequireExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->resultToken = new Token("FuzuliPackage", PACKAGE);
@@ -102,20 +102,20 @@ RequireExpression::~RequireExpression() {
 
 }
 
-Token *RequireExpression::eval(Environment *env) {
-	Token *libName = this->expressions->at(0)->eval(env);
-	string name = string(libName->getContent());
+FuzuliVariable RequireExpression::eval(Environment *env) {
+	FuzuliVariable libName = this->expressions->at(0)->eval(env);
+	string name = string(libName.s);
 	for (unsigned int i = 0; i < RequireExpression::installedPackages.size();
 			i++) {
 		if (RequireExpression::installedPackages[i] == name) {
-			cout << "Fuzuli package " << libName->getContent()
+			cout << "Fuzuli package " << libName.s
 					<< " is already imported" << endl;
-			return (Token::NULL_TOKEN);
+			return (Expression::createNewNull());
 		}
 	}
 	RequireExpression::installedPackages.push_back(name);
 	SourceCode *source = new SourceCode();
-	source->readFromFile(libName->getContent());
+	source->readFromFile(libName.s);
 	AstBuilder *ast = new AstBuilder(source);
 	source->reset();
 	while (1) {
@@ -125,8 +125,8 @@ Token *RequireExpression::eval(Environment *env) {
 		}
 		expr->eval(env);
 	}
-	return (this->resultToken);
+	return (Expression::createNewInt(1));
 }
 
-*/
+
 }

@@ -23,7 +23,20 @@
 
 namespace fuzuli {
 
-/*
+FuzuliFunction::FuzuliFunction() {
+	// TODO Auto-generated constructor stub
+
+}
+
+FuzuliFunction::~FuzuliFunction() {
+	// TODO Auto-generated destructor stub
+}
+
+const char *FuzuliFunction::getStringName() {
+	Token *token = ((IdentifierExpression*) (this->name))->stringToken;
+	return (token->getContent());
+}
+
 FunctionExpression::FunctionExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = FUNCTION_EXPRESSION;
@@ -34,23 +47,23 @@ FunctionExpression::~FunctionExpression() {
 
 }
 
-Token *FunctionExpression::eval(Environment *env) {
+FuzuliVariable FunctionExpression::eval(Environment *env) {
 	FuzuliFunction *func = new FuzuliFunction();
 	ss->str("");ss->clear();
 	*ss << ((IdentifierExpression*) this->expressions->at(0))->stringToken->getContent();
 	*ss << this->expressions->at(1)->expressions->size();
 	const char *css = ss->str().c_str();
-	func->name = new StringExpression(env->newToken(css, STRING));
+	func->name = new StringExpression(new Token(css,STRING));
 
 	func->params = this->expressions->at(1);
 	func->body = this->expressions->at(2);
 	func->environment = env;
 
 	env->setFunction(css, func);
-	Token *willReturn = env->newToken("@FuzuliFunction", FUZULIFUNCTION);
-	willReturn->setKillable(false);
+	FuzuliVariable willReturn; willReturn.type = FUZULIFUNCTION;
 	return (willReturn);
 }
+
 
 FunctionCallExpression::FunctionCallExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
@@ -67,60 +80,24 @@ FunctionCallExpression::~FunctionCallExpression() {
 
 }
 
-Token *FunctionCallExpression::evalForClass(Environment* env) {
+FuzuliVariable FunctionCallExpression::evalForClass(Environment* env) {
 	Environment *object_env;
-	Token *result;
+	FuzuliVariable result;
 	FuzuliFunction *func;
 
 	string fullname = string(fname->getContent());
 	string _object = fullname.substr(0, fullname.find('.', 0));
 	string _fun = fullname.substr(fullname.find('.', 0) + 1,
 			fullname.length() - 1);
-	Token *obj = env->getVariable(_object.c_str());
+	FuzuliVariable obj = env->getVariable(_object.c_str());
 
-	if (_object == "this") {
-		object_env = env;
-	} else {
-		object_env = ((Environment*) (obj->object))->subenvironments[0];
-	}
-	Token *thisToken = env->newToken("@FuzuliObject", FUZULIFUNCTION);
-	thisToken->object = object_env;
-	object_env->setVariable("this", thisToken);
-
-	ss->str(""); ss->clear();
-	*ss << _fun.c_str();
-	*ss << paramscount;
-	//func = object_env->fuzuliFunctions[(str_func_name.str())];
-	func = object_env->getFunction(ss->str().c_str());
-
-	if (func == NULL) {
-		cout << "*** " << ss->str().c_str() << endl;
-		cout << "Fuzuli Function " << _fun.c_str() << "("
-				<< ss->str().c_str() << ")" << " is not defined in "
-				<< _object.c_str() << endl;
-		cout << "Contents of environment:" << endl;
-		//object_env->dump();
-		exit(-1);
-	}
-
-	ParamsExpression *paramsExpr = (ParamsExpression*) func->params;
-	paramsExpr->eval(env);
-	for (unsigned int i = 0; i < paramsExpr->paramNames.size(); i++) {
-		string *param = paramsExpr->paramNames[i];
-		Token *value = this->expressions->at(i + 1)->eval(env);
-		object_env->setVariableForFunctionParams(param->c_str(), value);
-	}
-
-	result = func->body->eval(object_env);
-
-	result->returnFlag = 0;
-
-	object_env->doAutomaticGCwithProtection(result);
+	cout << "FunctionCallExpression::evalForClass is not implemented yet" << endl;
+	exit(-3);
 	return (result);
 }
 
-Token *FunctionCallExpression::eval(Environment *env) {
-	Token *result = NULL;
+FuzuliVariable FunctionCallExpression::eval(Environment *env) {
+	FuzuliVariable result = Expression::createNewNull();
 	FuzuliFunction *func = env->getFunction(this->str_func_name.c_str());
 	if (func == NULL) {
 		if (strchr(fname->getContent(), '.') != 0) {
@@ -131,22 +108,21 @@ Token *FunctionCallExpression::eval(Environment *env) {
 			exit(-1);
 		}
 	}
-	Environment *funcEnvironment = env->createNext();
+	env->createLocal();
 	ParamsExpression *paramsExpr = (ParamsExpression*) func->params;
 	for (unsigned int i = 0; i < paramsExpr->paramNames.size(); i++) {
 		string *param = paramsExpr->paramNames[i];
-		Token *value = this->expressions->at(i + 1)->eval(env);
-		funcEnvironment->setVariableForFunctionParams(param->c_str(), value);
+		FuzuliVariable value = this->expressions->at(i + 1)->eval(env);
+		env->setVariableInThisScope(param->c_str(), value);
 	}
 
-	result = func->body->eval(funcEnvironment);
+	result = func->body->eval(env);
 
-	result->returnFlag = 0;
-
-	funcEnvironment->doAutomaticGCwithProtection(result);
-
+	result.returnFlag = false;
+	env->deleteLocal();
 	return (result);
 }
+
 
 ParamsExpression::ParamsExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
@@ -163,9 +139,10 @@ ParamsExpression::~ParamsExpression() {
 
 }
 
-Token *ParamsExpression::eval(Environment* env) {
-	return (Token::NULL_TOKEN);
+FuzuliVariable ParamsExpression::eval(Environment* env) {
+	return (Expression::createNewNull());
 }
+
 
 // Return Expression for Fuzuli Functions
 ReturnExpression::ReturnExpression(vector<Expression*> *expr) {
@@ -177,25 +154,13 @@ ReturnExpression::~ReturnExpression() {
 
 }
 
-Token *ReturnExpression::eval(Environment *env) {
-	Token *tok = this->expressions->at(0)->eval(env);
-	tok->returnFlag = 1;
+FuzuliVariable ReturnExpression::eval(Environment *env) {
+	FuzuliVariable tok = this->expressions->at(0)->eval(env);
+	tok.returnFlag = true;
 	return (tok);
 }
 
-FuzuliFunction::FuzuliFunction() {
-	// TODO Auto-generated constructor stub
 
-}
 
-FuzuliFunction::~FuzuliFunction() {
-	// TODO Auto-generated destructor stub
-}
 
-const char *FuzuliFunction::getStringName() {
-	Token *token = ((IdentifierExpression*) (this->name))->stringToken;
-	return (token->getContent());
-}
-
-*/
 }

@@ -47,6 +47,7 @@ struct FuzuliVariable {
 	int type;
 	const char *name;
 	bool breakFlag = false;
+	bool returnFlag = false;
 };
 
 enum TokenType {
@@ -343,7 +344,7 @@ public:
 
 	FuzuliFunction *searchFuncBackEnvironments(const char *name);
 	void setFunction(const char *name, FuzuliFunction *value);
-	void setVariableForFunctionParams(const char *name, Token *value);
+	void setVariableForFunctionParams(const char *name, FuzuliVariable value);
 	FuzuliFunction *getFunction(const char *name);
 	void setArgcArgv(int argc, char** argv);
 
@@ -740,19 +741,40 @@ public:
 };
 
 
-/*
-
-class BlockExpression: public Expression {
+class TypeofExpression: public Expression {
 public:
-	BlockExpression(vector<Expression*> *expr);
-	virtual ~BlockExpression();
+	TypeofExpression(vector<Expression*> *expr);
+	~TypeofExpression();
 	FuzuliVariable eval(Environment *env);
 };
 
-class GroupExpression: public Expression {
+class TypeExpression: public Expression {
 public:
-	GroupExpression(vector<Expression*> *expr);
-	virtual ~GroupExpression();
+	TypeExpression(vector<Expression*> *expr);
+	~TypeExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+
+class TimingExpression: public Expression {
+public:
+	TimingExpression(vector<Expression*> *expr);
+	virtual ~TimingExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+class DoTimesExpression: public Expression {
+public:
+	DoTimesExpression(vector<Expression*> *expr);
+	virtual ~DoTimesExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+
+class WhileExpression: public Expression {
+public:
+	WhileExpression(vector<Expression*> *expr);
+	virtual ~WhileExpression();
 	FuzuliVariable eval(Environment *env);
 };
 
@@ -762,6 +784,89 @@ public:
 	virtual ~BreakExpression();
 	FuzuliVariable eval(Environment *env);
 };
+
+class BlockExpression: public Expression {
+public:
+	BlockExpression(vector<Expression*> *expr);
+	virtual ~BlockExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+
+class RequireExpression: public Expression {
+public:
+	static vector<string> installedPackages;
+	RequireExpression(vector<Expression*> *expr);
+	virtual ~RequireExpression();
+	virtual FuzuliVariable eval(Environment *env);
+};
+
+
+class FuzuliFunction {
+public:
+	FuzuliFunction();
+	virtual ~FuzuliFunction();
+	Expression *name;
+	Expression *params;
+	Expression *body;
+	Environment *environment;
+	const char *getStringName();
+};
+
+
+class FunctionExpression: public Expression {
+public:
+	FunctionExpression(vector<Expression*> *expr);
+	virtual ~FunctionExpression();
+	FuzuliVariable eval(Environment *env);
+	FuzuliFunction *fuzulifunction;
+private:
+	stringstream *ss;
+};
+
+
+class FunctionCallExpression: public Expression {
+public:
+	FunctionCallExpression(vector<Expression*> *expr);
+	virtual ~FunctionCallExpression();
+	FuzuliVariable eval(Environment *env);
+	FuzuliVariable evalForClass(Environment *env);
+	string str_func_name;
+	Token *fname;
+	int paramscount;
+private:
+	stringstream *ss;
+};
+
+
+class ReturnExpression: public Expression {
+public:
+	ReturnExpression(vector<Expression*> *expr);
+	virtual ~ReturnExpression();
+	virtual FuzuliVariable eval(Environment *env);
+};
+
+
+class ParamsExpression: public Expression {
+public:
+	ParamsExpression(vector<Expression*> *expr);
+	virtual ~ParamsExpression();
+	FuzuliVariable eval(Environment *env);
+	vector<string*> paramNames;
+};
+
+
+
+/*
+
+
+class GroupExpression: public Expression {
+public:
+	GroupExpression(vector<Expression*> *expr);
+	virtual ~GroupExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
 
 
 
@@ -785,14 +890,6 @@ public:
 
 
 
-
-class DoTimesExpression: public Expression {
-public:
-	DoTimesExpression(vector<Expression*> *expr);
-	virtual ~DoTimesExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
 class SwitchExpression: public Expression {
 public:
 	SwitchExpression(vector<Expression*> *expr);
@@ -807,39 +904,6 @@ public:
 	FuzuliVariable eval(Environment *env);
 };
 
-class FuzuliFunction {
-public:
-	FuzuliFunction();
-	virtual ~FuzuliFunction();
-	Expression *name;
-	Expression *params;
-	Expression *body;
-	Environment *environment;
-	const char *getStringName();
-};
-
-class FunctionExpression: public Expression {
-public:
-	FunctionExpression(vector<Expression*> *expr);
-	virtual ~FunctionExpression();
-	FuzuliVariable eval(Environment *env);
-	FuzuliFunction *fuzulifunction;
-private:
-	stringstream *ss;
-};
-
-class FunctionCallExpression: public Expression {
-public:
-	FunctionCallExpression(vector<Expression*> *expr);
-	virtual ~FunctionCallExpression();
-	FuzuliVariable eval(Environment *env);
-	Token *evalForClass(Environment *env);
-	string str_func_name;
-	Token *fname;
-	int paramscount;
-private:
-	stringstream *ss;
-};
 
 
 class RequestExpression: public Expression {
@@ -853,30 +917,6 @@ class IssetExpression: public Expression {
 public:
 	IssetExpression(vector<Expression*> *expr);
 	virtual ~IssetExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
-class ParamsExpression: public Expression {
-public:
-	ParamsExpression(vector<Expression*> *expr);
-	virtual ~ParamsExpression();
-	FuzuliVariable eval(Environment *env);
-	vector<string*> paramNames;
-};
-
-
-
-class TypeofExpression: public Expression {
-public:
-	TypeofExpression(vector<Expression*> *expr);
-	~TypeofExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
-class TypeExpression: public Expression {
-public:
-	TypeExpression(vector<Expression*> *expr);
-	~TypeExpression();
 	FuzuliVariable eval(Environment *env);
 };
 
@@ -910,29 +950,6 @@ public:
 	virtual FuzuliVariable eval(Environment *env);
 };
 
-class RequireExpression: public Expression {
-public:
-	static vector<string> installedPackages;
-	RequireExpression(vector<Expression*> *expr);
-	virtual ~RequireExpression();
-	virtual FuzuliVariable eval(Environment *env);
-};
-
-class ReturnExpression: public Expression {
-public:
-	ReturnExpression(vector<Expression*> *expr);
-	virtual ~ReturnExpression();
-	virtual FuzuliVariable eval(Environment *env);
-};
-
-
-
-class WhileExpression: public Expression {
-public:
-	WhileExpression(vector<Expression*> *expr);
-	virtual ~WhileExpression();
-	FuzuliVariable eval(Environment *env);
-};
 
 
 class WebExpression: public Expression {
@@ -1027,12 +1044,7 @@ public:
 	FuzuliVariable eval(Environment *env);
 };
 
-class TimingExpression: public Expression {
-public:
-	TimingExpression(vector<Expression*> *expr);
-	virtual ~TimingExpression();
-	FuzuliVariable eval(Environment *env);
-};
+
 
 */
 }

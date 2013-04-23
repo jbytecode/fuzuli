@@ -21,7 +21,7 @@
 
 namespace fuzuli {
 
-/*
+
 using namespace std;
 
 TimingExpression::TimingExpression(vector<Expression*> *expr) {
@@ -33,17 +33,17 @@ TimingExpression::~TimingExpression() {
 
 }
 
-Token *TimingExpression::eval(Environment *env) {
-	Token *result = env->newToken(0.0, FLOAT);
+FuzuliVariable TimingExpression::eval(Environment *env) {
+	FuzuliVariable result = Expression::createNewDouble(0.0);
 	clock_t clock_start = clock();
 	clock_t clock_end;
 	for (unsigned int i = 0; i < this->expressions->size(); i++) {
 		this->expressions->at(i)->eval(env);
 	}
 	clock_end = clock();
-	result->setFloatValue(((double) (clock_end - clock_start)) / 1000.0);
+	result.d = (((double) (clock_end - clock_start)) / 1000.0);
 	return (result);
 }
 
-*/
+
 } /* namespace fuzuli */
