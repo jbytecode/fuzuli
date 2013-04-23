@@ -1,4 +1,4 @@
-(setprecision 10)
+#(setprecision 10)
 (let n  1.0)
 (let pi 0.0)
 (print "Calculating PI. This can take a while...\n")

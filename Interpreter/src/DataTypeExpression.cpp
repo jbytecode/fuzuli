@@ -170,7 +170,7 @@ FuzuliVariable IdentifierExpression::eval(Environment *env){
 }
 
 
-/*
+
 
 TypeofExpression::TypeofExpression(vector<Expression*> *expr){
 	this->expressions = expr;
@@ -181,9 +181,9 @@ TypeofExpression::~TypeofExpression(){
 
 }
 
-Token *TypeofExpression::eval(Environment *env){
-	Token *tok = this->expressions->at(0)->eval(env);
-	Token *result = env->newToken (tok->getType(), INTEGER);
+FuzuliVariable TypeofExpression::eval(Environment *env){
+	FuzuliVariable tok = this->expressions->at(0)->eval(env);
+	FuzuliVariable result = Expression::createNewInt(tok.type);
 	return(result);
 }
 
@@ -197,15 +197,16 @@ TypeExpression::~TypeExpression(){
 
 }
 
-Token *TypeExpression::eval(Environment *env){
-	Token *name = ((IdentifierExpression*)this->expressions->at(0))->stringToken;
-	Token *val = env->getVariable(name->getContent());
-	Token *type = this->expressions->at(1)->eval(env);
-	int index = type->getIntValue();
-	val->setType((enum TokenType)index);
-	return(Token::NULL_TOKEN);
+FuzuliVariable TypeExpression::eval(Environment *env){
+	const char* name = ((IdentifierExpression*)this->expressions->at(0))->id;
+	FuzuliVariable type = this->expressions->at(1)->eval(env);
+	int pos = env->getVariablePosition(name);
+	FuzuliVariable v= env->variables.at(pos);
+	v.type = Expression::getIntValue(type);
+	env->variables.at(pos) = v;
+	return(Expression::createNewNull());
 }
 
-*/
+
 }
 /*namespace fuzuli */

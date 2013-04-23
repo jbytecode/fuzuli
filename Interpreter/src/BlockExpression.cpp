@@ -24,7 +24,6 @@ namespace fuzuli {
 
 using namespace std;
 
-/*
 BlockExpression::BlockExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = BLOCK_EXPRESSION;
@@ -34,53 +33,46 @@ BlockExpression::~BlockExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *BlockExpression::eval(Environment *env) {
-	Token *result = Token::NULL_TOKEN;
-	Environment *blockEnvironment = env->createNext();
-	for (unsigned int i = 0; i < this->expressions->size(); i++) {
-		result = this->expressions->at(i)->eval(blockEnvironment);
-		if (result) {
-			if (result->breakFlag == 1) {
-				blockEnvironment->doAutomaticGCwithProtection(result);
-				return (result);
-			} else if (result->returnFlag == 1) {
-				blockEnvironment->doAutomaticGCwithProtection(result);
-				return (result);
-			}
-		}
-	}
-	blockEnvironment->doAutomaticGCwithProtection(result);
-	return (result);
-}
-
-
-
-
-GroupExpression::GroupExpression(vector<Expression*> *expr) {
-	this->expressions = expr;
-	this->type = GROUP_EXPRESSION;
-}
-
-GroupExpression::~GroupExpression() {
-	// TODO Auto-generated destructor stub
-}
-
-Token *GroupExpression::eval(Environment *env) {
-	Token *result = Token::NULL_TOKEN;
+FuzuliVariable BlockExpression::eval(Environment *env) {
+	FuzuliVariable result = Expression::createNewNull();
+	env->createLocal();
 	for (unsigned int i = 0; i < this->expressions->size(); i++) {
 		result = this->expressions->at(i)->eval(env);
-		if (result) {
-			if (result->breakFlag == 1) {
-				env->doAutomaticGCwithProtection(result);
-				return (result);
-			} else if (result->returnFlag == 1) {
-				env->doAutomaticGCwithProtection(result);
-				return (result);
-			}
+		if (result.breakFlag || result.returnFlag) {
+			env->deleteLocal();
+			return (result);
 		}
 	}
+	env->deleteLocal();
 	return (result);
 }
 
-*/
+/*
+ GroupExpression::GroupExpression(vector<Expression*> *expr) {
+ this->expressions = expr;
+ this->type = GROUP_EXPRESSION;
+ }
+
+ GroupExpression::~GroupExpression() {
+ // TODO Auto-generated destructor stub
+ }
+
+ Token *GroupExpression::eval(Environment *env) {
+ Token *result = Token::NULL_TOKEN;
+ for (unsigned int i = 0; i < this->expressions->size(); i++) {
+ result = this->expressions->at(i)->eval(env);
+ if (result) {
+ if (result->breakFlag == 1) {
+ env->doAutomaticGCwithProtection(result);
+ return (result);
+ } else if (result->returnFlag == 1) {
+ env->doAutomaticGCwithProtection(result);
+ return (result);
+ }
+ }
+ }
+ return (result);
+ }
+
+ */
 } /* namespace fuzuli */

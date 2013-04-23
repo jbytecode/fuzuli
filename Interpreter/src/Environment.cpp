@@ -102,7 +102,7 @@ void Environment::setVariable(const char *name, FuzuliVariable value) {
 		Expression::setVariableName(name, value);
 		this->variables.push_back(value);
 	} else {
-		Expression::setVariableName(name,value);
+		Expression::setVariableName(name, value);
 		this->variables[pos] = value;
 	}
 }
@@ -157,29 +157,24 @@ void Environment::deleteLocal() {
 }
 
 FuzuliFunction *Environment::searchFuncBackEnvironments(const char *name) {
-	cout << "Environment::searchFuncBackEnvironments is not implemented yet"
-			<< endl;
-	return (NULL);
+	return(this->fuzuliFunctions[string(name)]);
 }
 
 void Environment::setFunction(const char *name, FuzuliFunction *value) {
-	/*
-	 FuzuliFunction *existing = searchFuncBackEnvironments(name);
-	 if (!existing) {
-	 this->fuzuliFunctions[string(name)] = value;
-	 } else {
-	 existing->name = value->name;
-	 existing->environment = value->environment;
-	 existing->name = value->name;
-	 existing->params = value->params;
-	 existing->body = value->body;
-	 }
-	 */
+	FuzuliFunction *existing = searchFuncBackEnvironments(name);
+	if (!existing) {
+		this->fuzuliFunctions[string(name)] = value;
+	} else {
+		existing->name = value->name;
+		existing->environment = value->environment;
+		existing->name = value->name;
+		existing->params = value->params;
+		existing->body = value->body;
+	}
 }
 
-void Environment::setVariableForFunctionParams(const char* name, Token *value) {
-	cout << "Environment::setVariableForFunctionParams is not implemented yet"
-			<< endl;
+void Environment::setVariableForFunctionParams(const char* name, FuzuliVariable f){
+
 }
 
 FuzuliFunction *Environment::getFunction(const char *name) {
@@ -197,7 +192,7 @@ void Environment::setArgcArgv(int argc, char **argv) {
 }
 
 void Environment::dump() {
-	for (int i = 0; i < this->variables.size(); i++) {
+	for (unsigned int i = 0; i < this->variables.size(); i++) {
 		FuzuliVariable f = this->variables.at(i);
 		cout << i << ") " << f.name;
 		if (f.type == INTEGER) {

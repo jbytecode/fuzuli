@@ -86,8 +86,10 @@ FuzuliVariable ForEachExpression::eval(Environment *env) {
 	FuzuliVariable list = this->expressions->at(2)->eval(env);
 
 	vector<FuzuliVariable> *listVector = (vector<FuzuliVariable>*)list.v;
+	env->setVariableInThisScope(iden, listVector->at(0));
+
 	for (unsigned int i = 0; i < listVector->size(); i++) {
-		env->setVariableInThisScope(iden, listVector->at(i));
+		env->setVariable(iden, listVector->at(i));
 
 		for (unsigned int u = 3; u < this->expressions->size(); u++) {
 			result = this->expressions->at(u)->eval(env);
@@ -97,13 +99,15 @@ FuzuliVariable ForEachExpression::eval(Environment *env) {
 				return (result);
 			}
 		}
+
 	}
+
 	env->deleteLocal();
 	return (result);
 }
 
 
-/*
+
 DoTimesExpression::DoTimesExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = DOTIMES_EXPRESSION;
@@ -113,37 +117,38 @@ DoTimesExpression::~DoTimesExpression() {
 
 }
 
-Token *DoTimesExpression::eval(Environment *env) {
-	Environment *dotimesEnvironment = env->createNext();
-	Token *condition;
-	Token *result;
-	Token *iden =
-			(dynamic_cast<IdentifierExpression*>(this->expressions->at(0)))->stringToken;
-	Token *max = this->expressions->at(1)->eval(env);
-	condition = dotimesEnvironment->newToken(0.0, INTEGER);
-	dotimesEnvironment->setVariableInThisScope(iden->getContent(), condition);
-	condition->IncreaseReferences();
+FuzuliVariable DoTimesExpression::eval(Environment *env) {
+	env->createLocal();
+	FuzuliVariable condition;
+	FuzuliVariable result;
+	const char  *iden =
+			(dynamic_cast<IdentifierExpression*>(this->expressions->at(0)))->id;
+	FuzuliVariable max = this->expressions->at(1)->eval(env);
+	condition = Expression::createNewInt(0);
+	env->setVariableInThisScope(iden, condition);
+
 	while (1) {
 		for (unsigned int i = 2; i < this->expressions->size(); i++) {
-			result = this->expressions->at(i)->eval(dotimesEnvironment);
-			if (result->breakFlag) {
-				result->breakFlag = 0;
-				dotimesEnvironment->doAutomaticGCwithProtection(result);
+			result = this->expressions->at(i)->eval(env);
+			if (result.breakFlag) {
+				result.breakFlag = false;
+				env->deleteLocal();
 				return (result);
 				break;
 			}
 		}
-		result = dotimesEnvironment->getVariableInThisScope(iden->getContent());
-		result->setIntValue(result->getIntValue() + 1);
-		if (result->getIntValue() >= max->getIntValue()) {
+		result = env->getVariableInThisScope(iden);
+		result.i = ( Expression::getIntValue(result) + 1 ); result.type = INTEGER ;
+		env->setVariable(iden, result);
+		if (Expression::getIntValue(result) >= Expression::getIntValue(max)) {
 			break;
 		}
 	}
-	dotimesEnvironment->doAutomaticGCwithProtection(result);
-	return (result);
 
+	env->deleteLocal();
 	return (result);
 }
+
 
 WhileExpression::WhileExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
@@ -154,30 +159,32 @@ WhileExpression::~WhileExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *WhileExpression::eval(Environment *env) {
-	Environment *whileEnvironment = env->createNext();
-	Token *condition;
-	Token *result = Token::NULL_TOKEN;
+FuzuliVariable WhileExpression::eval(Environment *env) {
+	env->createLocal();
+	FuzuliVariable condition;
+	FuzuliVariable result = Expression::createNewNull();
 	while (1) {
-		condition = this->expressions->at(0)->eval(whileEnvironment);
-		if (condition->getIntValue() == 0) {
+		condition = this->expressions->at(0)->eval(env);
+		if (Expression::getIntValue(condition) == 0) {
 			break;
 		}
 
 		for (unsigned int ui = 1; ui < this->expressions->size(); ui++) {
-			result = this->expressions->at(ui)->eval(whileEnvironment);
-			if (result->breakFlag == 1) {
-				result->breakFlag = 0;
-				whileEnvironment->doAutomaticGCwithProtection(result);
+			result = this->expressions->at(ui)->eval(env);
+			if (result.breakFlag) {
+				result.breakFlag = false;
+				env->deleteLocal();
 				return (result);
 			}
 
 		}
 
 	}
-	whileEnvironment->doAutomaticGCwithProtection(result);
+	env->deleteLocal();
 	return (result);
 }
+
+
 
 BreakExpression::BreakExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
@@ -188,13 +195,14 @@ BreakExpression::~BreakExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *BreakExpression::eval(Environment *env) {
-	Token *result = env->newToken("@BREAK", BREAKTOKEN);
-	result->breakFlag = 1;
+FuzuliVariable BreakExpression::eval(Environment *env) {
+	FuzuliVariable result;
+	result.type = BREAKTOKEN;
+	result.breakFlag = true;
 	return (result);
 }
 
-*/
+
 
 } /* namespace fuzuli */
 

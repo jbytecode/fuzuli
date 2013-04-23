@@ -166,14 +166,14 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			ForExpression *pe = new ForExpression(expr);
 			return (pe);
 		} else if (strcmp(tok->getContent(), "foreach") == 0) {
-			//ForEachExpression *pe = new ForEachExpression(expr);
-			//return (pe);
+			ForEachExpression *pe = new ForEachExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "dotimes") == 0) {
-			//DoTimesExpression *pe = new DoTimesExpression(expr);
-			//return (pe);
+			DoTimesExpression *pe = new DoTimesExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "break") == 0) {
-			//BreakExpression *pe = new BreakExpression(expr);
-			//return (pe);
+			BreakExpression *pe = new BreakExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "switch") == 0) {
 			//SwitchExpression *pe = new SwitchExpression(expr);
 			//return (pe);
@@ -181,8 +181,8 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			//CaseExpression *pe = new CaseExpression(expr);
 			//return (pe);
 		} else if (strcmp(tok->getContent(), "block") == 0) {
-			//BlockExpression *pe = new BlockExpression(expr);
-			//return (pe);
+			BlockExpression *pe = new BlockExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "group") == 0) {
 			//GroupExpression *pe = new GroupExpression(expr);
 			//return (pe);
@@ -202,8 +202,8 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			//CloneExpression *pe = new CloneExpression(expr);
 			//return (pe);
 		} else if (strcmp(tok->getContent(), "while") == 0) {
-			//WhileExpression *pe = new WhileExpression(expr);
-			//return (pe);
+			WhileExpression *pe = new WhileExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "list") == 0) {
 			ListExpression *pe = new ListExpression(expr);
 			return (pe);
@@ -238,14 +238,14 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			LastExpression *pe = new LastExpression(expr);
 			return (pe);
 		} else if (strcmp(tok->getContent(), "params") == 0) {
-			//ParamsExpression *pe = new ParamsExpression(expr);
-			//return (pe);
+			ParamsExpression *pe = new ParamsExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "function") == 0) {
-			//FunctionExpression *pe = new FunctionExpression(expr);
-			//return (pe);
+			FunctionExpression *pe = new FunctionExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "return") == 0) {
-			//ReturnExpression *pe = new ReturnExpression(expr);
-			//return (pe);
+			ReturnExpression *pe = new ReturnExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "dynload") == 0) {
 			//DynLoadExpression *pe = new DynLoadExpression(expr);
 			//return (pe);
@@ -253,14 +253,14 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			//CExpression *pe = new CExpression(expr);
 			//return (pe);
 		} else if (strcmp(tok->getContent(), "typeof") == 0) {
-			//TypeofExpression *pe = new TypeofExpression(expr);
-			//return (pe);
+			TypeofExpression *pe = new TypeofExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "type") == 0) {
-			//TypeExpression *pe = new TypeExpression(expr);
-			//return (pe);
+			TypeExpression *pe = new TypeExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "require") == 0) {
-			//RequireExpression *pe = new RequireExpression(expr);
-			//return (pe);
+			RequireExpression *pe = new RequireExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "eval") == 0) {
 			//EvalExpression *pe = new EvalExpression(expr);
 			//return (pe);
@@ -307,13 +307,13 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			//DeleteExpression *pe = new DeleteExpression(expr);
 			//return (pe);
 		} else if (strcmp(tok->getContent(), "timing") == 0) {
-			//TimingExpression *pe = new TimingExpression(expr);
-			//return (pe);
+			TimingExpression *pe = new TimingExpression(expr);
+			return (pe);
 		}else {
 			/* It may be a FuzuliFunction */
-			//expr->insert(expr->begin(), new IdentifierExpression(tok));
-			//FunctionCallExpression *pe = new FunctionCallExpression(expr);
-			//return (pe);
+			expr->insert(expr->begin(), new IdentifierExpression(tok));
+			FunctionCallExpression *pe = new FunctionCallExpression(expr);
+			return (pe);
 		}
 	}
 	return (NULL);

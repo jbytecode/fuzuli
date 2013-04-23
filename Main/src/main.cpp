@@ -35,30 +35,45 @@ static char **a_argv;
 void doRepl();
 int calculateNumberOfParanthesis(const char *);
 void doSerialize(char *);
+void printFuzuliVariable(FuzuliVariable &f);
 
-
-void doSerialize(char *filename){
-	cout << "Serializer is not implemented yet"<< endl;
+void doSerialize(char *filename) {
+	cout << "Serializer is not implemented yet" << endl;
 	/*
-	Serializer *s = new Serializer();
-	stringstream channel;
-	s->serializeFile(filename, channel);
-	cout << channel.str().c_str()<<endl;
-	*/
+	 Serializer *s = new Serializer();
+	 stringstream channel;
+	 s->serializeFile(filename, channel);
+	 cout << channel.str().c_str()<<endl;
+	 */
 }
 
+void printFuzuliVariable(FuzuliVariable &f) {
+	if (f.type == INTEGER) {
+		cout << f.i << endl;
+	} else if (f.type == FLOAT) {
+		cout << f.d << endl;
+	} else if (f.type == STRING) {
+		cout << f.s << endl;
+	} else if (f.type == LIST) {
+		vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) f.v;
+		for (unsigned int i = 0; i < vect->size(); i++) {
+			printFuzuliVariable(vect->at(i));
+			cout << " ";
+		}
+	}
+}
 
-int calculateNumberOfParanthesis(const char *c){
+int calculateNumberOfParanthesis(const char *c) {
 	int num = 0;
 	int len = strlen(c);
-	for (int i=0;i<len;i++){
-		if(c[i] == '(') {
+	for (int i = 0; i < len; i++) {
+		if (c[i] == '(') {
 			num++;
-		}else if (c[i]==')'){
+		} else if (c[i] == ')') {
 			num--;
 		}
 	}
-	return(num);
+	return (num);
 }
 
 void doRepl() {
@@ -82,7 +97,6 @@ void doRepl() {
 
 		rl_bind_key('\t', rl_complete);
 
-
 		input = readline("F: ");
 
 		if (!input) {
@@ -93,7 +107,7 @@ void doRepl() {
 
 		ss << string(input) << " ";
 
-		if(calculateNumberOfParanthesis(ss.str().c_str())==0){
+		if (calculateNumberOfParanthesis(ss.str().c_str()) == 0) {
 			string code = ss.str() + "\r\n";
 			source->readFromText(&code);
 			source->reset();
@@ -104,13 +118,7 @@ void doRepl() {
 				break;
 			}
 			result = expr->eval(env);
-			if(result.type == INTEGER){
-				cout << result.i << endl;
-			}else if(result.type == FLOAT){
-				cout << result.d << endl;
-			}else if(result.type == STRING){
-				cout << result.s << endl;
-			}
+			printFuzuliVariable(result);
 			free(input);
 			ss.str("");
 		}
@@ -131,7 +139,7 @@ int main(int argc, char** argv) {
 	} else if (argc == 2 && strcmp(argv[1], "--repl") == 0) {
 		doRepl();
 		exit(0);
-	} else if(argc == 3 && strcmp(argv[1], "--serialize") == 0){
+	} else if (argc == 3 && strcmp(argv[1], "--serialize") == 0) {
 		doSerialize(argv[2]);
 		exit(0);
 	}
@@ -150,7 +158,7 @@ int main(int argc, char** argv) {
 
 	while (1) {
 		ex = b->getNextExpression();
-		if (!ex){
+		if (!ex) {
 			break;
 		}
 		ex->eval(globalEnvironment);
