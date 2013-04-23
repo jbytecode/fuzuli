@@ -20,6 +20,8 @@
 #include <vector>
 #include <sstream>
 #include <stdarg.h>
+#include <string.h>
+#include <stdlib.h>
 
 namespace fuzuli {
 
@@ -72,6 +74,40 @@ int Expression::getIntValue(FuzuliVariable &v){
 	}else{
 		return(0);
 	}
+}
+
+FuzuliVariable Expression::createNewInt(int value){
+	FuzuliVariable f;
+	f.type = INTEGER;
+	f.i = value;
+	return(f);
+}
+
+FuzuliVariable Expression::createNewDouble(double value){
+	FuzuliVariable f;
+	f.type = FLOAT;
+	f.d = value;
+	return(f);
+}
+
+FuzuliVariable Expression::createNewString(const char *c){
+	FuzuliVariable f;
+	f.type = STRING;
+	char *cnew = (char*) malloc (strlen(c) * sizeof(char));
+	strcpy (cnew, c);
+	f.s = cnew;
+	return(f);
+}
+
+FuzuliVariable Expression::createNewNull(){
+	FuzuliVariable f; f.type = NULLTOKEN;
+	return(f);
+}
+
+void Expression::setVariableName(const char *name, FuzuliVariable &f){
+	char *cnew = (char*) malloc (strlen(name) * sizeof(char));
+	strcpy (cnew, name);
+	f.name = (const char*)cnew;
 }
 
 } /* namespace fuzuli */
