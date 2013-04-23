@@ -223,20 +223,20 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			PrependExpression *pe = new PrependExpression(expr);
 			return (pe);
 		} else if (strcmp(tok->getContent(), "remove") == 0) {
-			//RemoveExpression *pe = new RemoveExpression(expr);
-			//return (pe);
+			RemoveExpression *pe = new RemoveExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "find") == 0) {
-			//FindExpression *pe = new FindExpression(expr);
-			//return (pe);
+			FindExpression *pe = new FindExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "fill") == 0) {
-			//FillExpression *pe = new FillExpression(expr);
-			//return (pe);
+			FillExpression *pe = new FillExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "first") == 0) {
-			//FirstExpression *pe = new FirstExpression(expr);
-			//return (pe);
+			FirstExpression *pe = new FirstExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "last") == 0) {
-			//LastExpression *pe = new LastExpression(expr);
-			//return (pe);
+			LastExpression *pe = new LastExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "params") == 0) {
 			//ParamsExpression *pe = new ParamsExpression(expr);
 			//return (pe);

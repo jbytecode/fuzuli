@@ -117,4 +117,22 @@ void Expression::setVariableName(const char *name, FuzuliVariable &f){
 	f.name = (const char*)cnew;
 }
 
+bool Expression::equalFuzuliVars(FuzuliVariable &f1, FuzuliVariable &f2){
+	if (f1.type == f2.type){
+		if(f1.type == INTEGER){
+			return ( f1.i == f2.i);
+		}else if(f1.type == FLOAT){
+			return ( f1.d == f2.d);
+		}else if(f1.type == STRING){
+			if(strcmp(f1.s, f2.s)==0){
+				return(true);
+			}else{
+				return(false);
+			}
+		}
+	}else{
+		return(Expression::getDoubleValue(f1) == Expression::getDoubleValue(f2));
+	}
+}
+
 } /* namespace fuzuli */
