@@ -104,6 +104,13 @@ FuzuliVariable Expression::createNewNull(){
 	return(f);
 }
 
+FuzuliVariable Expression::createNewList(){
+	FuzuliVariable f; f.type = LIST;
+	vector<FuzuliVariable> *v = new vector<FuzuliVariable>();
+	f.v = v;
+	return(f);
+}
+
 void Expression::setVariableName(const char *name, FuzuliVariable &f){
 	char *cnew = (char*) malloc (strlen(name) * sizeof(char));
 	strcpy (cnew, name);

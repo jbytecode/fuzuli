@@ -120,8 +120,8 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 		ModulaExpression *pe = new ModulaExpression(expr);
 		return (pe);
 	} else if (tok->getType() == COLON) {
-		//ColonExpression *pe = new ColonExpression(expr);
-		//return (pe);
+		ColonExpression *pe = new ColonExpression(expr);
+		return (pe);
 	} else if (tok->getType() == MINUSMINUS) {
 		DecExpression *pe = new DecExpression(expr);
 		return (pe);
@@ -205,23 +205,23 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			//WhileExpression *pe = new WhileExpression(expr);
 			//return (pe);
 		} else if (strcmp(tok->getContent(), "list") == 0) {
-			//ListExpression *pe = new ListExpression(expr);
-			//return (pe);
+			ListExpression *pe = new ListExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "length") == 0) {
-			//LengthExpression *pe = new LengthExpression(expr);
-			//return (pe);
+			LengthExpression *pe = new LengthExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "nth") == 0) {
-			//NthExpression *pe = new NthExpression(expr);
-			//return (pe);
+			NthExpression *pe = new NthExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "set") == 0) {
-			//SetExpression *pe = new SetExpression(expr);
-			//return (pe);
+			SetExpression *pe = new SetExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "append") == 0) {
-			//AppendExpression *pe = new AppendExpression(expr);
-			//return (pe);
+			AppendExpression *pe = new AppendExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "prepend") == 0) {
-			//PrependExpression *pe = new PrependExpression(expr);
-			//return (pe);
+			PrependExpression *pe = new PrependExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "remove") == 0) {
 			//RemoveExpression *pe = new RemoveExpression(expr);
 			//return (pe);
@@ -268,8 +268,8 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			//ExpressionExpression *pe = new ExpressionExpression(expr);
 			//return (pe);
 		} else if (strcmp(tok->getContent(), "explode") == 0) {
-			//ExplodeExpression *pe = new ExplodeExpression(expr);
-			//return (pe);
+			ExplodeExpression *pe = new ExplodeExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "REQUEST") == 0) {
 			//RequestExpression *pe = new RequestExpression(expr);
 			//return (pe);

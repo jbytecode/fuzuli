@@ -228,6 +228,7 @@ public:
 	static FuzuliVariable createNewDouble(double value);
 	static FuzuliVariable createNewString(const char *c);
 	static FuzuliVariable createNewNull();
+	static FuzuliVariable createNewList();
 	static void setVariableName (const char *name, FuzuliVariable &f);
 
 private:
@@ -644,6 +645,64 @@ public:
 	FuzuliVariable eval(Environment *env);
 };
 
+class ListExpression: public Expression {
+public:
+	ListExpression(vector<Expression*> *expr);
+	virtual ~ListExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+class LengthExpression: public Expression {
+public:
+	LengthExpression(vector<Expression*> *expr);
+	virtual ~LengthExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+class NthExpression: public Expression {
+public:
+	NthExpression(vector<Expression*> *expr);
+	virtual ~NthExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+class SetExpression: public Expression {
+public:
+	SetExpression(vector<Expression*> *expr);
+	virtual ~SetExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+
+class ExplodeExpression: public Expression {
+public:
+	ExplodeExpression(vector<Expression*> *expr);
+	virtual ~ExplodeExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+class ColonExpression: public Expression {
+public:
+	ColonExpression(vector<Expression*> *expr);
+	virtual ~ColonExpression();
+	virtual FuzuliVariable eval(Environment *env);
+};
+
+
+class AppendExpression: public Expression {
+public:
+	AppendExpression(vector<Expression*> *expr);
+	virtual ~AppendExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+class PrependExpression: public Expression {
+public:
+	PrependExpression(vector<Expression*> *expr);
+	virtual ~PrependExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
 /*
 
 class BlockExpression: public Expression {
@@ -794,56 +853,8 @@ public:
 };
 
 
-class ListExpression: public Expression {
-public:
-	ListExpression(vector<Expression*> *expr);
-	virtual ~ListExpression();
-	FuzuliVariable eval(Environment *env);
-};
 
 
-
-class LengthExpression: public Expression {
-public:
-	LengthExpression(vector<Expression*> *expr);
-	virtual ~LengthExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
-class NthExpression: public Expression {
-public:
-	NthExpression(vector<Expression*> *expr);
-	virtual ~NthExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
-class SetExpression: public Expression {
-public:
-	SetExpression(vector<Expression*> *expr);
-	virtual ~SetExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
-class ExplodeExpression: public Expression {
-public:
-	ExplodeExpression(vector<Expression*> *expr);
-	virtual ~ExplodeExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
-class AppendExpression: public Expression {
-public:
-	AppendExpression(vector<Expression*> *expr);
-	virtual ~AppendExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
-class PrependExpression: public Expression {
-public:
-	PrependExpression(vector<Expression*> *expr);
-	virtual ~PrependExpression();
-	FuzuliVariable eval(Environment *env);
-};
 
 class RemoveExpression: public Expression {
 public:
@@ -882,12 +893,6 @@ public:
 
 
 
-class ColonExpression: public Expression {
-public:
-	ColonExpression(vector<Expression*> *expr);
-	virtual ~ColonExpression();
-	virtual FuzuliVariable eval(Environment *env);
-};
 
 class RemainderExpression: public Expression {
 public:
