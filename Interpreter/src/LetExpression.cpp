@@ -65,12 +65,8 @@ FuzuliVariable DefExpression::eval(Environment *env) {
 		cout << var << " is already defined" << endl;
 		exit(-1);
 	}
-	FuzuliVariable f; f.type = INTEGER; f.i = 0;
-	char *c = (char*) malloc (sizeof(char) * strlen(var));
-	strcpy (c, var);
-	f.name = (const char*)c;
-	cout << "DEF: "<< f.name << endl;
-	env->setVariableInThisScope(c, f);
+	FuzuliVariable f = Expression::createNewInt(0);
+	env->setVariableInThisScope(var, f);
 	return (f);
 }
 

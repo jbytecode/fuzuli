@@ -222,8 +222,14 @@ public:
 	vector<Expression*> *expressions;
 	Token *resultToken;
 	enum ExpressionType type;
-	double getDoubleValue(FuzuliVariable &v);
-	int getIntValue(FuzuliVariable &v);
+	static double getDoubleValue(FuzuliVariable &v);
+	static int getIntValue(FuzuliVariable &v);
+	static FuzuliVariable createNewInt(int value);
+	static FuzuliVariable createNewDouble(double value);
+	static FuzuliVariable createNewString(const char *c);
+	static FuzuliVariable createNewNull();
+	static void setVariableName (const char *name, FuzuliVariable &f);
+
 private:
 
 };
@@ -328,6 +334,7 @@ public:
 	void setVariable(const char *name, FuzuliVariable value);
 	FuzuliVariable getVariable(const char *name);
 	void updateVariable (const char *name, FuzuliVariable value);
+	int getVariablePosition(const char *name);
 
 	void createLocal();
 	void deleteLocal();
@@ -630,6 +637,12 @@ public:
 	FuzuliVariable eval(Environment *env);
 };
 
+class ForEachExpression: public Expression {
+public:
+	ForEachExpression(vector<Expression*> *expr);
+	virtual ~ForEachExpression();
+	FuzuliVariable eval(Environment *env);
+};
 
 /*
 
@@ -675,12 +688,7 @@ public:
 
 
 
-class ForEachExpression: public Expression {
-public:
-	ForEachExpression(vector<Expression*> *expr);
-	virtual ~ForEachExpression();
-	FuzuliVariable eval(Environment *env);
-};
+
 
 class DoTimesExpression: public Expression {
 public:
