@@ -16,7 +16,6 @@ C++_DEPS :=
 OBJS := 
 C_DEPS := 
 CC_DEPS := 
-LIBRARIES := 
 CPP_DEPS := 
 CXX_DEPS := 
 C_UPPER_DEPS := 

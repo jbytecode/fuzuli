@@ -80,6 +80,8 @@ FuzuliVariable Expression::createNewInt(int value){
 	FuzuliVariable f;
 	f.type = INTEGER;
 	f.i = value;
+	f.returnFlag = false;
+	f.breakFlag = false;
 	return(f);
 }
 
@@ -87,6 +89,8 @@ FuzuliVariable Expression::createNewDouble(double value){
 	FuzuliVariable f;
 	f.type = FLOAT;
 	f.d = value;
+	f.returnFlag = false;
+	f.breakFlag = false;
 	return(f);
 }
 
@@ -96,11 +100,15 @@ FuzuliVariable Expression::createNewString(const char *c){
 	char *cnew = (char*) malloc (strlen(c) * sizeof(char));
 	strcpy (cnew, c);
 	f.s = cnew;
+	f.returnFlag = false;
+	f.breakFlag = false;
 	return(f);
 }
 
 FuzuliVariable Expression::createNewNull(){
 	FuzuliVariable f; f.type = NULLTOKEN;
+	f.returnFlag = false;
+	f.breakFlag = false;
 	return(f);
 }
 
@@ -108,6 +116,8 @@ FuzuliVariable Expression::createNewList(){
 	FuzuliVariable f; f.type = LIST;
 	vector<FuzuliVariable> *v = new vector<FuzuliVariable>();
 	f.v = v;
+	f.returnFlag = false;
+	f.breakFlag = false;
 	return(f);
 }
 

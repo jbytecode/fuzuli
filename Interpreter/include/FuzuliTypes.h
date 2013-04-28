@@ -46,8 +46,8 @@ struct FuzuliVariable {
 	};
 	int type;
 	const char *name;
-	bool breakFlag = false;
-	bool returnFlag = false;
+	bool breakFlag;
+	bool returnFlag;
 };
 
 enum TokenType {
@@ -348,8 +348,6 @@ public:
 	FuzuliFunction *getFunction(const char *name);
 	void setArgcArgv(int argc, char** argv);
 
-	FuzuliVariable newFuzuliVariableD(double d);
-	FuzuliVariable newFuzuliVariableI(int d);
 private:
 };
 

@@ -38,8 +38,8 @@ ForExpression::~ForExpression() {
 FuzuliVariable ForExpression::eval(Environment *env) {
 	env->createLocal();
 	this->expressions->at(0)->eval(env);
-	FuzuliVariable condition;
-	FuzuliVariable result;
+	FuzuliVariable condition = Expression::createNewInt(0);
+	FuzuliVariable result = Expression::createNewInt(0);
 	unsigned int i=3;
 	while (1) {
 		condition = this->expressions->at(1)->eval(env);
@@ -119,8 +119,8 @@ DoTimesExpression::~DoTimesExpression() {
 
 FuzuliVariable DoTimesExpression::eval(Environment *env) {
 	env->createLocal();
-	FuzuliVariable condition;
-	FuzuliVariable result;
+	FuzuliVariable condition = Expression::createNewInt(0);
+	FuzuliVariable result = Expression::createNewInt(0);
 	const char  *iden =
 			(dynamic_cast<IdentifierExpression*>(this->expressions->at(0)))->id;
 	FuzuliVariable max = this->expressions->at(1)->eval(env);
@@ -161,7 +161,7 @@ WhileExpression::~WhileExpression() {
 
 FuzuliVariable WhileExpression::eval(Environment *env) {
 	env->createLocal();
-	FuzuliVariable condition;
+	FuzuliVariable condition = Expression::createNewInt(0);
 	FuzuliVariable result = Expression::createNewNull();
 	while (1) {
 		condition = this->expressions->at(0)->eval(env);
@@ -196,9 +196,10 @@ BreakExpression::~BreakExpression() {
 }
 
 FuzuliVariable BreakExpression::eval(Environment *env) {
-	FuzuliVariable result;
+	FuzuliVariable result = Expression::createNewNull();
 	result.type = BREAKTOKEN;
 	result.breakFlag = true;
+	result.returnFlag = false;
 	return (result);
 }
 
