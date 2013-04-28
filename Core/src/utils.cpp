@@ -25,11 +25,14 @@
 using namespace std;
 using namespace fuzuli;
 
+/*
 extern "C" {
 Token *shuffle(Token *p, Environment *env);
 Token *sortd(Token *p, Environment *env);
 Token *sorta(Token *p, Environment *env);
 }
+
+
 
 bool TokenSorter_a(Token *i, Token *j) {
 	return (i->getFloatValue() < j->getFloatValue());
@@ -64,3 +67,4 @@ Token *shuffle(Token *p, Environment *env) {
 	return (Token::NULL_TOKEN);
 }
 
+*/

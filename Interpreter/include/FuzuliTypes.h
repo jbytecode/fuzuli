@@ -854,20 +854,6 @@ public:
 };
 
 
-
-/*
-
-
-class GroupExpression: public Expression {
-public:
-	GroupExpression(vector<Expression*> *expr);
-	virtual ~GroupExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
-
-
-
 class DynLoadExpression: public Expression {
 public:
 	DynLoadExpression(vector<Expression*> *expr);
@@ -884,6 +870,23 @@ public:
 	virtual ~CExpression();
 	FuzuliVariable eval(Environment *env);
 };
+
+
+
+/*
+
+
+class GroupExpression: public Expression {
+public:
+	GroupExpression(vector<Expression*> *expr);
+	virtual ~GroupExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+
+
+
+
 
 
 
