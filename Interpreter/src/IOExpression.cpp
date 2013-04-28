@@ -110,12 +110,12 @@ FuzuliVariable RequireExpression::eval(Environment *env) {
 		if (RequireExpression::installedPackages[i] == name) {
 			cout << "Fuzuli package " << libName.s
 					<< " is already imported" << endl;
-			return (Expression::createNewNull());
+			return (Expression::createNewString(name.c_str()));
 		}
 	}
 	RequireExpression::installedPackages.push_back(name);
 	SourceCode *source = new SourceCode();
-	source->readFromFile(name.c_str());
+	source->readFromFile(libName.s);
 	AstBuilder *ast = new AstBuilder(source);
 	source->reset();
 	while (1) {

@@ -238,9 +238,6 @@ FuzuliVariable levenshtein(FuzuliVariable params, Environment *env) {
 OneParameters
 FuzuliVariable urldecode(FuzuliVariable params, Environment *env) {
 	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
-	cout <<"Urldecode called with "<< vect->size() << " params " << endl;
-	cout << "First type is " << vect->at(0).type << endl;
-	cout << "str value is " << vect->at(0).s << endl;
 	const char *source = vect->at(0).s;
 	int len = strlen(vect->at(0).s);
 	stringstream ss;
@@ -259,8 +256,6 @@ FuzuliVariable urldecode(FuzuliVariable params, Environment *env) {
 			ss << c;
 		}
 	}
-	ss << '\0';
-	cout << "Returning: " << ss.str().c_str() << endl;
 	return Expression::createNewString(ss.str().c_str());
 }
 

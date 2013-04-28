@@ -25,46 +25,49 @@
 using namespace std;
 using namespace fuzuli;
 
-/*
 extern "C" {
-Token *shuffle(Token *p, Environment *env);
-Token *sortd(Token *p, Environment *env);
-Token *sorta(Token *p, Environment *env);
+FuzuliVariable shuffle(FuzuliVariable p, Environment *env);
+FuzuliVariable sortd(FuzuliVariable p, Environment *env);
+FuzuliVariable sorta(FuzuliVariable p, Environment *env);
 }
 
-
-
-bool TokenSorter_a(Token *i, Token *j) {
-	return (i->getFloatValue() < j->getFloatValue());
+bool TokenSorter_a(FuzuliVariable i, FuzuliVariable j) {
+	return (Expression::getDoubleValue(i) < Expression::getDoubleValue(j));
 }
 
-bool TokenSorter_d(Token *i, Token *j) {
-	return (i->getFloatValue() > j->getFloatValue());
+bool TokenSorter_d(FuzuliVariable i, FuzuliVariable j) {
+	return (Expression::getDoubleValue(i) > Expression::getDoubleValue(j));
 }
 
-Token *sorta(Token *p, Environment *env) {
-	sort(p->tokens[0]->tokens.begin(), p->tokens[0]->tokens.end(),
-			TokenSorter_a);
-	Token *result = env->newToken("@FUZULILIST", LIST);
-	for (unsigned int i = 0; i < p->tokens[0]->tokens.size(); i++) {
-		result->tokens.push_back(p->tokens[0]->tokens[i]);
+FuzuliVariable sorta(FuzuliVariable p, Environment *env) {
+	vector<FuzuliVariable> *params = (vector<FuzuliVariable>*) p.v;
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params->at(0).v;
+	sort(vect->begin(), vect->end(), TokenSorter_a);
+	FuzuliVariable result = Expression::createNewList();
+	vector<FuzuliVariable> *newvector = new vector<FuzuliVariable> ();
+	for (unsigned int i = 0; i < vect->size(); i++) {
+		newvector->push_back(vect->at(i));
 	}
+	result.v = newvector;
 	return (result);
 }
 
-Token *sortd(Token *p, Environment *env) {
-	sort(p->tokens[0]->tokens.begin(), p->tokens[0]->tokens.end(),
-			TokenSorter_d);
-	Token *result = env->newToken("@FUZULILIST", LIST);
-	for (unsigned int i = 0; i < p->tokens[0]->tokens.size(); i++) {
-		result->tokens.push_back(p->tokens[0]->tokens[i]);
+FuzuliVariable sortd(FuzuliVariable p, Environment *env) {
+	vector<FuzuliVariable> *params = (vector<FuzuliVariable>*) p.v;
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params->at(0).v;
+	sort(vect->begin(), vect->end(), TokenSorter_d);
+	FuzuliVariable result = Expression::createNewList();
+	vector<FuzuliVariable> *newvector = new vector<FuzuliVariable> ();
+	for (unsigned int i = 0; i < vect->size(); i++) {
+		newvector->push_back(vect->at(i));
 	}
+	result.v = newvector;
 	return (result);
 }
 
-Token *shuffle(Token *p, Environment *env) {
-	random_shuffle(p->tokens[0]->tokens.begin(), p->tokens[0]->tokens.end());
-	return (Token::NULL_TOKEN);
+FuzuliVariable shuffle(FuzuliVariable p, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) p.v;
+	random_shuffle(vect->begin(), vect->end());
+	return (Expression::createNewNull());
 }
 
-*/

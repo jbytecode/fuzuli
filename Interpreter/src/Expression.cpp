@@ -97,8 +97,9 @@ FuzuliVariable Expression::createNewDouble(double value){
 FuzuliVariable Expression::createNewString(const char *c){
 	FuzuliVariable f;
 	f.type = STRING;
-	char *cnew = (char*) malloc (strlen(c) * sizeof(char));
+	char *cnew = (char*) malloc (strlen(c) * sizeof(char) + 1);
 	strcpy (cnew, c);
+	cnew[strlen(c)] = '\0';
 	f.s = cnew;
 	f.returnFlag = false;
 	f.breakFlag = false;
