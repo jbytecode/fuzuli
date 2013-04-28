@@ -230,6 +230,7 @@ public:
 	static FuzuliVariable createNewString(const char *c);
 	static FuzuliVariable createNewNull();
 	static FuzuliVariable createNewList();
+	static FuzuliVariable createNewCObject(void *ptr);
 	static bool equalFuzuliVars(FuzuliVariable &f1, FuzuliVariable &f2);
 	static void setVariableName (const char *name, FuzuliVariable &f);
 
@@ -872,7 +873,84 @@ public:
 };
 
 
+class SwitchExpression: public Expression {
+public:
+	SwitchExpression(vector<Expression*> *expr);
+	virtual ~SwitchExpression();
+	FuzuliVariable eval(Environment *env);
+};
 
+class CaseExpression: public Expression {
+public:
+	CaseExpression(vector<Expression*> *expr);
+	virtual ~CaseExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+
+
+
+class EvalExpression: public Expression {
+public:
+	EvalExpression(vector<Expression*> *expr);
+	virtual ~EvalExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+class ExpressionExpression: public Expression {
+public:
+	ExpressionExpression(vector<Expression*> *expr);
+	~ExpressionExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+
+class CloneExpression: public Expression {
+public:
+	CloneExpression(vector<Expression*> *expr);
+	virtual ~CloneExpression();
+	virtual FuzuliVariable eval(Environment *env);
+};
+
+
+class FuzuliClass {
+public:
+	FuzuliClass();
+	virtual ~FuzuliClass();
+	static map<string, FuzuliClass*> all_classes;
+	Expression *body;
+	string extends;
+	string name;
+};
+
+
+class ClassExpression: public Expression {
+public:
+	ClassExpression(vector<Expression*> *expr);
+	virtual ~ClassExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+class NewExpression: public Expression {
+public:
+	NewExpression(vector<Expression*> *expr);
+	virtual ~NewExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+class SetPrecisionExpression: public Expression {
+public:
+	SetPrecisionExpression(vector<Expression*> *expr);
+	virtual ~SetPrecisionExpression();
+	FuzuliVariable eval(Environment *env);
+};
+
+class SetEpsilonExpression: public Expression {
+public:
+	SetEpsilonExpression(vector<Expression*> *expr);
+	virtual ~SetEpsilonExpression();
+	FuzuliVariable eval(Environment *env);
+};
 /*
 
 
@@ -889,21 +967,6 @@ public:
 
 
 
-
-
-class SwitchExpression: public Expression {
-public:
-	SwitchExpression(vector<Expression*> *expr);
-	virtual ~SwitchExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
-class CaseExpression: public Expression {
-public:
-	CaseExpression(vector<Expression*> *expr);
-	virtual ~CaseExpression();
-	FuzuliVariable eval(Environment *env);
-};
 
 
 
@@ -923,15 +986,6 @@ public:
 
 
 
-class EvalExpression: public Expression {
-public:
-	EvalExpression(vector<Expression*> *expr);
-	virtual ~EvalExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
-
-
 
 
 
@@ -944,12 +998,6 @@ public:
 };
 
 
-class CloneExpression: public Expression {
-public:
-	CloneExpression(vector<Expression*> *expr);
-	virtual ~CloneExpression();
-	virtual FuzuliVariable eval(Environment *env);
-};
 
 
 
@@ -961,12 +1009,7 @@ public:
 	const char *html;
 };
 
-class ExpressionExpression: public Expression {
-public:
-	ExpressionExpression(vector<Expression*> *expr);
-	~ExpressionExpression();
-	FuzuliVariable eval(Environment *env);
-};
+
 
 
 
@@ -1000,43 +1043,10 @@ public:
 	FuzuliVariable eval(Environment *env);
 };
 
-class SetPrecisionExpression: public Expression {
-public:
-	SetPrecisionExpression(vector<Expression*> *expr);
-	virtual ~SetPrecisionExpression();
-	FuzuliVariable eval(Environment *env);
-};
 
-class SetEpsilonExpression: public Expression {
-public:
-	SetEpsilonExpression(vector<Expression*> *expr);
-	virtual ~SetEpsilonExpression();
-	FuzuliVariable eval(Environment *env);
-};
 
-class FuzuliClass {
-public:
-	FuzuliClass();
-	virtual ~FuzuliClass();
-	static map<string, FuzuliClass*> all_classes;
-	Expression *body;
-	string extends;
-	string name;
-};
 
-class ClassExpression: public Expression {
-public:
-	ClassExpression(vector<Expression*> *expr);
-	virtual ~ClassExpression();
-	FuzuliVariable eval(Environment *env);
-};
 
-class NewExpression: public Expression {
-public:
-	NewExpression(vector<Expression*> *expr);
-	virtual ~NewExpression();
-	FuzuliVariable eval(Environment *env);
-};
 
 class DeleteExpression: public Expression {
 public:

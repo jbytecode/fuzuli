@@ -22,7 +22,7 @@
 #include <sstream>
 
 namespace fuzuli {
-/**
+
 using namespace std;
 
 EvalExpression::EvalExpression(vector<Expression*> *expr) {
@@ -34,20 +34,20 @@ EvalExpression::~EvalExpression() {
 	// TODO Auto-generated destructor stub
 }
 
-Token *EvalExpression::eval(Environment *env) {
-	Token *content = this->expressions->at(0)->eval(env);
+FuzuliVariable EvalExpression::eval(Environment *env) {
+	FuzuliVariable content = this->expressions->at(0)->eval(env);
 	//
 	// If x in (eval x) is string, x is parsed and being run.
 	// Otherwise, x is a Fuzuli Expression.
 	//
-	if (content->getType() == STRING) {
+	if (content.type == STRING) {
 		SourceCode source;
-		string *s = new string(content->getContent());
+		string *s = new string(content.s);
 		s->append("\n");
 		source.readFromText(s);
 		AstBuilder astBuilder(&source);
 		Expression *expr;
-		Token *res = Token::NULL_TOKEN;
+		FuzuliVariable res = Expression::createNewNull();
 		source.reset();
 
 		while (1) {
@@ -56,25 +56,21 @@ Token *EvalExpression::eval(Environment *env) {
 				break;
 			}
 			res = expr->eval(env);
-			if (res->getType() == BREAKTOKEN) {
+			if (res.type == BREAKTOKEN) {
 				break;
 			}
 		}
-		if (res) {
-			return (res);
-		} else {
-			return (Token::NULL_TOKEN);
-		}
-	} else if (content->getType() == COBJECT) {
+		return(res);
+	} else if (content.type == COBJECT) {
 		 // Content is a Fuzuli Expression.
-		Expression *expr = static_cast<Expression*>(content->object);
-		Token *result = NULL;
+		Expression *expr = static_cast<Expression*>(content.v);
+		FuzuliVariable result = Expression::createNewNull();
 		for (unsigned int i=0;i<expr->expressions->size();i++){
 			result = expr->expressions->at(i)->eval(env);
 		}
 		return(result);
 	}else{
-		return Token::NULL_TOKEN;
+		return Expression::createNewNull();
 	}
 }
 
@@ -87,12 +83,13 @@ ExpressionExpression::~ExpressionExpression() {
 
 }
 
-Token *ExpressionExpression::eval(Environment *env) {
-	Token *result = env->newToken("@FuzuliExpression", COBJECT);
-	result->object = this;
+FuzuliVariable ExpressionExpression::eval(Environment *env) {
+	FuzuliVariable result = Expression::createNewNull();
+	result.v = this;
+	result.type = COBJECT;
 	return (result);
 }
 
-*/
+
 } /* End of namspace Fuzuli */
 

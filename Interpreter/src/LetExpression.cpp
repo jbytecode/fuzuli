@@ -70,7 +70,7 @@ FuzuliVariable DefExpression::eval(Environment *env) {
 	return (f);
 }
 
-/*
+
 CloneExpression::CloneExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = CLONE_EXPRESSION;
@@ -80,10 +80,10 @@ CloneExpression::~CloneExpression() {
 
 }
 
-Token *CloneExpression::eval(Environment *env) {
-	Token *tok = this->expressions->at(0)->eval(env);
-	return (tok->clone());
+FuzuliVariable CloneExpression::eval(Environment *env) {
+	FuzuliVariable tok = this->expressions->at(0)->eval(env);
+	return(tok);
 }
 
-*/
+
 } /* namespace fuzuli */

@@ -49,22 +49,25 @@ FunctionExpression::~FunctionExpression() {
 
 FuzuliVariable FunctionExpression::eval(Environment *env) {
 	FuzuliFunction *func = new FuzuliFunction();
-	ss->str("");ss->clear();
-	*ss << ((IdentifierExpression*) this->expressions->at(0))->stringToken->getContent();
+	ss->str("");
+	ss->clear();
+	*ss
+			<< ((IdentifierExpression*) this->expressions->at(0))->stringToken->getContent();
 	*ss << this->expressions->at(1)->expressions->size();
 	const char *css = ss->str().c_str();
-	func->name = new StringExpression(new Token(css,STRING));
+	func->name = new StringExpression(new Token(css, STRING));
 
 	func->params = this->expressions->at(1);
 	func->body = this->expressions->at(2);
 	func->environment = env;
 
 	env->setFunction(css, func);
-	FuzuliVariable willReturn; willReturn.type = FUZULIFUNCTION;
-	willReturn.breakFlag = false; willReturn.returnFlag = false;
+	FuzuliVariable willReturn;
+	willReturn.type = FUZULIFUNCTION;
+	willReturn.breakFlag = false;
+	willReturn.returnFlag = false;
 	return (willReturn);
 }
-
 
 FunctionCallExpression::FunctionCallExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
@@ -83,7 +86,7 @@ FunctionCallExpression::~FunctionCallExpression() {
 
 FuzuliVariable FunctionCallExpression::evalForClass(Environment* env) {
 	Environment *object_env;
-	FuzuliVariable result;
+	FuzuliVariable result = Expression::createNewNull();
 	FuzuliFunction *func;
 
 	string fullname = string(fname->getContent());
@@ -92,8 +95,43 @@ FuzuliVariable FunctionCallExpression::evalForClass(Environment* env) {
 			fullname.length() - 1);
 	FuzuliVariable obj = env->getVariable(_object.c_str());
 
-	cout << "FunctionCallExpression::evalForClass is not implemented yet" << endl;
-	exit(-3);
+	if (_object == "this") {
+		object_env = env;
+	} else {
+		object_env = ((Environment*) (obj.v));
+	}
+	FuzuliVariable thisToken = Expression::createNewNull();
+	thisToken.v = object_env; thisToken.type = COBJECT;
+	object_env->setVariable("this", thisToken);
+
+	ss->str("");
+	ss->clear();
+	*ss << _fun.c_str();
+	*ss << paramscount;
+	//func = object_env->fuzuliFunctions[(str_func_name.str())];
+	func = object_env->getFunction(ss->str().c_str());
+
+	if (func == NULL) {
+		cout << "*** " << ss->str().c_str() << endl;
+		cout << "Fuzuli Function " << _fun.c_str() << "(" << ss->str().c_str()
+				<< ")" << " is not defined in " << _object.c_str() << endl;
+		cout << "Contents of environment:" << endl;
+		//object_env->dump();
+		exit(-1);
+	}
+
+	env->createLocal();
+	ParamsExpression *paramsExpr = (ParamsExpression*) func->params;
+	paramsExpr->eval(env);
+	for (unsigned int i = 0; i < paramsExpr->paramNames.size(); i++) {
+		string *param = paramsExpr->paramNames[i];
+		FuzuliVariable value = this->expressions->at(i + 1)->eval(env);
+		object_env->setVariableForFunctionParams(param->c_str(), value);
+	}
+
+	result = func->body->eval(object_env);
+	result.returnFlag = false;
+	env->deleteLocal();
 	return (result);
 }
 
@@ -124,14 +162,14 @@ FuzuliVariable FunctionCallExpression::eval(Environment *env) {
 	return (result);
 }
 
-
 ParamsExpression::ParamsExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = PARAMS_EXPRESSION;
 	this->paramNames.clear();
 	Token *temp;
 	for (unsigned int i = 0; i < this->expressions->size(); i++) {
-		temp = ((IdentifierExpression*) (this->expressions->at(i)))->stringToken;
+		temp =
+				((IdentifierExpression*) (this->expressions->at(i)))->stringToken;
 		this->paramNames.push_back(new string(temp->getContent()));
 	}
 }
@@ -143,7 +181,6 @@ ParamsExpression::~ParamsExpression() {
 FuzuliVariable ParamsExpression::eval(Environment* env) {
 	return (Expression::createNewNull());
 }
-
 
 // Return Expression for Fuzuli Functions
 ReturnExpression::ReturnExpression(vector<Expression*> *expr) {
@@ -157,11 +194,9 @@ ReturnExpression::~ReturnExpression() {
 
 FuzuliVariable ReturnExpression::eval(Environment *env) {
 	FuzuliVariable tok = this->expressions->at(0)->eval(env);
-	tok.returnFlag = true; tok.breakFlag = false;
+	tok.returnFlag = true;
+	tok.breakFlag = false;
 	return (tok);
 }
-
-
-
 
 }
