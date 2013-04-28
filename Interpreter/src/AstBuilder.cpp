@@ -175,11 +175,11 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			BreakExpression *pe = new BreakExpression(expr);
 			return (pe);
 		} else if (strcmp(tok->getContent(), "switch") == 0) {
-			//SwitchExpression *pe = new SwitchExpression(expr);
-			//return (pe);
+			SwitchExpression *pe = new SwitchExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "case") == 0) {
-			//CaseExpression *pe = new CaseExpression(expr);
-			//return (pe);
+			CaseExpression *pe = new CaseExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "block") == 0) {
 			BlockExpression *pe = new BlockExpression(expr);
 			return (pe);
@@ -199,8 +199,8 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			DefExpression *pe = new DefExpression(expr);
 			return (pe);
 		} else if (strcmp(tok->getContent(), "clone") == 0) {
-			//CloneExpression *pe = new CloneExpression(expr);
-			//return (pe);
+			CloneExpression *pe = new CloneExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "while") == 0) {
 			WhileExpression *pe = new WhileExpression(expr);
 			return (pe);
@@ -262,11 +262,11 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			RequireExpression *pe = new RequireExpression(expr);
 			return (pe);
 		} else if (strcmp(tok->getContent(), "eval") == 0) {
-			//EvalExpression *pe = new EvalExpression(expr);
-			//return (pe);
+			EvalExpression *pe = new EvalExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "expression") == 0) {
-			//ExpressionExpression *pe = new ExpressionExpression(expr);
-			//return (pe);
+			ExpressionExpression *pe = new ExpressionExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "explode") == 0) {
 			ExplodeExpression *pe = new ExplodeExpression(expr);
 			return (pe);
@@ -292,17 +292,17 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			//GCExpression *pe = new GCExpression(expr);
 			//return (pe);
 		} else if (strcmp(tok->getContent(), "setprecision") == 0) {
-			//SetPrecisionExpression *pe = new SetPrecisionExpression(expr);
-			//return (pe);
+			SetPrecisionExpression *pe = new SetPrecisionExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "setepsilon") == 0) {
-			//SetEpsilonExpression *pe = new SetEpsilonExpression(expr);
-			//return (pe);
+			SetEpsilonExpression *pe = new SetEpsilonExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "class") == 0) {
-			//ClassExpression *pe = new ClassExpression(expr);
-			//return (pe);
+			ClassExpression *pe = new ClassExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "new") == 0) {
-			//NewExpression *pe = new NewExpression(expr);
-			//return (pe);
+			NewExpression *pe = new NewExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "delete") == 0) {
 			//DeleteExpression *pe = new DeleteExpression(expr);
 			//return (pe);

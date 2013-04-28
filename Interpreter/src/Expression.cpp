@@ -122,6 +122,13 @@ FuzuliVariable Expression::createNewList(){
 	return(f);
 }
 
+FuzuliVariable Expression::createNewCObject(void *ptr){
+	FuzuliVariable f; f.type = COBJECT;
+	f.returnFlag = false;
+	f.breakFlag = false;
+	return(f);
+}
+
 void Expression::setVariableName(const char *name, FuzuliVariable &f){
 	char *cnew = (char*) malloc (strlen(name) * sizeof(char));
 	strcpy (cnew, name);

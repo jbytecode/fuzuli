@@ -50,7 +50,11 @@
 		)
 
 		(function setValue (params row col value)
-			(set (nth data row) col value)
+			(block
+				(println "setValue called with " row " and " col  " and " value)
+				(dump)
+				(set (nth data row) col value)
+			)
 		)
 
 		(function transpose (params)
@@ -167,6 +171,12 @@
 			)	
 		)
 
+		(function print (params) 
+			(block
+				(println "Matrix: " n " x " m)
+			)
+		)
+
 	)
 )
 
@@ -174,7 +184,9 @@
 (let error "ERROR\n")
 
 (let a (new Matrix))
+(println "Matrix new")
 (a.create 2 2)
+(println "Constrcuter 2x2")
 (a.setValue 0 0 1)(a.setValue 0 1 2)(a.setValue 1 0 3)(a.setValue 1 1 4)
 
 # TEST 1 - Transpose

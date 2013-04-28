@@ -58,7 +58,7 @@ FuzuliVariable IfExpression::eval(Environment *env) {
 }
 
 
-/*
+
 SwitchExpression::SwitchExpression(vector<Expression*> *expr){
 	this->expressions = expr;
 	this->type = SWITCH_EXPERSSION;
@@ -68,17 +68,18 @@ SwitchExpression::~SwitchExpression(){
 
 }
 
-Token *SwitchExpression::eval(Environment *env){
-	Token *controlVar = this->expressions->at(0)->eval(env);
+FuzuliVariable SwitchExpression::eval(Environment *env){
+	FuzuliVariable controlVar = this->expressions->at(0)->eval(env);
+	FuzuliVariable result = Expression::createNewNull();
 	for (unsigned int i=1; i<this->expressions->size(); i++){
 		CaseExpression *ce = dynamic_cast<CaseExpression*> (this->expressions->at(i));
-		Token *controlCEVar = ce->expressions->at(0)->eval(env);
-		if(*controlVar == *controlCEVar){
-			ce->expressions->at(1)->eval(env);
+		FuzuliVariable controlCEVar = ce->expressions->at(0)->eval(env);
+		if(Expression::equalFuzuliVars(controlVar, controlCEVar)){
+			result = ce->expressions->at(1)->eval(env);
 			break;
 		}
 	}
-	return(Token::NULL_TOKEN);
+	return(result);
 }
 
 CaseExpression::CaseExpression(vector<Expression*> *expr){
@@ -90,10 +91,10 @@ CaseExpression::~CaseExpression(){
 
 }
 
-Token *CaseExpression::eval(Environment *env){
-	this->expressions->at(1)->eval(env);
-	return(Token::NULL_TOKEN);
+FuzuliVariable CaseExpression::eval(Environment *env){
+	FuzuliVariable result = this->expressions->at(1)->eval(env);
+	return(result);
 }
-*/
+
 
 } /* namespace fuzuli */

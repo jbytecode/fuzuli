@@ -24,9 +24,7 @@
 
 namespace fuzuli {
 
-/*
 using namespace std;
-
 
 map<string, FuzuliClass*> FuzuliClass::all_classes;
 
@@ -47,38 +45,37 @@ ClassExpression::~ClassExpression() {
 
 }
 
-Token *ClassExpression::eval(Environment *env) {
-	Token *name =
-			reinterpret_cast<IdentifierExpression*>(this->expressions->at(0))->stringToken;
-	Token *extends_keyword =
-			reinterpret_cast<IdentifierExpression*>(this->expressions->at(1))->stringToken;
-	if (strcmp(extends_keyword->getContent(), "extends") != 0) {
-		cout << "Class declaration must follow an 'extends' keyword at line "
-				<< extends_keyword->getLineNumber() << endl;
-		return (Token::NULL_TOKEN);
+FuzuliVariable ClassExpression::eval(Environment *env) {
+	const char *name =
+			reinterpret_cast<IdentifierExpression*>(this->expressions->at(0))->id;
+	const char *extends_keyword =
+			reinterpret_cast<IdentifierExpression*>(this->expressions->at(1))->id;
+	if (strcmp(extends_keyword, "extends") != 0) {
+		cout << "Class declaration must follow an 'extends' keyword at class "
+				<< name << endl;
+		return (Expression::createNewNull());
 	}
-	Token *extented_class =
-			reinterpret_cast<IdentifierExpression*>(this->expressions->at(2))->stringToken;
+	const char *extented_class =
+			reinterpret_cast<IdentifierExpression*>(this->expressions->at(2))->id;
 
 	FuzuliClass *cls = new FuzuliClass();
-	cls->extends = string(extented_class->getContent());
-	cls->name = string(name->getContent());
+	cls->extends = string(extented_class);
+	cls->name = string(name);
 	cls->body = this->expressions->at(3);
 	FuzuliClass::all_classes[cls->name] = cls;
 
-	if (strcmp(extented_class->getContent(), "Object") != 0) {
-		FuzuliClass *parent =
-				FuzuliClass::all_classes[extented_class->getContent()];
+	if (strcmp(extented_class, "Object") != 0) {
+		FuzuliClass *parent = FuzuliClass::all_classes[extented_class];
 		vector<Expression*> tmp_expr;
 		for (unsigned int i = 0; i < parent->body->expressions->size(); i++) {
 			cls->body->expressions->push_back(parent->body->expressions->at(i));
 		}
 	}
 
-	return (Token::NULL_TOKEN);
+	return (Expression::createNewNull());
 }
 
-NewExpression::NewExpression( vector<Expression*> *expr) {
+NewExpression::NewExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
 	this->type = NEW_EXPRESSION;
 }
@@ -87,42 +84,51 @@ NewExpression::~NewExpression() {
 
 }
 
-Token *NewExpression::eval(Environment *env) {
-	Token *className =
-			reinterpret_cast<IdentifierExpression*>(this->expressions->at(0))->stringToken;
-	FuzuliClass *cls = FuzuliClass::all_classes[className->getContent()];
+FuzuliVariable NewExpression::eval(Environment *env) {
+	const char *className =
+			reinterpret_cast<IdentifierExpression*>(this->expressions->at(0))->id;
+	FuzuliClass *cls = FuzuliClass::all_classes[string(className)];
 	if (cls == NULL) {
-		cout << "Can not create an object from class "
-				<< className->getContent() << endl;
-		return (Token::NULL_TOKEN);
+		cout << "Can not create an object from class " << className << endl;
+		return (Expression::createNewNull());
 	}
-	Environment *cls_env = env->createNext();
+	Environment *cls_env = new Environment(env);
 	cls->body->eval(cls_env);
+
+	//Copying functions
+	std::map<string, FuzuliFunction*>::iterator mip;
+	for (mip = env->fuzuliFunctions.begin(); mip != env->fuzuliFunctions.end(); mip++){
+		cls_env->fuzuliFunctions[mip->first] = mip->second;
+	}
+	//Copying variables
+	for (unsigned int i=0;i<env->variables.size();i++){
+		cls_env->variables.push_back(env->variables.at(i));
+	}
 
 	//Running Constructor
 	vector<Expression*> *fexpr = new vector<Expression*>();
 	stringstream ss;
-	string constructorname = className->getContent();
-	ss << constructorname << this->expressions->size()-1;
+	string constructorname = string(className);
+	ss << constructorname << this->expressions->size() - 1;
 	string constructor_internal_name = ss.str();
 
-	if(cls_env->subenvironments[0]->getFunction(constructor_internal_name.c_str()) != NULL){
-	fexpr->push_back(
-			new IdentifierExpression(
-					new Token(constructorname.c_str(), IDENTIFIER)));
-	for (unsigned int i = 1; i < this->expressions->size(); i++) {
-		fexpr->push_back(this->expressions->at(i));
-	}
-	FunctionCallExpression *fcall = new FunctionCallExpression(fexpr);
-	fcall->eval(cls_env->subenvironments[0]);
+	if (cls_env->getFunction(constructor_internal_name.c_str()) != NULL) {
+		fexpr->push_back(
+				new IdentifierExpression(
+						new Token(constructorname.c_str(), IDENTIFIER)));
+		for (unsigned int i = 1; i < this->expressions->size(); i++) {
+			fexpr->push_back(this->expressions->at(i));
+		}
+		FunctionCallExpression *fcall = new FunctionCallExpression(fexpr);
+		fcall->eval(cls_env);
 	}
 
-	Token *obj = env->newToken("@FuzuliObject", FUZULIFUNCTION);
-	obj->object = (void*) cls_env;
+	FuzuliVariable obj = Expression::createNewNull();
+	obj.v = (void*) cls_env;
+	obj.type = COBJECT;
 	return (obj);
 }
 
-*/
-
-};
+}
+;
 
