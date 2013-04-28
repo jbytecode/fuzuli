@@ -115,7 +115,7 @@ FuzuliVariable RequireExpression::eval(Environment *env) {
 	}
 	RequireExpression::installedPackages.push_back(name);
 	SourceCode *source = new SourceCode();
-	source->readFromFile(libName.s);
+	source->readFromFile(name.c_str());
 	AstBuilder *ast = new AstBuilder(source);
 	source->reset();
 	while (1) {

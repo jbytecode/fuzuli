@@ -31,6 +31,7 @@
 using namespace std;
 using namespace fuzuli;
 
+/*
 void __readToken(FILE *file, Token *tok);
 void __writeToken(FILE *file, Token *tok);
 void __readLine(FILE *file, Token *tok);
@@ -69,6 +70,7 @@ Token *fgetcd(Token *p, Environment *env);
 Token *ftelld(Token *p, Environment *env);
 Token *readlined(Token *p, Environment *env);
 }
+
 
 NoParameters
 Token *readlined(Token *p, Environment *env) {
@@ -429,3 +431,5 @@ OneParameters
 Token *exitd(Token *p, Environment *env) {
 	exit(p->tokens[0]->getIntValue());
 }
+
+*/

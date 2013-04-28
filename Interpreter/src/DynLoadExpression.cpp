@@ -24,7 +24,7 @@
 
 namespace fuzuli {
 
-/*
+
 static vector<DynLoadExpression*> installedLibraries;
 
 DynLoadExpression::DynLoadExpression(vector<Expression*> *expr) {
@@ -37,21 +37,24 @@ DynLoadExpression::~DynLoadExpression() {
 
 }
 
-Token *DynLoadExpression::eval(Environment *env) {
-	Token *dllName = this->expressions->at(0)->eval(env);
+FuzuliVariable DynLoadExpression::eval(Environment *env) {
+	FuzuliVariable dllName = this->expressions->at(0)->eval(env);
 	stringstream ss;
 	for (unsigned int i = 0; i < installedLibraries.size(); i++) {
-		if (strcmp(installedLibraries[i]->libraryName, dllName->getContent())
+		if (strcmp(installedLibraries[i]->libraryName, dllName.s )
 				== 0) {
 			//cout << "this is already loaded. returning old"<<endl;
-			return (installedLibraries[i]->resultToken);
+			FuzuliVariable result = Expression::createNewNull();
+			result.type = DLL;
+			result.v = installedLibraries.at(i);
+			return (result);
 		}
 	}
-	this->libraryName = dllName->getContent();
+	this->libraryName = dllName.s;
 #ifdef __linux
-	ss << "lib" << dllName->getContent() << ".so";
+	ss << "lib" << dllName.s << ".so";
 #else
-	ss<<dllName->getContent()<<".dll";
+	ss<<dllName.s<<".dll";
 #endif
 	libraryHandle = dlopen(ss.str().c_str(), RTLD_LAZY);
 	if (!libraryHandle) {
@@ -59,9 +62,11 @@ Token *DynLoadExpression::eval(Environment *env) {
 		cout << dlerror() << endl;
 		exit(-1);
 	}
-	resultToken->expr = this;
+	FuzuliVariable result = Expression::createNewNull();
+	result.type = DLL;
+	result.v = this;
 	installedLibraries.push_back(this);
-	return (resultToken);
+	return (result);
 }
 
 CExpression::CExpression(vector<Expression*> *expr) {
@@ -74,30 +79,31 @@ CExpression::~CExpression() {
 
 }
 
-Token *CExpression::eval(Environment *env) {
-	typedef Token* (*Function)(Token*, Environment*);
+FuzuliVariable CExpression::eval(Environment *env) {
+	typedef FuzuliVariable (*Function)(FuzuliVariable, Environment*);
 	DynLoadExpression *dynExpr =
-			dynamic_cast<DynLoadExpression*>(this->expressions->at(0)->eval(env)->expr);
-	Token *funcName = this->expressions->at(1)->eval(env);
-	Token *params = env->newToken("@LIST", LIST);
+			(DynLoadExpression*)(this->expressions->at(0)->eval(env).v);
+	FuzuliVariable funcName = this->expressions->at(1)->eval(env);
+	FuzuliVariable params = Expression::createNewList();
+	vector <FuzuliVariable> *vect = new vector<FuzuliVariable>();
+	params.v = vect;
 	for (unsigned int i = 0; i < this->expressions->size() - 2; i++) {
-		Token *p = this->expressions->at(i + 2)->eval(env);
-		params->tokens.push_back(p);
+		FuzuliVariable p = this->expressions->at(i + 2)->eval(env);
+		vect->push_back(p);
 		//cout << "Adding "<<p->getContent()<<" to params"<<endl;
 	}
 	Function function = reinterpret_cast<Function>(dlsym(dynExpr->libraryHandle,
-			funcName->getContent()));
+			funcName.s));
 	if (!function) {
 		cout << "External Function call error:" << endl;
 		cout << dlerror() << endl;
 		exit(-2);
 	}
 
-	Token *result = function(params, env);
-	env->doAutomaticGCwithProtection(result);
+	FuzuliVariable result = function(params, env);
 	return (result);
 }
 
-*/
+
 }
 

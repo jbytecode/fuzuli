@@ -29,36 +29,38 @@
 using namespace std;
 using namespace fuzuli;
 
+
 extern "C" {
-Token *ltrim(Token *p, Environment *env);
-Token *rtrim(Token *p, Environment *env);
-Token *strcatd(Token *p, Environment *env);
-Token *lcase(Token *p, Environment *env);
-Token *ucase(Token *p, Environment *env);
-Token *left(Token *p, Environment *env);
-Token *right(Token *p, Environment *env);
-Token *strlend(Token *p, Environment *env);
-Token *substrd(Token *p, Environment *env);
-Token *strreverse(Token *p, Environment *env);
-Token *instr(Token *p, Environment *env);
-Token *chr(Token *p, Environment *env);
-Token *ord(Token *p, Environment *env);
-Token *md5(Token *p, Environment *env);
-Token *urldecode(Token *p, Environment *env);
-Token *levenshtein(Token *p, Environment *env);
-Token *str_replace(Token *p, Environment *env);
-Token *str_shuffle(Token *p, Environment *env);
-Token *isdigitd(Token *p, Environment *env);
-Token *isalphad(Token *p, Environment *env);
-Token *isalnumd(Token *p, Environment *env);
-Token *islowerd(Token *p, Environment *env);
-Token *isupperd(Token *p, Environment *env);
-Token *iscntrld(Token *p, Environment *env);
-Token *isgraphd(Token *p, Environment *env);
-Token *isprintd(Token *p, Environment *env);
-Token *ispunctd(Token *p, Environment *env);
-Token *isspaced(Token *p, Environment *env);
+FuzuliVariable ltrim(FuzuliVariable params, Environment *env);
+FuzuliVariable rtrim(FuzuliVariable params, Environment *env);
+FuzuliVariable strcatd(FuzuliVariable params, Environment *env);
+FuzuliVariable lcase(FuzuliVariable params, Environment *env);
+FuzuliVariable ucase(FuzuliVariable params, Environment *env);
+FuzuliVariable left(FuzuliVariable params, Environment *env);
+FuzuliVariable right(FuzuliVariable params, Environment *env);
+FuzuliVariable strlend(FuzuliVariable params, Environment *env);
+FuzuliVariable substrd(FuzuliVariable params, Environment *env);
+FuzuliVariable strreverse(FuzuliVariable params, Environment *env);
+FuzuliVariable instr(FuzuliVariable params, Environment *env);
+FuzuliVariable chr(FuzuliVariable params, Environment *env);
+FuzuliVariable ord(FuzuliVariable params, Environment *env);
+FuzuliVariable md5(FuzuliVariable params, Environment *env);
+FuzuliVariable urldecode(FuzuliVariable params, Environment *env);
+FuzuliVariable levenshtein(FuzuliVariable params, Environment *env);
+FuzuliVariable str_replace(FuzuliVariable params, Environment *env);
+FuzuliVariable str_shuffle(FuzuliVariable params, Environment *env);
+FuzuliVariable isdigitd(FuzuliVariable params, Environment *env);
+FuzuliVariable isalphad(FuzuliVariable params, Environment *env);
+FuzuliVariable isalnumd(FuzuliVariable params, Environment *env);
+FuzuliVariable islowerd(FuzuliVariable params, Environment *env);
+FuzuliVariable isupperd(FuzuliVariable params, Environment *env);
+FuzuliVariable iscntrld(FuzuliVariable params, Environment *env);
+FuzuliVariable isgraphd(FuzuliVariable params, Environment *env);
+FuzuliVariable isprintd(FuzuliVariable params, Environment *env);
+FuzuliVariable ispunctd(FuzuliVariable params, Environment *env);
+FuzuliVariable isspaced(FuzuliVariable params, Environment *env);
 }
+
 
 int min3(int p1, int p2, int p3) {
 	int m = (int) (fmin(fmin(p1, p2), p3));
@@ -66,95 +68,109 @@ int min3(int p1, int p2, int p3) {
 }
 
 OneParameters
-Token *isspaced(Token *p, Environment *env) {
-	int int_result = std::isspace((int) p->tokens[0]->getContent()[0]);
+FuzuliVariable isspaced(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	int int_result = std::isspace((int) vect->at(0).s [0]);
 	if (int_result != 0) {
 		int_result = 1;
 	}
-	return(env->newToken(int_result, INTEGER));
+	return Expression::createNewInt(int_result);
 }
 
 OneParameters
-Token *ispunctd(Token *p, Environment *env) {
-	int int_result = std::ispunct((int) p->tokens[0]->getContent()[0]);
-	if (int_result != 0) {
-		int_result = 1;
-	}
-	return ( env->newToken(int_result, INTEGER));
+FuzuliVariable ispunctd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+		int int_result = std::ispunct((int) vect->at(0).s [0]);
+		if (int_result != 0) {
+			int_result = 1;
+		}
+		return Expression::createNewInt(int_result);
 }
 
 OneParameters
-Token *isprintd(Token *p, Environment *env) {
-	int int_result = std::isprint((int) p->tokens[0]->getContent()[0]);
-	if (int_result != 0) {
-		int_result = 1;
-	}
-	return( env->newToken(int_result, INTEGER));
+FuzuliVariable isprintd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+		int int_result = std::isprint((int) vect->at(0).s [0]);
+		if (int_result != 0) {
+			int_result = 1;
+		}
+		return Expression::createNewInt(int_result);
 }
 
 OneParameters
-Token *isgraphd(Token *p, Environment *env) {
-	int int_result = std::isgraph((int) p->tokens[0]->getContent()[0]);
-	if (int_result != 0) {
-		int_result = 1;
-	}
-	return( env->newToken(int_result, INTEGER));
+FuzuliVariable isgraphd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+		int int_result = std::isgraph((int) vect->at(0).s [0]);
+		if (int_result != 0) {
+			int_result = 1;
+		}
+		return Expression::createNewInt(int_result);
 }
 
 OneParameters
-Token *iscntrld(Token *p, Environment *env) {
-	int int_result = std::iscntrl((int) p->tokens[0]->getContent()[0]);
-	if (int_result != 0) {
-		int_result = 1;
-	}
-	return(env->newToken(int_result, INTEGER));
+FuzuliVariable iscntrld(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+		int int_result = std::iscntrl((int) vect->at(0).s [0]);
+		if (int_result != 0) {
+			int_result = 1;
+		}
+		return Expression::createNewInt(int_result);
 }
 
 OneParameters
-Token *islowerd(Token *p, Environment *env) {
-	int int_result = std::islower((int) p->tokens[0]->getContent()[0]);
-	if (int_result != 0) {
-		int_result = 1;
-	}
-	return(env->newToken(int_result, INTEGER));
+FuzuliVariable islowerd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+		int int_result = std::islower((int) vect->at(0).s [0]);
+		if (int_result != 0) {
+			int_result = 1;
+		}
+		return Expression::createNewInt(int_result);
 }
 
 OneParameters
-Token *isupperd(Token *p, Environment *env) {
-	int int_result = std::isupper((int) p->tokens[0]->getContent()[0]);
-	if (int_result != 0) {
-		int_result = 1;
-	}
-	return(env->newToken(int_result, INTEGER));
+FuzuliVariable isupperd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+		int int_result = std::isupper((int) vect->at(0).s [0]);
+		if (int_result != 0) {
+			int_result = 1;
+		}
+		return Expression::createNewInt(int_result);
 }
 
 OneParameters
-Token *isalnumd(Token *p, Environment *env) {
-	int int_result = std::isalnum((int) p->tokens[0]->getContent()[0]);
-	if (int_result != 0) {
-		int_result = 1;
-	}
-	return(env->newToken(int_result, INTEGER));
+FuzuliVariable isalnumd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+		int int_result = std::isalnum((int) vect->at(0).s [0]);
+		if (int_result != 0) {
+			int_result = 1;
+		}
+		return Expression::createNewInt(int_result);
 }
 
 OneParameters
-Token *isalphad(Token *p, Environment *env) {
-	int int_result = std::isalpha((int) p->tokens[0]->getContent()[0]);
-	if (int_result != 0) {
-		int_result = 1;
-	}
-	return(env->newToken(int_result, INTEGER));
+FuzuliVariable isalphad(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+		int int_result = std::isalpha((int) vect->at(0).s [0]);
+		if (int_result != 0) {
+			int_result = 1;
+		}
+		return Expression::createNewInt(int_result);
 }
 
 OneParameters
-Token *isdigitd(Token *p, Environment *env) {
-	int int_result = std::isdigit((int) p->tokens[0]->getContent()[0]);
-	return(env->newToken(int_result, INTEGER));
+FuzuliVariable isdigitd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+		int int_result = std::isdigit((int) vect->at(0).s [0]);
+		if (int_result != 0) {
+			int_result = 1;
+		}
+		return Expression::createNewInt(int_result);
 }
 
 OneParameters
-Token *str_shuffle(Token *p, Environment *env) {
-	string str = string(p->tokens[0]->getContent());
+FuzuliVariable str_shuffle(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	string str = string(vect->at(0).s);
 	for (unsigned int i = 0; i < str.length(); i++) {
 		int index1 = rand() % str.length();
 		int index2 = rand() % str.length();
@@ -162,17 +178,18 @@ Token *str_shuffle(Token *p, Environment *env) {
 		str[index1] = str[index2];
 		str[index2] = c;
 	}
-	return(env->newToken(str.c_str(), STRING));
+	return Expression::createNewString(str.c_str());
 }
 
 ThreeParameters
-Token *str_replace(Token *p, Environment *env) {
-	Token *mainstr = p->tokens[0];
-	Token *find = p->tokens[1];
-	Token *to = p->tokens[2];
-	string s_mainstr = string(mainstr->getContent());
-	string s_find = string(find->getContent());
-	string s_to = string(to->getContent());
+FuzuliVariable str_replace(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	FuzuliVariable mainstr = vect->at(0);
+	FuzuliVariable find = vect->at(1);
+	FuzuliVariable to = vect->at(2);
+	string s_mainstr = string(mainstr.s);
+	string s_find = string(find.s);
+	string s_to = string(to.s);
 	stringstream ss;
 	for (unsigned int i = 0; i < s_mainstr.length(); i++) {
 		string part = s_mainstr.substr(i, s_find.length());
@@ -183,13 +200,14 @@ Token *str_replace(Token *p, Environment *env) {
 			ss << s_mainstr.substr(i, 1);
 		}
 	}
-	return(env->newToken(ss.str().c_str(), STRING));
+	return Expression::createNewString(ss.str().c_str());
 }
 
 TwoParameters
-Token *levenshtein(Token *p, Environment *env) {
-	const char *str1 = p->tokens[0]->getContent();
-	const char *str2 = p->tokens[1]->getContent();
+FuzuliVariable levenshtein(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	const char *str1 = vect->at(0).s;
+	const char *str2 = vect->at(1).s;
 	const int m = strlen(str1);
 	const int n = strlen(str2);
 	int **d = new int*[m];
@@ -214,13 +232,17 @@ Token *levenshtein(Token *p, Environment *env) {
 		}
 	}
 	delete[] d;
-	return (env->newToken(d[m - 1][n - 1], INTEGER));
+	return  Expression::createNewInt(d[m - 1][n - 1]);
 }
 
 OneParameters
-Token *urldecode(Token *p, Environment *env) {
-	const char *source = p->tokens[0]->getContent();
-	int len = strlen(source);
+FuzuliVariable urldecode(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	cout <<"Urldecode called with "<< vect->size() << " params " << endl;
+	cout << "First type is " << vect->at(0).type << endl;
+	cout << "str value is " << vect->at(0).s << endl;
+	const char *source = vect->at(0).s;
+	int len = strlen(vect->at(0).s);
 	stringstream ss;
 	for (int i = 0; i < len; i++) {
 		char c = source[i];
@@ -237,14 +259,17 @@ Token *urldecode(Token *p, Environment *env) {
 			ss << c;
 		}
 	}
-	return(env->newToken(ss.str().c_str(), STRING));
+	ss << '\0';
+	cout << "Returning: " << ss.str().c_str() << endl;
+	return Expression::createNewString(ss.str().c_str());
 }
 
 OneParameters
-Token *md5(Token *p, Environment *env) {
-	const char *source = p->tokens[0]->getContent();
+FuzuliVariable md5(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	const char *source = vect->at(0).s;
 	unsigned char* md5char = MD5((const unsigned char*) source,
-			strlen(p->tokens[0]->getContent()), NULL);
+			strlen(source), NULL);
 	stringstream ss;
 	int len = strlen((const char*) md5char);
 	for (int i = 0; i < len; i++) {
@@ -255,114 +280,124 @@ Token *md5(Token *p, Environment *env) {
 			ss << std::hex << num;
 		}
 	}
-	return(env->newToken(ss.str().c_str(), STRING));
+	return Expression::createNewString(ss.str().c_str());
 }
 
 OneParameters
-Token *ord(Token *p, Environment *env) {
-	char c = p->tokens[0]->getContent()[0];
+FuzuliVariable ord(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	char c = vect->at(0).s[0];
 	stringstream ss;
 	ss << (unsigned int) c;
-	return(env->newToken(ss.str().c_str(), STRING));
+	return Expression::createNewString(ss.str().c_str());
 }
 
 OneParameters
-Token *chr(Token *p, Environment *env) {
-	int value = p->tokens[0]->getIntValue();
+FuzuliVariable chr(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	int value = Expression::getIntValue(vect->at(0));
 	stringstream ss;
 	ss << (char) value;
-	return(env->newToken(ss.str().c_str(), STRING));
+	return Expression::createNewString(ss.str().c_str());
 }
 
 TwoParameters
-Token *instr(Token *p, Environment *env) {
-	string first = string(p->tokens[0]->getContent());
-	string second = string(p->tokens[1]->getContent());
+FuzuliVariable instr(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	string first = string(vect->at(0).s);
+	string second = string(vect->at(1).s);
 	int pos = first.find(second);
-	stringstream ss;
-	ss << pos;
-	return(env->newToken(ss.str().c_str(), INTEGER));
+	return Expression::createNewInt(pos);
 }
 
 OneParameters
-Token *strreverse(Token *p, Environment *env) {
-	string s = string(p->tokens[0]->getContent());
+FuzuliVariable strreverse(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	string s = string(vect->at(0).s);
 	std::reverse(s.begin(), s.end());
-	return(env->newToken(s.c_str(), STRING));
+	return Expression::createNewString(s.c_str());
 }
 
 ThreeParameters
-Token *substrd(Token *p, Environment *env) {
-	Token *param = p->tokens[0];
-	Token *start = p->tokens[1];
-	Token *stop = p->tokens[2];
-	int _start = start->getIntValue();
-	int _stop = stop->getIntValue();
-	string s = string(param->getContent());
-	return( env->newToken (s.substr(_start, (_stop) - (_start)).c_str(), STRING));
+FuzuliVariable substrd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	FuzuliVariable param = vect->at(0);
+	FuzuliVariable start = vect->at(1);
+	FuzuliVariable stop = vect->at(2);
+	int _start = Expression::getIntValue(start);
+	int _stop = Expression::getIntValue(stop);
+	string s = string(param.s);
+	return( Expression::createNewString (s.substr(_start, (_stop) - (_start)).c_str()));
 }
 
 OneParameters
-Token *strlend(Token *p, Environment *env) {
-	return(env->newToken(strlen(p->tokens[0]->getContent()), INTEGER));
+FuzuliVariable strlend(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	return Expression::createNewInt(strlen(vect->at(0).s));
 }
 
 TwoParameters
-Token *right(Token *p, Environment *env) {
-	Token *str = p->tokens[0];
-	Token *n = p->tokens[1];
-	string s = string(str->getContent());
-	string s1 = s.substr(strlen(str->getContent()) - n->getIntValue(),
-			n->getIntValue());
-	return(env->newToken(s1.c_str(), STRING));
+FuzuliVariable right(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	FuzuliVariable str = vect->at(0);
+	FuzuliVariable n = vect->at(1);
+	string s = string(str.s);
+	string s1 = s.substr(strlen(str.s) - Expression::getIntValue(n),
+			Expression::getIntValue(n));
+	return Expression::createNewString(s1.c_str());
 }
 
 TwoParameters
-Token *left(Token *p, Environment *env) {
-	Token *str = p->tokens[0];
-	Token *n = p->tokens[1];
-	return(
-			env->newToken(
-			string(str->getContent()).substr(0, n->getIntValue()).c_str(), STRING)
-			);
+FuzuliVariable left(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	FuzuliVariable str = vect->at(0);
+	FuzuliVariable n = vect->at(1);
+
+    string s = string(str.s).substr(0, Expression::getIntValue(n));
+	FuzuliVariable result = Expression::createNewString(s.c_str());
+	return(result);
 }
 
 OneParameters
-Token *ucase(Token *p, Environment *env) {
-	const char *content = p->tokens[0]->getContent();
+FuzuliVariable ucase(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	const char *content = vect->at(0).s;
 	unsigned int len = strlen(content);
 	char *newcontent = (char*) malloc(len * sizeof(char));
 	for (unsigned int i = 0; i < len; i++) {
 		newcontent[i] = toupper(content[i]);
 	}
 	newcontent[len] = '\0';
-	return (env->newToken((const char*) newcontent,STRING));
+	return Expression::createNewString(newcontent);
 }
 
 OneParameters
-Token *lcase(Token *p, Environment *env) {
-	const char *content = p->tokens[0]->getContent();
+FuzuliVariable lcase(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	const char *content = vect->at(0).s;
 	unsigned int len = strlen(content);
 	char *newcontent = (char*) malloc(len * sizeof(char));
 	for (unsigned int i = 0; i < len; i++) {
 		newcontent[i] = tolower(content[i]);
 	}
 	newcontent[len] = '\0';
-	return(env->newToken((const char*) newcontent, STRING));
+	return Expression::createNewString(newcontent);
 }
 
 OneParameters
-Token *strcatd(Token *p, Environment *env) {
+FuzuliVariable strcatd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
 	stringstream ss;
-	for (unsigned int i = 0; i < p->tokens[0]->tokens.size(); i++) {
-		ss << p->tokens[0]->tokens[i]->getContent();
+	for (unsigned int i = 0; i < vect->size(); i++) {
+		ss << vect->at(i).s;
 	}
-	return (env->newToken(ss.str().c_str(), STRING));
+	return Expression::createNewString(ss.str().c_str());
 }
 
 OneParameters
-Token *ltrim(Token *p, Environment *env) {
-	const char *content = p->tokens[0]->getContent();
+FuzuliVariable ltrim(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	const char *content = vect->at(0).s;
 	char *pointer = (char*) content;
 	unsigned int index = 0;
 	while (isspace(*pointer)) {
@@ -373,12 +408,13 @@ Token *ltrim(Token *p, Environment *env) {
 		index++;
 	}
 	string s = string(content);
-	return(env->newToken(s.substr(index, s.size() - index).c_str(), STRING));
+	return Expression::createNewString(s.substr(index, s.size() - index).c_str());
 }
 
 OneParameters
-Token *rtrim(Token *p, Environment *env) {
-	const char *content = p->tokens[0]->getContent();
+FuzuliVariable rtrim(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	const char *content = vect->at(0).s;
 	char *pointer = (char*) content;
 	pointer += strlen(content) - 1;
 	unsigned int index = strlen(content);
@@ -390,6 +426,6 @@ Token *rtrim(Token *p, Environment *env) {
 		index--;
 	}
 	string s = string(content);
-	return(env->newToken(s.substr(0, index).c_str(), STRING));
+	return Expression::createNewString(s.substr(0, index).c_str());
 }
 

@@ -4,20 +4,17 @@ cd Interpreter/Release
 make
 cd ..
 cd ..
-sleep 1
 
-#cd Core/Release
-#make
-#cd ..
-#cd ..
-#sleep 1
+cd Core/Release
+make
+cd ..
+cd ..
 
 
 cd Main/Release
 make
 cd ..
 cd ..
-sleep 1
 
 #cd Fltk/Release
 #make

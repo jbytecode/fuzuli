@@ -30,126 +30,162 @@ using namespace fuzuli;
 
 extern "C" {
 
-Token *sind(Token *params, Environment *env);
-Token *cosd(Token *params, Environment *env);
-Token *sqrtd(Token *params, Environment *env);
-Token *absd(Token *params, Environment *env);
-Token *logd(Token *params, Environment *env);
-Token *log10d(Token *params, Environment *env);
-Token *log2d(Token *params, Environment *env);
-Token *expd(Token *params, Environment *env);
-Token *pi(Token *params, Environment *env);
-Token *tand(Token *params, Environment *env);
-Token *atand(Token *params, Environment *env);
-Token *atan2d(Token *params, Environment *env);
-Token *acosd(Token *params, Environment *env);
-Token *asind(Token *params, Environment *env);
-Token *coshd(Token *params, Environment *env);
-Token *sinhd(Token *params, Environment *env);
-Token *tanhd(Token *params, Environment *env);
-Token *powd(Token *params, Environment *env);
-Token *isinfd(Token *params, Environment *env);
-Token *ceild(Token *params, Environment *env);
-Token *roundd(Token *params, Environment *env);
-Token *floord(Token *params, Environment *env);
+FuzuliVariable sind(FuzuliVariable params, Environment *env);
+FuzuliVariable cosd(FuzuliVariable params, Environment *env);
+FuzuliVariable sqrtd(FuzuliVariable params, Environment *env);
+FuzuliVariable absd(FuzuliVariable params, Environment *env);
+FuzuliVariable logd(FuzuliVariable params, Environment *env);
+FuzuliVariable log10d(FuzuliVariable params, Environment *env);
+FuzuliVariable log2d(FuzuliVariable params, Environment *env);
+FuzuliVariable expd(FuzuliVariable params, Environment *env);
+FuzuliVariable pi(FuzuliVariable params, Environment *env);
+FuzuliVariable tand(FuzuliVariable params, Environment *env);
+FuzuliVariable atand(FuzuliVariable params, Environment *env);
+FuzuliVariable atan2d(FuzuliVariable params, Environment *env);
+FuzuliVariable acosd(FuzuliVariable params, Environment *env);
+FuzuliVariable asind(FuzuliVariable params, Environment *env);
+FuzuliVariable coshd(FuzuliVariable params, Environment *env);
+FuzuliVariable sinhd(FuzuliVariable params, Environment *env);
+FuzuliVariable tanhd(FuzuliVariable params, Environment *env);
+FuzuliVariable powd(FuzuliVariable params, Environment *env);
+FuzuliVariable isinfd(FuzuliVariable params, Environment *env);
+FuzuliVariable ceild(FuzuliVariable params, Environment *env);
+FuzuliVariable roundd(FuzuliVariable params, Environment *env);
+FuzuliVariable floord(FuzuliVariable params, Environment *env);
 }
 
 OneParameters
-Token *floord(Token *params, Environment *env) {
-	double f_result = floor(params->tokens[0]->getFloatValue());
-	return (env->newToken(f_result, FLOAT));
+FuzuliVariable floord(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = floor(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
 OneParameters
-Token *roundd(Token *params, Environment *env) {
-	double f_result = round(params->tokens[0]->getFloatValue());
-	return (env->newToken(f_result, FLOAT));
+FuzuliVariable roundd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = round(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
 OneParameters
-Token *ceild(Token *params, Environment *env) {
-	double f_result = ceil(params->tokens[0]->getFloatValue());
-	return (env->newToken(f_result, FLOAT));
+FuzuliVariable ceild(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = ceil(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
-Token *powd(Token *params, Environment *env) {
-	double num1 = params->tokens[0]->getFloatValue();
-	double num2 = params->tokens[1]->getFloatValue();
-	return (env->newToken(pow(num1, num2), FLOAT));
+FuzuliVariable pi(FuzuliVariable params, Environment *env) {
+	return Expression::createNewDouble(3.141592653589793);
 }
 
-Token *tanhd(Token *params, Environment *env) {
-	return (env->newToken(tanh(params->tokens[0]->getFloatValue()), FLOAT));
+FuzuliVariable sind(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = sin(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
-Token *sinhd(Token *params, Environment *env) {
-	return (env->newToken(sinh(params->tokens[0]->getFloatValue()), FLOAT));
+FuzuliVariable cosd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = cos(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
-Token *coshd(Token *params, Environment *env) {
-	return (env->newToken(cosh(params->tokens[0]->getFloatValue()), FLOAT));
+FuzuliVariable powd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double num1 = Expression::getDoubleValue(vect->at(0));
+	double num2 = Expression::getDoubleValue(vect->at(1));
+	return Expression::createNewDouble(pow(num1, num2));
 }
 
-Token *asind(Token *params, Environment *env) {
-	return (env->newToken(asin(params->tokens[0]->getFloatValue()), FLOAT));
+FuzuliVariable tanhd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = tanh(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
-Token *acosd(Token *params, Environment *env) {
-	return (env->newToken(acos(params->tokens[0]->getFloatValue()), FLOAT));
+FuzuliVariable sinhd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = sinh(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
-Token *atand(Token *params, Environment *env) {
-	return (env->newToken(atan(params->tokens[0]->getFloatValue()), FLOAT));
+FuzuliVariable coshd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = cosh(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
-Token *atan2d(Token *params, Environment *env) {
-	double val = atan2(params->tokens[0]->getFloatValue(),
-			params->tokens[1]->getFloatValue());
-	return (env->newToken(val, FLOAT));
+FuzuliVariable asind(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = asin(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
-Token *tand(Token *params, Environment *env) {
-	return (env->newToken(tan(params->tokens[0]->getFloatValue()), FLOAT));
+FuzuliVariable acosd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = acos(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
-Token *sind(Token *params, Environment *env) {
-	return (env->newToken(sin(params->tokens[0]->getFloatValue()), FLOAT));
+FuzuliVariable atand(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = atan(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
-Token *cosd(Token *params, Environment *env) {
-	return (env->newToken(cos(params->tokens[0]->getFloatValue()), FLOAT));
+FuzuliVariable atan2d(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double num1 = Expression::getDoubleValue(vect->at(0));
+	double num2 = Expression::getDoubleValue(vect->at(1));
+	return Expression::createNewDouble(atan2(num1, num2));
 }
 
-Token *sqrtd(Token *params, Environment *env) {
-	return (env->newToken(sqrt(params->tokens[0]->getFloatValue()), FLOAT));
+FuzuliVariable tand(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = tan(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
-Token *absd(Token *params, Environment *env) {
-	return (env->newToken(fabs(params->tokens[0]->getFloatValue()), FLOAT));
+FuzuliVariable sqrtd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = sqrt(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
-Token *logd(Token *params, Environment *env) {
-	return (env->newToken(log(params->tokens[0]->getFloatValue()), FLOAT));
+FuzuliVariable absd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = abs(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
-Token *log10d(Token *params, Environment *env) {
-	return (env->newToken(log10(params->tokens[0]->getFloatValue()), FLOAT));
+FuzuliVariable logd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = log(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
-Token *log2d(Token *params, Environment *env) {
-	return (env->newToken(log2(params->tokens[0]->getFloatValue()), FLOAT));
+FuzuliVariable log10d(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = log10(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
-Token *expd(Token *params, Environment *env) {
-	return (env->newToken(exp(params->tokens[0]->getFloatValue()), FLOAT));
+FuzuliVariable log2d(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = log2(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
-Token *isinfd(Token *params, Environment *env) {
-	int res = std::isinf(params->tokens[0]->getFloatValue());
-	return (env->newToken(res, INTEGER));
+FuzuliVariable expd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = exp(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 
-Token *pi(Token *params, Environment *env) {
-	return (env->newToken(3.141592653589793, FLOAT));
+FuzuliVariable isinfd(FuzuliVariable params, Environment *env) {
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	double f_result = std::isinf(Expression::getDoubleValue(vect->at(0)));
+	return Expression::createNewDouble(f_result);
 }
 

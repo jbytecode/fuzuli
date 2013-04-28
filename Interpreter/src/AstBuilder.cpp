@@ -247,11 +247,11 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			ReturnExpression *pe = new ReturnExpression(expr);
 			return (pe);
 		} else if (strcmp(tok->getContent(), "dynload") == 0) {
-			//DynLoadExpression *pe = new DynLoadExpression(expr);
-			//return (pe);
+			DynLoadExpression *pe = new DynLoadExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "C") == 0) {
-			//CExpression *pe = new CExpression(expr);
-			//return (pe);
+			CExpression *pe = new CExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "typeof") == 0) {
 			TypeofExpression *pe = new TypeofExpression(expr);
 			return (pe);
