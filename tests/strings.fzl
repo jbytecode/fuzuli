@@ -114,9 +114,7 @@
 	(print error)
 )
 
-(println "Doing urldecode")
 (let result16 (urldecode "/?name=a%20b+c"))
-(println "Got result " result16)
 (if (= result16 "/?name=a b c")
 	(print passed)
 	(print error)
