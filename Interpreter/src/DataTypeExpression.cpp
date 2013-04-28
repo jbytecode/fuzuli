@@ -49,7 +49,7 @@ IntegerExpression::~IntegerExpression() {
 
 
 FuzuliVariable IntegerExpression::eval(Environment *env){
-	FuzuliVariable fv; fv.type = INTEGER; fv.i = this->integerValue;
+	FuzuliVariable fv = Expression::createNewInt(this->integerValue);
 	return(fv);
 }
 
@@ -77,9 +77,7 @@ IntegerConstantExpression::~IntegerConstantExpression() {
 }
 
 FuzuliVariable IntegerConstantExpression::eval(Environment *env){
-	FuzuliVariable f;
-	f.type = INTEGER;
-	f.i = this->integerValue;
+	FuzuliVariable f = Expression::createNewInt(this->integerValue);
 	return(f);
 }
 
@@ -101,9 +99,7 @@ FloatExpression::~FloatExpression() {
 }
 
 FuzuliVariable FloatExpression::eval(Environment *env){
-	FuzuliVariable fv;
-	fv.type = FLOAT;
-	fv.d = this->floatValue;
+	FuzuliVariable fv = Expression::createNewDouble(this->floatValue);
 	return(fv);
 }
 
@@ -124,9 +120,7 @@ FloatConstantExpression::~FloatConstantExpression() {
 }
 
 FuzuliVariable FloatConstantExpression::eval(Environment *env){
-	FuzuliVariable f;
-	f.type = FLOAT;
-	f.d = this->floatValue;
+	FuzuliVariable f = Expression::createNewDouble(this->floatValue);
 	return(f);
 }
 
@@ -144,9 +138,7 @@ StringExpression::~StringExpression() {
 }
 
 FuzuliVariable StringExpression::eval(Environment *env){
-	FuzuliVariable result;
-	result.type = STRING;
-	result.s = this->stringValue.c_str();
+	FuzuliVariable result = Expression::createNewString(this->stringValue.c_str());
 	return(result);
 }
 

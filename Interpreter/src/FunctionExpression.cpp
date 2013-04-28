@@ -61,6 +61,7 @@ FuzuliVariable FunctionExpression::eval(Environment *env) {
 
 	env->setFunction(css, func);
 	FuzuliVariable willReturn; willReturn.type = FUZULIFUNCTION;
+	willReturn.breakFlag = false; willReturn.returnFlag = false;
 	return (willReturn);
 }
 
@@ -156,7 +157,7 @@ ReturnExpression::~ReturnExpression() {
 
 FuzuliVariable ReturnExpression::eval(Environment *env) {
 	FuzuliVariable tok = this->expressions->at(0)->eval(env);
-	tok.returnFlag = true;
+	tok.returnFlag = true; tok.breakFlag = false;
 	return (tok);
 }
 

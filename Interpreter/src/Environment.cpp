@@ -41,29 +41,16 @@ Environment::~Environment() {
 
 }
 
-FuzuliVariable Environment::newFuzuliVariableD(double d) {
-	FuzuliVariable f;
-	f.type = FLOAT;
-	f.d = d;
-	return (f);
-}
-
-FuzuliVariable Environment::newFuzuliVariableI(int d) {
-	FuzuliVariable f;
-	f.type = INTEGER;
-	f.i = d;
-	return (f);
-}
 
 void Environment::registerGlobals() {
-	FuzuliVariable intf1 = this->newFuzuliVariableI(1);
-	FuzuliVariable intf2 = this->newFuzuliVariableI(2);
-	FuzuliVariable intf3 = this->newFuzuliVariableI(3);
-	FuzuliVariable intf4 = this->newFuzuliVariableI(4);
-	FuzuliVariable intf5 = this->newFuzuliVariableI(5);
+	FuzuliVariable intf1 = Expression::createNewInt(1);
+	FuzuliVariable intf2 = Expression::createNewInt(2);
+	FuzuliVariable intf3 = Expression::createNewInt(3);
+	FuzuliVariable intf4 = Expression::createNewInt(4);
+	FuzuliVariable intf5 = Expression::createNewInt(5);
 
-	FuzuliVariable intf6 = this->newFuzuliVariableI(1);
-	FuzuliVariable intf7 = this->newFuzuliVariableI(0);
+	FuzuliVariable intf6 = Expression::createNewInt(1);
+	FuzuliVariable intf7 =Expression::createNewInt(0);
 
 	this->setVariable("INTEGER", intf1);
 	this->setVariable("FLOAT", intf2);
@@ -182,7 +169,7 @@ FuzuliFunction *Environment::getFunction(const char *name) {
 }
 
 void Environment::setArgcArgv(int argc, char **argv) {
-	FuzuliVariable fargc = this->newFuzuliVariableI(argc);
+	FuzuliVariable fargc = Expression::createNewInt(argc);
 	this->setVariable("argc", fargc);
 
 	FuzuliVariable tok;
@@ -224,9 +211,7 @@ DumpExpression::~DumpExpression() {
 
 FuzuliVariable DumpExpression::eval(Environment *env) {
 	env->dump();
-	FuzuliVariable f;
-	f.type = INTEGER;
-	f.i = env->variables.size();
+	FuzuliVariable f=Expression::createNewInt(env->variables.size());
 	return (f);
 }
 

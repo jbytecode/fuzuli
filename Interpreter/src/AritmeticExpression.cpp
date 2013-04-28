@@ -44,9 +44,7 @@ FuzuliVariable AndExpression::eval(Environment *env) {
 			break;
 		}
 	}
-	FuzuliVariable result;
-	result.i = allTrue;
-	result.type = INTEGER;
+	FuzuliVariable result = Expression::createNewInt(allTrue);
 	return (result);
 }
 
@@ -65,9 +63,7 @@ FuzuliVariable AsterixExpression::eval(Environment *env) {
 		FuzuliVariable fv = expressions->at(i)->eval(env);
 		product *= this->getDoubleValue(fv);
 	}
-	FuzuliVariable result;
-	result.type = FLOAT;
-	result.d = product;
+	FuzuliVariable result = Expression::createNewDouble(product);
 	return (result);
 }
 
@@ -83,9 +79,9 @@ DivisionExpression::~DivisionExpression() {
 FuzuliVariable DivisionExpression::eval(Environment *env) {
 	FuzuliVariable tok1 = this->expressions->at(0)->eval(env);
 	FuzuliVariable tok2 = this->expressions->at(1)->eval(env);
-	FuzuliVariable fv;
-	fv.type = FLOAT;
-	fv.d = this->getDoubleValue(tok1) / this->getDoubleValue(tok2);
+	FuzuliVariable fv = Expression::createNewDouble(
+			this->getDoubleValue(tok1) / this->getDoubleValue(tok2)
+			);
 	return (fv);
 }
 
@@ -106,9 +102,7 @@ FuzuliVariable NotExpression::eval(Environment *env) {
 	} else {
 		intValue = 0;
 	}
-	FuzuliVariable fv;
-	fv.type = INTEGER;
-	fv.i = intValue;
+	FuzuliVariable fv = Expression::createNewInt(intValue);
 	return (fv);
 }
 
@@ -130,9 +124,7 @@ FuzuliVariable OrExpression::eval(Environment *env) {
 			break;
 		}
 	}
-	FuzuliVariable fv;
-	fv.type = INTEGER;
-	fv.i = atLeastOneTrue;
+	FuzuliVariable fv = Expression::createNewInt(atLeastOneTrue);
 	return (fv);
 }
 
@@ -151,9 +143,7 @@ FuzuliVariable PlusExpression::eval(Environment *env) {
 		FuzuliVariable fv = expressions->at(i)->eval(env);
 		sum += this->getDoubleValue(fv);
 	}
-	FuzuliVariable result;
-	result.type = FLOAT;
-	result.d = sum;
+	FuzuliVariable result = Expression::createNewDouble(sum);
 	return (result);
 }
 
@@ -172,6 +162,7 @@ FuzuliVariable IncExpression::eval(Environment *env) {
 	FuzuliVariable value = env->getVariable(id);
 	value.d = this->getDoubleValue(value) + 1.0;
 	value.type = FLOAT;
+	value.breakFlag = false; value.returnFlag = false;
 	env->setVariable(id, value);
 	return (value);
 }
@@ -193,6 +184,7 @@ FuzuliVariable DecExpression::eval(Environment *env) {
 	FuzuliVariable value = env->getVariable(id);
 	value.d = this->getDoubleValue(value) - 1.0;
 	value.type = FLOAT;
+	value.returnFlag = false; value.breakFlag = false;
 	env->setVariable(id, value);
 	return (value);
 }
@@ -213,9 +205,7 @@ FuzuliVariable SubtractionExpression::eval(Environment *env) {
 		fv = expressions->at(i)->eval(env);
 		diff -= this->getDoubleValue(fv);
 	}
-	FuzuliVariable result;
-	result.type = FLOAT;
-	result.d = diff;
+	FuzuliVariable result = Expression::createNewDouble(diff);
 	return (result);
 }
 
@@ -231,9 +221,9 @@ EqualsExpression::~EqualsExpression() {
 FuzuliVariable EqualsExpression::eval(Environment *env) {
 	FuzuliVariable tok1 = this->expressions->at(0)->eval(env);
 	FuzuliVariable tok2 = this->expressions->at(1)->eval(env);
-	FuzuliVariable result;
-	result.type = FLOAT;
-	result.d = (this->getDoubleValue(tok1) == this->getDoubleValue(tok2));
+	FuzuliVariable result = Expression::createNewInt(
+	     (this->getDoubleValue(tok1) == this->getDoubleValue(tok2))
+	 );
 	return (result);
 }
 
@@ -249,9 +239,9 @@ NotEqualsExpression::~NotEqualsExpression() {
 FuzuliVariable NotEqualsExpression::eval(Environment *env) {
 	FuzuliVariable tok1 = this->expressions->at(0)->eval(env);
 	FuzuliVariable tok2 = this->expressions->at(1)->eval(env);
-	FuzuliVariable result;
-	result.type = FLOAT;
-	result.d = (!(this->getDoubleValue(tok1) == this->getDoubleValue(tok2)));
+	FuzuliVariable result = Expression::createNewInt(
+	   (!(this->getDoubleValue(tok1) == this->getDoubleValue(tok2)))
+	);
 	return (result);
 }
 
@@ -267,9 +257,9 @@ LessExpression::~LessExpression() {
 FuzuliVariable LessExpression::eval(Environment *env) {
 	FuzuliVariable first = this->expressions->at(0)->eval(env);
 	FuzuliVariable second = this->expressions->at(1)->eval(env);
-	FuzuliVariable result;
-	result.type = FLOAT;
-	result.d = (this->getDoubleValue(first) < this->getDoubleValue(second));
+	FuzuliVariable result = Expression::createNewInt(
+			(this->getDoubleValue(first) < this->getDoubleValue(second))
+	);
 	return (result);
 }
 
@@ -285,9 +275,9 @@ LessOrEqualExpression::~LessOrEqualExpression() {
 FuzuliVariable LessOrEqualExpression::eval(Environment *env) {
 	FuzuliVariable first = this->expressions->at(0)->eval(env);
 	FuzuliVariable second = this->expressions->at(1)->eval(env);
-	FuzuliVariable result;
-	result.type = FLOAT;
-	result.d = (this->getDoubleValue(first) <= this->getDoubleValue(second));
+	FuzuliVariable result = Expression::createNewInt(
+	  (this->getDoubleValue(first) <= this->getDoubleValue(second))
+	 );
 	return (result);
 }
 
@@ -303,9 +293,9 @@ BiggerExpression::~BiggerExpression() {
 FuzuliVariable BiggerExpression::eval(Environment *env) {
 	FuzuliVariable first = this->expressions->at(0)->eval(env);
 	FuzuliVariable second = this->expressions->at(1)->eval(env);
-	FuzuliVariable result;
-	result.type = FLOAT;
-	result.d = (this->getDoubleValue(first) > this->getDoubleValue(second));
+	FuzuliVariable result = Expression::createNewInt(
+	  (this->getDoubleValue(first) > this->getDoubleValue(second))
+	  );
 	return (result);
 }
 
@@ -321,9 +311,9 @@ BigOrEqualExpression::~BigOrEqualExpression() {
 FuzuliVariable BigOrEqualExpression::eval(Environment *env) {
 	FuzuliVariable first = this->expressions->at(0)->eval(env);
 	FuzuliVariable second = this->expressions->at(1)->eval(env);
-	FuzuliVariable result;
-	result.type = FLOAT;
-	result.d = (this->getDoubleValue(first) >= this->getDoubleValue(second));
+	FuzuliVariable result = Expression::createNewInt(
+	  (this->getDoubleValue(first) >= this->getDoubleValue(second))
+	  );
 	return (result);
 }
 
@@ -339,9 +329,9 @@ ModulaExpression::~ModulaExpression() {
 FuzuliVariable ModulaExpression::eval(Environment *env) {
 	FuzuliVariable first = this->expressions->at(0)->eval(env);
 	FuzuliVariable second = this->expressions->at(1)->eval(env);
-	FuzuliVariable result;
-	result.type = FLOAT;
-	result.d = fmod(this->getDoubleValue(first), this->getDoubleValue(second));
+	FuzuliVariable result = Expression::createNewDouble(
+	 fmod(this->getDoubleValue(first), this->getDoubleValue(second))
+	 );
 	return (result);
 }
 
@@ -357,9 +347,9 @@ BitAndExpression::~BitAndExpression() {
 FuzuliVariable BitAndExpression::eval(Environment *env) {
 	FuzuliVariable first = this->expressions->at(0)->eval(env);
 	FuzuliVariable second = this->expressions->at(1)->eval(env);
-	FuzuliVariable result;
-	result.type = INTEGER;
-	result.i = (this->getIntValue(first) & this->getIntValue(second));
+	FuzuliVariable result = Expression::createNewInt(
+	  (this->getIntValue(first) & this->getIntValue(second))
+	);
 	return (result);
 }
 
@@ -374,9 +364,9 @@ BitNotExpression::~BitNotExpression() {
 
 FuzuliVariable BitNotExpression::eval(Environment *env) {
 	FuzuliVariable first = this->expressions->at(0)->eval(env);
-	FuzuliVariable result;
-	result.type = INTEGER;
-	result.i = ~(this->getIntValue(first));
+	FuzuliVariable result = Expression::createNewInt(
+	  ~(this->getIntValue(first))
+	);
 	return (result);
 }
 
@@ -392,9 +382,9 @@ BitOrExpression::~BitOrExpression() {
 FuzuliVariable BitOrExpression::eval(Environment *env) {
 	FuzuliVariable first = this->expressions->at(0)->eval(env);
 	FuzuliVariable second = this->expressions->at(1)->eval(env);
-	FuzuliVariable result;
-	result.type = INTEGER;
-	result.i = (this->getIntValue(first) | this->getIntValue(second));
+	FuzuliVariable result = Expression::createNewInt (
+	  (this->getIntValue(first) | this->getIntValue(second))
+	 );
 	return (result);
 }
 
@@ -410,9 +400,9 @@ BitXORExpression::~BitXORExpression() {
 FuzuliVariable BitXORExpression::eval(Environment *env) {
 	FuzuliVariable first = this->expressions->at(0)->eval(env);
 	FuzuliVariable second = this->expressions->at(1)->eval(env);
-	FuzuliVariable result;
-	result.type = INTEGER;
-	result.i = (this->getIntValue(first) ^ this->getIntValue(second));
+	FuzuliVariable result = Expression::createNewInt(
+	 (this->getIntValue(first) ^ this->getIntValue(second))
+	);
 	return (result);
 }
 
@@ -428,9 +418,9 @@ BitShiftLeftExpression::~BitShiftLeftExpression() {
 FuzuliVariable BitShiftLeftExpression::eval(Environment *env) {
 	FuzuliVariable first = this->expressions->at(0)->eval(env);
 	FuzuliVariable second = this->expressions->at(1)->eval(env);
-	FuzuliVariable result;
-	result.type = INTEGER;
-	result.i = (this->getIntValue(first) << this->getIntValue(second));
+	FuzuliVariable result = Expression::createNewInt(
+	  (this->getIntValue(first) << this->getIntValue(second))
+	  );
 	return (result);
 }
 
@@ -446,9 +436,9 @@ BitShiftRightExpression::~BitShiftRightExpression() {
 FuzuliVariable BitShiftRightExpression::eval(Environment *env) {
 	FuzuliVariable first = this->expressions->at(0)->eval(env);
 	FuzuliVariable second = this->expressions->at(1)->eval(env);
-	FuzuliVariable result;
-	result.type = INTEGER;
-	result.i = (this->getIntValue(first) >> this->getIntValue(second));
+	FuzuliVariable result = Expression::createNewInt(
+	  (this->getIntValue(first) >> this->getIntValue(second))
+	);
 	return (result);
 }
 
