@@ -47,32 +47,25 @@ FuzuliVariable BlockExpression::eval(Environment *env) {
 	return (result);
 }
 
-/*
- GroupExpression::GroupExpression(vector<Expression*> *expr) {
- this->expressions = expr;
- this->type = GROUP_EXPRESSION;
- }
+GroupExpression::GroupExpression(vector<Expression*> *expr) {
+	this->expressions = expr;
+	this->type = GROUP_EXPRESSION;
+}
 
- GroupExpression::~GroupExpression() {
- // TODO Auto-generated destructor stub
- }
+GroupExpression::~GroupExpression() {
+	// TODO Auto-generated destructor stub
+}
 
- Token *GroupExpression::eval(Environment *env) {
- Token *result = Token::NULL_TOKEN;
- for (unsigned int i = 0; i < this->expressions->size(); i++) {
- result = this->expressions->at(i)->eval(env);
- if (result) {
- if (result->breakFlag == 1) {
- env->doAutomaticGCwithProtection(result);
- return (result);
- } else if (result->returnFlag == 1) {
- env->doAutomaticGCwithProtection(result);
- return (result);
- }
- }
- }
- return (result);
- }
+FuzuliVariable GroupExpression::eval(Environment *env) {
+	FuzuliVariable result = Expression::createNewNull();
+	for (unsigned int i = 0; i < this->expressions->size(); i++) {
+		result = this->expressions->at(i)->eval(env);
+		if (result.breakFlag || result.returnFlag) {
+			env->deleteLocal();
+			return (result);
+		}
+	}
+	return (result);
+}
 
- */
 } /* namespace fuzuli */

@@ -25,7 +25,6 @@
 
 namespace fuzuli {
 
-/*
 using namespace std;
 
 stringstream cgi_post_content;
@@ -45,11 +44,10 @@ WebExpression::~WebExpression() {
 
 }
 
-Token *WebExpression::eval(Environment *env) {
+FuzuliVariable WebExpression::eval(Environment *env) {
 	cout << this->html;
-	return (Token::NULL_TOKEN);
+	return (Expression::createNewNull());
 }
-
 
 RequestExpression::RequestExpression(vector<Expression*> *expr) {
 	this->expressions = expr;
@@ -60,8 +58,8 @@ RequestExpression::RequestExpression(vector<Expression*> *expr) {
 RequestExpression::~RequestExpression() {
 }
 
-Token *RequestExpression::eval(Environment *env) {
-	Token *var = this->expressions->at(0)->eval(env);
+FuzuliVariable RequestExpression::eval(Environment *env) {
+	FuzuliVariable var = this->expressions->at(0)->eval(env);
 	string allcookies = string(getenv("QUERY_STRING"));
 	stringstream ss(allcookies);
 	string empty = "";
@@ -73,12 +71,12 @@ Token *RequestExpression::eval(Environment *env) {
 		string key;
 		if (std::getline(iss, key, '=')) {
 			clean_white_spaces(key);
-			if (strcmp(key.c_str(), var->getContent()) == 0) {
+			if (strcmp(key.c_str(), var.s) == 0) {
 				keyfound = 1;
 				string value;
 				std::getline(iss, value, '=');
 				result = value;
-				return (env->newToken(result.c_str(), STRING));
+				return (Expression::createNewString(result.c_str()));
 			}
 		}
 	}
@@ -88,12 +86,12 @@ Token *RequestExpression::eval(Environment *env) {
 		char c[bufsize];
 		while (1) {
 			cin.read(c, bufsize);
-			if(c[0]=='\0'){
+			if (c[0] == '\0') {
 				break;
 			}
 			cgi_post_content << c;
-			for(int j=0;j<bufsize;j++){
-				c[j]='\0';
+			for (int j = 0; j < bufsize; j++) {
+				c[j] = '\0';
 			}
 		}
 	}
@@ -103,21 +101,21 @@ Token *RequestExpression::eval(Environment *env) {
 		string key;
 		if (std::getline(iss, key, '=')) {
 			clean_white_spaces(key);
-			if (strcmp(key.c_str(), var->getContent()) == 0) {
+			if (strcmp(key.c_str(), var.s) == 0) {
 				keyfound = 1;
 				string value;
 				std::getline(iss, value, '=');
 				result = value;
-				return (env->newToken(result.c_str(), STRING));
+				return (Expression::createNewString(result.c_str()));
 			}
 		}
 	}
 
 	if (keyfound != 0) {
-		return (env->newToken("", STRING));
+		return (Expression::createNewString(""));
 	}
 
-	return (Token::NULL_TOKEN);
+	return (Expression::createNewNull());
 }
 
 SetCookieExpression::SetCookieExpression(vector<Expression*> *expr) {
@@ -130,12 +128,11 @@ SetCookieExpression::~SetCookieExpression() {
 
 }
 
-Token *SetCookieExpression::eval(Environment *env) {
-	Token *var = ((IdentifierExpression*) this->expressions->at(0))->stringToken;
-	Token *val = this->expressions->at(1)->eval(env);
-	cout << "Set-Cookie: " << var->getContent() << "=" << val->getContent()
-			<< "\n";
-	return (this->resultToken);
+FuzuliVariable SetCookieExpression::eval(Environment *env) {
+	const char *var = ((IdentifierExpression*) this->expressions->at(0))->id;
+	FuzuliVariable val = this->expressions->at(1)->eval(env);
+	cout << "Set-Cookie: " << var << "=" << Expression::getStringValue(val) << "\n";
+	return (val);
 }
 
 GetCookieExpression::GetCookieExpression(vector<Expression*> *expr) {
@@ -147,7 +144,7 @@ GetCookieExpression::~GetCookieExpression() {
 
 }
 
-Token *GetCookieExpression::eval(Environment *env) {
+FuzuliVariable GetCookieExpression::eval(Environment *env) {
 	Token *var = ((IdentifierExpression*) this->expressions->at(0))->stringToken;
 	string allcookies = string(getenv("HTTP_COOKIE"));
 	stringstream ss(allcookies);
@@ -166,7 +163,7 @@ Token *GetCookieExpression::eval(Environment *env) {
 			}
 		}
 	}
-	return (env->newToken(result.c_str(), STRING));
+	return (Expression::createNewString(result.c_str()));
 }
 
 IncludeExpression::IncludeExpression(vector<Expression*> *expr) {
@@ -179,21 +176,22 @@ IncludeExpression::~IncludeExpression() {
 
 }
 
-Token *IncludeExpression::eval(Environment *env) {
-	Token *file = this->expressions->at(0)->eval(env);
+FuzuliVariable IncludeExpression::eval(Environment *env) {
+	FuzuliVariable file = this->expressions->at(0)->eval(env);
 	SourceCode *source = new SourceCode();
-	source->readFromFile(file->getContent());
+	source->readFromFile(Expression::getStringValue(file));
 	AstBuilder *builder = new AstBuilder(source);
 	Expression *expr;
 	source->reset();
+	FuzuliVariable result = Expression::createNewNull();
 	while (1) {
 		expr = builder->getNextExpression();
 		if (!expr) {
 			break;
 		}
-		expr->eval(env);
+		result = expr->eval(env);
 	}
-	return (this->resultToken);
+	return (result);
 }
 
 IssetExpression::IssetExpression(vector<Expression*> *expr) {
@@ -205,17 +203,16 @@ IssetExpression::~IssetExpression() {
 
 }
 
-Token *IssetExpression::eval(Environment *env) {
-	Token *varname = this->expressions->at(0)->eval(env);
-	Token *result = env->newToken(0.0, INTEGER);
-	if (varname->getType() != NULLTOKEN) {
-		result->setIntValue(1);
+FuzuliVariable IssetExpression::eval(Environment *env) {
+	FuzuliVariable varname = this->expressions->at(0)->eval(env);
+	FuzuliVariable result = Expression::createNewInt(0);
+	if (varname.type != NULLTOKEN) {
+		result.i = 1;
 	} else {
-		result->setIntValue(0);
+		result.i = 0;
 	}
 	return (result);
 }
 
-*/
 }
 

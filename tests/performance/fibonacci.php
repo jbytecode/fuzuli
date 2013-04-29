@@ -8,7 +8,7 @@ function fibonacci ($x){
 }
 
 $start = microtime(true);
-for ($i=0;$i<24;$i++){
+for ($i=0;$i<26;$i++){
         fibonacci($i);
 }
 $stop = microtime (true);

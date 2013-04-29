@@ -88,6 +88,7 @@ FuzuliVariable ForEachExpression::eval(Environment *env) {
 	vector<FuzuliVariable> *listVector = (vector<FuzuliVariable>*)list.v;
 	env->setVariableInThisScope(iden, listVector->at(0));
 
+
 	for (unsigned int i = 0; i < listVector->size(); i++) {
 		env->setVariable(iden, listVector->at(i));
 
