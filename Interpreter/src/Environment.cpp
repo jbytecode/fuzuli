@@ -41,7 +41,6 @@ Environment::~Environment() {
 
 }
 
-
 void Environment::registerGlobals() {
 	FuzuliVariable intf1 = Expression::createNewInt(1);
 	FuzuliVariable intf2 = Expression::createNewInt(2);
@@ -50,7 +49,7 @@ void Environment::registerGlobals() {
 	FuzuliVariable intf5 = Expression::createNewInt(5);
 
 	FuzuliVariable intf6 = Expression::createNewInt(1);
-	FuzuliVariable intf7 =Expression::createNewInt(0);
+	FuzuliVariable intf7 = Expression::createNewInt(0);
 
 	this->setVariable("INTEGER", intf1);
 	this->setVariable("FLOAT", intf2);
@@ -144,7 +143,7 @@ void Environment::deleteLocal() {
 }
 
 FuzuliFunction *Environment::searchFuncBackEnvironments(const char *name) {
-	return(this->fuzuliFunctions[string(name)]);
+	return (this->fuzuliFunctions[string(name)]);
 }
 
 void Environment::setFunction(const char *name, FuzuliFunction *value) {
@@ -160,7 +159,8 @@ void Environment::setFunction(const char *name, FuzuliFunction *value) {
 	}
 }
 
-void Environment::setVariableForFunctionParams(const char* name, FuzuliVariable f){
+void Environment::setVariableForFunctionParams(const char* name,
+		FuzuliVariable f) {
 
 }
 
@@ -211,64 +211,36 @@ DumpExpression::~DumpExpression() {
 
 FuzuliVariable DumpExpression::eval(Environment *env) {
 	env->dump();
-	FuzuliVariable f=Expression::createNewInt(env->variables.size());
+	FuzuliVariable f = Expression::createNewInt(env->variables.size());
 	return (f);
 }
 
-/*
- GCExpression::GCExpression(vector<Expression*> *expr) {
- this->expressions = expr;
- this->type = GC_EXPRESSION;
- }
+GCExpression::GCExpression(vector<Expression*> *expr) {
+	this->expressions = expr;
+	this->type = GC_EXPRESSION;
+}
 
- GCExpression::~GCExpression() {
+GCExpression::~GCExpression() {
 
- }
+}
 
- Token *GCExpression::eval(Environment *env) {
- int num = 0;
- Token *result = new Token(num, FLOAT);
- if (this->expressions->size() == 0) {
- num = env->GC();
- result->setFloatValue(num);
- } else if (this->expressions->size() == 1) {
- Token *onoffparam = this->expressions->at(0)->eval(env);
- if (onoffparam->getFloatValue() == 1.0) {
- Environment::isAutomaticGC = true;
- result->setFloatValue(1.0);
- //cout << "Garbage Collector set to on"<<endl;
- } else if (onoffparam->getFloatValue() == 0.0) {
- Environment::isAutomaticGC = false;
- //cout << "Garbage Collector set to off"<<endl;
- result->setFloatValue(0.0);
- }
- }
- return (result);
- }
+FuzuliVariable GCExpression::eval(Environment *env) {
+	cout << "Gargabe Collection utility is not implemented yet" << endl;
+	return (Expression::createNewInt(-1));
+}
 
- DeleteExpression::DeleteExpression(vector<Expression*> *expr) {
- this->expressions = expr;
- this->type = DELETE_EXPRESSION;
- }
+DeleteExpression::DeleteExpression(vector<Expression*> *expr) {
+	this->expressions = expr;
+	this->type = DELETE_EXPRESSION;
+}
 
- DeleteExpression::~DeleteExpression() {
+DeleteExpression::~DeleteExpression() {
 
- }
+}
 
- Token *DeleteExpression::eval(Environment *env) {
- Token *obj =
- (dynamic_cast<IdentifierExpression*>(this->expressions->at(0)))->stringToken;
- cout << "Investigating :" << obj->getContent() << endl;
- if (env->getVariable(obj->getContent())) {
- //cout << obj->getContent() << " is variable. killing..." << endl;
- delete env->getVariable(obj->getContent());
- Environment *tokenv = env->searchBackEnvironments(obj->getContent());
- tokenv->variables.erase(string(obj->getContent()));
- } else if (env->getFunction(obj->getContent())) {
- cout << obj->getContent() << " is a function. Nothing to do..." << endl;
- }
- return (Token::NULL_TOKEN);
- }
- */
+FuzuliVariable DeleteExpression::eval(Environment *env) {
+	cout << "Delete expression is not implemented yet "<<endl;
+	return(Expression::createNewInt(-1));
+}
 
 } /* namespace fuzuli */

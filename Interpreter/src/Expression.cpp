@@ -76,6 +76,23 @@ int Expression::getIntValue(FuzuliVariable &v){
 	}
 }
 
+
+const char* Expression::getStringValue(FuzuliVariable &v){
+	stringstream ss;
+	if(v.type == FLOAT){
+		ss << v.d;
+	}else if (v.type == INTEGER){
+		ss << v.i;
+	}else if (v.type == STRING){
+		ss << v.s;
+	}else{
+		return(0);
+	}
+	return(ss.str().c_str());
+}
+
+
+
 FuzuliVariable Expression::createNewInt(int value){
 	FuzuliVariable f;
 	f.type = INTEGER;

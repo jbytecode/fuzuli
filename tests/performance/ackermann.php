@@ -10,7 +10,7 @@ function ack ($m, $n){
 }
 
 $start = microtime(true);
-print (ack(3,5)."\n");
+//print (ack(3,5)."\n");
 $stop = microtime(true);
 print (($stop - $start)*1000);
 ?>

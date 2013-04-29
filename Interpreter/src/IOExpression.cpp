@@ -67,8 +67,7 @@ FuzuliVariable PrintExpression::eval(Environment *env) {
 		__PrintToken(&ss, tok);
 	}
 	cout << ss.str().c_str();
-	FuzuliVariable fv;fv.type=NULLTOKEN;fv.i=0;
-	return (fv);
+	return (Expression::createNewNull());
 }
 
 
@@ -87,8 +86,7 @@ FuzuliVariable PrintlnExpression::eval(Environment *env) {
 		__PrintToken(&ss, tok);
 	}
 	cout << ss.str().c_str() << endl;
-	FuzuliVariable fv;fv.type=NULLTOKEN;fv.i=0;
-	return (fv);
+	return(Expression::createNewNull());
 }
 
 

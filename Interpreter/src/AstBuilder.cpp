@@ -41,8 +41,8 @@ Expression* AstBuilder::getNextExpression() {
 		return (NULL);
 	}
 	if (tok->getType() == HTML) {
-		//WebExpression *ie = new WebExpression(tok->getContent());
-		//return (ie);
+		WebExpression *ie = new WebExpression(tok->getContent());
+		return (ie);
 	}
 	if (tok->getType() != LPARENTH) {
 		cout << "LPARANT required at line " << this->code->getCurrentLine()
@@ -76,8 +76,8 @@ Expression* AstBuilder::getNextExpression() {
 				IdentifierExpression *ie = new IdentifierExpression(tok);
 				exprlist->push_back(ie);
 			} else if (tok->getType() == HTML) {
-				//WebExpression *webexp = new WebExpression(tok->getContent());
-				//exprlist->push_back(webexp);
+				WebExpression *webexp = new WebExpression(tok->getContent());
+				exprlist->push_back(webexp);
 			}
 		}
 	}
@@ -184,8 +184,8 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			BlockExpression *pe = new BlockExpression(expr);
 			return (pe);
 		} else if (strcmp(tok->getContent(), "group") == 0) {
-			//GroupExpression *pe = new GroupExpression(expr);
-			//return (pe);
+			GroupExpression *pe = new GroupExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "print") == 0) {
 			PrintExpression *pe = new PrintExpression(expr);
 			return (pe);
@@ -271,26 +271,26 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			ExplodeExpression *pe = new ExplodeExpression(expr);
 			return (pe);
 		} else if (strcmp(tok->getContent(), "REQUEST") == 0) {
-			//RequestExpression *pe = new RequestExpression(expr);
-			//return (pe);
+			RequestExpression *pe = new RequestExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "isset") == 0) {
-			//IssetExpression *pe = new IssetExpression(expr);
-			//return (pe);
+			IssetExpression *pe = new IssetExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "setcookie") == 0) {
-			//SetCookieExpression *pe = new SetCookieExpression(expr);
-			//return (pe);
+			SetCookieExpression *pe = new SetCookieExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "getcookie") == 0) {
-			//GetCookieExpression *pe = new GetCookieExpression(expr);
-			//return (pe);
+			GetCookieExpression *pe = new GetCookieExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "include") == 0) {
-			//IncludeExpression *pe = new IncludeExpression(expr);
-			//return (pe);
+			IncludeExpression *pe = new IncludeExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "dump") == 0) {
 			DumpExpression *pe = new DumpExpression(expr);
 			return (pe);
 		} else if (strcmp(tok->getContent(), "gc") == 0) {
-			//GCExpression *pe = new GCExpression(expr);
-			//return (pe);
+			GCExpression *pe = new GCExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "setprecision") == 0) {
 			SetPrecisionExpression *pe = new SetPrecisionExpression(expr);
 			return (pe);
@@ -304,8 +304,8 @@ Expression *AstBuilder::fuzuliCall(Token *tok, vector<Expression*> *expr) {
 			NewExpression *pe = new NewExpression(expr);
 			return (pe);
 		} else if (strcmp(tok->getContent(), "delete") == 0) {
-			//DeleteExpression *pe = new DeleteExpression(expr);
-			//return (pe);
+			DeleteExpression *pe = new DeleteExpression(expr);
+			return (pe);
 		} else if (strcmp(tok->getContent(), "timing") == 0) {
 			TimingExpression *pe = new TimingExpression(expr);
 			return (pe);

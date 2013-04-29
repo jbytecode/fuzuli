@@ -225,6 +225,7 @@ public:
 	enum ExpressionType type;
 	static double getDoubleValue(FuzuliVariable &v);
 	static int getIntValue(FuzuliVariable &v);
+	static const char *getStringValue (FuzuliVariable &v);
 	static FuzuliVariable createNewInt(int value);
 	static FuzuliVariable createNewDouble(double value);
 	static FuzuliVariable createNewString(const char *c);
@@ -951,8 +952,6 @@ public:
 	virtual ~SetEpsilonExpression();
 	FuzuliVariable eval(Environment *env);
 };
-/*
-
 
 class GroupExpression: public Expression {
 public:
@@ -961,13 +960,20 @@ public:
 	FuzuliVariable eval(Environment *env);
 };
 
+class GCExpression: public Expression {
+public:
+	GCExpression(vector<Expression*> *expr);
+	virtual ~GCExpression();
+	FuzuliVariable eval(Environment *env);
+};
 
 
-
-
-
-
-
+class DeleteExpression: public Expression {
+public:
+	DeleteExpression(vector<Expression*> *expr);
+	virtual ~DeleteExpression();
+	FuzuliVariable eval(Environment *env);
+};
 
 
 class RequestExpression: public Expression {
@@ -1010,9 +1016,6 @@ public:
 };
 
 
-
-
-
 class SetCookieExpression: public Expression {
 public:
 	SetCookieExpression(vector<Expression*> *expr);
@@ -1036,28 +1039,6 @@ public:
 
 
 
-class GCExpression: public Expression {
-public:
-	GCExpression(vector<Expression*> *expr);
-	virtual ~GCExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
-
-
-
-
-
-class DeleteExpression: public Expression {
-public:
-	DeleteExpression(vector<Expression*> *expr);
-	virtual ~DeleteExpression();
-	FuzuliVariable eval(Environment *env);
-};
-
-
-
-*/
 }
 
 #endif /* FUZULITYPES_H_ */
