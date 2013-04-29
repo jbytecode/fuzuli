@@ -84,11 +84,12 @@ const char* Expression::getStringValue(FuzuliVariable &v){
 	}else if (v.type == INTEGER){
 		ss << v.i;
 	}else if (v.type == STRING){
-		ss << v.s;
+		return(v.s);
 	}else{
 		return(0);
 	}
-	return(ss.str().c_str());
+	const char *retvalue = ss.str().c_str();
+	return(retvalue);
 }
 
 

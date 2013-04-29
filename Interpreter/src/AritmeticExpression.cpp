@@ -1,6 +1,6 @@
 /*
  * fuzuli : A general purpose interpreter
- * Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
+ * Copyright (C) 2012,2013 Mehmet Hakan Satman <mhsatman@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #include <cstdlib>
 #include <sstream>
 #include <cmath>
+#include <cstring>
 
 namespace fuzuli {
 
@@ -222,9 +223,20 @@ EqualsExpression::~EqualsExpression() {
 FuzuliVariable EqualsExpression::eval(Environment *env) {
 	FuzuliVariable tok1 = this->expressions->at(0)->eval(env);
 	FuzuliVariable tok2 = this->expressions->at(1)->eval(env);
-	FuzuliVariable result = Expression::createNewInt(
-			 abs(this->getDoubleValue(tok1) - this->getDoubleValue(tok2)) < Token::epsilon
-	);
+	FuzuliVariable result = Expression::createNewNull();
+	if (tok1.type == STRING) {
+
+		if (strcmp(Expression::getStringValue(tok1),
+				Expression::getStringValue(tok2)) == 0) {
+			result = Expression::createNewInt(1);
+		} else {
+			result = Expression::createNewInt(0);
+		}
+	} else {
+		result = Expression::createNewInt(
+				abs(this->getDoubleValue(tok1) - this->getDoubleValue(tok2))
+						< Token::epsilon);
+	}
 	return (result);
 }
 
@@ -239,10 +251,21 @@ NotEqualsExpression::~NotEqualsExpression() {
 
 FuzuliVariable NotEqualsExpression::eval(Environment *env) {
 	FuzuliVariable tok1 = this->expressions->at(0)->eval(env);
-	FuzuliVariable tok2 = this->expressions->at(1)->eval(env);
-	FuzuliVariable result = Expression::createNewInt(
-			(!(this->getDoubleValue(tok1) == this->getDoubleValue(tok2))));
-	return (result);
+		FuzuliVariable tok2 = this->expressions->at(1)->eval(env);
+		FuzuliVariable result = Expression::createNewNull();
+		if (tok1.type == STRING) {
+			if (strcmp(Expression::getStringValue(tok1),
+					Expression::getStringValue(tok2)) != 0) {
+				result = Expression::createNewInt(1);
+			} else {
+				result = Expression::createNewInt(0);
+			}
+		} else {
+			result = Expression::createNewInt(
+					abs(this->getDoubleValue(tok1) - this->getDoubleValue(tok2))
+							> Token::epsilon);
+		}
+		return (result);
 }
 
 LessExpression::LessExpression(vector<Expression*> *expr) {
