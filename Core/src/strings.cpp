@@ -381,7 +381,8 @@ FuzuliVariable lcase(FuzuliVariable params, Environment *env) {
 
 OneParameters
 FuzuliVariable strcatd(FuzuliVariable params, Environment *env) {
-	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params.v;
+	vector<FuzuliVariable> *allparams = (vector<FuzuliVariable>*) params.v;
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*)allparams->at(0).v;
 	stringstream ss;
 	for (unsigned int i = 0; i < vect->size(); i++) {
 		ss << vect->at(i).s;

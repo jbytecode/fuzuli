@@ -54,3 +54,21 @@
     (print error)
 )
 
+
+
+
+(let shuffled (shuffle a))
+(if (and
+        (= (nth shuffled 0) 5)
+        (= (nth shuffled 1) 3)
+        (= (nth shuffled 2) 3)
+        (= (nth shuffled 3) 2)
+        (= (nth shuffled 4) 1)
+        (= (nth shuffled 5) 4)
+    )
+    (print passed)
+    (print error)
+)
+
+
+
