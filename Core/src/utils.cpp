@@ -66,8 +66,16 @@ FuzuliVariable sortd(FuzuliVariable p, Environment *env) {
 }
 
 FuzuliVariable shuffle(FuzuliVariable p, Environment *env) {
-	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) p.v;
-	random_shuffle(vect->begin(), vect->end());
-	return (Expression::createNewNull());
+	vector<FuzuliVariable> *params = (vector<FuzuliVariable>*) p.v;
+	vector<FuzuliVariable> *vect = (vector<FuzuliVariable>*) params->at(0).v ;
+
+	for (unsigned int i=0;i<vect->size();i++){
+		int index1 = (int)(((double)rand()/(double)RAND_MAX) * vect->size());
+		int index2 = (int)(((double)rand()/(double)RAND_MAX) * vect->size());
+		FuzuliVariable c = vect->at(index1);
+		vect->at(index1) = vect->at(index2);
+		vect->at(index2) = c;
+	}
+	return (params->at(0));
 }
 
