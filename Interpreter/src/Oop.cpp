@@ -123,9 +123,7 @@ FuzuliVariable NewExpression::eval(Environment *env) {
 		fcall->eval(cls_env);
 	}
 
-	FuzuliVariable obj = Expression::createNewNull();
-	obj.v = (void*) cls_env;
-	obj.type = COBJECT;
+	FuzuliVariable obj = Expression::createNewCObject(cls_env);
 	return (obj);
 }
 

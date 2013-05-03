@@ -100,8 +100,7 @@ FuzuliVariable FunctionCallExpression::evalForClass(Environment* env) {
 	} else {
 		object_env = ((Environment*) (obj.v));
 	}
-	FuzuliVariable thisToken = Expression::createNewNull();
-	thisToken.v = object_env; thisToken.type = COBJECT;
+	FuzuliVariable thisToken = Expression::createNewCObject(object_env);
 	object_env->setVariable("this", thisToken);
 
 	ss->str("");
@@ -120,18 +119,19 @@ FuzuliVariable FunctionCallExpression::evalForClass(Environment* env) {
 		exit(-1);
 	}
 
-	env->createLocal();
+	object_env->createLocal();
 	ParamsExpression *paramsExpr = (ParamsExpression*) func->params;
 	paramsExpr->eval(env);
 	for (unsigned int i = 0; i < paramsExpr->paramNames.size(); i++) {
 		string *param = paramsExpr->paramNames[i];
 		FuzuliVariable value = this->expressions->at(i + 1)->eval(env);
-		object_env->setVariableForFunctionParams(param->c_str(), value);
+		//cout << "In function setting " << param->c_str() << " to " << value.s << endl;
+		object_env->setVariableInThisScope(param->c_str(), value);
 	}
 
 	result = func->body->eval(object_env);
 	result.returnFlag = false;
-	env->deleteLocal();
+	object_env->deleteLocal();
 	return (result);
 }
 
