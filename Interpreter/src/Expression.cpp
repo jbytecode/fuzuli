@@ -144,6 +144,7 @@ FuzuliVariable Expression::createNewCObject(void *ptr){
 	FuzuliVariable f; f.type = COBJECT;
 	f.returnFlag = false;
 	f.breakFlag = false;
+	f.v = ptr;
 	return(f);
 }
 

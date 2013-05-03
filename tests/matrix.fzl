@@ -18,10 +18,10 @@
 (require "/usr/lib/fuzuli/nfl/math.nfl")
 
 (class Matrix extends Object
-	(block
+	(group
 		(def data LIST)
-		(def n INTEGER)
-		(def m INTEGER)
+		(let n INTEGER)
+		(let m INTEGER)
 
 
 		(function create (params rows cols)
@@ -32,7 +32,7 @@
 				(for (let i 0) (< i rows) (++ i)
 					(set data i (: 1 cols))
 				)
-				(fill data 0.0)
+				#(fill data 0.0)
 			)
 		)
 		
@@ -51,8 +51,7 @@
 
 		(function setValue (params row col value)
 			(block
-				(println "setValue called with " row " and " col  " and " value)
-				(dump)
+				#(println "setValue called with " row " and " col  " and " value)
 				(set (nth data row) col value)
 			)
 		)
@@ -199,6 +198,7 @@
 	(print passed)
 	(print error)
 )
+(println "Trans: " trans)
 
 # TEST 2 - Clone
 (let klon (a.clonematrix))
