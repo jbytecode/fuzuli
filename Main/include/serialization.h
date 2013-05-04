@@ -26,20 +26,18 @@ using namespace std;
 
 namespace fuzuli {
 
-/*
+
 class Serializer {
 public:
 	Serializer();
 	~Serializer();
 	void serializeFile(string infile, stringstream& channel);
 	void serializeExpression(Expression *expr, stringstream& channel);
-	void setByteCode(char* bc);
-	char *getByteCode();
 	Expression* getNextExpression();
-	static void IntToChars(int value, stringstream& channel);
-	static void DoubleToChars(double value, stringstream& channel);
-	static void StringToChars(string value, stringstream& channel);
-	static void CharArrayToChars(const char *value, stringstream& channel);
+	void emitAsm(const char *as, stringstream& channel);
+	void pushInt(int i, stringstream& channel);
+	static int getIntPart(double d, int i);
+	static double combineInts(int p1,int p2);
 private:
 	SourceCode *code;
 	AstBuilder *builder;
@@ -47,7 +45,7 @@ private:
 	unsigned int code_index;
 };
 
-*/
+
 } /* end of namespace fuzuli */
 
 #endif /* SERIALIZATION_H_ */

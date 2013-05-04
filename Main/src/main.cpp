@@ -38,13 +38,11 @@ void doSerialize(char *);
 void printFuzuliVariable(FuzuliVariable &f);
 
 void doSerialize(char *filename) {
-	cout << "Serializer is not implemented yet" << endl;
-	/*
-	 Serializer *s = new Serializer();
-	 stringstream channel;
-	 s->serializeFile(filename, channel);
-	 cout << channel.str().c_str()<<endl;
-	 */
+	//cout << "Serializer is not implemented yet" << endl;
+	Serializer *s = new Serializer();
+	stringstream channel;
+	s->serializeFile(filename, channel);
+	cout << channel.str().c_str() << endl;
 }
 
 void printFuzuliVariable(FuzuliVariable &f) {
