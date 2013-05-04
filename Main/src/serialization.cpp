@@ -17,15 +17,17 @@
  */
 
 #include "FuzuliTypes.h"
-//#include "../include/serialization.h"
+#include "../include/serialization.h"
 #include <cstring>
+#include <stdlib.h>
 
 using namespace std;
 using namespace fuzuli;
 
 namespace fuzuli {
 
-/*
+
+
 Serializer::Serializer() {
 
 }
@@ -34,52 +36,8 @@ Serializer::~Serializer() {
 
 }
 
-void Serializer::IntToChars(int value, stringstream& channel) {
-	char *p = (char*) &value;
-	unsigned int i_size = sizeof(int);
-	for (unsigned int i = 0; i < i_size; i++) {
-		channel << (int)(*p);
-		if(i != i_size-1) { channel << ", ";}
-		p++;
-	}
-	channel << ", ";
-}
-
-void Serializer::DoubleToChars(double value, stringstream& channel) {
-	char *p = (char*) &value;
-	unsigned int i_size = sizeof(double);
-	for (unsigned int i = 0; i < i_size; i++) {
-		channel << (int)(*p);
-		if(i != i_size-1) { channel << ", ";}
-		p++;
-	}
-	channel << ", ";
-}
-
-void Serializer::StringToChars(string value, stringstream& channel) {
-	char *p = (char*) value.c_str();
-	unsigned int i_size = sizeof(double);
-	for (unsigned int i = 0; i < i_size; i++) {
-		channel << (int)(*p);
-		if(i != i_size-1) { channel << ", ";}
-		p++;
-	}
-	channel << ", ";
-}
-
-void Serializer::CharArrayToChars (const char* value, stringstream& channel) {
-	const char *p = value;
-	unsigned int i_size = sizeof(double);
-	for (unsigned int i = 0; i < i_size; i++) {
-		channel << (int)(*p);
-		if(i != i_size-1) { channel << ", ";}
-		p++;
-	}
-	channel << ", ";
-}
-
 void Serializer::serializeFile(string infile, stringstream& channel) {
-	channel << "char char_code[] = {";
+	channel << ".text" << endl << ".global main" << endl << "main:" << endl;
 	this->code = new SourceCode();
 	this->code->readFromFile(infile.c_str());
 	this->builder = new AstBuilder(this->code);
@@ -91,66 +49,72 @@ void Serializer::serializeFile(string infile, stringstream& channel) {
 		}
 		this->serializeExpression(expr, channel);
 	}
-	channel << "0};"<<endl;
+	emitAsm("/* End Program */", channel);
+	emitAsm("movl $1, %eax", channel);
+	emitAsm("movl $0, %ebx", channel);
+	emitAsm("int $0x80", channel);
 }
-
-
 
 void Serializer::serializeExpression(Expression *expr, stringstream& channel) {
-	Serializer::IntToChars(expr->type, channel);
-	switch (expr->type) {
-	case INTEGER_EXPRESSION:
-		Serializer::IntToChars(
-				dynamic_cast<IntegerExpression*>(expr)->integerValue, channel);
-		break;
-	case INTEGERCONSTANT_EXPRESSION:
-		Serializer::IntToChars(
-				dynamic_cast<IntegerConstantExpression*>(expr)->integerValue,
-				channel);
-		break;
-	case FLOAT_EXPRESSION:
-		Serializer::DoubleToChars(
-				dynamic_cast<FloatExpression*>(expr)->floatValue, channel);
-		break;
-	case FLOATCONSTANT_EXPRESSION:
-		Serializer::DoubleToChars(
-				dynamic_cast<FloatConstantExpression*>(expr)->floatValue,
-				channel);
-		break;
-	case STRING_EXPRESSION:
-		Serializer::IntToChars(
-				dynamic_cast<StringExpression*>(expr)->stringValue.length(),
-				channel);
-		Serializer::StringToChars(
-				dynamic_cast<StringExpression*>(expr)->stringValue, channel);
-		break;
-	case IDENTIFIER_EXPRESSION:
-		Serializer::IntToChars(
-				strlen(dynamic_cast<IdentifierExpression*>(expr)->id), channel);
-		Serializer::CharArrayToChars(
-				dynamic_cast<IdentifierExpression*>(expr)->id, channel);
-		break;
-	default:
-		Serializer::IntToChars(expr->expressions->size(), channel);
-		for (unsigned int i = 0; i < expr->expressions->size(); i++) {
-			serializeExpression(expr->expressions->at(i), channel);
+	//cout << "In serializeExpression, expr->type is " << expr->type << endl;
+	if (expr->type == INTEGERCONSTANT_EXPRESSION) {
+		int intval =
+				dynamic_cast<IntegerConstantExpression*>(expr)->integerValue;
+		channel << "pushl $" << getIntPart((double) intval, 1) << endl;
+		channel << "pushl $" << getIntPart((double) intval, 2) << endl;
+	} else if (expr->type == PLUS_EXPRESSION) {
+		PlusExpression *pe = dynamic_cast<PlusExpression*>(expr);
+		for (unsigned int i = 0; i < pe->expressions->size(); i++) {
+			serializeExpression(pe->expressions->at(i), channel);
+			if ((i % 2) == 0 && i > 0) {
+				emitAsm("call add", channel);
+			}
 		}
-		break;
+		emitAsm("call __add", channel);
+		emitAsm("pushl %eax", channel);
+	} else if (expr->type == FLOATCONSTANT_EXPRESSION) {
+		double doubleval =
+				dynamic_cast<FloatConstantExpression*>(expr)->floatValue;
+		channel << "pushl $" << getIntPart(doubleval, 1) << endl;
+		channel << "pushl $" << getIntPart(doubleval, 2) << endl;
+	} else if (expr->type == PRINTLN_EXPRESSION) {
+		PrintlnExpression *pe = dynamic_cast<PrintlnExpression*>(expr);
+		for (unsigned int i = 0; i < pe->expressions->size(); i++) {
+			serializeExpression(pe->expressions->at(i), channel);
+			emitAsm("call __println", channel);
+		}
+
 	}
-}
 
-void Serializer::setByteCode(char *bc) {
-	this->bytecode = bc;
-	this->code_index = 0;
-}
-
-char *Serializer::getByteCode() {
-	return (this->bytecode);
 }
 
 Expression *Serializer::getNextExpression() {
 	return NULL;
 }
 
-*/
+void Serializer::emitAsm(const char *as, stringstream &channel) {
+	channel << as << endl;
+}
+
+void Serializer::pushInt(int i, stringstream &channel) {
+	channel << "push " << i << endl;
+}
+
+int Serializer::getIntPart(double d, int i) {
+	int *parts = (int*) &d;
+	if (i == 1) {
+		return (*parts);
+	} else {
+		parts++;
+		return (*parts);
+	}
+}
+
+double Serializer::combineInts(int p1, int p2) {
+	double val;
+	memcpy(&val, &p1, sizeof(int));
+	memcpy(&val + sizeof(int), &p2, sizeof(int));
+	return (val);
+}
+
 } /* end of namespace fuzuli */

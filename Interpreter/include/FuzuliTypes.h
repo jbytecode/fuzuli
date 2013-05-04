@@ -43,6 +43,7 @@ struct FuzuliVariable {
 		char c;
 		const char *s;
 		void *v;
+		long l;
 	};
 	int type;
 	const char *name;
