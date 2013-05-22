@@ -1,0 +1,16 @@
+!SESSION 2013-05-22 15:49:26.476 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.7.0_02
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=tr_TR
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.eclipse.ui 2 0 2013-05-22 15:50:23.523
+!MESSAGE Warnings while parsing the key bindings from the 'org.eclipse.ui.commands' extension point
+!SUBENTRY 1 org.eclipse.ui 2 0 2013-05-22 15:50:23.523
+!MESSAGE Could not parse key sequence: plug-in='org.eclipse.m2e.core.ui', id='org.eclipse.m2e.core.ui.command.addDependency', keySequence='Ctrl+Shift+D'
+!SUBENTRY 1 org.eclipse.ui 2 0 2013-05-22 15:50:23.523
+!MESSAGE Could not parse key sequence: plug-in='org.eclipse.m2e.core.ui', id='org.eclipse.m2e.core.ui.command.addPlugin', keySequence='Ctrl+Shift+P'
+!SUBENTRY 1 org.eclipse.ui 2 0 2013-05-22 15:50:23.523
+!MESSAGE Could not parse key sequence: plug-in='org.eclipse.cdt.make.ui', id='org.eclipse.cdt.make.ui.targetBuildCommand', keySequence='Shift+F9'
