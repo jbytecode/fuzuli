@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/D:/fuzuli/JFuzuli/JFuzuli/src/Editor/MainFrame.java</file>
-        <file>file:/D:/fuzuli/JFuzuli/JFuzuli/src/Editor/AboutForm.java</file>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/fuzuli/JFuzuli/JFuzuli/src/gp/ExpressionGenerator.java</file>
+            <file>file:/D:/fuzuli/JFuzuli/JFuzuli/src/jfuzuli/main/JFuzuli.java</file>
+            <file>file:/D:/fuzuli/JFuzuli/JFuzuli/test/gp/ExpressionGeneratorTest.java</file>
+        </group>
     </open-files>
 </project-private>
