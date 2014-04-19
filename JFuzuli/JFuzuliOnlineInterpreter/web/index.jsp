@@ -1,0 +1,99 @@
+<%-- 
+    Document   : index
+    Created on : 19.Nis.2014, 11:48:40
+    Author     : hako
+--%>
+
+<%@page import="org.expr.SampleLoader"%>
+<%@page import="java.io.PipedWriter"%>
+<%@page import="java.io.DataOutputStream"%>
+<%@page import="java.io.OutputStream"%>
+<%@page import="java.io.PrintStream"%>
+<%@page import="org.expr.WebOutput"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Interpreter.*"%>
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Fuzuli for Java, Online Interpreter</title>
+
+    <script type="text/javascript">
+
+    </script>
+</head>
+<body>
+    <form method="post">
+        <table>
+            <tr><td>
+                    <select name="samplecode">
+                        <option value="">Custom code</option>
+                        <option value="factorial">Recursive Factorial</option>
+                        <option value="fibonacci">Recursive Fibonacci</option>
+                        <option value="pi">Calculating Pi</option>
+                        <option value="secant">Secant Method</option>
+                        <option value="ols">Ordinary Least Squares</option>
+                    </select>
+                </td></tr>
+            <tr><td colspan="2">
+                    <textarea name="code" cols="60" rows="15" style="font-family: monospace; font-size: 12px;"><%
+                        String code = request.getParameter("code");
+                        String samplecode = request.getParameter("samplecode");
+
+                        if (samplecode == null){
+                            samplecode = "";
+                        }
+                        if (samplecode.equals("")) {
+                            if (code != null) {
+                                out.print(code.trim());
+                            } else {
+                                out.println("(let a 5)");
+                            }
+                        } else {
+                            out.println(SampleLoader.loadSample(samplecode + ".fzl"));
+                        }
+                        %></textarea>  
+                </td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Load or Run"></input>
+            <td><input type="reset" value="Clean"></input></td>
+            </tr>
+            <tr><td colspan="2">
+            <div id="output" style="background-color: #000000; color: #ffffff; font-family: monospace; font-size: 12px;">
+                <%
+                    WebOutput wout = new WebOutput(null);
+                    wout.setWriter(out);
+                    System.setOut(wout);
+                    System.setErr(wout);
+
+                    if (code != null) {
+                        Parser p = new Parser(code + "\n");
+                        Environment globalEnv = new Environment(null);
+                        p.resetParser();
+                        while (true) {
+                            Expression e = p.getNextExpression();
+                            if (e == null) {
+                                //out.println("Expression is null");
+                                break;
+                            }
+                            try {
+                                Object result = e.eval(globalEnv);
+                                //out.println(result.toString()+"<br>");
+                            } catch (RuntimeException rexp) {
+                                out.println("<p style=\"color: red;\">" + rexp + "</p><br>");
+                            }
+                        }
+                    }
+                %>
+            </div>
+            </td></tr>
+
+        </table>
+    </form>
+</body>
+</html>
+
+
