@@ -1,0 +1,36 @@
+# Some string functions in Fuzuli
+# See http://www.fuzuliproject.org/docs/index.php?package=5
+# for full documentation
+
+(require "string.nfl")
+
+(let myStr "Fuzuli Programming Language and Interpreter")
+(let enter "<br>")
+
+(print "Original text:"  myStr enter)
+
+(print "Number of characters: "  (strlen myStr) enter)
+
+(print "Reverse:"  (strreverse myStr) enter)
+
+(print "First 6 characters:"  (left myStr 6) enter)
+
+(print "Last 11 characters:"  (right myStr 11) enter)
+
+(print "Characters between 7 and 19:"  (substr myStr 7 19) enter)
+
+(print "MD5 of string:"  (md5 myStr) enter)
+
+(print "Uppercase:"  (ucase myStr) enter)
+
+(print "Lowercase:"  (lcase myStr) enter)
+
+(print "Array of words:"  (explode myStr " ") enter)
+
+(print "Location of programming?"  (instr myStr "programming") enter)
+
+(print "Location of Programming?"  (instr myStr "Programming") enter)
+
+(print "Replace Programming:"  (str_replace myStr "Programming" "") enter)
+
+(print "Shuffle:"  (str_shuffle myStr) enter)

@@ -35,6 +35,7 @@
                         <option value="pi">Calculating Pi</option>
                         <option value="secant">Secant Method</option>
                         <option value="ols">Ordinary Least Squares</option>
+                        <option value="string">String Functions</option>
                     </select>
                 </td></tr>
             <tr><td colspan="2">

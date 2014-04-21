@@ -10,5 +10,9 @@
             <file>file:/D:/fuzuli/JFuzuli/JFuzuliOnlineInterpreter/src/java/org/expr/samples/ols.fzl</file>
             <file>file:/D:/fuzuli/JFuzuli/JFuzuliOnlineInterpreter/src/java/org/expr/samples/pi.fzl</file>
         </group>
+        <group>
+            <file>file:/D:/fuzuli/JFuzuli/JFuzuliOnlineInterpreter/src/java/org/expr/samples/string.fzl</file>
+            <file>file:/D:/fuzuli/JFuzuli/JFuzuliOnlineInterpreter/web/index.jsp</file>
+        </group>
     </open-files>
 </project-private>
