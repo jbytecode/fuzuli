@@ -1,0 +1,8 @@
+# Triangle
+(for (let i 1) (<= i 10) (inc i)
+   (for (let j 1) (<= j i) (inc j)
+       (print "*")
+   )
+   (print "<br>")
+)
+

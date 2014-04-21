@@ -26,20 +26,26 @@
 </head>
 <body>
     <form method="post">
-        <table>
-            <tr><td>
+        <table width="100%">
+            <tr><td width="95%">
                     <select name="samplecode">
                         <option value="">Custom code</option>
+                        <option value="sum">Summing up an array</option>
+                        <option value="triangle">Triangle</option>
+                        <option value="functions">Custom Functions</option>
                         <option value="factorial">Recursive Factorial</option>
                         <option value="fibonacci">Recursive Fibonacci</option>
                         <option value="pi">Calculating Pi</option>
                         <option value="secant">Secant Method</option>
                         <option value="ols">Ordinary Least Squares</option>
                         <option value="string">String Functions</option>
+                        <option value="bigmemory">Memory Allocation</option>
+                        <option value="bublesort">Buble Sort</option>
+                        <option value="quicksort">Quick Sort</option>
                     </select>
                 </td></tr>
             <tr><td colspan="2">
-                    <textarea name="code" cols="60" rows="15" style="font-family: monospace; font-size: 12px;"><%
+                    <textarea name="code" rows="15" style="font-family: monospace; font-size: 12px; width:100%;"><%
                         String code = request.getParameter("code");
                         String samplecode = request.getParameter("samplecode");
 
@@ -50,7 +56,7 @@
                             if (code != null) {
                                 out.print(code.trim());
                             } else {
-                                out.println("(let a 5)");
+                                out.println("(print \"Hello world!<br>\")");
                             }
                         } else {
                             out.println(SampleLoader.loadSample(samplecode + ".fzl"));
@@ -59,8 +65,8 @@
                 </td>
             </tr>
             <tr>
-                <td><input type="submit" value="Load or Run"></input>
-            <td><input type="reset" value="Clean"></input></td>
+                <td align="left"><input type="submit" value="Load or Run"></input>
+            <td width="5%" align="right"><input type="reset" value="Clean"></input></td>
             </tr>
             <tr><td colspan="2">
             <div id="output" style="background-color: #000000; color: #ffffff; font-family: monospace; font-size: 12px;">
@@ -96,5 +102,3 @@
     </form>
 </body>
 </html>
-
-
