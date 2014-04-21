@@ -1,0 +1,65 @@
+(let enter "<br>")
+(print "Memory Information:" enter)
+(let mylist (list 5 6 4 2 3 9 1 10 5))
+
+
+(print "Original List:" enter)
+(print mylist enter)
+
+
+
+(function partition (params arr left right)
+    (block
+	(def i INTEGER) (def j INTEGER)(def tmp INTEGER)
+	(def pivot INTEGER)
+	(let i left) (let j right)
+	 
+	(let pivot (nth arr (/ (+ left right) 2)))
+		
+
+        (while (<= i  j)
+            (block
+            	(while (< (nth arr i) pivot)(inc i))
+                (while (> (nth arr j) pivot) (-- j)) 
+		    (if (<= i  j) 
+			(block
+		            (let tmp  (nth arr i))	
+		            (set arr i (nth arr j))
+		            (set arr j  tmp)
+		            (++ i)
+		            (-- j)
+			)
+                    )
+            )
+	)
+    (return i)
+    )
+)
+
+
+(function quicksort (params arr left right) 
+    (block
+	(def index INTEGER)
+	(let index (partition arr left right))
+	(if (< left  (- index 1))
+	   (block
+               (quicksort arr left  (- index 1))
+            )   
+	)
+
+       (if (< index right)
+           (block
+               (quicksort arr  index  right)
+           )
+        )
+    )
+)
+
+(quicksort mylist 0 (- (length mylist) 1))
+(print "After sorting:" enter)
+(print mylist enter)
+
+(print "Memory Information:" enter)
+(print (gc) enter)
+
+

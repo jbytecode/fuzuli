@@ -1,0 +1,12 @@
+(let limit 1000000)
+(let enter "<br>")
+(print "Creating array of 0..." limit enter)
+(let a (: 0 limit))
+(print "Array created with length " (length a) enter)
+(print (gc) enter)
+(let a NULL)
+(print "Gargabe Collecting manually:" enter)
+(print (gc) enter)
+(dump)
+
+
