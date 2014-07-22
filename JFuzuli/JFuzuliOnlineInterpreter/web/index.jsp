@@ -42,6 +42,7 @@
                         <option value="bigmemory">Memory Allocation</option>
                         <option value="bublesort">Buble Sort</option>
                         <option value="quicksort">Quick Sort</option>
+                        <option value="random">Random Numbers</option>
                     </select>
                 </td></tr>
             <tr><td colspan="2">

@@ -1,0 +1,19 @@
+(require "random.nfl")
+
+(let enter "<br>")
+
+(let a (rndInt))
+(let b (rndFloat))
+(let c (rndDouble))
+(let d (rndBoolean))
+(let e (rndLong))
+(let f (rndNormal))
+(let g (rndDoubleList 10))
+
+(print "Random Integer: " a enter)
+(print "Random Float: " b enter)
+(print "Random Double " c enter)
+(print "Random Boolean: " d enter)
+(print "Random Long: " e enter)
+(print "Random Normal:" f enter)
+(print "Random Double List with size of 10: " g enter)
