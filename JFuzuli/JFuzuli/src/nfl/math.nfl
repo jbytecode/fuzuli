@@ -44,7 +44,7 @@
 )
 
 (function abs (params x)
-	(return  (internal "Core.FMath.abs" x) )
+spa	(return  (internal "Core.FMath.abs" x) )
 )
 
 (function sqrt (params x)
