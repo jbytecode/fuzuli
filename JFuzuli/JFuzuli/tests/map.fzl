@@ -1,0 +1,103 @@
+#
+# fuzuli : A general purpose interpreter
+# Copyright (C) 2012,2014 Mehmet Hakan Satman <mhsatman@yahoo.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+(require "map.nfl")
+
+(let passed "PASSED!\n")
+(let error "ERROR\n")
+
+# TEST 1
+(let mymap (map_new))
+(if (= (typeof mymap) "java.util.HashMap")
+	(print passed)
+	(print error)
+)
+
+
+# TEST 2
+(map_put mymap "name" "Fuzuli")
+(map_put mymap "type" "Programming Language")
+(print passed)
+
+
+# TEST 3
+(let name (map_get mymap "name"))
+(if (= name "Fuzuli")
+	(print passed)
+	(print error)
+)
+
+# TEST 4
+(let size (map_size mymap))
+(if (= size 2)
+	(print passed)
+	(print error)
+)
+
+# TEST 5
+(map_clear mymap)
+(let size (map_size mymap))
+(if (= size 0)
+	(print passed)
+	(print error)
+)
+
+# TEST 6
+(map_put mymap "name" "Fuzuli")
+(map_put mymap "type" "Programming Language")
+(map_remove mymap "name")
+(let size (map_size mymap))
+(if (= size 1)
+	(print passed)
+	(print error)
+)
+
+# TEST 7
+(map_clear mymap)
+(if (= (map_empty mymap) true)
+	(print passed)
+	(print error)
+)
+
+
+# TEST 8
+(map_put mymap "name" "Fuzuli")
+(map_put mymap "type" "Programming Language")
+(if (= (map_contains_value mymap "Fuzuli") true)
+	(print passed)
+	(print error)
+)
+
+# TEST 9
+(if (= (map_contains_key mymap "type") true)
+	(print passed)
+	(print error)
+)
+
+# TEST 10
+(if (= (length (map_get_keys mymap)) 2)
+	(print passed)
+	(print error)
+)
+
+
+
+
+
+
+
+

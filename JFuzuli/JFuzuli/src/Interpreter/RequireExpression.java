@@ -40,7 +40,7 @@ public class RequireExpression extends Expression {
             try {
                 e = parser.getNextExpression();
             } catch (Exception exc) {
-                System.out.println("Parsing Error (" + filename + "): " + exc.getMessage());
+                System.out.println("Parsing Error (" + filename + "): " + "Line Number: "+ parser.lineNumber+ ", "+exc.getMessage());
                 exc.printStackTrace();
                 System.exit(-1);
             }

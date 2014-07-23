@@ -20,11 +20,12 @@
 package Core;
 
 import Interpreter.Environment;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FHashMap {
 
-    public static HashMap<Object,Object> map_create (Environment env){
+    public static HashMap<Object,Object> map_new (Environment env){
         HashMap<Object, Object> hashmap = new HashMap<Object, Object>();
         return(hashmap);
     }
@@ -69,14 +70,16 @@ public class FHashMap {
         return(hashmap.containsValue(value));
     }
     
-    public static Object map_get_keys (Object map, Object value, Environment env){
+    public static Object map_get_keys (Object map, Environment env){
         HashMap<Object, Object> hashmap = (HashMap<Object, Object>)map;
-        return(hashmap.keySet());
+        ArrayList<Object> arr = new ArrayList<Object>(hashmap.keySet());
+        return(arr);
     }
     
-    public static Object map_get_values (Object map, Object value, Environment env){
+    public static Object map_get_values (Object map, Environment env){
         HashMap<Object, Object> hashmap = (HashMap<Object, Object>)map;
-        return(hashmap.values());
+        ArrayList<Object> arr = new ArrayList<Object>(hashmap.values());
+        return(arr);
     }
     
     
