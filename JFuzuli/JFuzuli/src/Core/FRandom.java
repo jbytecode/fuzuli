@@ -31,7 +31,7 @@ public class FRandom {
     public static void randomize(Object o, Environment env){
         long seed = (long)FValue.getAsDouble(o);
         System.out.println("F: Setting seed to " + seed);
-        random.setSeed(seed);
+        random.setSeed(seed); 
     }
     
     public static double nextDouble(Environment env){
