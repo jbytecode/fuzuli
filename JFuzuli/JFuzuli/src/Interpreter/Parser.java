@@ -34,7 +34,8 @@ public class Parser {
     int charIndex;
     int tokenIndex;
     ArrayList<Token> tokens;
-
+    int lineNumber = 0;
+    
     public Parser(String code) {
         this.sourcecode = code;
         resetParser();
@@ -96,6 +97,7 @@ public class Parser {
         charIndex = 0;
         tokenIndex = 0;
         tokens = new ArrayList<Token>();
+        lineNumber = 0;
         readAllTokens();
     }
 
@@ -141,11 +143,17 @@ public class Parser {
             tok.content = "End of Program";
             return (tok);
         } else if (current == ' ' || current == '\t' || current == '\n' || current == '\r' || Character.isSpaceChar(current)) {
+            if (current=='\n'){
+                lineNumber++;
+            }
             return (parseNextToken());
         } else if (current == '#'){
             while(true){
                 current = consume();
-                if (current == '\n') break;
+                if (current == '\n') {
+                    lineNumber++;
+                    break;
+                }
             }
           return (parseNextToken());
         }else if (current == '(') {

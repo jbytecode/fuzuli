@@ -1,0 +1,76 @@
+#
+# fuzuli : A general purpose interpreter
+# Copyright (C) 2012-2014 Mehmet Hakan Satman <mhsatman@yahoo.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Creates a new HashMap object
+(function map_new (params)
+    (return (internal "Core.FHashMap.map_new"))
+)
+
+# Puts <key value> pairs to a given map object
+(function map_put (params map key value)
+    (return (internal "Core.FHashMap.map_put" map key value))
+)
+
+# Returns the value corresponding to key for a given map object
+(function map_get (params map key)
+    (return (internal "Core.FHashMap.map_get" map key))
+)
+
+# Returns number of elements of a map object
+(function map_size (params map)
+    (return (internal "Core.FHashMap.map_size" map))
+)
+
+# Removes all objects of object map
+(function map_clear (params map)
+    (return (internal "Core.FHashMap.map_clear" map))
+)
+
+# Removes the object with the given key
+(function map_remove (params map key)
+    (return (internal "Core.FHashMap.map_remove" map key))
+)
+
+# Returns true if the given map is empty
+# else returns false
+(function map_empty (params map)
+    (return (internal "Core.FHashMap.map_empty" map))
+)
+
+# Returns true if the map contains the given value
+(function map_contains_value (params map value)
+    (return (internal "Core.FHashMap.map_contains_value" map value))
+)
+
+# Returns true if the map contains the given key
+(function map_contains_key (params map key)
+    (return (internal "Core.FHashMap.map_contains_key" map key))
+)
+
+# Returns a list of keys of a given map
+(function map_get_keys (params map)
+    (return (internal "Core.FHashMap.map_get_keys" map))
+)
+
+# Returns a list of values of a given map
+(function map_get_values (params map)
+    (return (internal "Core.FHashMap.map_get_values" map))
+)
+
+
+
+

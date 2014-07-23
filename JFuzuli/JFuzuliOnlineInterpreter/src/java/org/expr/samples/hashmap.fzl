@@ -1,0 +1,25 @@
+(require "map.nfl")
+(let enter "<br>")
+
+# Creating new map 
+(let mymap (map_new))
+
+# Adding objects
+(map_put mymap "language" "Fuzuli")
+(map_put mymap "implementation" "Java")
+(map_put mymap "type" "Programming Language")
+
+# Accessing Elements
+(print "Key: type, Value          : " (map_get mymap "type") enter)
+(print "Key: language, Value      : " (map_get mymap "language") enter)
+(print "Key: implementation, Value: " (map_get mymap "implementation") enter)
+
+# Size of Map
+(print "Size of object: " (map_size mymap) enter)
+
+# All of the keys
+(print "All key keys: " (map_get_keys mymap) enter)
+
+# All of the values
+(print "All key values: " (map_get_values mymap) enter)
+
