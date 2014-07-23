@@ -1,6 +1,6 @@
 /*
  * fuzuli : A general purpose interpreter
- * Copyright (C) 2013 Mehmet Hakan Satman <mhsatman@yahoo.com>
+ * Copyright (C) 2014 Mehmet Hakan Satman <mhsatman@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
