@@ -17,47 +17,55 @@
 
 
 
-
+# Returns a new string with the spaces removed on the left and on the right of string x
 (function trim (params x)
 		(return  (rtrim (ltrim x)))
 )
 
-
+# Returns a new string with the spaces removed on the left of string x
 (function ltrim (params x)
 		(return (internal "Core.FStrings.ltrim" x))
 )
 
+# Returns a new string with the spaces removed on the right of string x
 (function rtrim (params x)
 		(return (internal "Core.FStrings.rtrim" x))
 )
 
-
+# Returns lower case of x
 (function lcase (params x)
 	(return (internal "Core.FStrings.lcase" x))
 )
 
+# Returns lower upper of x
 (function ucase (params x)
 	(return (internal "Core.FStrings.ucase" x))
 )
 
+# Returns first n characters of string x
 (function left (params x n)
 	(return (internal "Core.FStrings.left" x n))
 )
 
-
+# Returns last n characters of string x
 (function right (params x n)
 	(return (internal "Core.FStrings.right" x n))
 )
 
-
+# Combines all elements of alist in a string
+# alist is a List object, probably created as
+# (let alist (list 1 4 6 ...)) or
+# (let alist (: 1 100))
 (function strcat (params alist)
 	(return (internal "Core.FStrings.strcat" alist))
 )
 
 
+# Returns number of characters of string x
 (function strlen (params x)
 	(return (internal "Core.FStrings.strlen" x)) 
 )
+
 
 (function substr (params x a b)
 	(block
