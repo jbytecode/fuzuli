@@ -43,6 +43,7 @@
                         <option value="bublesort">Buble Sort</option>
                         <option value="quicksort">Quick Sort</option>
                         <option value="random">Random Numbers</option>
+                        <option value="stack">Stack</option>
                     </select>
                 </td></tr>
             <tr><td colspan="2">
