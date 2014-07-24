@@ -6,9 +6,6 @@
             <file>file:/D:/fuzuli/JFuzuli/JFuzuli/src/nfl/random.nfl</file>
             <file>file:/D:/fuzuli/JFuzuli/JFuzuli/src/Core/FRandom.java</file>
         </group>
-        <group>
-            <file>file:/home/hako/fuzuli/JFuzuli/JFuzuli/src/Core/FHashMap.java</file>
-            <file>file:/home/hako/fuzuli/JFuzuli/JFuzuli/src/nfl/map.nfl</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
