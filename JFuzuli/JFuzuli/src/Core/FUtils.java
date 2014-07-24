@@ -21,24 +21,36 @@ import Interpreter.Environment;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
 public class FUtils {
 
-    public static ArrayList sorta (ArrayList obj, Environment env){
-        ArrayList al = (ArrayList)obj.clone();
+    public static ArrayList sorta(ArrayList obj, Environment env) {
+        ArrayList al = (ArrayList) obj.clone();
         Collections.sort(al);
-        return(al);
+        return (al);
     }
-    
-    public static ArrayList sortd (ArrayList obj, Environment env){
-        ArrayList al = (ArrayList)obj.clone();
+
+    public static ArrayList sortd(ArrayList obj, Environment env) {
+        ArrayList al = (ArrayList) obj.clone();
         Collections.sort(al, Collections.reverseOrder());
-        return(al);
+        return (al);
     }
-    
-     public static ArrayList shuffle (ArrayList obj, Environment env){
-        ArrayList al = (ArrayList)obj.clone();
+
+    public static ArrayList shuffle(ArrayList obj, Environment env) {
+        ArrayList al = (ArrayList) obj.clone();
         Collections.shuffle(al);
-        return(al);
+        return (al);
+    }
+
+    public static boolean detectClass(String className) {
+        Class c = null;
+        try {
+            c = Class.forName(className);
+        } catch (Exception e) {
+
+        }
+        if (c == null) {
+            return (false);
+        }
+        return (true);
     }
 }
