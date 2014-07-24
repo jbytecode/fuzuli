@@ -19,12 +19,16 @@
 package Core;
 
 import Interpreter.Environment;
+/*
+// This package is not supported in Java 7
 import java.util.Base64;
+*/
 
 
 
 public class FBase64 {
 
+    /*
     public static Object base64_decode(Object str, Environment env) {
         Base64.Decoder decoder = Base64.getDecoder();
         String s = str.toString();
@@ -38,5 +42,6 @@ public class FBase64 {
         byte[] bytes = encoder.encode(s.getBytes());
         return (new String(bytes));
     }
+    */
 
 }
