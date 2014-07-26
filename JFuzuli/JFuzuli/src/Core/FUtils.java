@@ -20,9 +20,8 @@ package Core;
 import Interpreter.Environment;
 import Interpreter.Expression;
 import Interpreter.FunctionExpression;
-import Interpreter.IdentifierExpression;
-import Interpreter.ParamsExpression;
-import Interpreter.StringExpression;
+import Compiler.Fuzulic;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -85,6 +84,13 @@ public class FUtils {
     
     public static HashMap<String, Object> variable_list(Environment env){
         return(env.topEnvironment.variables);
+    }
+    
+    public static File compile (Object fzl_name, Environment env){
+        Fuzulic compiler = new Fuzulic();
+        String fname = fzl_name.toString();
+        File f = compiler.compile(fname);
+        return(f);
     }
     
 }

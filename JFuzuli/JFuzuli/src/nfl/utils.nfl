@@ -49,3 +49,10 @@
     (return (internal "Core.FUtils.variable_list"))
 )
 
+
+# Compiles Fuzuli source code 'filename' into a jar file
+# with the same with the source in the same folder
+(function compile (params filename)
+    (return (internal "Core.FUtils.compile" filename))
+)
+
