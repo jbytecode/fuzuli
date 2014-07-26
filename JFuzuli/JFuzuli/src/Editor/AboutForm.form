@@ -75,7 +75,7 @@
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Fuzuli Project Core Team, 2012, 2013 - http://www.fuzuliproject.org"/>
+        <Property name="text" type="java.lang.String" value="Fuzuli Project Core Team, 2012-2014 - http://www.fuzuliproject.org"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
