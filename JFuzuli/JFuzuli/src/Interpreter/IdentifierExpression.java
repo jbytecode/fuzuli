@@ -22,7 +22,7 @@ package Interpreter;
 
 public class IdentifierExpression extends Expression {
 
-    String iden;
+    public String iden;
     
     public IdentifierExpression(String iden){
         this.iden = iden;
