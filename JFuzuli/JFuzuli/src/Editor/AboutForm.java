@@ -42,7 +42,7 @@ public class AboutForm extends javax.swing.JDialog {
         jLabel2.setText("JFuzuli, A Java Implementation of the Fuzuli Programming Language");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Fuzuli Project Core Team, 2012, 2013 - http://www.fuzuliproject.org");
+        jLabel3.setText("Fuzuli Project Core Team, 2012-2014 - http://www.fuzuliproject.org");
 
         jButton1.setText("Close");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
