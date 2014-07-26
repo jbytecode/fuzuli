@@ -19,7 +19,7 @@ package Interpreter;
 
 public class StringExpression extends Expression {
 
-    String val;
+    public String val;
     
     public StringExpression(String s){
         val = s;

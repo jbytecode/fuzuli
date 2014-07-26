@@ -1,6 +1,6 @@
 /*
  * fuzuli : A general purpose interpreter
- * Copyright (C) 2013 Mehmet Hakan Satman <mhsatman@yahoo.com>
+ * Copyright (C) 2013-2014 Mehmet Hakan Satman <mhsatman@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,16 @@
 package Core;
 
 import Interpreter.Environment;
+import Interpreter.Expression;
+import Interpreter.FunctionExpression;
+import Interpreter.IdentifierExpression;
+import Interpreter.ParamsExpression;
+import Interpreter.StringExpression;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Set;
 
 public class FUtils {
 
@@ -53,4 +61,30 @@ public class FUtils {
         }
         return (true);
     }
+
+    public static ArrayList<Object> function_list(Environment env) {
+        HashMap<String, FunctionExpression> functions = env.topEnvironment.functions;
+        ArrayList<Object> arr = new ArrayList<Object>();
+        Set<String> fset = functions.keySet();
+        Object[] objlist = fset.toArray();
+        arr.addAll(Arrays.asList(objlist));
+        return (arr);
+    }
+
+    public static ArrayList<String> function_params(Object name, Environment env) {
+        String fname = name.toString();
+        FunctionExpression fexp = env.findFunction(fname);
+        return(fexp.params);
+    }
+    
+    public static ArrayList<Expression> function_body (Object name, Environment env){
+        String fname = name.toString();
+        FunctionExpression fexp = env.findFunction(fname);
+        return(fexp.body);
+    }
+    
+    public static HashMap<String, Object> variable_list(Environment env){
+        return(env.topEnvironment.variables);
+    }
+    
 }

@@ -23,8 +23,8 @@ import java.util.ArrayList;
 public class FunctionExpression extends Expression {
 
     String fname;
-    ArrayList<String> params;
-    ArrayList<Expression> body;
+    public ArrayList<String> params;
+    public ArrayList<Expression> body;
     
     public FunctionExpression(ArrayList<Expression>expr){
         this.exprs = expr;

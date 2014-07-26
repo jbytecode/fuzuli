@@ -32,6 +32,10 @@ public abstract class Expression implements Serializable {
     
     public abstract Object eval (Environment e);
     
+    public ArrayList<Expression> getExpressions(){
+        return(exprs);
+    }
+    
     @Override
     public String toString(){
         StringBuilder buf = new StringBuilder();

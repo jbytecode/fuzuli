@@ -17,18 +17,35 @@
 
 
 (function shuffle (params alist)
-		(return (internal "Core.FUtils.shuffle" alist))
+    (return (internal "Core.FUtils.shuffle" alist))
 )
 
 (function sorta (params alist)
-		(return (internal "Core.FUtils.sorta" alist))
+    (return (internal "Core.FUtils.sorta" alist))
 )
 
 (function sortd (params alist)
-		(return (internal "Core.FUtils.sortd" alist))
+    (return (internal "Core.FUtils.sortd" alist))
+)
+
+# Returns a list of defined functions
+(function function_list (params)
+    (return (internal "Core.FUtils.function_list"))
 )
 
 
+# Returns a list of parameters for a given function 
+(function function_params (params name)
+    (return (internal "Core.FUtils.function_params" name))
+)
 
+# Returns body of a given function
+(function function_body (params name)
+    (return (internal "Core.FUtils.function_body" name))
+)
 
+# Returns a list of globally defined variables
+(function variable_list (params)
+    (return (internal "Core.FUtils.variable_list"))
+)
 
