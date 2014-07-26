@@ -18,15 +18,13 @@
 
 package jfuzuli.main;
 
-import Interpreter.ConstantNumberExpression;
-import Interpreter.NumberExpression;
+import Editor.MainFrame;
 import Interpreter.Environment;
 import Interpreter.Expression;
 import Interpreter.Parser;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
-import java.util.Scanner;
 
 /**
  *
@@ -88,9 +86,17 @@ public class JFuzuli {
         if (args.length == 1) {
             if(args[0].equals("--repl")){
                 repl(args);
+            }else if(args[0].equals("--editor")){
+                MainFrame mf = new MainFrame();
+                mf.setVisible(true);
             }else{
                 runSingleFile(args);
             }
+        }else{
+            System.out.println("Usage:");
+            System.out.println("java -jar JFuzuli.jar fzlfile");
+            System.out.println("java -jar JFuzuli.jar --repl");
+            System.out.println("java -jar JFuzuli.jar --editor");
         }
     }
 }
