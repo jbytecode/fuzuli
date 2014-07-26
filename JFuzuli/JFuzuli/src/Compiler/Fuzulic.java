@@ -116,6 +116,10 @@ public class Fuzulic {
         compile (args[0]);
     }
     
+    public Fuzulic(){
+        
+    }
+    
     public static void main (String[] args){
         String newname;
         System.out.println("Fuzuli bytecode compiler 1.0");
