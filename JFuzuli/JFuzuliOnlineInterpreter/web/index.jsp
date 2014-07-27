@@ -40,11 +40,13 @@
                         <option value="ols">Ordinary Least Squares</option>
                         <option value="string">String Functions</option>
                         <option value="bigmemory">Memory Allocation</option>
-                        <option value="bublesort">Buble Sort</option>
+                        <option value="bublesort">Bubble Sort</option>
                         <option value="quicksort">Quick Sort</option>
                         <option value="random">Random Numbers</option>
                         <option value="stack">Stack</option>
                         <option value="hashmap">Hash Map</option>
+                        <option value="reflection">Reflection</option>
+                        <option value="java">Creating Java Objects</option>
                     </select>
                 </td></tr>
             <tr><td colspan="2">
