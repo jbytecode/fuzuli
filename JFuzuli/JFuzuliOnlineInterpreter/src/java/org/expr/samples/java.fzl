@@ -1,0 +1,14 @@
+# This example shows use of javanew, javacall and javastatic
+# for creating java objects, calling java methods and calling 
+# static methods, respectively.
+
+(let enter "<br>")
+(let s (javanew "java.lang.String" "Hello world!"))
+(print "String is " s enter)
+
+(let f5 (javacall s "substring" (jint 0) (jint 5)))
+(print "First 5 characters : " f5 enter)
+
+(let i (jint 10))
+(print "Converting " i " to String: " (javastatic "java.lang.String.valueOf" i ) enter)
+
