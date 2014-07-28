@@ -1,0 +1,24 @@
+# This example show how Fuzuli expressions can be passed
+# to functions. Generic functions can be easly created with Fuzuli
+
+(let enter "<br>")
+
+(let expr1 (expression (+ a b)))
+(let expr2 (expression (- a b)))
+(let expr3 (expression (* a b)))
+(let expr4 (expression (/ a b)))
+
+
+(function generic_function (params e x y)
+   (let a x)
+   (let b y)
+   (return (eval e))
+)
+
+(let x1 15)(let x2 5)
+(print "x1=" x1 ", x2=" x2 enter)
+(print "+ : " (generic_function expr1 x1 x2) enter)
+(print "- : " (generic_function expr2 x1 x2) enter)
+(print "* : " (generic_function expr3 x1 x2) enter)
+(print "/ : " (generic_function expr4 x1 x2) enter)
+

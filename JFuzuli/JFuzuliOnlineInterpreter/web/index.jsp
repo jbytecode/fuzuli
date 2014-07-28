@@ -47,6 +47,7 @@
                         <option value="hashmap">Hash Map</option>
                         <option value="reflection">Reflection</option>
                         <option value="java">Creating Java Objects</option>
+                        <option value="expression">Passing Fuzuli Codes/Expressions to Functions</option>
                     </select>
                 </td></tr>
             <tr><td colspan="2">
