@@ -16,50 +16,50 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# Reset the randomizer using the number seed
+/* Reset the randomizer using the number seed */
 (function rndRandomize (params seed)
     (return (internal "Core.FRandom.randomize" seed))
 )
 
 
-# Returns next random boolean
+/* Returns next random boolean */
 (function rndBoolean (params)
     (return (internal "Core.FRandom.nextBoolean"))
 )
 
-# Returns next random integer
+/* Returns next random integer
 (function rndInt (params)
     (return (internal "Core.FRandom.nextInt"))
 )
 
-# Returns next random long
+/* Returns next random long */
 (function rndLong (params)
     (return (internal "Core.FRandom.nextLong"))
 )
 
-# Returns next random float
+/* Returns next random float */
 (function rndFloat (params)
     (return (internal "Core.FRandom.nextFloat"))
 )
 
-# Returns next random double
+/* Returns next random double */
 (function rndDouble (params)
     (return (internal "Core.FRandom.nextDouble"))
 )
 
-# Returns next random Normal
-# This function is same with the rndGaussian
+/* Returns next random Normal
+This function is same with the rndGaussian */
 (function rndNormal (params)
     (return (internal "Core.FRandom.nextGaussian"))
 )
 
-# Returns next random Normal
-# This function is same with the rndNormal
+/* Returns next random Normal
+This function is same with the rndNormal */
 (function rndGaussian (params)
     (return (internal "Core.FRandom.nextGaussian"))
 )
 
-# Returns next random double array with size of n
+/* Returns next random double array with size of n */
 (function rndDoubleList (params n)
     (return (internal "Core.FRandom.nextDoubleList" n))
 )
