@@ -28,30 +28,30 @@
     (return (internal "Core.FUtils.sortd" alist))
 )
 
-# Returns a list of defined functions
+/* Returns a list of defined functions */
 (function function_list (params)
     (return (internal "Core.FUtils.function_list"))
 )
 
 
-# Returns a list of parameters for a given function 
+/* Returns a list of parameters for a given function */
 (function function_params (params name)
     (return (internal "Core.FUtils.function_params" name))
 )
 
-# Returns body of a given function
+/* Returns body of a given function */
 (function function_body (params name)
     (return (internal "Core.FUtils.function_body" name))
 )
 
-# Returns a list of globally defined variables
+/* Returns a list of globally defined variables */
 (function variable_list (params)
     (return (internal "Core.FUtils.variable_list"))
 )
 
 
-# Compiles Fuzuli source code 'filename' into a jar file
-# with the same with the source in the same folder
+/* Compiles Fuzuli source code 'filename' into a jar file
+with the same with the source in the same folder */
 (function compile (params filename)
     (return (internal "Core.FUtils.compile" filename))
 )
