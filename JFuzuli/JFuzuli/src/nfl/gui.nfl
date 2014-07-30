@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# Message and Input Boxes
+/* Message and Input Boxes */
 (function msgbox (params text)
     (return (internal "Core.Gui.FBasics.msgbox" text))
 )
@@ -29,7 +29,7 @@
     (return (internal "Core.Gui.FBasics.registerEvent" obj func))
 )
 
-# For all components
+/* For all components */
 (function show (params obj)
     (return (internal "Core.Gui.FBasics.show" obj))
 )
@@ -42,7 +42,7 @@
 
 
 
-# DrawingArea Functions
+/* DrawingArea Functions */
 (function createDrawingArea (params w h)
     (return (internal "Core.Gui.FDrawingArea.createDrawingArea" w h))
 )
