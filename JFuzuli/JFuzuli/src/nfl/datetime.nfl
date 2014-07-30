@@ -15,23 +15,23 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Returns a list of YEAR - MONTH - DAY - HOUR - MINUTE - SECOND - MILLISECOND
+/* Returns a list of YEAR - MONTH - DAY - HOUR - MINUTE - SECOND - MILLISECOND */
 (function datetime (params)
     (return (internal "Core.FDate.datetime"))
 )
 
-# Returns the current time zone id as string
+/* Returns the current time zone id as string */
 (function timezone_get (params)
     (return (internal "Core.FDate.timezone_get"))
 )
 
-# Sets strzone as the default time zone id.
-# A List of all time zones can be get using (timezone_list)
+/* Sets strzone as the default time zone id.
+A List of all time zones can be get using (timezone_list) */
 (function timezone_get (params strzone)
     (return (internal "Core.FDate.timezone_set" strzone))
 )
 
-# Return all available time zone id's as a list
+/* Return all available time zone id's as a list */
 (function timezone_list (params)
     (return (internal "Core.FDate.timezone_list"))
 )
