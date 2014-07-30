@@ -27,7 +27,7 @@
     (return (internal "Core.FRandom.nextBoolean"))
 )
 
-/* Returns next random integer
+/* Returns next random integer */
 (function rndInt (params)
     (return (internal "Core.FRandom.nextInt"))
 )
@@ -47,13 +47,13 @@
     (return (internal "Core.FRandom.nextDouble"))
 )
 
-/* Returns next random Normal
+/* Returns next random Normal */
 This function is same with the rndGaussian */
 (function rndNormal (params)
     (return (internal "Core.FRandom.nextGaussian"))
 )
 
-/* Returns next random Normal
+/* Returns next random Normal */
 This function is same with the rndNormal */
 (function rndGaussian (params)
     (return (internal "Core.FRandom.nextGaussian"))
