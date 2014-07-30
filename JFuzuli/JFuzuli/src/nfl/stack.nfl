@@ -16,34 +16,34 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# Creates and returns new stack
+/* Creates and returns new stack */
 (function stack_new (params)
     (return (internal "Core.FStack.stack_new"))
 )
 
-# Returns true if stack is empty
+/* Returns true if stack is empty */
 (function stack_empty (params stack)
     (return (internal "Core.FStack.stack_empty" stack))
 )
 
-# Clears the stack
+/* Clears the stack */
 (function stack_clear (params stack)
     (return (internal "Core.FStack.stack_clear" stack))
 )
 
-# Push obj to the stack
+/* Push obj to the stack */
 (function stack_push (params stack obj)
     (return (internal "Core.FStack.stack_push" stack obj))
 )
 
-# Pop an object from top of the stack
+/* Pop an object from top of the stack */
 (function stack_pop (params stack)
     (return (internal "Core.FStack.stack_pop" stack))
 )
 
-# Peeks an object from top of the stack
-# Returned object is not removed from the stack.
-# This is the main difference between the method stack_pop
+/* Peeks an object from top of the stack
+Returned object is not removed from the stack.
+This is the main difference between the method stack_pop */
 (function stack_peek (params stack)
     (return (internal "Core.FStack.stack_peek" stack))
 )
