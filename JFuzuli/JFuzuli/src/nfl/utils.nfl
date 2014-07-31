@@ -16,14 +16,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+/* Shuffles all elements of list 'alist' */ 
 (function shuffle (params alist)
     (return (internal "Core.FUtils.shuffle" alist))
 )
 
+/* Return the sorted list of list 'alist' in ascending order */ 
 (function sorta (params alist)
     (return (internal "Core.FUtils.sorta" alist))
 )
 
+/* Return the sorted list of list 'alist' in descending order */ 
 (function sortd (params alist)
     (return (internal "Core.FUtils.sortd" alist))
 )

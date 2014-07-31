@@ -66,93 +66,110 @@ alist is a List object, probably created as
 	(return (internal "Core.FStrings.strlen" x)) 
 )
 
-
+/* Returns the part of string x between index of a and b 
+For example, (substr "fuzuli" 0 3) returns fuz */
 (function substr (params x a b)
 	(block
 		(return (internal "Core.FStrings.substr" x a b))
 	)
 )
 
+/* Reverse the string x */
 (function strreverse (params x)
 	(return (internal "Core.FStrings.strreverse" x))
 )
 
 
-
+/* Returns 1 if 'part' is included in string 'text'
+For example (instr "istanbul" "bul") returns 1
+whereas (instr "istanbul" "zeta") returns 0 */
 (function instr (params text part)
 	(return (internal "Core.FStrings.instr" text part))
 )
 
-
+/* Returns the ascii character by code */
 (function chr (params byte)
 	(return (internal "Core.FStrings.chr" byte))
 )
 
+/* Returns ascii code of character */
 (function ord (params character)
 	(return (internal "Core.FStrings.ord" character))
 )
 
+/* Returns the md5 of given text */
 (function md5 (params text)
 	(return (internal "Core.FStrings.md5" text))
 )
 
+/* Decodes url */
 (function urldecode (params url)
 	(return (internal "Core.FStrings.urldecode" url))
 )
 
+/* Calculates the Levenshtein distance for two given strings */
 (function levenshtein (params text1 text2)
 	(return (internal "Core.FStrings.levenshtein" text1 text2))
 )
 
 
+/* Returns a new string by replacing all 'what' phrases with 'to' phareses in string mainstr */
 (function str_replace (params mainstr what to)
 		(return (internal "Core.FStrings.str_replace" mainstr what to))
 )
 
+/* Shuffles all of the characters of string 'str' */
 (function str_shuffle (params str)
 		(return (internal "Core.FStrings.str_shuffle" str))
 
 )
 
+/* Returns 1, if str is digit */
 (function isdigit (params str)
 		(return (internal "Core.FStrings.isdigit" str))
 )
 
+/* Returns 1, if str is alpha character */
 (function isalpha (params str)
 		(return (internal "Core.FStrings.isalpha" str))
 )
 
+/* Returns 1, if str is alpha numeric */
 (function isalnum (params str)
 		(return (internal "Core.FStrings.isalnum" str))
 )
 
+/* Returns 1 is str is in upper case */ 
 (function isupper (params str)
 		(return (internal "Core.FStrings.isupper" str))
 )
 
+/* Returns 1 is str is in lower case */ 
 (function islower (params str)
 		(return (internal "Core.FStrings.islower" str))
 )
 
+/* Returns 1 is str is control character */ 
 (function iscntrl (params str)
 		(return (internal "Core.FStrings.iscntrl" str))
 )
 
-
+/* Returns 1 is str is graphics character */ 
 (function isgraph (params str)
 		(return (internal "Core.FStrings.isgraph" str))
 )
 
-
+/* Returns 1 is str is printable */ 
 (function isprint (params str)
 		(return (internal "Core.FStrings.isprint" str))
 )
 
-
+/* Returns 1 is str is punctuation */ 
 (function ispunct (params str)
 		(return (internal "Core.FStrings.ispunct" str))
 )
 
+/* Returns 1 is str is space character */ 
 (function isspace (params str)
 		(return (internal "Core.FStrings.isspace" str))
 )
