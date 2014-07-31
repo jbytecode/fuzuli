@@ -1,0 +1,15 @@
+ body{ margin:0px; padding:0px; background:#ffffff; font-family:Arial, Helvetica, sans-serif;}
+   h1{ display:block; height:48px; line-height:48px; margin:0px; padding:0px 10px; background:#48abff; border:solid 1px #cccccc; border-bottom:none; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:16px; font-weight:bold; color:#fff;}
+   .left{ width:210px; position:absolute; left:0px; top:58px; z-index:9; padding:0px 10px 10px 10px; font-size:11px; font-weight:bold;}
+   .left ul{ margin:0px; padding:0px; list-style:none; border:solid 1px #e2e2e2;}
+   .left ul li{ border-top:solid 1px #e2e2e2;}
+   .left ul li:first-child{ border:none;}
+   .left ul li a{ display:block; padding:15px 10px; text-decoration:none; color:#101010;}
+   .left ul li a:hover{ text-decoration:underline;}
+   .left ul li.selected a{ background:#f0f0f0;}
+   .right{ padding:10px 10px 10px 240px; position:relative; z-index:8;}
+   .right table{ border-bottom:solid 1px #cccccc; border-right:solid 1px #cccccc; font-size:14px; color:#282828;}
+   .right table tr td{ border-top:solid 1px #cccccc; border-left:solid 1px #cccccc; padding:15px 10px;}
+   .right table tr td span{ font-weight:bold;}
+   .info{ text-align:right; font-size:12px; color:#aaa; padding:0px 10px 10px 10px;}
+   
