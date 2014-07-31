@@ -17,6 +17,8 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+   set_time_limit(0);
    ini_set ( 'display_errors', FALSE );
    require "parser.php";
    
