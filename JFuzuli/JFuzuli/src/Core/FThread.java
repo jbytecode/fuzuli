@@ -62,6 +62,10 @@ public class FThread {
         }
     }
     
+    public static String thread_name (Environment env){
+        return(Thread.currentThread().getName());
+    }
+    
 }
 
 

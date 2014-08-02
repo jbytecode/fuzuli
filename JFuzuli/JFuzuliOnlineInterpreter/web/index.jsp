@@ -48,6 +48,7 @@
                         <option value="reflection">Reflection</option>
                         <option value="java">Creating Java Objects</option>
                         <option value="expression">Passing Fuzuli Codes/Expressions to Functions</option>
+                        <option value="thread">Threads</option>
                     </select>
                 </td></tr>
             <tr><td colspan="2">
