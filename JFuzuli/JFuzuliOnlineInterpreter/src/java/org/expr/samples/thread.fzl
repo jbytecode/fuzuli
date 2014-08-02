@@ -1,0 +1,26 @@
+(require "thread.nfl")
+
+(let enter "<br>")
+
+(function three_times (params)
+   (print "<u>Started thread: " (thread_name) "</u>" enter)
+   (for (let i 0) (< i 5) (++ i)
+     (print "Running thread " (thread_name) enter)
+     (thread_sleep 500)
+   )
+)
+
+(let mythread1 (thread_new "three_times"))
+(let mythread2 (thread_new "three_times"))
+(let mythread3 (thread_new "three_times"))
+
+(thread_start mythread1)
+(thread_sleep 100)
+(thread_start mythread2)
+(thread_sleep 100)
+(thread_start mythread3)
+(thread_sleep 100)
+
+(thread_join mythread1)
+(thread_join mythread2)
+(thread_join mythread3)

@@ -32,7 +32,7 @@
 # New Thread
 (function three_times (params)
 	(for (let i 0) (< i 3) (++ i)
-		(print passed)
+		(print "Running Thread: " (thread_name) "\n")
 		(thread_sleep 1000)
 	)
 )
@@ -40,5 +40,7 @@
 (let mythread2 (thread_new "three_times"))
 (thread_start mythread1)
 (thread_start mythread2)
+
+
 
 

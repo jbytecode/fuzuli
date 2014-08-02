@@ -37,6 +37,10 @@
     (return (internal "Core.FThread.thread_join" athread))
 )
 
+/* Returns the name of current thread */
+(function thread_name (params)
+    (return (internal "Core.FThread.thread_name"))
+)
 
 
 
