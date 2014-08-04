@@ -59,3 +59,10 @@ with the same with the source in the same folder */
     (return (internal "Core.FUtils.compile" filename))
 )
 
+/* Returns hashcode of any Java Object */
+(function hashcode (params aJavaObject)
+    (return (javacall aJavaObject "hashCode"))
+)
+
+
+
