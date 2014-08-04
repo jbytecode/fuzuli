@@ -15,15 +15,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Core;
 
 import Interpreter.Environment;
 import Interpreter.FValue;
-
+import java.util.ArrayList;
 
 public class FMath {
-    
+
     public static Double pi(Environment env) {
         return Math.PI;
     }
@@ -95,5 +94,15 @@ public class FMath {
 
     public static double floor(Object d, Environment env) {
         return Math.floor(FValue.getAsDouble(d));
+    }
+
+    public static double euclidean(Object l1, Object l2, Environment env) {
+        ArrayList list1 = (ArrayList) l1;
+        ArrayList list2 = (ArrayList) l2;
+        double euc = 0.0;
+        for (int i = 0; i < list1.size(); i++) {
+            euc += Math.pow(FValue.getAsDouble(list1.get(i)) - FValue.getAsDouble(list2.get(i)), 2.0);
+        }
+        return (Math.sqrt(euc));
     }
 }

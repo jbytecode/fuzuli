@@ -137,3 +137,9 @@
 )
 
 
+# TEST 17 - euclidean
+(let l1 (list 1 2 3 4 5))
+(if (= (euclidean l1 l1) 0.0)
+	(print passed)
+	(print error)
+)

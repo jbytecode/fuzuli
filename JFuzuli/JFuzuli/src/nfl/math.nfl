@@ -130,3 +130,11 @@
 (function floor (params x )
 	(return (internal "Core.FMath.floor" x))
 )
+
+
+/* Returns the euclidean distance between two vectors
+   given by list1 and list2, respectively. */
+(function euclidean (params list1 list2)
+    (return (internal "Core.FMath.euclidean" list1 list2))
+)
+

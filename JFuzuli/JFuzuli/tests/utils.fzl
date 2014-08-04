@@ -21,15 +21,21 @@
 (let error "ERROR\n")
 
 (let f (function_list))
-(print f "\n")
+#(print f "\n")
 
 (let e (function_params "sorta"))
-(print e "\n")
+#(print e "\n")
 
 (let body (function_body "sorta"))
-(print body "\n")
+#(print body "\n")
 
 (let vlist (variable_list))
-(print vlist "\n")
+#(print vlist "\n")
+
+(let a "Hello")
+(if (= (hashcode a) "69609650")
+	(print passed)
+	(print error)
+)
 
 
