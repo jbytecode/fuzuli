@@ -97,10 +97,6 @@
 )
 
 
-(function rnd (params)
-		(return (internal "Core.FIO.rnd"))
-)
-
 (function print_r (params alist)
 		(return (internal "Core.FIO.print_r" alist))
 )
@@ -124,10 +120,6 @@
 
 (function time (params)
 		(return (internal "Core.FIO.time"))
-)
-
-(function randomize (params seed)
-		(return (internal "Core.FIO.randomize" seed))
 )
 
 

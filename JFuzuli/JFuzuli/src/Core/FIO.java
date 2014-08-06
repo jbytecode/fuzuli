@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.stream.Stream;
 
 public class FIO {
 
@@ -71,6 +72,8 @@ public class FIO {
         if (obj instanceof String) {
             String s = (String) (obj);
             os.writeUTF(s);
+        }else if(obj instanceof Integer){
+            os.writeInt((Integer)obj);
         } else if (obj instanceof Number) {
             os.writeDouble((Double)obj);
         } else if (obj instanceof ArrayList) {
@@ -103,22 +106,22 @@ public class FIO {
             return(dis.readDouble());
         }else if (o instanceof String){
             return(dis.readUTF());
+        }else if(o instanceof Integer){
+            return(dis.readInt());
+        }else if(o instanceof Float){
+            return(dis.readFloat());
         }else{
             throw new RuntimeException("fread can not read from "+dis);
         }
     }
+    
     
     public static Object unlink (String name, Environment env){
         File f = new File(name);
         return f.delete();
     }
     
-    public static Object randomize (Number num, Environment env){
-        Random r = FIO.getCurrentRandomizer();
-        r.setSeed(num.longValue());
-        return(0.0);
-    }
-    
+       
     private static Random getCurrentRandomizer(){
         Thread th = Thread.currentThread();
         if (FIO.randomizers.containsKey(th)){
@@ -131,10 +134,6 @@ public class FIO {
         }
     }
     
-    public static double rnd (Environment env){
-        Random r = FIO.getCurrentRandomizer();
-        return(r.nextDouble());
-    }
     
     public static String getenv (String var, Environment env){
         return(System.getProperty(var));
@@ -212,4 +211,19 @@ public class FIO {
         reader.read(buf);
         return(new String(buf));
     }
+    
+    public static void fputs (DataOutputStream f, String s, Environment env) throws IOException{
+        f.writeUTF(s);
+    }
+    
+    public static char fgetc(DataInputStream f, Environment env) throws IOException {
+        char c = f.readChar();
+        return (c);
+    }
+    
+    public static void fflush(DataOutputStream stream, Environment env) throws IOException{
+        stream.flush();
+    }
+    
+    
 }

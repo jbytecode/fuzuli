@@ -614,12 +614,6 @@ public class Parser {
             }else if (tok.content.equals("dump")){
                 exprs = getExpressionList();
                 return (new DumpExpression(exprs));
-            }else if (tok.content.equals("class")){
-                exprs = getExpressionList();
-                return (new ClassExpression(exprs));
-            }else if (tok.content.equals("new")){
-                exprs = getExpressionList();
-                return (new NewExpression(exprs));
             }else if (tok.content.equals("jint")){
                 exprs = getExpressionList();
                 return (new JintExpression(exprs));

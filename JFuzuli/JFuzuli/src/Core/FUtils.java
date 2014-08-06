@@ -93,4 +93,8 @@ public class FUtils {
         return(f);
     }
     
+    public static Environment environment(Environment env){
+        return(env.topEnvironment);
+    }
+    
 }
