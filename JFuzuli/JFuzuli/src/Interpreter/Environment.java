@@ -20,21 +20,19 @@ package Interpreter;
 import java.io.Serializable;
 import java.util.HashMap;
 
-
 public class Environment implements Serializable {
 
     public HashMap<String, Object> variables;
     public Environment topEnvironment;
     public Environment subEnvironment;
     public HashMap<String, FunctionExpression> functions;
-    public static HashMap<String, ClassExpression> classes = new HashMap<String, ClassExpression>();
-    
+
     public Environment(Environment top) {
         this.topEnvironment = top;
         this.variables = new HashMap<String, Object>();
         this.functions = new HashMap<String, FunctionExpression>();
         //this.classes = new HashMap<String, ClassExpression>();
-        if (top==null){
+        if (top == null) {
             this.variables.put("NULL", FValue.NULL);
             this.variables.put("true", Boolean.TRUE);
             this.variables.put("false", Boolean.FALSE);
@@ -48,7 +46,7 @@ public class Environment implements Serializable {
             this.variables.put("BYTE", java.lang.Byte.class.getCanonicalName());
             this.variables.put("BOOLEAN", java.lang.Boolean.class.getCanonicalName());
             this.variables.put("CHAR", java.lang.Character.class.getCanonicalName());
-        }else{
+        } else {
             top.subEnvironment = this;
         }
     }
@@ -56,65 +54,51 @@ public class Environment implements Serializable {
     public Object getVariableInThisEnvironment(String name) {
         return (this.variables.get(name));
     }
-    
+
     public void setVariableInThisEnvironment(String name, Object val) {
         this.variables.put(name, val);
     }
 
     public Environment findEnvironmentOfVariable(String name) {
-        if(variables.containsKey(name)){
-            return(this);
-        }else if (this.topEnvironment !=null){
-            return(topEnvironment.findEnvironmentOfVariable(name));
-        }else{
-            return(null);
+        if (variables.containsKey(name)) {
+            return (this);
+        } else if (this.topEnvironment != null) {
+            return (topEnvironment.findEnvironmentOfVariable(name));
+        } else {
+            return (null);
         }
     }
-    
-    
 
     public void setVariable(String name, Object val) {
         Environment env = findEnvironmentOfVariable(name);
-        if(env==null){
+        if (env == null) {
             this.variables.put(name, val);
-        }else{
+        } else {
             env.setVariableInThisEnvironment(name, val);
         }
     }
-    
-    public String toString(){
+
+    public String toString() {
         StringBuilder buf = new StringBuilder();
-        if (this.topEnvironment!=null){
+        if (this.topEnvironment != null) {
             //buf.append(this.topEnvironment.toString());
         }
-        buf.append(this.variables.toString());  
-        return(buf.toString());
+        buf.append(this.variables.toString());
+        return (buf.toString());
     }
-    
-    public void registerFunction(String name, FunctionExpression f){
+
+    public void registerFunction(String name, FunctionExpression f) {
         this.functions.put(name, f);
     }
-    
-     public FunctionExpression findFunction(String name) {
-        if(functions.containsKey(name)){
-            return(functions.get(name));
-        }else if (this.topEnvironment !=null){
-            return(topEnvironment.findFunction(name));
-        }else{
-            return(null);
-        }
-    }
-     
-     public void registerClass(String name, ClassExpression c){
-        this.classes.put(name, c);
-    }
-    
-     public ClassExpression findClass(String name) {
-        if(classes.containsKey(name)){
-            return(classes.get(name));
-        }else{
-            return(null);
-        }
-    }
-}
 
+    public FunctionExpression findFunction(String name) {
+        if (functions.containsKey(name)) {
+            return (functions.get(name));
+        } else if (this.topEnvironment != null) {
+            return (topEnvironment.findFunction(name));
+        } else {
+            return (null);
+        }
+    }
+
+}

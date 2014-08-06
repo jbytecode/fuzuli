@@ -21,6 +21,7 @@
 
 (let passed "PASSED!\n")
 (let error "ERROR\n")
+(let enter "\n")
 
 # TEST 1
 (let f (fopen "testio.txt" "w"))
@@ -40,37 +41,39 @@
 	 (print passed)
 	 (print error)
 )
+
 (unlink "testio.txt")
 
 
-
 # TEST 2
-# Factorial
-(function factorial (params x)
-    (block
-        (if (> x 1.0) 
-        	(return (* x (factorial (- x 1.0)))) 
-        	(return 1.0)
-        )
-    )
-)
+(let f (fopen "testio.txt" "w"))
+(fwrite f "Fuzuli")
+(fwrite f 3.141592)
+(fwrite f (jint 5))
+(fclose f)
 
-
-(let result2 (factorial 6))
-(if (= result2 720) 
-	(print passed) 
-	(print error)
-)
-
-
-
-# TEST 3
-(randomize 12345)
-(let result3 (rnd))
-(if (= result3 0.3618031071604718)
+(let f (fopen "testio.txt" "r"))
+(let strval (fread f ""))
+(if (= strval "Fuzuli")
 	(print passed)
 	(print error)
 )
+
+(let doubleval (fread f 0.0))
+(if (= doubleval 3.141592)
+	(print passed)
+	(print error)
+)
+
+(let intval (fread f (jint 0)))
+(if (= intval (jint 5))
+	(print passed)
+	(print error)
+)
+(fclose f)
+(unlink "testio.txt")
+
+
 
 
 # TEST 4

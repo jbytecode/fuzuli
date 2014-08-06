@@ -65,4 +65,12 @@ with the same with the source in the same folder */
 )
 
 
+/* Returns the current environment which holds the
+variables and functions. If this function is called
+in a local variable scope, only the corresponding values are 
+returned due to current environment */
+(function environment (params)
+    (return (internal "Core.FUtils.environment"))
+)
+
 

@@ -16,55 +16,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-(require "string.nfl")
+(require "oop.nfl")
+
 (let passed "PASSED!\n")
 (let error "ERROR\n")
 
-(class Person extends Object
-		
-		(require "string.nfl")
-		(def name STRING)
-		(def surname STRING)
-
-		(function getName (params)
-			(return name)
-		)
-
-		(function getSurname (params)
-			(return surname)
-		)
-
-		(function setName (params n)
-			(let name n)
-		)
-
-		(function setSurname (params s)
-			(let surname s)
-		)
-
-		(function toString (params)
-			(return (strcat (list name " " surname)))
-		)
-)
-
-
-#TEST1
-(let p1 (new Person))
-(p1.setName "Fuzuli")
-(p1.setSurname "Language")
-(if (= (p1.toString) "Fuzuli Language")
-	(print passed)
-	(print error)
-)
-
-
-#TEST2
-(p1.setName "Changed")
-(p1.setSurname "Changed")
-(if (= (p1.toString) "Changed Changed")
-	(print passed)
-	(print error)
-)
-
-
+(classdef "Person")
+(print (classlist))
 
