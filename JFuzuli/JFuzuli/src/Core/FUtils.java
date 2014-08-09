@@ -21,6 +21,8 @@ import Interpreter.Environment;
 import Interpreter.Expression;
 import Interpreter.FunctionExpression;
 import Compiler.Fuzulic;
+import Interpreter.ExpressionExpression;
+import Interpreter.FValue;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,6 +97,18 @@ public class FUtils {
     
     public static Environment environment(Environment env){
         return(env.topEnvironment);
+    }
+    
+    public static int expression_length(Expression exp, Environment env){
+        return(exp.getExpressions().size());
+    }
+    
+    public static Expression expression_get (Expression exp, Object i, Environment env){
+        int index = (int)FValue.getAsDouble(i);
+        ArrayList<Expression> arr = new ArrayList<Expression>(1);
+        arr.add(exp.getExpressions().get(index));
+        ExpressionExpression exprexpr = new ExpressionExpression(arr);
+        return(exprexpr);
     }
     
 }

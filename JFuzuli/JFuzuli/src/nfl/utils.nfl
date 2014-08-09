@@ -74,3 +74,16 @@ returned due to current environment */
 )
 
 
+/* Return number of elements of a given Fuzuli expression */
+(function expression_length (params expr)
+    (return (internal "Core.FUtils.expression_length" expr))
+)
+
+/* Returns ith sub-expression of expression expr */
+(function expression_get (params expr i)
+    (return (internal "Core.FUtils.expression_get" expr i))
+)
+
+
+
+
