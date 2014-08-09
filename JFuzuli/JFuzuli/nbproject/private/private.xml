@@ -8,7 +8,6 @@
         </group>
         <group name="JFuzuliBundle">
             <file>file:/D:/fuzuli/JFuzuli/JFuzuli/src/Core/FMath.java</file>
-            <file>file:/D:/fuzuli/JFuzuli/JFuzuli/src/Core/Gui/FDrawingArea.java</file>
         </group>
     </open-files>
 </project-private>
