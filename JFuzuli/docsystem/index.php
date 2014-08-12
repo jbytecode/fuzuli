@@ -17,32 +17,30 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+set_time_limit(0);
+ini_set ( 'display_errors', FALSE );
+require "parser.php";
 
-   set_time_limit(0);
-   ini_set ( 'display_errors', FALSE );
-   require "parser.php";
-   
-   $parser = new PARSER();
-   $array = $parser->getFiles();
-   
-   if( $_REQUEST["process"] == "clearAll" ) {
-         
-      $parser->clearAll ();
-         
-   }
-   else {
-         
-      foreach($array as $arr) {
-         
-         system( touch ( trim( $arr ) ) );
-         system( chmod ( trim( $arr ), 0777 ) );
-         
-         $parser->getContent( trim ( $arr ) );
-      
-      }
-      
-      //$parser->getContent( "random.nfl" ); //test
-   }
-   
+$parser = new PARSER();
+$array = $parser->getFiles();
+
+if( $_REQUEST["process"] == "clearAll" ) {
+
+$parser->clearAll ();
+
+}
+else {
+
+foreach($array as $arr) {
+
+system( touch ( trim( $arr ) ) );
+system( chmod ( trim( $arr ), 0777 ) );
+
+$parser->getContent( trim ( $arr ) );
+
+}
+
+//$parser->getContent( "random.nfl" ); //test
+}
+
 ?>
-
