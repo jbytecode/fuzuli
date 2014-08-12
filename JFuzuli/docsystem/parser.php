@@ -21,7 +21,7 @@
     
     public $pathLocal   = ".";
     public $path        = "https://fuzuli.googlecode.com/hg/JFuzuli/JFuzuli/src/nfl/";
-   public $fileList    = "nfl.list";
+    public $fileList    = "nfl.list";
     public $file        = "string.nfl"; //for test
     public $extension   = "nfl";
     public $extension_w = "html";
@@ -29,14 +29,15 @@
     public $strip_func  = "(function";
     public $strip_param = "(params";
     public $systemFiles = array();
-    public $resultChars = array("(", ")", "/*", "*/", "function", "params");
+    public $resultChars = array("(", ")", "/*", "*/", "function ");
+    public $resultDesc  = array("(", ")", "/*", "*/", "params");
     public $lineCount   = 5;
-   public $loading     = "Please wait while loading files.....";
-   public $fuzuli      = "Fuzuli Developer Team";
-   public $noDesc      = "Description not found!";
-   public $package     = "Package Functions";
-   public $jquery      = "http://code.jquery.com/jquery-1.11.0.min.js";
-   public $style       = "style.css";
+    public $loading     = "Please wait while loading files.....";
+    public $fuzuli      = "Fuzuli Developer Team";
+    public $noDesc      = "Description not found!";
+    public $package     = "Package Functions";
+    public $jquery      = "http://code.jquery.com/jquery-1.11.0.min.js";
+    public $style       = "style.css";
     
     public function __construct () {
       
@@ -152,29 +153,29 @@
        echo $myfile." file has just been created by the system. Click <a href='".str_replace( ".".$this->extension."", ".".$this->extension_w."", $myfile )."' target='_blank'>here</a><br>";
 
        $output .= "<html>";
-      $output .= "<head>";
+       $output .= "<head>";
        $output .= "<title>".ucwords ( $myfile )." ".$this->package."</title>";
-      $output .= '<script src="'.$this->jquery.'"></script>';
-      $output .= '<script type="text/javascript">';
-      $output .= '$(document).ready(function() {';
-      $output .= '$("table tr:even").css("background", "#ffffff");';
-      $output .= '$("table tr:odd").css("background", "#f0f0f0");';
-      $output .= '});';
-      $output .= '</script>';
-      $output .= '<link rel="stylesheet" href="'.$this->style.'" type="text/css" />';
+       $output .= '<script src="'.$this->jquery.'"></script>';
+       $output .= '<script type="text/javascript">';
+       $output .= '$(document).ready(function() {';
+       $output .= '$("table tr:even").css("background", "#ffffff");';
+       $output .= '$("table tr:odd").css("background", "#f0f0f0");';
+       $output .= '});';
+       $output .= '</script>';
+       $output .= '<link rel="stylesheet" href="'.$this->style.'" type="text/css" />';
        $output .= "</head>";
        $output .= "<body>";
-      $output .= '<h1>'.ucwords ( $myfile ).' '.$this->package.'</h1>';
-      $output .= '<div class="left">';
-      $output .= '<ul>';
-      $fileNames = $this->getFiles ();
-      foreach ( $fileNames as $eachNames ) {
-         if ( strlen ( $eachNames ) > 0 ) {
-            $output .= '<li><a href="'.str_replace ( ".".$this->extension."", ".".$this->extension_w."", $eachNames ).'">'.ucwords ( $eachNames ).' '.$this->package.'</a></li>';
-         }
-      }
-      $output .= '</ul>';
-      $output .= '</div>';
+       $output .= '<h1>'.ucwords ( $myfile ).' '.$this->package.'</h1>';
+       $output .= '<div class="left">';
+       $output .= '<ul>';
+       $fileNames = $this->getFiles ();
+       foreach ( $fileNames as $eachNames ) {
+          if ( strlen ( $eachNames ) > 0 ) {
+             $output .= '<li><a href="'.str_replace ( ".".$this->extension."", ".".$this->extension_w."", $eachNames ).'">'.ucwords ( $eachNames ).' '.$this->package.'</a></li>';
+          }
+       }
+       $output .= '</ul>';
+       $output .= '</div>';
        
        for ($i = 0; $i<=count($content); $i++) {
           
@@ -182,11 +183,11 @@
              
              $f = $this->setExplode( $content[$i], $this->strip_param );
              $functionName = trim( str_replace( $this->resultChars, "", $f[0] ) );
-             $paramName    = "params ".trim( str_replace( $this->resultChars, "", $f[1] ) );
+             $paramName    = trim( str_replace( $this->resultChars, "", $f[1] ) );
              
              if( strlen( $content[$i-1] ) >= 3 ) {
                 
-                $description  = trim( str_replace( $this->resultChars, "", $this->controlComment ( $myfile, $i ) ) );
+                $description  = trim( str_replace( $this->resultDesc, "", $this->controlComment ( $myfile, $i ) ) );
                 
              }
              else {
