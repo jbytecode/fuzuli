@@ -66,7 +66,7 @@ public class FProperties {
     }
     
     public static int properties_size (Properties props, Environment env){
-        return(props.size());
+        return(props.size()); 
     }
     
 }
