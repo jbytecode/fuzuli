@@ -24,6 +24,7 @@ import Interpreter.FValue;
 import Interpreter.FunctionCallExpression;
 import Interpreter.FunctionExpression;
 import java.util.ArrayList;
+import java.util.Properties;
 
 
 public class FThread {
@@ -63,8 +64,9 @@ public class FThread {
     }
     
     public static String thread_name (Environment env){
-        return(Thread.currentThread().getName());
+        return(Thread.currentThread().getName()); 
     }
+    
     
 }
 
