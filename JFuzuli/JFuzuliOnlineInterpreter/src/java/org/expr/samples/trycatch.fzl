@@ -1,0 +1,19 @@
+(let enter "<br>")
+
+(trycatch
+
+     (block
+         (print "Setting a = b, but b is null!" enter)
+         (let a b)
+     )
+
+     (block
+         (print "Exception catched! Because b is not defined!" enter)
+     )
+
+     (block
+         (print "This is optional 'finally block' and will be run in any situation" enter)
+     )
+
+)
+

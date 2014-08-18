@@ -49,10 +49,11 @@
                         <option value="java">Creating Java Objects</option>
                         <option value="expression">Passing Fuzuli Codes/Expressions to Functions</option>
                         <option value="thread">Threads</option>
+                        <option value="trycatch">Exception Handling with trycatch</option>
                     </select>
                 </td></tr>
             <tr><td colspan="2">
-                    <textarea name="code" rows="15" style="font-family: monospace; font-size: 12px; width:100%;"><%
+                    <textarea name="code" rows="25" style="font-family: monospace; font-size: 12px; width:100%;"><%
                         String code = request.getParameter("code");
                         String samplecode = request.getParameter("samplecode");
 
