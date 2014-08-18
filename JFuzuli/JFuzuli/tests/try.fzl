@@ -16,24 +16,43 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-(require "net.nfl")
 
 (let passed "PASSED!\n")
 (let error "ERROR\n")
 
 
-#TEST1 (Exception for wrong URL)
-
-(let data 
-  (try 
-    (httpdownload "http://www.fuzuli project.org")
+# TEST1 
+(trycatch
+  (block
+	(let a b)
+  )
+  
+  (block
+	(print passed)
   )
 )
 
-(let type (typeof data))
-(if (= type "Interpreter.FuzuliException")
+
+# TEST2
+(trycatch
+  # TRY
+  (block
+	(let a b)
+  )
+  
+  # CATCH
+  (block
 	(print passed)
-	(print error)
+  )
+  
+  # FINALLY
+  (block
+	(print passed)
+  )
 )
+
+
+
+
 
 

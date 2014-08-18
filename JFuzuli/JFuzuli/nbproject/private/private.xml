@@ -6,8 +6,6 @@
             <file>file:/D:/fuzuli/JFuzuli/JFuzuli/src/nfl/utils.nfl</file>
             <file>file:/D:/fuzuli/JFuzuli/JFuzuli/src/nfl/datetime.nfl</file>
         </group>
-        <group name="JFuzuliBundle">
-            <file>file:/D:/fuzuli/JFuzuli/JFuzuli/src/Editor/MainFrame.java</file>
-        </group>
+        <group name="JFuzuliBundle"/>
     </open-files>
 </project-private>

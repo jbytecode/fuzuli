@@ -602,9 +602,9 @@ public class Parser {
             }else if (tok.content.equals("expression")){
                 exprs = getExpressionList();
                 return (new ExpressionExpression(exprs));
-            }else if (tok.content.equals("try")){
+            }else if (tok.content.equals("trycatch")){
                 exprs = getExpressionList();
-                return (new TryExpression(exprs));
+                return (new TryCatchExpression(exprs));
             }else if (tok.content.equals("dotimes")){
                 exprs = getExpressionList();
                 return (new DoTimesExpression(exprs));
