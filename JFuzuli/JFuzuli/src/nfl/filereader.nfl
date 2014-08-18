@@ -1,0 +1,36 @@
+#
+# fuzuli : A general purpose interpreter
+# Copyright (C) 2014 Mehmet Hakan Satman <mhsatman@yahoo.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+(function filereader_new (params filename)
+    (return (internal "Core.FFileReader.filereader_new" filename))
+)
+
+(function filereader_read (params reader len)
+    (return (internal "Core.FFileReader.filereader_read" reader len))
+)
+
+(function filereader_readline (params reader)
+    (return (internal "Core.FFileReader.filereader_readline" reader))
+)
+
+
+(function filereader_close (params reader)
+    (return (internal "Core.FFileReader.filereader_close" reader))
+)
+
+
