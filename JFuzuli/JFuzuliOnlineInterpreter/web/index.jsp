@@ -50,6 +50,7 @@
                         <option value="expression">Passing Fuzuli Codes/Expressions to Functions</option>
                         <option value="thread">Threads</option>
                         <option value="trycatch">Exception Handling with trycatch</option>
+                        <option value="javascript">Javascript and JFuzuli Integration</option>
                     </select>
                 </td></tr>
             <tr><td colspan="2">
