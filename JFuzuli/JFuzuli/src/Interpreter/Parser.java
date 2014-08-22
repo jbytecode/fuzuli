@@ -274,6 +274,28 @@ public class Parser {
                 tok.content = "<=";
                 tok.type = Token.TokenType.LESSOREQUAL;
                 return(tok);
+            }else if(next == '?'){
+                StringBuilder sb = new StringBuilder();
+                while(looknext()!='\n'){
+                    sb.append(consume());
+                }
+                consume();
+                if(sb.substring(0, 10).equals("javascript")){
+                    StringBuilder jscode = new StringBuilder();
+                    while(true){
+                        if(jscode.length()>2){
+                            if(jscode.toString().endsWith("?>")){
+                                break;
+                            }
+                        }
+                        jscode.append(consume());
+                        //System.out.println(jscode);
+                    }
+                    String jsfinalcode = jscode.substring(0, jscode.length()-2);
+                    tok.content = jsfinalcode;
+                    tok.type = Token.TokenType.JSCODE;
+                    return(tok);
+                }
             }else {
                 putBackChar();
             }
@@ -470,6 +492,10 @@ public class Parser {
         }else if (tok.content.equals("--")){
                 exprs = getExpressionList();
                 return (new DecExpression(exprs));
+        }else if (tok.type == Token.TokenType.JSCODE){
+                ArrayList<Expression> arrlist = new ArrayList<Expression>();
+                arrlist.add(new StringExpression(tok.content));
+                return(new JavascriptExpression(arrlist));
         }else if (tok.type == Token.TokenType.STRING){
             return (new StringExpression(tok.content));
         }else if (tok.type == Token.TokenType.IDENTIFIER) {

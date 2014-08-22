@@ -43,6 +43,7 @@ public class Token {
         OBJECT,
         IDENTIFIER,
         STRING,
+        JSCODE,
         EQUALS,
         LESS,
         BIGGER,
@@ -61,7 +62,11 @@ public class Token {
         SLASH_ASTERIX_COMMENT_START,
         SLASH_ASTERIX_COMMENT_END,
         UNKNOWN,
-        EOP,
+        EOP
+    }
+    
+    public String toString(){
+        return(this.content);
     }
 }
 
