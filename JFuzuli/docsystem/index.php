@@ -19,6 +19,7 @@
 
 set_time_limit(0);
 ini_set ( 'display_errors', FALSE );
+
 require "parser.php";
 
 $parser = new PARSER();
@@ -26,21 +27,21 @@ $array = $parser->getFiles();
 
 if( $_REQUEST["process"] == "clearAll" ) {
 
-$parser->clearAll ();
+  $parser->clearAll ();
 
 }
 else {
 
-foreach($array as $arr) {
-
-system( touch ( trim( $arr ) ) );
-system( chmod ( trim( $arr ), 0777 ) );
-
-$parser->getContent( trim ( $arr ) );
-
-}
-
-//$parser->getContent( "random.nfl" ); //test
+  foreach($array as $arr) {
+  
+    system( touch ( trim( $arr ) ) );
+    system( chmod ( trim( $arr ), 0777 ) );
+    
+    $parser->getContent( trim ( $arr ) );
+  
+  }
+  
+  //$parser->getContent( "random.nfl" ); //test
 }
 
 ?>
