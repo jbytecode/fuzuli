@@ -1,2 +1,5 @@
-(let a (+ 555 5))
+(let x 1)
+(let a (+ 
+   (+ x (+ (+ 5 x) x)) 5)
+)
 (print a)
