@@ -1,3 +1,7 @@
+Identity <- function(x){
+    return(x)
+}
+
 # Class FuzuliSource
 FuzuliSource <- setRefClass("FuzuliSource",
 	fields = list(
@@ -250,6 +254,7 @@ AutomaticCodeGenerator <- setRefClass(Class="AutomaticCodeGenerator",
         initialize = function(){
             .self$FunctionList <- list()
             .self$ConstantList <- list()
+            .self$addFunction("Identity", 1)
         },
         
         addFunction = function(fname, numparams){
@@ -265,29 +270,48 @@ AutomaticCodeGenerator <- setRefClass(Class="AutomaticCodeGenerator",
             .self$ConstantList[[length(.self$ConstantList)+1]] <- name
         },
         
-        generateSingleExpression = function(){
+        generateSingleExpression = function(deep = 1){
+            if(deep==0){
+                return(sample(.self$ConstantList,size=1))
+            }
             randomf <- sample(x = .self$FunctionList,size = 1)[[1]]
             fname <- randomf[["fname"]]
             numparams <- randomf[["numparams"]]
             params <- sample(.self$ConstantList, size=numparams, replace = TRUE)
             txt <- paste("(", fname, sep="")
             for (element in params){
-                txt <- paste(txt, element)
+                if(runif(1) < 0.5){
+                    txt <- paste(txt, element)
+                }else{
+                    txt <- paste(txt, generateSingleExpression(deep-1))
+                }
             }
             txt <- paste(txt,")",sep="")
             return(txt)
         }
+        
+        
+        
     ) # end of methods
 ) # end of class
 
 s <- FuzuliSource$new();s$readFile("1.rlisp");l <- FuzuliLexer$new(s);p <- FuzuliParser$new(l);p$run()
 
+x <- c(1,2,3,4,5)
+y <- c(2,4,6,8,10)
 auto.code <- AutomaticCodeGenerator$new()
 auto.code$addConstant("x")
 auto.code$addConstant("y")
-auto.code$addConstant("5")
+auto.code$addConstant("2")
 auto.code$addFunction("+",2)
-e <- auto.code$generateSingleExpression()
+auto.code$addFunction("-",2)
+auto.code$addFunction("/",2)
+auto.code$addFunction("^",2)
+auto.code$addFunction("mean",1)
+auto.code$addFunction("sum",1)
+auto.code$addFunction("length",1)
+e <- auto.code$generateSingleExpression(50)
 print(e)
-
+s <- FuzuliSource$new();s$readString(e);l <- FuzuliLexer$new(s);p <- FuzuliParser$new(l);result<-p$run()
+print(result)
 
