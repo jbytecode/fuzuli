@@ -134,4 +134,36 @@ public class FunctionCallExpression extends Expression{
         
     }
     
+    public static Object doFunctionCall(String name, ArrayList<Object> params, Environment e) {
+        Environment env = new Environment(e);
+        env.variables.clear();
+        int size;
+        
+        Object returnval = null, val = null;
+        
+        FunctionExpression func = env.findFunction(name);
+        
+        if(func == null){
+            throw new RuntimeException("Fuzuli function '"+name+ "' is not defined");
+        }
+        
+        size = params.size();
+        for (int i=0;i<size;i++){
+            e.setVariableInThisEnvironment(func.params.get(i), params.get(i));
+        }
+        
+        size=func.body.size();
+        for (int i=0;i<size;i++){
+            val = func.body.get(i).eval(env);
+            //System.out.println("In Function, object is "+val.getObject().getClass().getCanonicalName());
+            if(val instanceof ReturnExpression ){
+                ReturnExpression re =  (ReturnExpression)(val);
+                returnval = re.returnvalue;
+                break;
+            }
+        }
+        return(returnval);
+        
+    }
+    
 }

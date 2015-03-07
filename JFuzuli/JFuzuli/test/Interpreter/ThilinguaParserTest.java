@@ -47,7 +47,7 @@ public class ThilinguaParserTest {
         Environment env = new Environment(null);
         Expression Expr = parser.getNextExpression();
         Object o = Expr.eval(env);
-        assertEquals(new Double(78), o);
+        assertEquals(new Double(7), o);
     }
     
 }
