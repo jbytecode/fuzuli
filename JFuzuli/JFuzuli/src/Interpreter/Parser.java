@@ -643,6 +643,9 @@ public class Parser {
             }else if (tok.content.equals("jint")){
                 exprs = getExpressionList();
                 return (new JintExpression(exprs));
+            }else if (tok.content.equals("loadclass")){
+                exprs = getExpressionList();
+                return (new LoadClassExpression(exprs));
             }else{
                 String fname = tok.content;
                 if(this.getPreviousToken().type == Token.TokenType.LPARAN){                    

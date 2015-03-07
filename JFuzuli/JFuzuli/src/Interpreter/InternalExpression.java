@@ -52,7 +52,7 @@ public class InternalExpression extends Expression {
         try {
             result = method.invoke(cls, params);
         } catch (Exception ex) {
-            throw new FuzuliException(ex, "Can not call static method " + classname + "." + methodname + ": "+this.exprs.toString());
+            throw new FuzuliException(ex, "Can not call static method " + classname + "." + methodname + ": " + this.exprs.toString());
         }
 
         return (result);
@@ -66,6 +66,6 @@ public class InternalExpression extends Expression {
             }
         }
 
-        throw new FuzuliException (new Exception(), "Can not find method " + methodname +" with "+(paramscount) +" parameters in class " + cls.getCanonicalName());
+        throw new FuzuliException(new Exception(), "Can not find method " + methodname + " with " + (paramscount) + " parameters in class " + cls.getCanonicalName());
     }
 }
