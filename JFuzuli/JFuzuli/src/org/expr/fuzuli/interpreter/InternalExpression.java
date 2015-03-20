@@ -38,7 +38,11 @@ public class InternalExpression extends Expression {
         try {
             cls = Class.forName(classname);
         } catch (Exception clsex) {
-            throw new FuzuliException(clsex, "Can not find class " + classname + ": " + this.exprs.toString());
+            try{
+               cls = FuzuliClassLoader.loadClass(classname);
+            }catch(Exception e2){
+                throw new FuzuliException(e2, "Can not find class " + classname + ": " + this.exprs.toString());
+            }
         }
 
         Method method = findMethod(cls, methodname, paramscount + 1);

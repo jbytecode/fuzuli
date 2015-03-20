@@ -21,6 +21,7 @@ package org.expr.fuzuli.core;
 import org.expr.fuzuli.interpreter.Environment;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.Socket;
 import java.net.URL;
@@ -73,6 +74,7 @@ public class FNet {
         URL u = new URL(url);
         HttpURLConnection con = (HttpURLConnection)u.openConnection();
         InputStream is = con.getInputStream();
+        
         byte[] bytes = new byte[1024];
         StringBuilder buf = new StringBuilder();
         while(true){

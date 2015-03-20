@@ -1,7 +1,6 @@
 # Linear Regression 
-(require "/usr/lib/fuzuli/nfl/math.nfl")
-(require "/usr/lib/fuzuli/nfl/io.nfl")
-(require "/usr/lib/fuzuli/nfl/types.nfl")
+(require "math.nfl")
+(require "io.nfl")
 
 (function sum (params alist)
 	(block

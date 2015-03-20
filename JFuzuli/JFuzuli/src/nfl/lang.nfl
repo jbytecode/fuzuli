@@ -19,3 +19,36 @@
     (return (internal "org.expr.fuzuli.interpreter.FunctionCallExpression.doFunctionCall" fname paramlist))
 )
 
+# Traditional LISP function car
+# Returns first element of a list
+(function car (params alist)
+    (return (nth alist 0))
+)
+
+
+# Traditional LISP function cdr
+# Return rest of a list
+(function cdr (params alist)
+    (block
+        (let cpylist alist)
+        (return (remove cpylist 0))
+    )
+)
+
+
+
+(function first (params alist)
+    (return (car alist))
+)
+
+
+(function last (params alist)
+    (return (nth alist 
+                (- 
+                    (length alist) 
+                    1
+                ) 
+            ) 
+    )
+)
+

@@ -580,12 +580,6 @@ public class Parser {
             }else if (tok.content.equals("fill")){
                 exprs = getExpressionList();
                 return (new FillExpression(exprs));
-            }else if (tok.content.equals("first")){
-                exprs = getExpressionList();
-                return (new FirstExpression(exprs));
-            }else if (tok.content.equals("last")){
-                exprs = getExpressionList();
-                return (new LastExpression(exprs));
             }else if (tok.content.equals("setprecision")){
                 exprs = getExpressionList();
                 return (new SetPrecisionExpression(exprs));
@@ -643,9 +637,9 @@ public class Parser {
             }else if (tok.content.equals("jint")){
                 exprs = getExpressionList();
                 return (new JintExpression(exprs));
-            }else if (tok.content.equals("loadclass")){
+            }else if (tok.content.equals("loadjar")){
                 exprs = getExpressionList();
-                return (new LoadClassExpression(exprs));
+                return (new LoadJarExpression(exprs));
             }else{
                 String fname = tok.content;
                 if(this.getPreviousToken().type == Token.TokenType.LPARAN){                    

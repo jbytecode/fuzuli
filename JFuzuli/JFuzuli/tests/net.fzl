@@ -22,7 +22,7 @@
 (let error "ERROR\n")
 
 #TEST 1
-(let data (httpdownload "http://www.fuzuliproject.org"))
+(let data (httpdownload "http://stdioe.blogspot.com"))
 
 (if (!= (instr data "</html>") -1)
 	(print passed)

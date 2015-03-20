@@ -45,7 +45,11 @@ public class JavaNewExpression extends Expression {
                 cls = Class.forName(String.valueOf(ClassName));
             }
         }catch (Exception clsex){
-            throw new RuntimeException("javanew: Can not find class " + ClassName + ": " + clsex.toString());
+            try{
+                cls = FuzuliClassLoader.loadClass(String.valueOf(ClassName));
+            }catch(Exception e2){
+                throw new RuntimeException("javanew: Can not find class " + ClassName + ": " + clsex.toString());
+            }
         }
         
         Object[] params = new Object[paramscount];

@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+(require "lang.nfl")
+
 
 (let passed "PASSED!\n")
 (let error "ERROR\n")
@@ -99,17 +101,19 @@
 )
 
 # test 10 - first
-(let mylist (: -10 100))
+# "first" is moved to package lang.nfl
+(let mylist (list 10 100))
 (let f (first mylist))
-(if (= f -10)
+(if (= f 10)
 	(print passed)
 	(print error)
 )
 
 # test 11 - last
-(let mylist (: -10 100))
+# "last" is moved to package lang.nfl
+(let mylist (list 1 2 3 4))
 (let l (last mylist))
-(if (= l 100)
+(if (= l 4)
 	(print passed)
 	(print error)
 )

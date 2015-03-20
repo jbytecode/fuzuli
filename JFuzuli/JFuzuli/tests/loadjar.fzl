@@ -20,8 +20,9 @@
 (let error "ERROR\n")
 
 # TEST 1
-(let result (loadclass "file:///home/hako/fuzuli/JFuzuli/JFuzuli/tests/FuzuliTest.jar" "fuzulitest.FuzuliTest"))
-(let arr (javanew "]java/lang/String" 2))
-(internal "fuzulitest.FuzuliTest.Main" arr)
+# if getTest() method returns "PASSED\n" then the test is succeed.
+(let myjar (loadjar "file:///home/hako/fuzuli/JFuzuli/JFuzuli/tests/FuzuliTest.jar"))
+(let obj (javanew "fuzulitest.FuzuliTest"))
+(print (javacall obj "getTest"))
 
 

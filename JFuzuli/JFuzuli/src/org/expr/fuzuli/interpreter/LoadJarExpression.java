@@ -1,6 +1,6 @@
 /*
  * fuzuli : A general purpose interpreter
- * Copyright (C) 2013 Mehmet Hakan Satman <mhsatman@yahoo.com>
+ * Copyright (C) 2015 Mehmet Hakan Satman <mhsatman@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,16 +20,18 @@ package org.expr.fuzuli.interpreter;
 
 import java.util.ArrayList;
 
-public class FirstExpression extends Expression{
 
-    public FirstExpression (ArrayList<Expression> expr){
+public class LoadJarExpression extends Expression {
+
+    public LoadJarExpression(ArrayList<Expression> expr){
         this.exprs = expr;
     }
     
     @Override
     public Object eval(Environment e) {
-        ArrayList<Expression> list = (ArrayList<Expression>)this.exprs.get(0).eval(e);
-        return (list.get(0).eval(e));
+        String jarFileName = exprs.get(0).eval(e).toString();
+        FuzuliClassLoader.addJarFile(jarFileName);
+        return(jarFileName);
     }
     
 }
