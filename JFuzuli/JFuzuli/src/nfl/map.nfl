@@ -17,58 +17,58 @@
 
 /* Creates a new HashMap object */
 (function map_new (params)
-    (return (internal "Core.FHashMap.map_new"))
+    (return (internal "org.expr.fuzuli.core.FHashMap.map_new"))
 )
 
 /* Puts <key value> pairs to a given map object */
 (function map_put (params map key value)
-    (return (internal "Core.FHashMap.map_put" map key value))
+    (return (internal "org.expr.fuzuli.core.FHashMap.map_put" map key value))
 )
 
 /* Returns the value corresponding to key for a given map object */
 (function map_get (params map key)
-    (return (internal "Core.FHashMap.map_get" map key))
+    (return (internal "org.expr.fuzuli.core.FHashMap.map_get" map key))
 )
 
 /* Returns number of elements of a map object */
 (function map_size (params map)
-    (return (internal "Core.FHashMap.map_size" map))
+    (return (internal "org.expr.fuzuli.core.FHashMap.map_size" map))
 )
 
 /* Removes all objects of object map */
 (function map_clear (params map)
-    (return (internal "Core.FHashMap.map_clear" map))
+    (return (internal "org.expr.fuzuli.core.FHashMap.map_clear" map))
 )
 
 /* Removes the object with the given key */
 (function map_remove (params map key)
-    (return (internal "Core.FHashMap.map_remove" map key))
+    (return (internal "org.expr.fuzuli.core.FHashMap.map_remove" map key))
 )
 
 /* Returns true if the given map is empty
 else returns false */
 (function map_empty (params map)
-    (return (internal "Core.FHashMap.map_empty" map))
+    (return (internal "org.expr.fuzuli.core.FHashMap.map_empty" map))
 )
 
 /* Returns true if the map contains the given value */
 (function map_contains_value (params map value)
-    (return (internal "Core.FHashMap.map_contains_value" map value))
+    (return (internal "org.expr.fuzuli.core.FHashMap.map_contains_value" map value))
 )
 
 /* Returns true if the map contains the given key */
 (function map_contains_key (params map key)
-    (return (internal "Core.FHashMap.map_contains_key" map key))
+    (return (internal "org.expr.fuzuli.core.FHashMap.map_contains_key" map key))
 )
 
 /* Returns a list of keys of a given map */
 (function map_get_keys (params map)
-    (return (internal "Core.FHashMap.map_get_keys" map))
+    (return (internal "org.expr.fuzuli.core.FHashMap.map_get_keys" map))
 )
 
 /* Returns a list of values of a given map */
 (function map_get_values (params map)
-    (return (internal "Core.FHashMap.map_get_values" map))
+    (return (internal "org.expr.fuzuli.core.FHashMap.map_get_values" map))
 )
 
 

@@ -18,22 +18,22 @@
 
 /* Creates and returns a new filereader object for a given file */
 (function filereader_new (params filename)
-    (return (internal "Core.FFileReader.filereader_new" filename))
+    (return (internal "org.expr.fuzuli.core.FFileReader.filereader_new" filename))
 )
 
 /* Reads from a file reader object of size len. This function returns an empty string if cursor is at end of file */
 (function filereader_read (params reader len)
-    (return (internal "Core.FFileReader.filereader_read" reader len))
+    (return (internal "org.expr.fuzuli.core.FFileReader.filereader_read" reader len))
 )
 
 /* Returns string line by line at each function invocation */
 (function filereader_readline (params reader)
-    (return (internal "Core.FFileReader.filereader_readline" reader))
+    (return (internal "org.expr.fuzuli.core.FFileReader.filereader_readline" reader))
 )
 
 /* Closes the given file reader object */
 (function filereader_close (params reader)
-    (return (internal "Core.FFileReader.filereader_close" reader))
+    (return (internal "org.expr.fuzuli.core.FFileReader.filereader_close" reader))
 )
 
 

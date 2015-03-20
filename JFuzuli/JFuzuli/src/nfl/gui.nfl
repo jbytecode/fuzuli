@@ -18,24 +18,24 @@
 
 /* Message and Input Boxes */
 (function msgbox (params text)
-    (return (internal "Core.Gui.FBasics.msgbox" text))
+    (return (internal "org.expr.fuzuli.core.gui.FBasics.msgbox" text))
 )
 
 (function inputbox (params text)
-    (return (internal "Core.Gui.FBasics.inputbox" text))
+    (return (internal "org.expr.fuzuli.core.gui.FBasics.inputbox" text))
 )
 
 (function registerEvent (params obj func)
-    (return (internal "Core.Gui.FBasics.registerEvent" obj func))
+    (return (internal "org.expr.fuzuli.core.gui.FBasics.registerEvent" obj func))
 )
 
 /* For all components */
 (function show (params obj)
-    (return (internal "Core.Gui.FBasics.show" obj))
+    (return (internal "org.expr.fuzuli.core.gui.FBasics.show" obj))
 )
 
 (function hide (params obj)
-    (return (internal "Core.Gui.FBasics.hide" obj))
+    (return (internal "org.expr.fuzuli.core.gui.FBasics.hide" obj))
 )
 
 
@@ -44,14 +44,14 @@
 
 /* DrawingArea Functions */
 (function createDrawingArea (params w h)
-    (return (internal "Core.Gui.FDrawingArea.createDrawingArea" w h))
+    (return (internal "org.expr.fuzuli.core.gui.FDrawingArea.createDrawingArea" w h))
 )
 
 (function getGraphicsOfDrawingArea (params da)
-    (return (internal "Core.Gui.FDrawingArea.getGraphicsOfDrawingArea" da))
+    (return (internal "org.expr.fuzuli.core.gui.FDrawingArea.getGraphicsOfDrawingArea" da))
 )
 
 (function refreshDrawingArea (params obj)
-    (return (internal "Core.Gui.FDrawingArea.refreshDrawingArea" obj))
+    (return (internal "org.expr.fuzuli.core.gui.FDrawingArea.refreshDrawingArea" obj))
 )
 

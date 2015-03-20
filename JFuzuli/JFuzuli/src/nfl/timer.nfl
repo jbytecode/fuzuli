@@ -21,13 +21,13 @@
 /* Schedules expression expr after delay milliseconds.
 Expression will be run each period milliseconds. */
 (function schedule (params expr delay period)
-    (return (internal "Core.FTimerTask.schedule" expr delay period))
+    (return (internal "org.expr.fuzuli.core.FTimerTask.schedule" expr delay period))
 )
 
 
 
 /* Runs the expression expr after delay milliseconds */
 (function schedule_once (params expr delay)
-    (return (internal "Core.FTimerTask.schedule_once" expr delay))
+    (return (internal "org.expr.fuzuli.core.FTimerTask.schedule_once" expr delay))
 )
 

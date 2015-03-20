@@ -18,50 +18,50 @@
 
 /* Reset the randomizer using the number seed */
 (function rndRandomize (params seed)
-    (return (internal "Core.FRandom.randomize" seed))
+    (return (internal "org.expr.fuzuli.core.FRandom.randomize" seed))
 )
 
 
 /* Returns next random boolean */
 (function rndBoolean (params)
-    (return (internal "Core.FRandom.nextBoolean"))
+    (return (internal "org.expr.fuzuli.core.FRandom.nextBoolean"))
 )
 
 /* Returns next random integer */
 (function rndInt (params)
-    (return (internal "Core.FRandom.nextInt"))
+    (return (internal "org.expr.fuzuli.core.FRandom.nextInt"))
 )
 
 /* Returns next random long */
 (function rndLong (params)
-    (return (internal "Core.FRandom.nextLong"))
+    (return (internal "org.expr.fuzuli.core.FRandom.nextLong"))
 )
 
 /* Returns next random float */
 (function rndFloat (params)
-    (return (internal "Core.FRandom.nextFloat"))
+    (return (internal "org.expr.fuzuli.core.FRandom.nextFloat"))
 )
 
 /* Returns next random double */
 (function rndDouble (params)
-    (return (internal "Core.FRandom.nextDouble"))
+    (return (internal "org.expr.fuzuli.core.FRandom.nextDouble"))
 )
 
 /* Returns next random Normal
 This function is same with the rndGaussian */
 (function rndNormal (params)
-    (return (internal "Core.FRandom.nextGaussian"))
+    (return (internal "org.expr.fuzuli.core.FRandom.nextGaussian"))
 )
 
 /* Returns next random Normal
 This function is same with the rndNormal */
 (function rndGaussian (params)
-    (return (internal "Core.FRandom.nextGaussian"))
+    (return (internal "org.expr.fuzuli.core.FRandom.nextGaussian"))
 )
 
 /* Returns next random double array with size of n */
 (function rndDoubleList (params n)
-    (return (internal "Core.FRandom.nextDoubleList" n))
+    (return (internal "org.expr.fuzuli.core.FRandom.nextDoubleList" n))
 )
 
 

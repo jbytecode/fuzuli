@@ -1,12 +1,12 @@
 package gp;
 
-import Interpreter.AsterixExpression;
-import Interpreter.ConstantNumberExpression;
-import Interpreter.DivisionExpression;
-import Interpreter.Expression;
-import Interpreter.IdentifierExpression;
-import Interpreter.MinusExpression;
-import Interpreter.PlusExpression;
+import org.expr.fuzuli.interpreter.AsterixExpression;
+import org.expr.fuzuli.interpreter.ConstantNumberExpression;
+import org.expr.fuzuli.interpreter.DivisionExpression;
+import org.expr.fuzuli.interpreter.Expression;
+import org.expr.fuzuli.interpreter.IdentifierExpression;
+import org.expr.fuzuli.interpreter.MinusExpression;
+import org.expr.fuzuli.interpreter.PlusExpression;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;

@@ -21,7 +21,7 @@
 
 # TEST 1
 (let result (loadclass "file:///home/hako/fuzuli/JFuzuli/JFuzuli/tests/FuzuliTest.jar" "fuzulitest.FuzuliTest"))
-(let arr (javanew "]java.lang.String" 2))
+(let arr (javanew "]java/lang/String" 2))
 (internal "fuzulitest.FuzuliTest.Main" arr)
 
 

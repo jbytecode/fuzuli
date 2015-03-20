@@ -18,48 +18,48 @@
 
 /* Creates a new properties object */
 (function properties_new (params)
-	(return (internal "Core.FProperties.properties"))
+	(return (internal "org.expr.fuzuli.core.FProperties.properties"))
 )
 
 /* Loads properties from a file and returns the properties object */
 (function properties_load (params prop file)
-	(return (internal "Core.FProperties.properties_load" prop file))
+	(return (internal "org.expr.fuzuli.core.FProperties.properties_load" prop file))
 )
 
 /* Saves the properties object into the file */
 (function properties_save (params prop file)
-	(return (internal "Core.FProperties.properties_save" prop file))
+	(return (internal "org.expr.fuzuli.core.FProperties.properties_save" prop file))
 )
 
 /* Inserts a key=value entry into a properties object */
 (function properties_set (params prop key value)
-	(return (internal "Core.FProperties.properties_set" prop key value))
+	(return (internal "org.expr.fuzuli.core.FProperties.properties_set" prop key value))
 )
 
 /* Returns the value of a property for a given key */
 (function properties_get (params prop key)
-	(return (internal "Core.FProperties.properties_get" prop key))
+	(return (internal "org.expr.fuzuli.core.FProperties.properties_get" prop key))
 )
 
 /* Returns a list of all keys */
 (function properties_keys (params prop)
-	(return (internal "Core.FProperties.properties_keys" prop))
+	(return (internal "org.expr.fuzuli.core.FProperties.properties_keys" prop))
 )
 
 /* Returns a list of all values */
 (function properties_values (params prop)
-	(return (internal "Core.FProperties.properties_values" prop))
+	(return (internal "org.expr.fuzuli.core.FProperties.properties_values" prop))
 )
 
 /* Cleans the properties object */
 (function properties_clear (params prop)
-	(return (internal "Core.FProperties.properties_clear" prop))
+	(return (internal "org.expr.fuzuli.core.FProperties.properties_clear" prop))
 )
 
 
 /* Returns number of keys in a properties object */
 (function properties_size (params prop)
-        (return (internal "Core.FProperties.properties_size" prop))
+        (return (internal "org.expr.fuzuli.core.FProperties.properties_size" prop))
 )
 
 

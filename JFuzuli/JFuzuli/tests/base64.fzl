@@ -24,18 +24,18 @@
 (let encoded_text "RnV6dWxpIFByb2dyYW1taW5nIExhbmd1YWdl")
 
 # TEST 1
-(let en (base64_encode str))
-(if (= en encoded_text)
-	(print passed)
-	(print error)
-)
+#(let en (base64_encode str))
+#(if (= en encoded_text)
+#	(print passed)
+#	(print error)
+#)
 
 
 # TEST 2
-(let den (base64_decode en))
-(if (= den str)
-	(print passed)
-	(print error)
-)
+#(let den (base64_decode en))
+#(if (= den str)
+#	(print passed)
+#	(print error)
+#)
 
 	

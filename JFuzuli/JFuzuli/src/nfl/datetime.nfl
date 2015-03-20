@@ -17,22 +17,22 @@
 
 /* Returns a list of YEAR - MONTH - DAY - HOUR - MINUTE - SECOND - MILLISECOND */
 (function datetime (params)
-    (return (internal "Core.FDate.datetime"))
+    (return (internal "org.expr.fuzuli.core.FDate.datetime"))
 )
 
 /* Returns the current time zone id as string */
 (function timezone_get (params)
-    (return (internal "Core.FDate.timezone_get"))
+    (return (internal "org.expr.fuzuli.core.FDate.timezone_get"))
 )
 
 /* Sets strzone as the default time zone id.
 A List of all time zones can be get using (timezone_list) */
 (function timezone_get (params strzone)
-    (return (internal "Core.FDate.timezone_set" strzone))
+    (return (internal "org.expr.fuzuli.core.FDate.timezone_set" strzone))
 )
 
 /* Return all available time zone id's as a list */
 (function timezone_list (params)
-    (return (internal "Core.FDate.timezone_list"))
+    (return (internal "org.expr.fuzuli.core.FDate.timezone_list"))
 )
 

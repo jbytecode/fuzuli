@@ -18,10 +18,10 @@
 
 /* This Java 8 specific function is not enabled in current version */
 (function base64_encode (params str)
-    (return (internal "Core.FBase64.base64_encode" str))
+    (return (internal "org.expr.fuzuli.core.FBase64.base64_encode" str))
 )
 
 /* This Java 8 specific function is not enabled in current version */
 (function base64_decode (params str)
-    (return (internal "Core.FBase64.base64_decode" str))
+    (return (internal "org.expr.fuzuli.core.FBase64.base64_decode" str))
 )

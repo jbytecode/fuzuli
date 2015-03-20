@@ -16,6 +16,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 (function fcall (params fname paramlist)
-    (return (internal "Interpreter.FunctionCallExpression.doFunctionCall" fname paramlist))
+    (return (internal "org.expr.fuzuli.interpreter.FunctionCallExpression.doFunctionCall" fname paramlist))
 )
 

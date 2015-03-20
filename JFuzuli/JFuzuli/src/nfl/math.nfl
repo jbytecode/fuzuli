@@ -23,118 +23,118 @@
 
 
 /* Returns the PI constant */
-(let PI (internal "Core.FMath.pi"))
+(let PI (internal "org.expr.fuzuli.core.FMath.pi"))
 
 
 /* Returns sine of x */
 (function sin (params x)
-	(return (internal "Core.FMath.sin" x))
+	(return (internal "org.expr.fuzuli.core.FMath.sin" x))
 )
 
 /* Returns cosine of x */
 (function cos (params x)
-	(return (internal "Core.FMath.cos" x) )
+	(return (internal "org.expr.fuzuli.core.FMath.cos" x) )
 )
 
 /* Returns tangent of x */
 (function tan (params x)
-	(return (internal "Core.FMath.tan" x) )
+	(return (internal "org.expr.fuzuli.core.FMath.tan" x) )
 )
 
 /* Returns absolute value of x */
 (function abs (params x)
-	(return  (internal "Core.FMath.abs" x) )
+	(return  (internal "org.expr.fuzuli.core.FMath.abs" x) )
 )
 
 /* Returns square root of x */
 (function sqrt (params x)
-	(return (internal "Core.FMath.sqrt" x) )
+	(return (internal "org.expr.fuzuli.core.FMath.sqrt" x) )
 )
 
 /* Returns e^x, where e is the natural logarithm base */
 (function exp (params x)
-	(return  (internal "Core.FMath.exp" x) )
+	(return  (internal "org.expr.fuzuli.core.FMath.exp" x) )
 )
 
 /* Returns natural logarithm of x, ln(x) */
 (function log (params x)
-	(return (internal "Core.FMath.log" x) )
+	(return (internal "org.expr.fuzuli.core.FMath.log" x) )
 )
 
 /* Returns logarithm of x of base 10 */
 (function log10 (params x)
-	(return  (internal "Core.FMath.log10" x) )
+	(return  (internal "org.expr.fuzuli.core.FMath.log10" x) )
 )
 
 /* Returns logarithm of x of base 2 */
 (function log2 (params x)
-	(return  (internal "Core.FMath.log2" x) )
+	(return  (internal "org.expr.fuzuli.core.FMath.log2" x) )
 )
 
 /* Returns hyperbolic cosine of x */
 (function cosh (params x)
-	(return (internal "Core.FMath.cosh" x) )
+	(return (internal "org.expr.fuzuli.core.FMath.cosh" x) )
 )
 
 /* Returns hyperbolic sine of x */
 (function sinh (params x)
-	(return (internal "Core.FMath.sinh" x) )
+	(return (internal "org.expr.fuzuli.core.FMath.sinh" x) )
 )
 
 /* Returns hyperbolix tangent of x */
 (function tanh (params x)
-	(return (internal "Core.FMath.tanh" x) )
+	(return (internal "org.expr.fuzuli.core.FMath.tanh" x) )
 )
 
 /* Returns inverse sine of x, arc sin (x) */
 (function asin (params x)
-	(return (internal "Core.FMath.asin" x) )
+	(return (internal "org.expr.fuzuli.core.FMath.asin" x) )
 )
 
 /* Returns inverse cosine of x, arc cos (x) */
 (function acos (params x)
-	(return (internal "Core.FMath.acos" x) )
+	(return (internal "org.expr.fuzuli.core.FMath.acos" x) )
 )
 
 /* Returns inverse tangent of x, arc tan (x) */
 (function atan (params x)
-	(return (internal "Core.FMath.atan" x) )
+	(return (internal "org.expr.fuzuli.core.FMath.atan" x) )
 )
 
 /* Returns the angle theta from the conversion of rectangular coordinates (a, b) to polar coordinates (r, theta) */
 (function atan2 (params a b)
-	(return (internal "Core.FMath.atan2" a b) )
+	(return (internal "org.expr.fuzuli.core.FMath.atan2" a b) )
 )
 
 /* Returns x^p */
 (function pow (params x p)
-	(return (internal "Core.FMath.pow" x p))
+	(return (internal "org.expr.fuzuli.core.FMath.pow" x p))
 )
 
 /* Returns true if x is infinity */
 (function isinf (params x )
-	(return (internal "Core.FMath.isinf" x))
+	(return (internal "org.expr.fuzuli.core.FMath.isinf" x))
 )
 
 /* Returns the smallest value that is greater than or equal to the x */
 (function ceil (params x )
-	(return (internal "Core.FMath.ceil" x))
+	(return (internal "org.expr.fuzuli.core.FMath.ceil" x))
 )
 
 /* Returns an integer with x rounded */
 (function round (params x )
-	(return (internal "Core.FMath.round" x))
+	(return (internal "org.expr.fuzuli.core.FMath.round" x))
 )
 
 /* Returns the largest value that is smaller than or equal to the x */
 (function floor (params x )
-	(return (internal "Core.FMath.floor" x))
+	(return (internal "org.expr.fuzuli.core.FMath.floor" x))
 )
 
 
 /* Returns the euclidean distance between two vectors
    given by list1 and list2, respectively. */
 (function euclidean (params list1 list2)
-    (return (internal "Core.FMath.euclidean" list1 list2))
+    (return (internal "org.expr.fuzuli.core.FMath.euclidean" list1 list2))
 )
 

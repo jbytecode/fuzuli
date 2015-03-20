@@ -6,6 +6,9 @@
 
 package Interpreter;
 
+import org.expr.fuzuli.interpreter.ThilinguaParser;
+import org.expr.fuzuli.interpreter.Expression;
+import org.expr.fuzuli.interpreter.Environment;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

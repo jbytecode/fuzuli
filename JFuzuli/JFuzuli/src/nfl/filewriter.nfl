@@ -18,26 +18,26 @@
 
 /* Creates a new FileWriter object for a given file name */
 (function filewriter_new (params filename)
-    (return (internal "Core.FFileWriter.filewriter_new" filename))
+    (return (internal "org.expr.fuzuli.core.FFileWriter.filewriter_new" filename))
 )
 
 /* Writes str using a given FileWriter object */
 (function filewriter_write (params filewriter str)
-    (return (internal "Core.FFileWriter.filewriter_write" filewriter str))
+    (return (internal "org.expr.fuzuli.core.FFileWriter.filewriter_write" filewriter str))
 )
 
 /* Sends the data in a buffer to a FileWriter object */
 (function filewriter_flush (params filewriter)
-    (return (internal "Core.FFileWriter.filewriter_flush" filewriter))
+    (return (internal "org.expr.fuzuli.core.FFileWriter.filewriter_flush" filewriter))
 )
 
 /* Same of filewriter_flush */
 (function filewriter_refresh (params filewriter)
-    (return (internal "Core.FFileWriter.filewriter_flush" filewriter))
+    (return (internal "org.expr.fuzuli.core.FFileWriter.filewriter_flush" filewriter))
 )
 
 (function filewriter_close (params filewriter)
-    (return (internal "Core.FFileWriter.filewriter_close" filewriter))
+    (return (internal "org.expr.fuzuli.core.FFileWriter.filewriter_close" filewriter))
 )
 
 

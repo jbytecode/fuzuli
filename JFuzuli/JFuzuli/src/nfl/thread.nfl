@@ -17,29 +17,29 @@
 
 /* Sleeps the current thread for millis milliseconds */
 (function thread_sleep (params millis)
-    (return (internal "Core.FThread.thread_sleep" millis))
+    (return (internal "org.expr.fuzuli.core.FThread.thread_sleep" millis))
 )
 
 
 /* Creates a new thread for 'function_name'. */
 (function thread_new (params function_name)
-    (return (internal "Core.FThread.thread_new" function_name))
+    (return (internal "org.expr.fuzuli.core.FThread.thread_new" function_name))
 )
 
 /* With this function, multiple functions can be run 
    simultaneously. */
 (function thread_start (params athread)
-    (return (internal "Core.FThread.thread_start" athread))
+    (return (internal "org.expr.fuzuli.core.FThread.thread_start" athread))
 )
 
 /* Joins the thread 'athread' */
 (function thread_join (params athread)
-    (return (internal "Core.FThread.thread_join" athread))
+    (return (internal "org.expr.fuzuli.core.FThread.thread_join" athread))
 )
 
 /* Returns the name of current thread */
 (function thread_name (params)
-    (return (internal "Core.FThread.thread_name"))
+    (return (internal "org.expr.fuzuli.core.FThread.thread_name"))
 )
 
 

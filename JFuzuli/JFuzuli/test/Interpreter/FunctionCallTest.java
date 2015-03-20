@@ -5,6 +5,10 @@
  */
 package Interpreter;
 
+import org.expr.fuzuli.interpreter.FunctionCallExpression;
+import org.expr.fuzuli.interpreter.Expression;
+import org.expr.fuzuli.interpreter.Parser;
+import org.expr.fuzuli.interpreter.Environment;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;

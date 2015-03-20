@@ -18,26 +18,26 @@
 # (let net_lib (dynload "FuzuliSocket"))
 
 (function fsockopen (params host port)
-	(return (internal "Core.FNet.fsockopen" host port))
+	(return (internal "org.expr.fuzuli.core.FNet.fsockopen" host port))
 )
 
 (function fsockwrite (params socket what)
-	(return (internal "Core.FNet.fsockwrite" socket what))
+	(return (internal "org.expr.fuzuli.core.FNet.fsockwrite" socket what))
 )
 
 (function fsockread (params socket howmany)
-	(return (internal "Core.FNet.fsockread" socket howmany))
+	(return (internal "org.expr.fuzuli.core.FNet.fsockread" socket howmany))
 )
 
 (function fsockclose (params socket)
-	(return (internal "Core.FNet.fsockclose" socket))
+	(return (internal "org.expr.fuzuli.core.FNet.fsockclose" socket))
 )
 
 (function fsocklisten (params port)
-	(return (internal "Core.FNet.fsocklisten" port))
+	(return (internal "org.expr.fuzuli.core.FNet.fsocklisten" port))
 )
 
 (function httpdownload (params url)
-        (return (internal "Core.FNet.httpdownload" url))
+        (return (internal "org.expr.fuzuli.core.FNet.httpdownload" url))
 )
 

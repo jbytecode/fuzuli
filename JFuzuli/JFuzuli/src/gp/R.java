@@ -1,8 +1,8 @@
 package gp;
 
-import Interpreter.Environment;
-import Interpreter.Expression;
-import Interpreter.Parser;
+import org.expr.fuzuli.interpreter.Environment;
+import org.expr.fuzuli.interpreter.Expression;
+import org.expr.fuzuli.interpreter.Parser;
 
 public class R {
     

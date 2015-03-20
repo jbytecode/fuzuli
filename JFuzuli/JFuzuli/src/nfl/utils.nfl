@@ -18,45 +18,45 @@
 
 /* Shuffles all elements of list 'alist' */ 
 (function shuffle (params alist)
-    (return (internal "Core.FUtils.shuffle" alist))
+    (return (internal "org.expr.fuzuli.core.FUtils.shuffle" alist))
 )
 
 /* Return the sorted list of list 'alist' in ascending order */ 
 (function sorta (params alist)
-    (return (internal "Core.FUtils.sorta" alist))
+    (return (internal "org.expr.fuzuli.core.FUtils.sorta" alist))
 )
 
 /* Return the sorted list of list 'alist' in descending order */ 
 (function sortd (params alist)
-    (return (internal "Core.FUtils.sortd" alist))
+    (return (internal "org.expr.fuzuli.core.FUtils.sortd" alist))
 )
 
 /* Returns a list of defined functions */
 (function function_list (params)
-    (return (internal "Core.FUtils.function_list"))
+    (return (internal "org.expr.fuzuli.core.FUtils.function_list"))
 )
 
 
 /* Returns a list of parameters for a given function */
 (function function_params (params name)
-    (return (internal "Core.FUtils.function_params" name))
+    (return (internal "org.expr.fuzuli.core.FUtils.function_params" name))
 )
 
 /* Returns body of a given function */
 (function function_body (params name)
-    (return (internal "Core.FUtils.function_body" name))
+    (return (internal "org.expr.fuzuli.core.FUtils.function_body" name))
 )
 
 /* Returns a list of globally defined variables */
 (function variable_list (params)
-    (return (internal "Core.FUtils.variable_list"))
+    (return (internal "org.expr.fuzuli.core.FUtils.variable_list"))
 )
 
 
 /* Compiles Fuzuli source code 'filename' into a jar file
 with the same with the source in the same folder */
 (function compile (params filename)
-    (return (internal "Core.FUtils.compile" filename))
+    (return (internal "org.expr.fuzuli.core.FUtils.compile" filename))
 )
 
 /* Returns hashcode of any Java Object */
@@ -70,18 +70,18 @@ variables and functions. If this function is called
 in a local variable scope, only the corresponding values are 
 returned due to current environment */
 (function environment (params)
-    (return (internal "Core.FUtils.environment"))
+    (return (internal "org.expr.fuzuli.core.FUtils.environment"))
 )
 
 
 /* Return number of elements of a given Fuzuli expression */
 (function expression_length (params expr)
-    (return (internal "Core.FUtils.expression_length" expr))
+    (return (internal "org.expr.fuzuli.core.FUtils.expression_length" expr))
 )
 
 /* Returns ith sub-expression of expression expr */
 (function expression_get (params expr i)
-    (return (internal "Core.FUtils.expression_get" expr i))
+    (return (internal "org.expr.fuzuli.core.FUtils.expression_get" expr i))
 )
 
 

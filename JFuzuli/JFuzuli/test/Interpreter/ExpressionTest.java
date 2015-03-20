@@ -6,6 +6,9 @@
 
 package Interpreter;
 
+import org.expr.fuzuli.interpreter.ConstantNumberExpression;
+import org.expr.fuzuli.interpreter.IdentifierExpression;
+import org.expr.fuzuli.interpreter.Environment;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

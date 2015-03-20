@@ -18,131 +18,131 @@
 
 
 (function fopen (params file mode)
-		(return (internal "Core.FIO.fopen" file mode))
+		(return (internal "org.expr.fuzuli.core.FIO.fopen" file mode))
 )
 
 (function fclose (params file)
-		(return (internal "Core.FIO.fclose" file))
+		(return (internal "org.expr.fuzuli.core.FIO.fclose" file))
 )
 
 (function feof (params file)
-		(return (internal "Core.FIO.feof" file))
+		(return (internal "org.expr.fuzuli.core.FIO.feof" file))
 )
 
 (function fwrite (params file obj)
-		(return (internal "Core.FIO.fwrite" file obj))
+		(return (internal "org.expr.fuzuli.core.FIO.fwrite" file obj))
 )
 
 
 (function fread (params file obj)
-		(return (internal "Core.FIO.fread" file obj))
+		(return (internal "org.expr.fuzuli.core.FIO.fread" file obj))
 )
 
 
 (function fflush (params file)
-		(return (internal "Core.FIO.fflush" file))
+		(return (internal "org.expr.fuzuli.core.FIO.fflush" file))
 )
 
 (function chdir (params x)
-		(return (internal "Core.FIO.chdir" x))
+		(return (internal "org.expr.fuzuli.core.FIO.chdir" x))
 ) 
 
 (function getpwd (params)
-		(return (internal "Core.FIO.getpwd"))
+		(return (internal "org.expr.fuzuli.core.FIO.getpwd"))
 )
 
 (function dir (params x)
-		(return (internal "Core.FIO.dir" x))
+		(return (internal "org.expr.fuzuli.core.FIO.dir" x))
 )
 
 (function unlink (params x)
-		(return (internal "Core.FIO.unlink" x))
+		(return (internal "org.expr.fuzuli.core.FIO.unlink" x))
 )
 
 (function rename (params x y)
-		(return (internal "Core.FIO.rename" x y))
+		(return (internal "org.expr.fuzuli.core.FIO.rename" x y))
 )
 
 
 (function tmpfile (params)
-		(return (internal "Core.FIO.tmpfile"))
+		(return (internal "org.expr.fuzuli.core.FIO.tmpfile"))
 )
 
 
 (function tmpnam (params)
-		(return (internal "Core.FIO.tmpname"))
+		(return (internal "org.expr.fuzuli.core.FIO.tmpname"))
 )
 
 
 (function datetime (params)
-		(return (internal "Core.FIO.datetime"))
+		(return (internal "org.expr.fuzuli.core.FIO.datetime"))
 )
 
 
 (function asctime (params)
-		(return (internal "Core.FIO.asctime"))
+		(return (internal "org.expr.fuzuli.core.FIO.asctime"))
 )
 
 (function sleep (params x)
-		(return (internal "Core.FIO.sleep" x))
+		(return (internal "org.expr.fuzuli.core.FIO.sleep" x))
 )
 
 
 (function getenv (params var)
-		(return (internal "Core.FIO.getenv" var))
+		(return (internal "org.expr.fuzuli.core.FIO.getenv" var))
 )
 
 (function setenv (params var val changeflag)
-		(return (internal "Core.FIO.setenv" var val changeflag))
+		(return (internal "org.expr.fuzuli.core.FIO.setenv" var val changeflag))
 )
 
 
 (function print_r (params alist)
-		(return (internal "Core.FIO.print_r" alist))
+		(return (internal "org.expr.fuzuli.core.FIO.print_r" alist))
 )
 
 (function popen (params process mode)
-		(return (internal "Core.FIO.popen" process mode))
+		(return (internal "org.expr.fuzuli.core.FIO.popen" process mode))
 )
 
 (function pclose (params process)
-		(return (internal "Core.FIO.pclose" process))
+		(return (internal "org.expr.fuzuli.core.FIO.pclose" process))
 )
 
 (function exit (params code)
-		(return (internal "Core.FIO.exit" code))
+		(return (internal "org.expr.fuzuli.core.FIO.exit" code))
 )
 
 (function is_dir (params dir)
-		(return (internal "Core.FIO.is_dir" dir))
+		(return (internal "org.expr.fuzuli.core.FIO.is_dir" dir))
 )
 
 
 (function time (params)
-		(return (internal "Core.FIO.time"))
+		(return (internal "org.expr.fuzuli.core.FIO.time"))
 )
 
 
 (function puts (params text)
-		(return (internal "Core.FIO.puts" text))
+		(return (internal "org.expr.fuzuli.core.FIO.puts" text))
 )
 
 (function fputs (params file text)
-		(return (internal "Core.FIO.fputs" file text))
+		(return (internal "org.expr.fuzuli.core.FIO.fputs" file text))
 )
 
 (function fgetc (params file)
-		(return (internal "Core.FIO.fgetc" file))
+		(return (internal "org.expr.fuzuli.core.FIO.fgetc" file))
 )
 
 (function ftell (params file)
-		(return (internal "Core.FIO.ftell" file))
+		(return (internal "org.expr.fuzuli.core.FIO.ftell" file))
 )
 
 (function readline (params)
-		(return (internal "Core.FIO.readline"))
+		(return (internal "org.expr.fuzuli.core.FIO.readline"))
 )
 
 (function file_get_contents (params filename)
-    (return (internal "Core.FIO.file_get_contents" filename))
+    (return (internal "org.expr.fuzuli.core.FIO.file_get_contents" filename))
 )
