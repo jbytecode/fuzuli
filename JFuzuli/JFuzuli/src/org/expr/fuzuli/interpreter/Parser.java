@@ -385,6 +385,10 @@ public class Parser {
             tok.type = Token.TokenType.STRING;
             tok.content = buf.toString();
             return(tok);
+        }else if (current == '\''){
+            tok.content = "'";
+            tok.type = Token.TokenType.SINGLEQUOTE;
+            return(tok);
         }
 
         throw new RuntimeException("Unknow character: '"+current+"'");
@@ -498,6 +502,10 @@ public class Parser {
                 return(new JavascriptExpression(arrlist));
         }else if (tok.type == Token.TokenType.STRING){
             return (new StringExpression(tok.content));
+        }else if (tok.type == Token.TokenType.SINGLEQUOTE){
+                getNextToken(); // This is opening paranthesis.
+                exprs = getExpressionList();
+                return(new ListExpression(exprs));
         }else if (tok.type == Token.TokenType.IDENTIFIER) {
             if (tok.content.equals("print")) {
                 exprs = getExpressionList();

@@ -126,4 +126,11 @@
 	(print error)
 )
 
+# test 13 - testing old list notation
+(let a '(1 2 3 4 5))
+(if (= (- (last a) (first a)) 4)
+	(print passed)
+	(print error)
+)
+
 

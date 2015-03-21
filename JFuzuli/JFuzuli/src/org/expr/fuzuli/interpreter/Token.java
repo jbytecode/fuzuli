@@ -61,6 +61,7 @@ public class Token {
         SLASHSLASHCOMMENT,
         SLASH_ASTERIX_COMMENT_START,
         SLASH_ASTERIX_COMMENT_END,
+        SINGLEQUOTE,
         UNKNOWN,
         EOP
     }
