@@ -1,8 +1,0 @@
-################################################################################
-# Automatically-generated file. Do not edit!
-################################################################################
-
-USER_OBJS := /home/hako/workspace/fuzuli/Interpreter/Debug/libfuzuli.so
-
-LIBS :=
-
