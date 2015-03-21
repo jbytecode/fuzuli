@@ -28,11 +28,11 @@ public class ColonExpression extends Expression{
     
     @Override
     public Object eval(Environment e) {
-        ArrayList<Expression> colonex = new ArrayList<Expression>();
+        ArrayList<Long> colonex = new ArrayList<Long>();
         int i1 = (int)   FValue.getAsDouble(this.exprs.get(0).eval(e));
         int i2 = (int)   FValue.getAsDouble(this.exprs.get(1).eval(e));
         for (int i=i1; i<=i2; i++){
-            colonex.add(new NumberExpression(i));
+            colonex.add(new Long((long)i));
         }
         return(colonex);
     }

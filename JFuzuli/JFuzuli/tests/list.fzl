@@ -118,3 +118,12 @@
 	(print error)
 )
 
+# test 12 - last with colon
+(let mylist (: 0 1000))
+(let l (last mylist))
+(if (= l 1000)
+	(print passed)
+	(print error)
+)
+
+
