@@ -33,9 +33,9 @@ public class ForEachExpression extends Expression {
         
         String iden = ((IdentifierExpression)this.exprs.get(0)).iden;
         String in  = ((IdentifierExpression)this.exprs.get(1)).iden;
-        ArrayList<Expression> list = (ArrayList<Expression>)this.exprs.get(2).eval(env);
+        ArrayList<Double> list = (ArrayList<Double>)this.exprs.get(2).eval(env);
         for (int i=0;i<list.size();i++){
-            env.setVariable(iden, list.get(i).eval(env));
+            env.setVariable(iden, list.get(i));
             for (int j=3;j<this.exprs.size();j++){
                 this.exprs.get(j).eval(env);
             }

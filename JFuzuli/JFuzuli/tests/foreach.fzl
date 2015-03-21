@@ -24,7 +24,7 @@
 	(let summ (+ summ i)) 
 )
 
-
+# TEST 1
 (if (= summ (/ (* 10 11) 2))
 	(print passed)
 	(print error)
