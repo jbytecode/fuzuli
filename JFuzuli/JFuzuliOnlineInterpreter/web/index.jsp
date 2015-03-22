@@ -11,7 +11,7 @@
 <%@page import="java.io.PrintStream"%>
 <%@page import="org.expr.WebOutput"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="Interpreter.*"%>
+<%@page import="org.expr.fuzuli.interpreter.*"%>
 
 
 <!DOCTYPE html>
@@ -30,6 +30,7 @@
             <tr><td width="95%">
                     <select name="samplecode">
                         <option value="">Custom code</option>
+                        <option value="carcdr">Car, Cdr, Nth</option>
                         <option value="sum">Summing up an array</option>
                         <option value="triangle">Triangle</option>
                         <option value="functions">Custom Functions</option>
