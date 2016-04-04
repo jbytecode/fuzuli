@@ -30,6 +30,7 @@ public class ForExpression extends Expression {
     public Object eval(Environment e) {
         e.subEnvironment = new Environment(e);
         Environment env = e.subEnvironment;
+        Object result;
         
         this.exprs.get(0).eval(env);
         while(true){
@@ -37,7 +38,7 @@ public class ForExpression extends Expression {
                 break;
             }
             for (int i=3;i<this.exprs.size();i++){
-                Object result = this.exprs.get(i).eval(env);
+                result = this.exprs.get(i).eval(env);
                 if (result instanceof BreakExpression) {
                     return (result);
                 }

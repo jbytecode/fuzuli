@@ -27,8 +27,9 @@ public class AndExpression extends Expression {
 
     @Override
     public Object eval(Environment e) {
+        Double current;
         for (int i=0;i<this.exprs.size();i++){
-            Double current = FValue.getAsDouble(this.exprs.get(i).eval(e));
+            current = FValue.getAsDouble(this.exprs.get(i).eval(e));
             if(current != 1.0){
                 return(0.0);
             }

@@ -19,7 +19,7 @@
 
 
 $php_bin="/usr/bin/php";
-$fuzuli_bin="/usr/lib/fuzuli/fuzuli";
+$fuzuli_bin="java -jar ../../dist/JFuzuli.jar";
 
 $php_temp=tempnam ("/temp", "php_output");
 $fuzuli_temp=tempnam ("/temp", "fuzuli_output");

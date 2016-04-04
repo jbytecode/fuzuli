@@ -29,13 +29,15 @@ public class WhileExpression extends Expression {
     public Object eval(Environment e) {
         e.subEnvironment = new Environment(e);
         Environment env = e.subEnvironment;
+        Expression ex;
+        Object result;
         while (true) {
             if (FValue.getAsDouble(this.exprs.get(0).eval(env)) == 0.0) {
                 break;
             }
             for (int i = 1; i < this.exprs.size(); i++) {
-                Expression ex = this.exprs.get(i);
-                Object result = ex.eval(env);
+                ex = this.exprs.get(i);
+                result = ex.eval(env);
                 if (result instanceof BreakExpression) {
                     return (result);
                 }

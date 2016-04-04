@@ -38,7 +38,7 @@
 	(print error)
 )
 
-(block
-	(let local_a 1)
-	(print (environment))
-)
+#(block
+#	(let local_a 1)
+#	(print (environment))
+#)

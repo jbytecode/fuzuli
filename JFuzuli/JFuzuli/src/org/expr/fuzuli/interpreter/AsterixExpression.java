@@ -34,8 +34,7 @@ public class AsterixExpression extends Expression {
     public Object eval(Environment e) {
         Double sum = 1.0;
         for (Expression exp : exprs) {
-            Object f = exp.eval(e);
-
+            //Object f = exp.eval(e);
             sum *= FValue.getAsDouble(exp.eval(e));
         }
         return (sum);

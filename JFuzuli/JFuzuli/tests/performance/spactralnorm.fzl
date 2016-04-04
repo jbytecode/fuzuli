@@ -1,5 +1,5 @@
 # Spactral norm 
-(require "/usr/lib/fuzuli/nfl/math.nfl")
+(require "math.nfl")
 
 (function A (params i j)
 	(return
@@ -9,7 +9,7 @@
 
 (function Av (params n v)
 	(block
-	(let Av (clone tpl))
+	(let Av tpl)
 	(def i INTEGER)
 	(for (let i 0)(< i n)(++i)
 		(let sum 0.0)
@@ -24,7 +24,7 @@
 
 (function Atv (params n v)
 	(block
-		(let Atv (clone tpl))
+		(let Atv tpl)
 	(def i INTEGER)
 		(for (let i 0)(< i n)(++i)
 			(let sum 0.0)

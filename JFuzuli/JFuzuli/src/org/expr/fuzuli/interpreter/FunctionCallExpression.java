@@ -126,8 +126,7 @@ public class FunctionCallExpression extends Expression{
             //System.out.println("In Function, object is "+val.getObject().getClass().getCanonicalName());
             if(val instanceof ReturnExpression ){
                 ReturnExpression re =  (ReturnExpression)(val);
-                returnval = re.returnvalue;
-                break;
+                return(re.returnvalue);
             }
         }
         return(returnval);
@@ -136,7 +135,7 @@ public class FunctionCallExpression extends Expression{
     
     public static Object doFunctionCall(String name, ArrayList<Object> params, Environment e) {
         Environment env = new Environment(e);
-        env.variables.clear();
+        //env.variables.clear();
         int size;
         
         Object returnval = null, val = null;
@@ -158,8 +157,7 @@ public class FunctionCallExpression extends Expression{
             //System.out.println("In Function, object is "+val.getObject().getClass().getCanonicalName());
             if(val instanceof ReturnExpression ){
                 ReturnExpression re =  (ReturnExpression)(val);
-                returnval = re.returnvalue;
-                break;
+                return(re.returnvalue);
             }
         }
         return(returnval);

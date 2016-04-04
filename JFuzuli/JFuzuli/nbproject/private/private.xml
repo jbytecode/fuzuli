@@ -5,6 +5,7 @@
         <group name="JFuzuliBundle"/>
         <group>
             <file>file:/home/hako/fuzuli/JFuzuli/JFuzuli/src/org/expr/fuzuli/interpreter/Parser.java</file>
+            <file>file:/home/hako/fuzuli/JFuzuli/JFuzuli/src/org/expr/fuzuli/interpreter/AndExpression.java</file>
         </group>
     </open-files>
 </project-private>

@@ -38,8 +38,7 @@ public class FValue implements Serializable {
     
     public static double getAsDouble(Object obj){
         if (obj instanceof Number){
-            Number n = (Number) obj;
-            return (n.doubleValue());
+            return(((Number)obj).doubleValue());
         }else {
             try{
                 return (Double.parseDouble(String.valueOf(obj)));

@@ -27,8 +27,9 @@ public class ParamsExpression extends Expression {
     public ParamsExpression(ArrayList<Expression>expr){
         this.exprs = expr;
         paramNames = new ArrayList<String>();
+        IdentifierExpression id;
         for (int i=0;i<this.exprs.size();i++){
-            IdentifierExpression id = (IdentifierExpression)this.exprs.get(i);
+            id = (IdentifierExpression)this.exprs.get(i);
             paramNames.add(id.iden);
         }
     }

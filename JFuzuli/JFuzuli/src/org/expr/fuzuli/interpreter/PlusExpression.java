@@ -36,8 +36,7 @@ public class PlusExpression extends Expression {
     public Object eval(Environment e) {
         Double sum = 0.0;
         for (Expression exp : exprs) {
-            Object f = exp.eval(e);
-            sum += FValue.getAsDouble(f);
+            sum += FValue.getAsDouble(exp.eval(e));
         }
         return (sum);
     }

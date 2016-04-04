@@ -32,10 +32,12 @@ public class SwitchExpression extends Expression {
         Environment env = e.subEnvironment;
         
         Object key = this.exprs.get(0).eval(env);
+        CaseExpression caze;
+        Object caseKey;
         
         for (int i=1;i<this.exprs.size();i++){
-            CaseExpression caze = (CaseExpression)(this.exprs.get(i));
-            Object caseKey = caze.getKey(env);
+            caze = (CaseExpression)(this.exprs.get(i));
+            caseKey = caze.getKey(env);
             if (FValue.Equals(caseKey, key)){
                 return(caze.eval(env));
             }
