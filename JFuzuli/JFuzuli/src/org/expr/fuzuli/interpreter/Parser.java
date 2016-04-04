@@ -664,6 +664,12 @@ public class Parser {
                 case "loadjar":
                     exprs = getExpressionList();
                     return (new LoadJarExpression(exprs));
+                case "class":
+                    exprs = getExpressionList();
+                    return(new ClassExpression(exprs));
+                case "new":
+                    exprs = getExpressionList();
+                    return(new NewExpression(exprs));
                 default:
                     String fname = tok.content;
                     if (this.getPreviousToken().type == Token.TokenType.LPARAN) {

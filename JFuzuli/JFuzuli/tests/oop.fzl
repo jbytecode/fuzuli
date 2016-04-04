@@ -16,11 +16,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-(require "oop.nfl")
 
 (let passed "PASSED!\n")
 (let error "ERROR\n")
 
-(classdef "Person")
-(print (classlist))
+(class MyClass extends Object 
+	(function myprint (params x)
+		(print x)
+	)
+)
+
+(let myobj (new MyClass))
+(myobj.myprint passed)
+
 

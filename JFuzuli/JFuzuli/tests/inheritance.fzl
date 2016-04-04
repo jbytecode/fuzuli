@@ -65,6 +65,8 @@
 (let p (new Person))
 (p.setName "Fuzuli")
 (p.setSurname "Programming Language")
+#(print p "\n\n\n")
+
 
 (let s (new Student))
 (s.setDepartment "Computer Science")

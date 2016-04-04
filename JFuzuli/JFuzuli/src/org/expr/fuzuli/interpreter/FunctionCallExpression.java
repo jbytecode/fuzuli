@@ -33,8 +33,7 @@ public class FunctionCallExpression extends Expression{
     public Object evalClass(Environment e) {
         String ObjectName = fname.substring(0, fname.indexOf('.'));
         String FunctionName = fname.substring(fname.indexOf('.')+1);
-        Environment e1 = e.findEnvironmentOfVariable(ObjectName);
-        Environment object_env = (Environment)e1.getVariableInThisEnvironment(ObjectName);
+        Environment object_env = (Environment)e.getVariableInThisEnvironment(ObjectName);
         Environment functEnv = new Environment(object_env);
         
         
@@ -44,7 +43,11 @@ public class FunctionCallExpression extends Expression{
         
         FunctionExpression func = object_env.findFunction(FunctionName);
         if(func == null){
-            throw new RuntimeException("Fuzuli function '"+FunctionName+ "' is not defined in object "+ObjectName);
+            throw new RuntimeException("Fuzuli function '"+FunctionName+ 
+                    "' is not defined in object "+ObjectName+
+                    "\n"+
+                    object_env.toString()
+            );
         }
         
         size = exprs.size();
