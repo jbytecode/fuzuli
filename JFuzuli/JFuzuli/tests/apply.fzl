@@ -1,6 +1,6 @@
 #
 # fuzuli : A general purpose interpreter
-# Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
+# Copyright (C) 2016 Mehmet Hakan Satman <mhsatman@yahoo.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,53 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-(require "string.nfl")
 (let passed "PASSED!\n")
 (let error "ERROR\n")
 
-(class Person extends Object
-		
-		(def name STRING)
-		(def surname STRING)
-
-		(function getName (params)
-			(return name)
-		)
-
-		(function getSurname (params)
-			(return surname)
-		)
-
-		(function setName (params n)
-			(let name n)
-		)
-
-		(function setSurname (params s)
-			(let surname s)
-		)
-
-		(function toString (params)
-			(return (strcat (list name " " surname)))
-		)
-		
-		(function createDefault (params)
-			(let k (new Person))
-			(k.setName "Default Name")
-			(k.setSurname "Default Surname")
-			(return k)
-		)
-)
-
-
-#TEST1
-(let p1 (new Person))
-(let p2 (p1.createDefault))
-
-(if (= (p2.toString) "Default Name Default Surname")
+(function f (params x)
 	(print passed)
-	(print error)
 )
 
-
+(apply f 5) 
 

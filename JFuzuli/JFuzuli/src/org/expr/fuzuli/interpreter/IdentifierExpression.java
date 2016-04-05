@@ -22,7 +22,7 @@ package org.expr.fuzuli.interpreter;
 
 public class IdentifierExpression extends Expression {
 
-    public String iden;
+    public final String iden;
     
     public IdentifierExpression(String iden){
         this.iden = iden;

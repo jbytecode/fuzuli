@@ -20,13 +20,13 @@ package org.expr.fuzuli.interpreter;
 import java.io.Serializable;
 import java.util.HashMap;
 
-public class Environment implements Serializable {
+public final class Environment implements Serializable {
 
-    public HashMap<String, Object> variables;
+    public final HashMap<String, Object> variables;
     public Environment topEnvironment;
     public Environment subEnvironment;
-    public HashMap<String, FunctionExpression> functions;
-    public HashMap<String, ClassExpression> classes;
+    public final HashMap<String, FunctionExpression> functions;
+    public final HashMap<String, ClassExpression> classes;
 
     public Environment(Environment top) {
         this.topEnvironment = top;
@@ -35,19 +35,8 @@ public class Environment implements Serializable {
         this.classes   = new HashMap<String, ClassExpression>();
         
         if (top == null) {
-            this.variables.put("NULL", FValue.NULL);
-            this.variables.put("true", Boolean.TRUE);
-            this.variables.put("false", Boolean.FALSE);
-            this.variables.put("NULL", 0);
-            this.variables.put("null", null);
-            this.variables.put("INTEGER", java.lang.Integer.class.getCanonicalName());
-            this.variables.put("DOUBLE", java.lang.Double.class.getCanonicalName());
-            this.variables.put("FLOAT", java.lang.Float.class.getCanonicalName());
-            this.variables.put("SHORT", java.lang.Short.class.getCanonicalName());
-            this.variables.put("LONG", java.lang.Long.class.getCanonicalName());
-            this.variables.put("BYTE", java.lang.Byte.class.getCanonicalName());
-            this.variables.put("BOOLEAN", java.lang.Boolean.class.getCanonicalName());
-            this.variables.put("CHAR", java.lang.Character.class.getCanonicalName());
+            this.addConstants();
+            this.addInternalFunctions();
         } else {
             top.subEnvironment = this;
         }
@@ -115,6 +104,50 @@ public class Environment implements Serializable {
         } else {
             return (null);
         }
+    }
+    
+    private void addConstants(){
+        this.variables.put("NULL", FValue.NULL);
+            this.variables.put("true", Boolean.TRUE);
+            this.variables.put("false", Boolean.FALSE);
+            this.variables.put("NULL", 0);
+            this.variables.put("null", null);
+            this.variables.put("INTEGER", java.lang.Integer.class.getCanonicalName());
+            this.variables.put("DOUBLE", java.lang.Double.class.getCanonicalName());
+            this.variables.put("FLOAT", java.lang.Float.class.getCanonicalName());
+            this.variables.put("SHORT", java.lang.Short.class.getCanonicalName());
+            this.variables.put("LONG", java.lang.Long.class.getCanonicalName());
+            this.variables.put("BYTE", java.lang.Byte.class.getCanonicalName());
+            this.variables.put("BOOLEAN", java.lang.Boolean.class.getCanonicalName());
+            this.variables.put("CHAR", java.lang.Character.class.getCanonicalName());
+    }
+    
+    public void addInternalFunctions(){
+        this.functions.put("gc", new FunctionInternalExpression(null,"gc",GcExpression.class));
+        this.functions.put("dump", new FunctionInternalExpression(null,"dump",DumpExpression.class));
+        this.functions.put("jint", new FunctionInternalExpression(null,"jint",JintExpression.class));
+        this.functions.put("dotimes", new FunctionInternalExpression(null,"dotimes",DoTimesExpression.class));
+        this.functions.put("length", new FunctionInternalExpression(null,"length",LengthExpression.class));
+        this.functions.put("typeof", new FunctionInternalExpression(null,"typeof",TypeOfExpression.class));
+        this.functions.put("print", new FunctionInternalExpression(null,"print",PrintExpression.class));
+        this.functions.put("println", new FunctionInternalExpression(null,"println",PrintlnExpression.class));
+        this.functions.put("and", new FunctionInternalExpression(null,"and",AndExpression.class));
+        this.functions.put("or", new FunctionInternalExpression(null,"or",OrExpression.class));
+        this.functions.put("nth", new FunctionInternalExpression(null,"nth",NthExpression.class));
+        this.functions.put("def", new FunctionInternalExpression(null,"def",DefExpression.class));
+        this.functions.put("inc", new FunctionInternalExpression(null,"inc",IncExpression.class));
+        this.functions.put("dec", new FunctionInternalExpression(null,"dec",DecExpression.class));
+        this.functions.put("list", new FunctionInternalExpression(null,"list",ListExpression.class));
+        this.functions.put("require", new FunctionInternalExpression(null,"require",RequireExpression.class));
+        this.functions.put("foreach", new FunctionInternalExpression(null,"foreach",ForEachExpression.class));
+        this.functions.put("return", new FunctionInternalExpression(null,"return",ReturnExpression.class));
+        this.functions.put("timing", new FunctionInternalExpression(null,"timing",TimingExpression.class));
+        this.functions.put("javastatic", new FunctionInternalExpression(null,"javastatic",JavaStaticExpression.class));
+        this.functions.put("javanew", new FunctionInternalExpression(null,"javanew",JavaNewExpression.class));
+        this.functions.put("javacall", new FunctionInternalExpression(null,"javacall",JavaCallExpression.class));
+        this.functions.put("explode", new FunctionInternalExpression(null,"explode",ExplodeExpression.class));
+        this.functions.put("while", new FunctionInternalExpression(null,"while",WhileExpression.class));
+        
     }
 
 }

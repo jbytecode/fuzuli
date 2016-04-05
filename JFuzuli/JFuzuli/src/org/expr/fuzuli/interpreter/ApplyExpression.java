@@ -1,6 +1,6 @@
 /*
  * fuzuli : A general purpose interpreter
- * Copyright (C) 2013 Mehmet Hakan Satman <mhsatman@yahoo.com>
+ * Copyright (C) 2016 Mehmet Hakan Satman <mhsatman@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,32 +18,28 @@
 package org.expr.fuzuli.interpreter;
 
 import java.util.ArrayList;
+import java.util.List;
 
+public class ApplyExpression extends Expression {
 
-public class FunctionExpression extends Expression {
-
-    String fname;
-    public ArrayList<String> params;
-    public final ArrayList<Expression> body;
-    
-    public FunctionExpression(ArrayList<Expression>expr){
-        this.exprs = expr;
-        body = new ArrayList<Expression>();
+    public ApplyExpression(ArrayList<Expression> exprs) {
+        this.exprs = exprs;
     }
-    
+
     @Override
     public Object eval(Environment e) {
-        if(this.exprs.get(0) instanceof IdentifierExpression){
-            this.fname = ((IdentifierExpression)this.exprs.get(0)).iden;
-        }else{
-            this.fname = this.exprs.get(0).eval(e).toString();
+        String fname;
+        Object result;
+        if (this.exprs.get(0) instanceof IdentifierExpression) {
+            fname = ((IdentifierExpression) this.exprs.get(0)).iden;
+        } else {
+            fname = this.exprs.get(0).eval(e).toString();
         }
-        params = (ArrayList<String>)this.exprs.get(1).eval(e);
-        for (int i=2;i<this.exprs.size();i++){
-            this.body.add(this.exprs.get(i));
-        }
-        e.registerFunction(fname, this);
-        return(this);
+        List<Expression> cdr = this.exprs.subList(1, this.exprs.size() - 1);
+        ArrayList<Expression> cdr2 = new ArrayList<>(cdr);
+        FunctionCallExpression fce = new FunctionCallExpression(cdr2);
+        fce.fname = fname;
+        result = fce.eval(e);
+        return (result);
     }
-
 }
