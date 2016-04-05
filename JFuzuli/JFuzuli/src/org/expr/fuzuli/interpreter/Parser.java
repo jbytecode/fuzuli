@@ -559,6 +559,7 @@ public class Parser {
                 case "for":
                     exprs = getExpressionList();
                     return (new ForExpression(exprs));
+                    
                 //case "foreach":
                 //    exprs = getExpressionList();
                 //    return (new ForEachExpression(exprs));
