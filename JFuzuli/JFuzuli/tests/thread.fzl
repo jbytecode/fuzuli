@@ -24,7 +24,7 @@
 # TEST 1 
 # Sleep for a second 
 (print passed)
-(thread_sleep 1000)
+(thread_sleep 100)
 (print passed)
 
 
@@ -33,7 +33,7 @@
 (function three_times (params)
 	(for (let i 0) (< i 3) (++ i)
 		(print "Running Thread: " (thread_name) "\n")
-		(thread_sleep 1000)
+		(thread_sleep 100)
 	)
 )
 (let mythread1 (thread_new "three_times"))

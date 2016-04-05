@@ -74,6 +74,7 @@ public class FunctionCallExpression extends Expression{
         if(fname.contains(".")){
             return evalClass(e);
         }
+        
         Environment env = new Environment(e);
         env.variables.clear();
         int size;
@@ -84,6 +85,12 @@ public class FunctionCallExpression extends Expression{
         
         if(func == null){
             throw new RuntimeException("Fuzuli function '"+fname+ "' is not defined");
+        }
+        
+        if(func instanceof FunctionInternalExpression){
+            //((FunctionInternalExpression) func).exprs = this.exprs;
+            func.exprs = this.exprs;
+            return(func.eval(e));
         }
         
         size = exprs.size();

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class ConstantNumberExpression extends Expression{
     
-     double d;
+    double d;
     
     public ConstantNumberExpression(ArrayList<Expression> e){
         this.exprs = e;
