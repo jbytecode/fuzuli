@@ -18,6 +18,7 @@
 
 (let passed "PASSED!\n")
 (let error "ERROR\n")
+(let migrated_to_java_test true)
 
 (def i INTEGER)(def a INTEGER)(def toplam INTEGER)
 (def h INTEGER)(def j INTEGER)

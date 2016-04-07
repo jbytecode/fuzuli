@@ -52,7 +52,7 @@
 (let tpl (: 0 n))(fill tpl 0)
 (for (let i 0)(< i 10)(++ i)
 	(println "Doing for i "i)
-	(let v (AtAv n u))
+	#(let v (AtAv n u))
 	(let u (AtAv n v))
 )
 

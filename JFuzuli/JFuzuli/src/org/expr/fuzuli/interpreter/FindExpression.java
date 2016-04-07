@@ -34,7 +34,7 @@ public class FindExpression extends Expression{
         for (int i=0;i<list.size();i++){
             Object vv = list.get(i);
             if (FValue.Equals(vv, item)){
-                return(i);
+                return(new Double(i));
             }
         }
         return (FValue.NULL);
