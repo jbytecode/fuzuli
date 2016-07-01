@@ -3,6 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="JFuzuliBundle"/>
-        <group/>
+        <group>
+            <file>file:/home/hako/fuzuli/JFuzuli/JFuzuli/test/Interpreter/InternalsTest.java</file>
+            <file>file:/home/hako/fuzuli/JFuzuli/JFuzuli/src/org/expr/fuzuli/core/FMath.java</file>
+            <file>file:/home/hako/fuzuli/JFuzuli/JFuzuli/src/nfl/math.nfl</file>
+        </group>
     </open-files>
 </project-private>
