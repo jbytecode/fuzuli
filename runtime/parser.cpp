@@ -5,8 +5,10 @@
 
 #include "token.h"
 #include "sourcecode.h"
+#include "expression.h"
 
 using namespace std;
+using namespace fuzuli::expression;
 
 namespace fuzuli {
     namespace parser {
@@ -87,7 +89,7 @@ namespace fuzuli {
             return(tok);
         }
 
-        void parse(){
+        Token *parse(){
             Token *tok;
             while(true){
                 tok = get_next_token();
@@ -100,6 +102,33 @@ namespace fuzuli {
                 }
                 cout << endl;
             }
+            return(tok);
         }
+
+        fuzuli::expression::Expression *parse_expression(){
+            fuzuli::expression::Expression *expr = new fuzuli::expression::Expression;
+            Token *tok;
+            while (true){
+                tok = get_next_token();
+                if(tok->type == LPARAN){
+                    return(parse_expression());
+                }else if (tok->type == IDENTIFIER){
+                    Expression *iden_expr = new Expression;
+                    iden_expr->type = IdentifierExpression;
+                    iden_expr->constant.cc = (const char*)tok->value.ptr_val;
+                    iden_expr->expressions = parse_expression(); /*Get Expression List */
+                    return(iden_expr);
+                }else if (tok->type == STRING){
+                    Expression *str_expr = new Expression;
+                    str_expr->type = StringConstantExpression;
+                    str_expr->constant.cc = (const char*)tok->value.ptr_val;
+                    return(str_expr);
+                }else if (tok->type == RPARAN){
+                    return(NULL);
+                }
+            }
+        }
+
+        
     } // end of namespace parser
 } // end of namespace fuzuli

@@ -1,8 +1,12 @@
+#ifndef __parser_h__
+#define __parser_h__
+
 #include <string>
 #include <iostream>
 
 #include "token.h"
 #include "sourcecode.h"
+#include "expression.h"
 
 using namespace std;
 
@@ -15,7 +19,11 @@ namespace fuzuli {
        
         Token *get_next_token();
 
-        void parse();
+        Token *parse();
+
+        fuzuli::expression::Expression *parse_expression();
         
     } // end of namespace parser
 } // end of namespace fuzuli
+
+#endif
