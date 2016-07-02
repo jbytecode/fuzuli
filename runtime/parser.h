@@ -8,6 +8,7 @@
 #include "sourcecode.h"
 #include "expression.h"
 
+
 using namespace std;
 
 namespace fuzuli {
@@ -21,7 +22,8 @@ namespace fuzuli {
 
         Token *parse();
 
-        fuzuli::expression::Expression *parse_expression();
+        fuzuli::Token *run_vector(vector<Token*> &vals);
+        fuzuli::Token *run_expression();
         
     } // end of namespace parser
 } // end of namespace fuzuli

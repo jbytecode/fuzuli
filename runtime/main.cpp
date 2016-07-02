@@ -13,10 +13,13 @@ int main(int argc, char **argv){
     }else{
         string code = fuzuli::sourcecode::loadcode(argv[1]);
         fuzuli::parser::init_parser(code);
-        fuzuli::expression::Expression *expr = fuzuli::parser::parse_expression();
-        cout << "Expression type: " << expr->type << endl;
-        cout << "Expression constant: " << expr->constant.cc << endl;
-        cout << "Expression params count :" << expr->expressions.size() << endl;
+        Token *t1 = fuzuli::parser::run_expression();
+        //Token *t2 = fuzuli::parser::run_expression();
+        //Token *t3 = fuzuli::parser::run_expression();
+        cout << "Return of 1 "<< (t1 == NULL) << endl;
+        //cout << "Return of 2 "<< t2->type << endl;
+        //cout << "Return of 3 "<< t3->type << endl;
     }
+    cout << "Done." << endl;
     return(0);
 }

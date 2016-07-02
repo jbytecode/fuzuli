@@ -2,10 +2,14 @@
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
+#include <cstring>
+#include <stack>
 
+#include "parser.h"
 #include "token.h"
 #include "sourcecode.h"
 #include "expression.h"
+#include "core.h"
 
 using namespace std;
 using namespace fuzuli::expression;
@@ -68,7 +72,7 @@ namespace fuzuli {
                     }
                 }
                 tok->type = IDENTIFIER;
-                tok->value.ptr_val = (void*)ss.str().c_str();
+                tok->value.ptr_val = (void*) fuzuli::new_char_array(ss.str().c_str());
                 return(tok); 
             }else if (c == '"'){
                 eat();
@@ -78,11 +82,18 @@ namespace fuzuli {
                         eat();
                         break;
                     }
+                    if (c=='\\'){
+                        eat();
+                        c = readc();
+                        if(c=='n'){
+                            c = '\n';
+                        }
+                    }
                     ss << c;
                     eat();
                 }
                 tok->type = STRING;
-                tok->value.ptr_val = (void*) ss.str().c_str();
+                tok->value.ptr_val = (void*) fuzuli::new_char_array(ss.str().c_str());
                 return(tok);
             }
             tok->type = _NULL;
@@ -105,30 +116,43 @@ namespace fuzuli {
             return(tok);
         }
 
-        fuzuli::expression::Expression *parse_expression(){
-            fuzuli::expression::Expression *expr = new fuzuli::expression::Expression;
+        fuzuli::Token *run_expression(){
+            vector<Token*> vals;
             Token *tok;
-            while (true){
+            while(true){
                 tok = get_next_token();
-                if(tok->type == LPARAN){
-                    return(parse_expression());
-                }else if (tok->type == IDENTIFIER){
-                    Expression *iden_expr = new Expression;
-                    iden_expr->type = IdentifierExpression;
-                    iden_expr->constant.cc = (const char*)tok->value.ptr_val;
-                    iden_expr->expressions = parse_expression(); /*Get Expression List */
-                    return(iden_expr);
-                }else if (tok->type == STRING){
-                    Expression *str_expr = new Expression;
-                    str_expr->type = StringConstantExpression;
-                    str_expr->constant.cc = (const char*)tok->value.ptr_val;
-                    return(str_expr);
-                }else if (tok->type == RPARAN){
+                if(tok == NULL){
                     return(NULL);
                 }
+                if(tok->type == _NULL){
+                    return(NULL);
+                }
+                if(tok->type == LPARAN){
+                    vals.push_back(run_expression());
+                }else if (tok->type == RPARAN){
+                    return(fuzuli::parser::run_vector(vals));
+                }else {
+                    vals.push_back(tok);
+                }
             }
+            Token *t = new Token;
+            t->type = _NULL;
+            return(t);
         }
 
-        
+        fuzuli::Token *run_vector(vector<Token*> &vals){
+            //cout << "We are in run vector:" << endl;
+            Token *tok;
+            tok = vals[0];
+            char *cmd = (char *)tok->value.ptr_val;
+            //cout << "Doing command: " << cmd << endl;
+            if(strcmp(cmd, "print")==0){
+                return(fuzuli::core::print(vals));
+            }else if(strcmp(cmd, "strlen")==0){
+                return(fuzuli::core::strlen_(vals));
+            }
+            return(new_null_token());
+        }
+
     } // end of namespace parser
 } // end of namespace fuzuli

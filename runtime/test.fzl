@@ -1,2 +1,15 @@
-(print "Hello World!")
+(print "Size of Hello World! is: " (strlen "Hello World!") "\n")
+(print "Hello World!\n")
+
+
+
+
+
+
+
+
+
+(print "End of file\n")
+
+
 
