@@ -556,9 +556,9 @@ public class Parser {
                 //case "typeof":
                 //    exprs = getExpressionList();
                 //    return (new TypeOfExpression(exprs));
-                case "for":
-                    exprs = getExpressionList();
-                    return (new ForExpression(exprs));
+                //case "for":
+                //    exprs = getExpressionList();
+                //    return (new ForExpression(exprs));
                     
                 //case "foreach":
                 //    exprs = getExpressionList();
@@ -566,9 +566,9 @@ public class Parser {
                 //case "while":
                 //    exprs = getExpressionList();
                 //    return (new WhileExpression(exprs));
-                case "break":
-                    exprs = getExpressionList();
-                    return (new BreakExpression(exprs));
+                //case "break":
+                //    exprs = getExpressionList();
+                //    return (new BreakExpression(exprs));
                 //case "def":
                 //    exprs = getExpressionList();
                 //    return (new DefExpression(exprs));

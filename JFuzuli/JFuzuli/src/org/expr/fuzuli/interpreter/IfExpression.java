@@ -41,7 +41,7 @@ public class IfExpression extends Expression {
             }
         }else{
             System.out.println("Criteria: "+FValue.getAsDouble(criterian));
-            throw new RuntimeException("Bad if statement");
+            throw new RuntimeException("Bad if statement: expression count = " +this.exprs.size());
         }
         return(FValue.ZERO);
     }

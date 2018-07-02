@@ -173,9 +173,7 @@
 (let a (new Matrix))
 (a.create 2 2)
 (a.setValue 0 0 1)(a.setValue 0 1 2)(a.setValue 1 0 3)(a.setValue 1 1 4)
-
-
-(print a)
+(print "a is " a)
 
 # TEST 1 - Transpose
 (let trans (a.transpose))

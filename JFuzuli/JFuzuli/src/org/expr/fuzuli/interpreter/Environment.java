@@ -147,7 +147,8 @@ public final class Environment implements Serializable {
         this.functions.put("javacall", new FunctionInternalExpression(null,"javacall",JavaCallExpression.class));
         this.functions.put("explode", new FunctionInternalExpression(null,"explode",ExplodeExpression.class));
         this.functions.put("while", new FunctionInternalExpression(null,"while",WhileExpression.class));
-        
+        this.functions.put("break", new FunctionInternalExpression(null, "break", BreakExpression.class));
+        this.functions.put("for", new FunctionInternalExpression(null, "for", ForExpression.class));
     }
 
 }
