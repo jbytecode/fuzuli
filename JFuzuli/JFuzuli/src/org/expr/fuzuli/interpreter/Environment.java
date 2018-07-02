@@ -123,6 +123,7 @@ public final class Environment implements Serializable {
     }
     
     public void addInternalFunctions(){
+        /*
         this.functions.put("gc", new FunctionInternalExpression(null,"gc",GcExpression.class));
         this.functions.put("dump", new FunctionInternalExpression(null,"dump",DumpExpression.class));
         this.functions.put("jint", new FunctionInternalExpression(null,"jint",JintExpression.class));
@@ -149,6 +150,12 @@ public final class Environment implements Serializable {
         this.functions.put("while", new FunctionInternalExpression(null,"while",WhileExpression.class));
         this.functions.put("break", new FunctionInternalExpression(null, "break", BreakExpression.class));
         this.functions.put("for", new FunctionInternalExpression(null, "for", ForExpression.class));
+        this.functions.put("eval", new FunctionInternalExpression(null, "eval", EvalExpression.class));
+        this.functions.put("expression", new FunctionInternalExpression(null, "expression", ExpressionExpression.class));
+        this.functions.put("trycatch", new FunctionInternalExpression(null, "trycatch", TryCatchExpression.class));
+        this.functions.put("dynload", new FunctionInternalExpression(null, "dynload", DynLoadExpression.class));
+        this.functions.put("return", new FunctionInternalExpression(null, "return", ReturnExpression.class));
+        */
     }
 
 }

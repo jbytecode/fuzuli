@@ -523,18 +523,18 @@ public class Parser {
 
         } else if (tok.type == Token.TokenType.IDENTIFIER) {
             switch (tok.content) {
-                //case "print":
-                //    exprs = getExpressionList();
-                //    return (new PrintExpression(exprs));
-                //case "println":
-                //    exprs = getExpressionList();
-                //    return (new PrintlnExpression(exprs));
-                //case "and":
-                //    exprs = getExpressionList();
-                //    return (new AndExpression(exprs));
-                //case "or":
-                //    exprs = getExpressionList();
-                //    return (new OrExpression(exprs));
+                case "print":
+                    exprs = getExpressionList();
+                    return (new PrintExpression(exprs));
+                case "println":
+                    exprs = getExpressionList();
+                    return (new PrintlnExpression(exprs));
+                case "and":
+                    exprs = getExpressionList();
+                    return (new AndExpression(exprs));
+                case "or":
+                    exprs = getExpressionList();
+                    return (new OrExpression(exprs));
                 case "let":
                     exprs = getExpressionList();
                     return (new LetExpression(exprs));
@@ -553,40 +553,40 @@ public class Parser {
                 case "setepsilon":
                     exprs = getExpressionList();
                     return (new SetEpsilonExpression(exprs));
-                //case "typeof":
-                //    exprs = getExpressionList();
-                //    return (new TypeOfExpression(exprs));
-                //case "for":
-                //    exprs = getExpressionList();
-                //    return (new ForExpression(exprs));
+                case "typeof":
+                    exprs = getExpressionList();
+                    return (new TypeOfExpression(exprs));
+                case "for":
+                    exprs = getExpressionList();
+                    return (new ForExpression(exprs));
                     
-                //case "foreach":
-                //    exprs = getExpressionList();
-                //    return (new ForEachExpression(exprs));
-                //case "while":
-                //    exprs = getExpressionList();
-                //    return (new WhileExpression(exprs));
-                //case "break":
-                //    exprs = getExpressionList();
-                //    return (new BreakExpression(exprs));
-                //case "def":
-                //    exprs = getExpressionList();
-                //    return (new DefExpression(exprs));
-                //case "inc":
-                //    exprs = getExpressionList();
-                //    return (new IncExpression(exprs));
-                //case "dec":
-                //    exprs = getExpressionList();
-                //    return (new DecExpression(exprs));
-                //case "list":
-                //    exprs = getExpressionList();
-                //    return (new ListExpression(exprs));
-                //case "nth":
-                //    exprs = getExpressionList();
-                //    return (new NthExpression(exprs));
-                //case "length":
-                //    exprs = getExpressionList();
-                //    return (new LengthExpression(exprs));
+                case "foreach":
+                    exprs = getExpressionList();
+                    return (new ForEachExpression(exprs));
+                case "while":
+                    exprs = getExpressionList();
+                    return (new WhileExpression(exprs));
+                case "break":
+                    exprs = getExpressionList();
+                    return (new BreakExpression(exprs));
+                case "def":
+                    exprs = getExpressionList();
+                    return (new DefExpression(exprs));
+                case "inc":
+                    exprs = getExpressionList();
+                    return (new IncExpression(exprs));
+                case "dec":
+                    exprs = getExpressionList();
+                    return (new DecExpression(exprs));
+                case "list":
+                    exprs = getExpressionList();
+                    return (new ListExpression(exprs));
+                case "nth":
+                    exprs = getExpressionList();
+                    return (new NthExpression(exprs));
+                case "length":
+                    exprs = getExpressionList();
+                    return (new LengthExpression(exprs));
                 case "set":
                     exprs = getExpressionList();
                     return (new SetExpression(exprs));
@@ -617,30 +617,30 @@ public class Parser {
                 case "return":
                     exprs = getExpressionList();
                     return (new ReturnExpression(exprs));
-                //case "timing":
-                //    exprs = getExpressionList();
-                //    return (new TimingExpression(exprs));
-                //case "require":
-                //    exprs = getExpressionList();
-                //    return (new RequireExpression(exprs));
+                case "timing":
+                    exprs = getExpressionList();
+                    return (new TimingExpression(exprs));
+                case "require":
+                    exprs = getExpressionList();
+                    return (new RequireExpression(exprs));
                 case "dynload":
                     exprs = getExpressionList();
                     return (new DynLoadExpression(exprs));
                 case "internal":
                     exprs = getExpressionList();
                     return (new InternalExpression(exprs));
-                //case "javastatic":
-                //    exprs = getExpressionList();
-                //    return (new JavaStaticExpression(exprs));
-                //case "javanew":
-                //    exprs = getExpressionList();
-                //    return (new JavaNewExpression(exprs));
-                //case "javacall":
-                //    exprs = getExpressionList();
-                //    return (new JavaCallExpression(exprs));
-                //case "explode":
-                //    exprs = getExpressionList();
-                //    return (new ExplodeExpression(exprs));
+                case "javastatic":
+                    exprs = getExpressionList();
+                    return (new JavaStaticExpression(exprs));
+                case "javanew":
+                    exprs = getExpressionList();
+                    return (new JavaNewExpression(exprs));
+                case "javacall":
+                    exprs = getExpressionList();
+                    return (new JavaCallExpression(exprs));
+                case "explode":
+                    exprs = getExpressionList();
+                    return (new ExplodeExpression(exprs));
                 case "eval":
                     exprs = getExpressionList();
                     return (new EvalExpression(exprs));
@@ -650,18 +650,18 @@ public class Parser {
                 case "trycatch":
                     exprs = getExpressionList();
                     return (new TryCatchExpression(exprs));
-                //case "dotimes":
-                //    exprs = getExpressionList();
-                //    return (new DoTimesExpression(exprs));
-                //case "gc":
-                //    exprs = getExpressionList();
-                //    return (new GcExpression(exprs));
-                //case "dump":
-                //    exprs = getExpressionList();
-                //    return (new DumpExpression(exprs));
-                //case "jint":
-                //    exprs = getExpressionList();
-                //    return (new JintExpression(exprs));
+                case "dotimes":
+                    exprs = getExpressionList();
+                    return (new DoTimesExpression(exprs));
+                case "gc":
+                    exprs = getExpressionList();
+                    return (new GcExpression(exprs));
+                case "dump":
+                    exprs = getExpressionList();
+                    return (new DumpExpression(exprs));
+                case "jint":
+                    exprs = getExpressionList();
+                    return (new JintExpression(exprs));
                 case "loadjar":
                     exprs = getExpressionList();
                     return (new LoadJarExpression(exprs));
