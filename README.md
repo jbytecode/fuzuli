@@ -3,7 +3,7 @@ http://stdioe.blogspot.com/search/label/fuzuli
 
 * fuzuli is a Lispy programming language
 
-Since it is not a real Lisp clone, the syntax is higly barrowed from Lisp:
+Since it is not a real Lisp clone, the syntax is highly barrowed from Lisp:
 
 ```fuzuli
 (print "Hello world!")
