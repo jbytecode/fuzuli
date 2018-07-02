@@ -16,24 +16,57 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
   
+(require "lang.nfl")
 
 (let passed "PASSED!\n")
 (let error "ERROR\n")
 
-(let i 0)
 
-(while (< i 10)
-		(inc i)
-		(if (>= i 10) 
-			(break)
-		)
+(function test_sum (params a b)
+	(block
+		(return (+ a b))
+	)
 )
 
-# Test while and break
-(if (>= i 9)
+(let mylist (list 1 2 3 4 5 6 7 8 9 10))
+
+
+# TEST 1 - fcall test #
+(if (= (fcall "test_sum" (list 6 5)) 11)
 	(print passed)
 	(print error)
 )
+
+
+# TEST 2 - car
+(let a (car mylist))
+(if (= a 1)
+	(print passed)
+	(print error)
+)
+
+# TEST 3 - cdr
+(let a (cdr mylist))
+(if (= a (list 2 3 4 5 6 7 8 9 10))
+	(print passed)
+	(print error)
+)
+
+# TEST 4 - first
+(let a (first mylist))
+(if (= a 1)
+	(print passed)
+	(print error)
+)
+
+# TEST 5 - last
+(let a (last mylist))
+(if (= a 10)
+	(print passed)
+	(print error)
+)
+
+
 
 
 

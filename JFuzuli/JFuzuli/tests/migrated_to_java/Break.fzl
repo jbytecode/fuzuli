@@ -18,6 +18,8 @@
 (let passed "PASSED!\n")
 (let error "ERROR\n")
 
+
+# TEST 1
 (let toplam 0.0)
 
 (for (let i 0) (< i 10) (let i (+ i 1))
@@ -37,4 +39,25 @@
     (print passed)
     (print error)
 )
+
+
+
+
+
+# TEST 2
+(let i 0)
+
+(while (= 0 0)
+        (inc i)
+        (if (>= i 10)
+            (break)
+        )
+)
+
+# Test while and break
+(if (>= i 10)
+    (print passed)
+    (print error)
+)
+
 

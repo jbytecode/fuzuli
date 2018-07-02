@@ -78,7 +78,7 @@
 )
 
 (let result10 (ucase str))
-(if (= result10 " FUZULI ")
+(if (or (= result10 " FUZULI ") (= result10 " FUZULİ "))
 	(print passed)
 	(print error)
 )
