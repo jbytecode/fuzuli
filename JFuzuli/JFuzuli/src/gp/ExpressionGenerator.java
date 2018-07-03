@@ -1,7 +1,7 @@
 package gp;
 
 import org.expr.fuzuli.interpreter.AsterixExpression;
-import org.expr.fuzuli.interpreter.ConstantNumberExpression;
+import org.expr.fuzuli.interpreter.ConstantDoubleNumberExpression;
 import org.expr.fuzuli.interpreter.DivisionExpression;
 import org.expr.fuzuli.interpreter.Expression;
 import org.expr.fuzuli.interpreter.IdentifierExpression;
@@ -28,13 +28,13 @@ public class ExpressionGenerator {
         System.out.println("Deep: "+deep);
         if (deep >5){
             double num = Math.random();
-            result = new ConstantNumberExpression(num);
+            result = new ConstantDoubleNumberExpression(num);
             return(result);
         }
         
-        if (current == ConstantNumberExpression.class) {
+        if (current == ConstantDoubleNumberExpression.class) {
             double num = Math.random();
-            result = new ConstantNumberExpression(num);
+            result = new ConstantDoubleNumberExpression(num);
         } else if (current == IdentifierExpression.class && (identifierList.length != 0)) {
             int index = (int) (Math.random() * identifierList.length);
             result = new IdentifierExpression(identifierList[index]);

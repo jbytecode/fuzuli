@@ -73,9 +73,11 @@ public class FIO {
             os.writeUTF(s);
         }else if(obj instanceof Integer){
             os.writeInt((Integer)obj);
-        } else if (obj instanceof Number) {
+        }else if(obj instanceof Long){
+            os.writeLong((Long)obj);
+        }else if (obj instanceof Number) {
             os.writeDouble((Double)obj);
-        } else if (obj instanceof ArrayList) {
+        }else if (obj instanceof ArrayList) {
             ArrayList al = (ArrayList)obj;
             for (int i=0;i<al.size();i++){
                 fwrite(os, al.get(i), env);
@@ -105,6 +107,8 @@ public class FIO {
             return(dis.readDouble());
         }else if (o instanceof String){
             return(dis.readUTF());
+        }else if(o instanceof Long){
+            return(dis.readLong());
         }else if(o instanceof Integer){
             return(dis.readInt());
         }else if(o instanceof Float){

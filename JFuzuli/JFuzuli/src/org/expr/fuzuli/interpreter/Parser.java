@@ -186,7 +186,7 @@ public class Parser {
                     }
                     putBackChar();
                     tok.content = String.valueOf(Long.parseLong(buf.toString(), 16));
-                    tok.type = Token.TokenType.DOUBLE;
+                    tok.type = Token.TokenType.LONG;
                     return (tok);
                 } else {
                     putBackChar();
@@ -430,7 +430,8 @@ public class Parser {
 
     public Expression getNextExpression() {
         Token tok;
-        ConstantNumberExpression dexpr;
+        ConstantDoubleNumberExpression dexpr;
+        ConstantIntegerNumberExpression iexpr;
         ArrayList<Expression> exprs = null;
         tok = getNextToken();
         if (tok.type != Token.TokenType.IDENTIFIER) {
@@ -442,11 +443,11 @@ public class Parser {
                 case RPARAN:
                     return (null);
                 case DOUBLE:
-                    dexpr = new ConstantNumberExpression(Double.parseDouble(tok.content));
+                    dexpr = new ConstantDoubleNumberExpression(Double.parseDouble(tok.content));
                     return (dexpr);
                 case LONG:
-                    dexpr = new ConstantNumberExpression(Long.parseLong(tok.content));
-                    return (dexpr);
+                    iexpr = new ConstantIntegerNumberExpression(Long.parseLong(tok.content));
+                    return (iexpr);
                 case PLUS:
                     exprs = getExpressionList();
                     return (new PlusExpression(exprs));

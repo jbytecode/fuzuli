@@ -19,26 +19,26 @@ package org.expr.fuzuli.interpreter;
 
 import java.util.ArrayList;
 
-public class ConstantNumberExpression extends Expression{
+public class ConstantIntegerNumberExpression extends Expression{
     
-    double d;
+    long l;
     
-    public ConstantNumberExpression(ArrayList<Expression> e){
+    public ConstantIntegerNumberExpression(ArrayList<Expression> e){
         this.exprs = e;
     }
     
-    public ConstantNumberExpression(double d){
-        this.d = d;
+    public ConstantIntegerNumberExpression(long l){
+        this.l = l;
     }
     
 
     @Override
     public Object eval(Environment e) {
-        return( d);
+        return(l);
     }
     
     public String toString(){
-        return("Const("+this.d+")");
+        return("IntegerConst(" + this.l + ")");
     }
 
 }
