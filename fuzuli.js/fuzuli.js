@@ -49,6 +49,75 @@ class Token {
 };
 
 
+class Expression {
+    constructor(){
+
+    }
+}
+
+
+class AlertExpression extends Expression {
+    
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+    eval(env){
+        alert(this.exprs[0].eval(env));
+    }
+}
+
+class ConstantDoubleNumberExpression extends Expression{
+
+    constructor(doubleValue){
+        super();
+        this.doubleValue = doubleValue;
+    }
+
+    eval(env){
+        return(this.doubleValue);
+    }
+}
+
+class ConstantIntegerNumberExpression extends Expression{
+
+    constructor(longValue){
+        super();
+        this.longValue = longValue;
+    }
+
+    eval(env){
+        return(this.longValue);
+    }
+}
+
+class PlusExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        var sum = 0.0;
+        for (var i = 0; i < this.exprs.length; i++){
+            sum += this.exprs[i].eval(env);
+        }
+        return(sum);
+    }
+}
+
+class MinusExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        return this.exprs[0].eval(env) - this.exprs[1].eval(env);
+    }
+}
+
+
 class Parser {
 
     constructor(code) {
@@ -373,8 +442,8 @@ class Parser {
 
     
     getNextToken() {
-        var tok = this.tokens[tokenIndex];
-        tokenIndex++;
+        var tok = this.tokens[this.tokenIndex];
+        this.tokenIndex++;
         return (tok);
     }
 
@@ -384,6 +453,73 @@ class Parser {
         } else {
             return (null);
         }
+    }
+
+    getExpressionList() {
+        var exprs = [];
+        var e;
+        while (true) {
+            e = this.getNextExpression();
+            if (e == null) {
+                break;
+            }
+            exprs.push(e);
+        }
+        return (exprs);
+    }
+
+
+    getNextExpression() {
+        var tok;
+        var exprs = [];
+        tok = this.getNextToken();
+        if (tok.type != TokenType["IDENTIFIER"]) {
+            switch (tok.type) {
+                case TokenType["EOP"]:
+                    return (null);
+                case TokenType["LPARAN"]:
+                    return this.getNextExpression();
+                case TokenType["RPARAN"]:
+                    return (null);
+                case TokenType["DOUBLE"]:
+                    var dexpr = new ConstantDoubleNumberExpression(parseFloat(tok.content));
+                    return (dexpr);
+                case TokenType["LONG"]:
+                    var iexpr = new ConstantIntegerNumberExpression(parseInt(tok.content));
+                    return (iexpr);
+                case TokenType["PLUS"]:
+                    exprs = this.getExpressionList();
+                    return (new PlusExpression(exprs));
+                case TokenType["MINUS"]:
+                    exprs = this.getExpressionList();
+                    return (new MinusExpression(exprs));
+                case TokenType["SINGLEQUOTE"]:
+                    this.getNextToken(); // This is opening paranthesis.
+                    exprs = getExpressionList();
+                    return (new ListExpression(exprs));
+                default:
+                //NOP
+            }
+
+        } else if (tok.type == TokenType["IDENTIFIER"]) {
+            switch (tok.content) {
+                case "alert":
+                    exprs = this.getExpressionList();
+                    return (new AlertExpression(exprs));     
+                default:
+                    var fname = tok.content;
+                    if (this.getPreviousToken().type == TokenType["LPARAN"]) {
+                        exprs = getExpressionList();
+                        //System.out.println("Function call to "+fname+" with "+exprs.toString());
+                        //var fce = new FunctionCallExpression(exprs);
+                        //fce.fname = fname;
+                        //return (fce);
+                    } else {
+                        return (new IdentifierExpression(tok.content));
+                    }
+            }
+        }
+        throw new RuntimeException("Can not understand '" + tok.content + "'");
     }
 };
 
@@ -400,5 +536,12 @@ for(var i = 0; i < scripts.length; i++){
 console.log("Received source code: " + sourcecode);
 var parser = new Parser(sourcecode);
 console.log("Parser created with content: " + parser.getSourceCode());
-console.log(parser.getTokens());
-
+//console.log(parser.getTokens());
+var exprs = parser.getExpressionList();
+var env = null;
+var result = null;
+for (var i = 0; i < exprs.length; i++){
+    expr = exprs[i];
+    result = expr.eval(env);
+}
+console.log(result);
