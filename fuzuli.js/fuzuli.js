@@ -204,18 +204,18 @@ class Parser {
             }
             return (tok);
         } else if (current == '+') {
-            var next = consume();
+            var next = this.consume();
             if (next == '+') {
                 tok.content = "++";
-                tok.type = Token.TokenType.PLUSPLUS;
+                tok.type = TokenType["PLUSPLUS"];
                 return (tok);
             }
-            putBackChar();
+            this.putBackChar();
             tok.content = "+";
-            tok.type = Token.TokenType.PLUS;
+            tok.type = TokenType["PLUS"];
             return (tok);
         } else if (current == '-') {
-            var next = consume();
+            var next = this.consume();
             if (this.isDigit(next)) {
                 this.putBackChar();
                 var t = this.parseNextToken();
@@ -229,128 +229,106 @@ class Parser {
                 tok.type = Token.TokenType.MINUSMINUS;
                 return (tok);
             }
-            putBackChar();
+            this.putBackChar();
             tok.content = "-";
-            tok.type = Token.TokenType.MINUS;
+            tok.type = TokenType["MINUS"];
             return (tok);
         } else if (current == '/') {
-            var next = consume();
+            var next = this.consume();
             if (next == '/') {
                 while (true) {
-                    var c = consume();
+                    var c = this.consume();
                     if (c == '\n') {
-                        return (parseNextToken());
+                        return (this.parseNextToken());
                     }
                 }
             } else if (next == '*') {
                 while (true) {
-                    var c1 = consume();
-                    var c2 = consume();
+                    var c1 = this.consume();
+                    var c2 = this.consume();
                     if (c1 == '*' && c2 == '/') {
-                        return (parseNextToken());
+                        return (this.parseNextToken());
                     }
-                    putBackChar();
+                    this.putBackChar();
                 }
             }
-            putBackChar();
+            this.putBackChar();
             tok.content = "/";
-            tok.type = Token.TokenType.DIVISION;
+            tok.type = TokenType["DIVISION"];
             return (tok);
         } else if (current == '*') {
             tok.content = "*";
-            tok.type = Token.TokenType.ASTERIX;
+            tok.type = TokenType["ASTERIX"];
             return (tok);
         } else if (current == '=') {
             tok.content = "=";
-            tok.type = Token.TokenType.EQUALS;
+            tok.type = TokenType["EQUALS"];
             return (tok);
         } else if (current == '<') {
-            var next = consume();
+            var next = this.consume();
             if (next == '<') {
                 tok.content = "<<";
-                tok.type = Token.TokenType.BITSHIFTLEFT;
+                tok.type = TokenType["BITSHIFTLEFT"];
                 return (tok);
             } else if (next == '=') {
                 tok.content = "<=";
-                tok.type = Token.TokenType.LESSOREQUAL;
+                tok.type = TokenType["LESSOREQUAL"];
                 return (tok);
-            } else if (next == '?') {
-                var sb = "";
-                while (looknext() != '\n') {
-                    sb += consume();
-                }
-                consume();
-                if (sb.substring(0, 10).equals("javascript")) {
-                    var jscode = "";
-                    while (true) {
-                        if (jscode.length() > 2) {
-                            if (jscode.toString().endsWith("?>")) {
-                                break;
-                            }
-                        }
-                        jscode.append(consume());
-                        //System.out.println(jscode);
-                    }
-                    var jsfinalcode = jscode.substring(0, jscode.length() - 2);
-                    tok.content = jsfinalcode;
-                    tok.type = Token.TokenType.JSCODE;
-                    return (tok);
-                }
-            } else {
-                putBackChar();
+            }else {
+                this.putBackChar();
             }
             tok.content = "<";
-            tok.type = Token.TokenType.LESS;
+            tok.type = TokenType["LESS"];
             return (tok);
         } else if (current == '>') {
-            var next = consume();
+            var next = this.consume();
             if (next == '>') {
                 tok.content = ">>";
-                tok.type = Token.TokenType.BITSHIFTRIGHT;
+                tok.type = TokenType["BITSHIFTRIGHT"];
                 return (tok);
             } else if (next == '=') {
                 tok.content = ">=";
-                tok.type = Token.TokenType.BIGGEROREQUAL;
+                tok.type = TokenType["BIGGEROREQUAL"];
                 return (tok);
             } else {
-                putBackChar();
+                this.putBackChar();
             }
             tok.content = ">";
-            tok.type = Token.TokenType.BIGGER;
+            tok.type = TokenType["BIGGER"];
             return (tok);
         } else if (current == '&') {
             tok.content = "&";
-            tok.type = Token.TokenType.BITAND;
+            tok.type = TokenType["BITAND"];
             return (tok);
         } else if (current == '|') {
             tok.content = "|";
-            tok.type = Token.TokenType.BITOR;
+            tok.type = TokenType["BITOR"];
             return (tok);
         } else if (current == '~') {
             tok.content = "~";
-            tok.type = Token.TokenType.BITNOT;
+            tok.type = TokenType["BITNOT"];
             return (tok);
         } else if (current == '^') {
             tok.content = "^";
-            tok.type = Token.TokenType.BITXOR;
+            tok.type = TokenType["BITXOR"];
             return (tok);
         } else if (current == ':') {
             tok.content = ":";
-            tok.type = Token.TokenType.COLON;
+            tok.type = TokenType["COLON"];
             return (tok);
         } else if (current == '!') {
-            buf.append(current);
-            current = consume();
+            buf += current;
+            current = this.consume();
             if (current == '=') {
-                buf.append(current);
+                buf += current;
                 tok.content = buf.toString();
-                tok.type = Token.TokenType.NOTEQUAL;
+                tok.type = TokenType["NOTEQUAL"];
                 return (tok);
             } else {
-                putBackChar();
+                this.putBackChar();
             }
             tok.content = "!";
-            tok.type = Token.TokenType.EXCLAMATION;
+            tok.type = TokenType["EXCLAMATION"];
             return (tok);
         } else if (this.isLetter(current)) {
             buf += current;
@@ -386,7 +364,7 @@ class Parser {
             return (tok);
         } else if (current == '\'') {
             tok.content = "'";
-            tok.type = Token.TokenType.SINGLEQUOTE;
+            tok.type = TokenType["SINGLEQUOTE"];
             return (tok);
         }
 
