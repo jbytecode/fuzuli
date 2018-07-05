@@ -5,13 +5,15 @@
 
 
     <script type = "text/fuzuli">
-        (let a (+ 4 20))
-        (let b 10)
-        (let c "test")
+        (let passed "PASSED!\n")
+        (let error "ERROR\n")
 
-        (print "a is " a)
-        (print "b is " b)
-        (print "c is " c)
+
+        # TEST 1 #
+        (if (= (< 1 4) 1)
+            (print passed)
+            (print error)
+        )
     </script>
     <script type = "text/javascript" src = "fuzuli.js"></script>
 

@@ -195,6 +195,29 @@ class DivideExpression extends Expression {
     }
 }
 
+class EqualsExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        return this.exprs[0].eval(env) == this.exprs[1].eval(env);
+    }
+}
+
+
+class LessExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        return this.exprs[0].eval(env) < this.exprs[1].eval(env);
+    }
+}
+
 class LetExpression extends Expression {
     constructor(exprs){
         super();
@@ -223,6 +246,34 @@ class PrintExpression extends Expression {
             div.innerText += this.exprs[i].eval(env);
         }
         document.body.appendChild(div);
+    }
+}
+
+
+class IfExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        
+        if(this.exprs.length == 2){
+            var constraint = this.exprs[0].eval(env);
+            if(constraint){
+                return this.exprs[1].eval(env);
+            }else{
+                return(null);
+            }
+        }
+        if(this.exprs.length == 3){
+            var constraint = this.exprs[0].eval(env);
+            if(constraint){
+                return this.exprs[1].eval(env);
+            }else{
+                return this.exprs[2].eval(env);
+            }
+        }
     }
 }
 
@@ -608,6 +659,12 @@ class Parser {
                 case TokenType["DIVISION"]:
                     exprs = this.getExpressionList();
                     return (new DivideExpression(exprs));
+                case TokenType["EQUALS"]:
+                    exprs = this.getExpressionList();
+                    return (new EqualsExpression(exprs));
+                case TokenType["LESS"]:
+                    exprs = this.getExpressionList();
+                    return (new LessExpression(exprs));
                     
                 case TokenType["SINGLEQUOTE"]:
                     this.getNextToken(); // This is opening paranthesis.
@@ -628,6 +685,9 @@ class Parser {
                 case "print":
                     exprs = this.getExpressionList();
                     return(new PrintExpression(exprs));
+                case "if":
+                    exprs = this.getExpressionList();
+                    return(new IfExpression(exprs));
                 default:
                     return (new IdentifierExpression(tok.content));
             }
