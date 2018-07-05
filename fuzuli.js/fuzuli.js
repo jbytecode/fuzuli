@@ -48,6 +48,41 @@ class Token {
     }
 };
 
+class Environment {
+    constructor(topenv){
+        this.variables = [];
+        this.topenv = topenv;
+    }
+
+    defineVariable(varname, value){
+        this.variables[varname] = value;
+    }
+
+    setVariable(varname, value){
+        if(this.variables[varname] != null){
+            this.variables[varname] = value;
+            return;
+        }else{
+            if(this.topenv == null){
+                this.variables[varname] = value;
+            }else{
+                this.topenv.setVariable(varname, value);
+            }
+        }
+    }
+
+    getVariable(varname){
+        if(this.variables[varname] != null){
+            return(this.variables[varname]);
+        }else{
+            if(this.topenv == null){
+                return(null);
+            }else{
+                this.topenv.getVariable(varname);
+            }
+        }
+    }
+}
 
 class Expression {
     constructor(){
@@ -91,6 +126,26 @@ class ConstantIntegerNumberExpression extends Expression{
     }
 }
 
+class StringLiteralExpression extends Expression {
+    constructor(str){
+        super();
+        this.str = str;
+    }
+    eval(env){
+        return(this.str);
+    }
+}
+
+class IdentifierExpression extends Expression{
+    constructor(id){
+        super();
+        this.id = id;
+    }
+    eval(env){
+        return(env.getVariable(this.id));
+    }
+}
+
 class PlusExpression extends Expression {
     constructor(exprs){
         super();
@@ -117,6 +172,59 @@ class MinusExpression extends Expression {
     }
 }
 
+class AsterixExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        return this.exprs[0].eval(env) * this.exprs[1].eval(env);
+    }
+}
+
+
+class DivideExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        return this.exprs[0].eval(env) / this.exprs[1].eval(env);
+    }
+}
+
+class LetExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        var varname = this.exprs[0].id;
+        var value = this.exprs[1].eval(env);
+        env.setVariable(varname, value);
+        return(value);
+    }
+}
+
+
+class PrintExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        var div = document.createElement("div");
+        div.style = "border: 1px solid #555555; background: #eeeeee;";
+        for (var i = 0; i < this.exprs.length; i++){
+            div.innerText += this.exprs[i].eval(env);
+        }
+        document.body.appendChild(div);
+    }
+}
 
 class Parser {
 
@@ -154,7 +262,6 @@ class Parser {
             return '\0';
         }
         var current = this.sourcecode.charAt(this.charIndex);
-        console.log("Consumed: " + current);
         this.charIndex++;
         if (this.charIndex >= this.sourcecode.length) {
             console.log("charindex is bigger than source code len, exiting");
@@ -448,8 +555,8 @@ class Parser {
     }
 
     getPreviousToken() {
-        if (tokenIndex > 1) {
-            return (this.tokens[tokenIndex - 2]);
+        if (this.tokenIndex > 1) {
+            return (this.tokens[this.tokenIndex - 2]);
         } else {
             return (null);
         }
@@ -486,13 +593,22 @@ class Parser {
                     return (dexpr);
                 case TokenType["LONG"]:
                     var iexpr = new ConstantIntegerNumberExpression(parseInt(tok.content));
-                    return (iexpr);
+                    return (iexpr);   
+                case TokenType["STRING"]:
+                    return (new StringLiteralExpression(tok.content)); 
                 case TokenType["PLUS"]:
                     exprs = this.getExpressionList();
                     return (new PlusExpression(exprs));
                 case TokenType["MINUS"]:
                     exprs = this.getExpressionList();
                     return (new MinusExpression(exprs));
+                case TokenType["ASTERIX"]:
+                    exprs = this.getExpressionList();
+                    return (new AsterixExpression(exprs));
+                case TokenType["DIVISION"]:
+                    exprs = this.getExpressionList();
+                    return (new DivideExpression(exprs));
+                    
                 case TokenType["SINGLEQUOTE"]:
                     this.getNextToken(); // This is opening paranthesis.
                     exprs = getExpressionList();
@@ -506,17 +622,14 @@ class Parser {
                 case "alert":
                     exprs = this.getExpressionList();
                     return (new AlertExpression(exprs));     
+                case "let":
+                    exprs = this.getExpressionList();
+                    return (new LetExpression(exprs));
+                case "print":
+                    exprs = this.getExpressionList();
+                    return(new PrintExpression(exprs));
                 default:
-                    var fname = tok.content;
-                    if (this.getPreviousToken().type == TokenType["LPARAN"]) {
-                        exprs = getExpressionList();
-                        //System.out.println("Function call to "+fname+" with "+exprs.toString());
-                        //var fce = new FunctionCallExpression(exprs);
-                        //fce.fname = fname;
-                        //return (fce);
-                    } else {
-                        return (new IdentifierExpression(tok.content));
-                    }
+                    return (new IdentifierExpression(tok.content));
             }
         }
         throw new RuntimeException("Can not understand '" + tok.content + "'");
@@ -538,10 +651,14 @@ var parser = new Parser(sourcecode);
 console.log("Parser created with content: " + parser.getSourceCode());
 //console.log(parser.getTokens());
 var exprs = parser.getExpressionList();
-var env = null;
+var env = new Environment(null);
 var result = null;
+console.log("Running " + exprs.length + " expressions");
 for (var i = 0; i < exprs.length; i++){
     expr = exprs[i];
+    console.log("Running: " + expr);
     result = expr.eval(env);
 }
 console.log(result);
+console.log(exprs);
+console.log(env);
