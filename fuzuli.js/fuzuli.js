@@ -207,6 +207,18 @@ class EqualsExpression extends Expression {
 }
 
 
+class NotEqualsExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        return this.exprs[0].eval(env) != this.exprs[1].eval(env);
+    }
+}
+
+
 class LessExpression extends Expression {
     constructor(exprs){
         super();
@@ -217,6 +229,110 @@ class LessExpression extends Expression {
         return this.exprs[0].eval(env) < this.exprs[1].eval(env);
     }
 }
+
+
+class BitAndExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        return this.exprs[0].eval(env) & this.exprs[1].eval(env);
+    }
+}
+
+class BitOrExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        return this.exprs[0].eval(env) | this.exprs[1].eval(env);
+    }
+}
+
+
+class BitShiftLeftExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        return this.exprs[0].eval(env) << this.exprs[1].eval(env);
+    }
+}
+
+
+class BitShiftRightExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        return this.exprs[0].eval(env) >> this.exprs[1].eval(env);
+    }
+}
+
+
+class BitNotExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        return ~this.exprs[0].eval(env);
+    }
+}
+
+
+class XorExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        return this.exprs[0].eval(env) ^ this.exprs[1].eval(env);
+    }
+}
+
+
+class PlusPlusExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        var identifier = this.exprs[0].id;
+        var value = env.getVariable(identifier) + 1;
+        env.setVariable(identifier, value);
+        return(value);
+    }
+}
+
+
+class MinusMinusExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+
+    eval(env){
+        var identifier = this.exprs[0].id;
+        var value = env.getVariable(identifier) - 1;
+        env.setVariable(identifier, value);
+        return(value);
+    }
+}
+
+
+
 
 class LetExpression extends Expression {
     constructor(exprs){
@@ -276,6 +392,69 @@ class IfExpression extends Expression {
         }
     }
 }
+
+
+
+class WhileExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+    eval(env){
+        var result;
+        var m = 0;
+        while(this.exprs[0].eval(env)){
+            result = this.exprs[1].eval(env);
+            if(result instanceof BreakExpression){
+                break;
+            }
+            console.log(result);
+            m++;
+            if(m> 200){
+                console.log("Outin while because of m");
+                break;
+            }
+        }
+        return(result);
+    }
+}
+
+class BreakExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+    eval(env){
+        return(this);
+    }
+}
+
+
+class BlockExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+    eval(env){
+        var result;
+        var newenv = new Environment(env);
+        for (var i = 0; i < this.exprs.length; i++){
+            result = this.exprs[i].eval(newenv);
+        }
+        return(result);
+    }
+}
+
+class TypeofExpression extends Expression {
+    constructor(exprs){
+        super();
+        this.exprs = exprs;
+    }
+    eval(env){
+        return(typeof(exprs[0].eval(env)));
+    }
+}
+
 
 class Parser {
 
@@ -453,7 +632,7 @@ class Parser {
                 return (tok);
             } else if (next == '-') {
                 tok.content = "--";
-                tok.type = Token.TokenType.MINUSMINUS;
+                tok.type = TokenType["MINUSMINUS"];
                 return (tok);
             }
             this.putBackChar();
@@ -662,10 +841,36 @@ class Parser {
                 case TokenType["EQUALS"]:
                     exprs = this.getExpressionList();
                     return (new EqualsExpression(exprs));
+                case TokenType["NOTEQUAL"]:
+                    exprs = this.getExpressionList();
+                    return (new NotEqualsExpression(exprs));
                 case TokenType["LESS"]:
                     exprs = this.getExpressionList();
                     return (new LessExpression(exprs));
-                    
+                case TokenType["BITAND"]:
+                    exprs = this.getExpressionList();
+                    return (new BitAndExpression(exprs));
+                case TokenType["BITSHIFTLEFT"]:
+                    exprs = this.getExpressionList();
+                    return (new BitShiftLeftExpression(exprs));
+                case TokenType["BITSHIFTRIGHT"]:
+                    exprs = this.getExpressionList();
+                    return (new BitShiftRightExpression(exprs));
+                case TokenType["BITOR"]:
+                    exprs = this.getExpressionList();
+                    return (new BitOrExpression(exprs));
+                case TokenType["BITNOT"]:
+                    exprs = this.getExpressionList();
+                    return (new BitNotExpression(exprs));
+                case TokenType["BITXOR"]:
+                    exprs = this.getExpressionList();
+                    return (new XorExpression(exprs));
+                case TokenType["PLUSPLUS"]:
+                    exprs = this.getExpressionList();
+                    return (new PlusPlusExpression(exprs));
+                case TokenType["MINUSMINUS"]:
+                    exprs = this.getExpressionList();
+                    return (new MinusMinusExpression(exprs));
                 case TokenType["SINGLEQUOTE"]:
                     this.getNextToken(); // This is opening paranthesis.
                     exprs = getExpressionList();
@@ -688,11 +893,29 @@ class Parser {
                 case "if":
                     exprs = this.getExpressionList();
                     return(new IfExpression(exprs));
+                case "inc":
+                    exprs = this.getExpressionList();
+                    return(new PlusPlusExpression(exprs));
+                case "dec":
+                    exprs = this.getExpressionList();
+                    return(new MinusMinusExpression(exprs));
+                case "while":
+                    exprs = this.getExpressionList();
+                    return(new WhileExpression(exprs));
+                case "break":
+                    exprs = this.getExpressionList();
+                    return(new BreakExpression(exprs));
+                case "block":
+                    exprs = this.getExpressionList();
+                    return(new BlockExpression(exprs));
+                case "typeof":
+                    exprs = this.getExpressionList();
+                    return(new TypeofExpression(exprs));
                 default:
                     return (new IdentifierExpression(tok.content));
             }
         }
-        throw new RuntimeException("Can not understand '" + tok.content + "'");
+        alert("Can not understand '" + tok.content + "'");
     }
 };
 
