@@ -1,0 +1,66 @@
+# Loading required packages
+(require "/usr/lib/fuzuli/nfl/io.nfl")
+(require "/usr/lib/fuzuli/nfl/string.nfl")
+(require "/usr/lib/fuzuli/nfl/net.nfl")
+
+# Getting a domain name from user.
+(puts "Please give a domain (for default just type enter):")
+(let word (readline))
+
+# If user did not type anything
+# set the default page to amazon.com
+(if (< (strlen word) 3)
+   (let word "amazon.com")
+)
+(print "Doing " word "\n")
+
+
+# Open a socket connection to host
+(print "Connecting " word "\n")
+(let socket (fsockopen word 80))
+
+# Sending HTTP Request
+(print "Sending request\n")
+(fsockwrite socket (strcat (list "GET /\n\n")))
+
+# Reading html content
+(print "Retrieving result\n")
+(def htmllist LIST)
+(while 1
+   (let c (fsockread socket 4096))
+   (if (= (typeof c) NULL) (break))
+   (append htmllist c)
+   (print ".\n")
+)
+# Closing socket
+(fsockclose socket)
+
+(print "Constucting string\n")
+(let html (strcat htmllist))
+(let len (strlen html))
+(print len " bytes read.\n")
+
+(def part STRING)
+(def i INTEGER)
+
+
+# Parsing loaded content
+(dotimes i len
+   (let part (substr html i (+ i 7)))
+   (if (= part "<a href")
+      (block
+         (print "link found: \n")
+         (while (!= part "</a>")
+            (let part (substr html i (+ i 4)))
+            (print (substr html i (+ i 1)))
+            (inc i)
+         )
+         (print part "\n")
+      )
+   )
+)
+
+(let part NULL)
+(let html NULL)
+(println "Garbage collected: " (gc))
+(dump)

@@ -1,0 +1,15 @@
+(function fibonacci (params x)
+        (if (<= x 2)
+                (return 1)
+                (return (+ (fibonacci (- x 1)) (fibonacci (- x 2))))
+        )
+)
+
+(print
+        (timing
+                (for (let i 0) (< i 26) (inc i)
+                        (fibonacci i)
+                )
+        )
+)
+

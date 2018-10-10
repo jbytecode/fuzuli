@@ -1,0 +1,258 @@
+#
+# fuzuli : A general purpose interpreter
+# Copyright (C) 2012 Mehmet Hakan Satman <mhsatman@yahoo.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+ 
+(let window_lib (dynload "FuzuliFltk"))
+
+
+(let FL_HELVETICA               0)
+(let FL_HELVETICA_BOLD          1)
+(let FL_HELVETICA_ITALIC        2)
+(let FL_HELVETICA_BOLD_ITALIC   3)
+(let FL_COURIER                 4)
+(let FL_COURIER_BOLD            5) 
+(let FL_COURIER_ITALIC          6)
+(let FL_COURIER_BOLD_ITALIC     7)
+(let FL_TIMES                   8)
+(let FL_TIMES_BOLD              9)
+(let FL_TIMES_ITALIC            10)
+(let FL_TIMES_BOLD_ITALIC       11)	
+(let FL_SYMBOL                  12)	
+(let FL_SCREEN                  13)	
+(let FL_SCREEN_BOLD             14)	
+(let FL_ZAPF_DINGBATS           15)	
+(let FL_FREE_FONT               16)
+(let FL_BOLD                    1)	
+(let FL_ITALIC                  2)	
+(let FL_BOLD_ITALIC             3)	
+
+(function messagebox (params msg)
+	(return (C window_lib "messagebox" msg))
+)
+
+
+(function inputbox (params text default)
+	(return (C window_lib "inputbox" text default))
+)
+
+(function main_loop (params)
+	(C window_lib "window_main_loop")
+)
+
+(function window_new (params width height title)
+	(return (C window_lib "window_new_3" width height title))
+)
+
+(function window_begin (params form)
+	(return (C window_lib "window_begin" form))
+)
+
+(function window_end (params form)
+	(return (C window_lib "window_end" form))
+)
+
+(function window_show (params form)
+	(return (C window_lib "window_show" form))
+)
+
+(function window_add (params form btn)
+	(return (C window_lib "window_add" form btn))
+)
+
+(function button_new (params x y width height title)
+	(return (C window_lib "button_new" x y width height title))
+)
+
+(function input_new (params x y width height title)
+	(return (C window_lib "input_new" x y width height title))
+)
+
+(function input_gettext (params input)
+	(return (C window_lib "input_gettext" input))
+)
+
+(function input_settext (params input text)
+	(return (C window_lib "input_settext" input text))
+)
+
+
+(function texteditor_new (params x y width height title)
+	(return (C window_lib "texteditor_new" x y width height title))
+)
+
+(function texteditor_gettext (params input)
+	(return (C window_lib "texteditor_gettext" input))
+)
+
+(function texteditor_settext (params input text)
+	(return (C window_lib "texteditor_settext" input text))
+)
+
+
+(function progress_new (params x y width height title)
+	(return (C window_lib "progress_new" x y width height title))
+)
+
+(function progress_setvalue (params progress value)
+	(return (C window_lib "progress_setvalue" progress value))
+)
+
+
+(function progress_getvalue (params progress value)
+	(return (C window_lib "progress_setvalue" progress value))
+)
+
+
+(function radiobutton_new (params x y width height title)
+	(return (C window_lib "radiobutton_new" x y width height title))
+)
+
+(function radiobutton_setvalue (params dial value)
+	(return (C window_lib "radiobutton_setvalue" dial value))
+)
+
+(function radiobutton_getvalue (params dial)
+	(return (C window_lib "radiobutton_getvalue" dial))
+)
+
+
+(function dial_new (params x y width height title)
+	(return (C window_lib "dial_new" x y width height title))
+)
+
+(function dial_setvalue (params dial value)
+	(return (C window_lib "dial_setvalue" dial value))
+)
+
+(function dial_getvalue (params dial)
+	(return (C window_lib "dial_getvalue" dial))
+)
+
+(function checkbox_new (params x y width height title)
+	(return (C window_lib "checkbox_new" x y width height title))
+)
+
+(function checkbox_setvalue (params cbox value)
+	(return (C window_lib "checkbox_setvalue" cbox value))
+)
+
+(function checkbox_getvalue (params cbox)
+	(return (C window_lib "checkbox_getvalue" cbox))
+)
+
+(function menubar_new (params x y width height title)
+	(return (C window_lib "menubar_new" x y width height title))
+)
+
+(function menubar_add (params menubar path shortcut)
+	(return (C window_lib "menubar_add" menubar path shortcut))
+)
+
+(function menubar_selected (params menubar)
+	(return (C window_lib "menubar_selected" menubar))
+)
+
+(function box_new (params x y width height title)
+	(return (C window_lib "box_new" x y width height title))
+)
+
+
+(function group_new (params x y width height title)
+	(return (C window_lib "group_new" x y width height title))
+)
+
+(function group_begin (params grp)
+	(return (C window_lib "group_begin" grp))
+)
+
+(function group_end (params grp)
+	(return (C window_lib "group_end" grp))
+)
+
+
+
+(function widget_backgroundcolor (params widget color)
+	(return (C window_lib "widget_backgroundcolor" widget color))
+)
+
+(function widget_foregroundcolor (params widget color)
+	(return (C window_lib "widget_foregroundcolor" widget color))
+)
+
+(function fl_line (params x y x1 y1)
+	(return (C window_lib "fl_lined" x y x1 y1))
+)
+
+(function fl_color (params col)
+	(return (C window_lib "fl_colord" col))
+)
+
+(function fl_point(params x y)
+	(return (C window_lib "fl_pointd" x y))
+)
+
+(function fl_circle(params x y r)
+	(return (C window_lib "fl_circled" x y r))
+)
+
+(function fl_font (params font size)
+	(return (C window_lib "fl_fontd" font size))
+)
+
+(function fl_text (params x y text)
+	(return (C window_lib "fl_textd" x y text))
+)
+
+(function fl_textwidth (params text)
+	(return (C window_lib "fl_textwidth" text))
+)
+
+(function fl_rect (params x y w h)
+	(return (C window_lib "fl_rectd" x y w h))
+)
+
+(function fl_arc (params x y w h a1 a2)
+	(return (C window_lib "fl_arcd" x y w h a1 a2))
+)
+
+(function fl_arc2 (params x y r start end)
+	(return (C window_lib "fl_arc2d" x y r start end))
+)
+
+(function fl_pie (params x y w h a1 a2)
+	(return (C window_lib "fl_pied" x y w h a1 a2))
+)
+
+(function fl_rotate (params a)
+	(return (C window_lib "fl_rotated" a))
+)
+
+(function png_new (params filename)
+	(return (C window_lib "png_new" filename))
+)
+
+(function png_draw (params png x y )
+	(return (C window_lib "png_draw" png x y))
+)
+
+(function jpg_new (params filename)
+	(return (C window_lib "jpg_new" filename))
+)
+
+(function jpg_draw (params jpg x y )
+	(return (C window_lib "jpg_draw"  jpg x y))
+)
