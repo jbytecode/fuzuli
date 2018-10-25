@@ -9,7 +9,7 @@
 FuzuliValue* doIdentifierOperation(Expression *expr, Environment *env){
     LinkedList *alls = (LinkedList*) env->FuzuliValues;
     unsigned int len = LinkedListLength(alls);
-    FuzuliValue *returnvalue;
+    FuzuliValue *returnvalue = FuzuliValueCreateNull();
     for (unsigned int i = 0; i < len; i++){
         FuzuliValue *val = (FuzuliValue*) LinkedListGet(alls, i);
         if(strcmp(val->tag, expr->tag) == 0){

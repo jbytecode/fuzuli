@@ -3,7 +3,16 @@
 
 #include "string.h"
 
-typedef enum {FTYPE_UINT, FTYPE_INT, FTYPE_FLOAT, FTYPE_STRING, FTYPE_LONG, FTYPE_DOUBLE, FTYPE_POINTER} FuzuliType; 
+typedef enum {
+	FTYPE_UINT, 
+	FTYPE_INT, 
+	FTYPE_FLOAT, 
+	FTYPE_STRING, 
+	FTYPE_LONG, 
+	FTYPE_DOUBLE, 
+	FTYPE_POINTER,
+	FTYPE_NULL
+} FuzuliType; 
 
 typedef struct {
 	FuzuliType type;
@@ -30,6 +39,7 @@ FuzuliValue* FuzuliValueCreateFloat(float f);
 FuzuliValue* FuzuliValueCreateUnsignedInteger(unsigned int i);
 FuzuliValue* FuzuliValueCreateLong(long l);
 FuzuliValue* FuzuliValueCreatePointer(void *v);
+FuzuliValue* FuzuliValueCreateNull();
 void FuzuliValuePrint(FuzuliValue *value);
 void FuzuliValuePrintDebugged(FuzuliValue *value);
 void FuzuliValueSetTag(FuzuliValue *val, char *tag);

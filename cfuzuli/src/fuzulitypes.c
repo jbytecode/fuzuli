@@ -3,6 +3,12 @@
 #include <string.h>
 #include "fuzulitypes.h"
 
+FuzuliValue* FuzuliValueCreateNull(){
+    FuzuliValue *value = (FuzuliValue*)malloc(sizeof(FuzuliValue));
+    value->type = FTYPE_NULL;
+    value->svalue = StringNew("NULL");
+    return(value);
+}
 
 FuzuliValue* FuzuliValueCreateString(const char *c){
     FuzuliValue *value = (FuzuliValue*)malloc(sizeof(FuzuliValue));
@@ -129,12 +135,14 @@ void FuzuliValuePrint(FuzuliValue *value){
         case FTYPE_POINTER:
             printf("%p", &value->vvalue);
             break;
+	case FTYPE_NULL:
+	    printf("NULL");
+	    break;
         default:
-            if(value->tag != NULL){
-                //printf("FV=type not found: %s\n", value->tag);
-            }else{
-                printf("FV=type not found in evaluator.");
-            }
+            printf("FuzulivaluePrint: type '%u' not found in evaluator.\n", value->type);
+	    if(value->tag != NULL){
+		    printf("Tagges as: %s\n", value->tag);
+	    }
     }
     printf(" ");
 }
