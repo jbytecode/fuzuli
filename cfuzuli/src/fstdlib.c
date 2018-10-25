@@ -5,6 +5,7 @@
 #include "fuzulitypes.h"
 #include "expression.h"
 #include "eval.h"
+#include "ferror.h"
 
 FuzuliValue* doIdentifierOperation(Expression *expr, Environment *env){
     LinkedList *alls = (LinkedList*) env->FuzuliValues;
@@ -16,8 +17,8 @@ FuzuliValue* doIdentifierOperation(Expression *expr, Environment *env){
             returnvalue = val;
         }
     }
-    if(returnvalue == NULL){
-        printf("Identifier %s not found in the current scope\n", expr->tag);
+    if(returnvalue->type == FTYPE_NULL){
+        printf("Variable is null in %s\n", expr->tag);
         exit(-1);
     }
 
@@ -25,6 +26,7 @@ FuzuliValue* doIdentifierOperation(Expression *expr, Environment *env){
         InternalFunctionPointer p = returnvalue->vvalue;
         return p(expr, env);
     }
+    FuzuliValuePrint(returnvalue);
     return returnvalue;
 }
 
@@ -44,6 +46,10 @@ FuzuliValue *doPlusOperation(Expression *expr, Environment *env)
 {
     FuzuliValue *val1 = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
     FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
+    if(val1->type != val2->type){
+        printf("'%s' - '%s'", val1->tag, val2->tag);
+        ErrorAndTerminate("Variable types are different in plus operation\n", -1);
+    }
     FuzuliValue *result = FuzuliValueCreateDouble(val1->dvalue + val2->dvalue);
     return result;
 }

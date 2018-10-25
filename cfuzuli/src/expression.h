@@ -17,7 +17,7 @@ typedef struct {
 
 
 Expression *ExpressionNew(unsigned int type);
-void ExpressionPrint(Expression *expr);
+void ExpressionPrint(Expression *expr, unsigned int deepness);
 void ExpressionSetTag(Expression *expr, char *tag);
 Expression *ExpressionNewWithTag(unsigned int type, char *tag);
 

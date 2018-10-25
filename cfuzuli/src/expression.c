@@ -24,12 +24,14 @@ void ExpressionSetTag(Expression *expr, char *tag){
     strcpy(expr->tag, tag);
 }
 
-void ExpressionPrint(Expression *expr){
+void ExpressionPrint(Expression *expr, unsigned int deepness){
     unsigned int len = LinkedListLength(expr->arguments);
-    printf("Expression{type: %u, NumArgs: %u, Tag: %s}[", expr->type, len, expr->tag);
+    for (unsigned int i = 0; i < deepness; i++) {printf("\t");}
+    printf("<Expression type='%u' NumArgs='%u' Tag='%s'>\n", expr->type, len, expr->tag);
     for (unsigned int i = 0; i < len; i++){
         Expression *subexpr = (Expression*)LinkedListGet(expr->arguments, i);
-        ExpressionPrint(subexpr);
+        ExpressionPrint(subexpr, deepness + 1);
     }
-    printf("]\n");
+    for (unsigned int i = 0; i < deepness; i++) {printf("\t");}
+    printf("</Expression>\n");
 }

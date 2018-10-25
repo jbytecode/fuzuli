@@ -10,6 +10,9 @@ all: main
 clean: 
 	rm -Rf build
 
+ferror.o:	src/ferror.c src/ferror.h
+	$(CC) $(FLAGS) -c -o $(OUT_DIR)/ferror.o src/ferror.c
+
 fstdlib.o:	src/fstdlib.c
 	$(CC) $(FLAGS) -c -o $(OUT_DIR)/fstdlib.o src/fstdlib.c
 
@@ -47,11 +50,11 @@ lexer.o: src/lexer.c
 	$(CC) $(FLAGS) -c -o $(OUT_DIR)/lexer.o src/lexer.c
 	
 libfuzuli.so:	fstdlib.o string.o linkedlist.o stringexpression.o eval.o fuzulitypes.o \
-                sourcecode.o lexer.o token.o parser.o expression.o environment.o
+                sourcecode.o lexer.o token.o parser.o expression.o environment.o ferror.o
 	$(CC) -shared -o $(OUT_DIR)/libfuzuli.so $(OUT_DIR)/string.o $(OUT_DIR)/linkedlist.o \
 	$(OUT_DIR)/eval.o $(OUT_DIR)/stringexpression.o $(OUT_DIR)/fuzulitypes.o \
 	$(OUT_DIR)/sourcecode.o $(OUT_DIR)/lexer.o $(OUT_DIR)/token.o $(OUT_DIR)/parser.o \
-	$(OUT_DIR)/expression.o $(OUT_DIR)/fstdlib.o $(OUT_DIR)/environment.o
+	$(OUT_DIR)/expression.o $(OUT_DIR)/fstdlib.o $(OUT_DIR)/environment.o $(OUT_DIR)/ferror.o 
  
 main:	libfuzuli.so	
 	$(CC) -o $(OUT_DIR)/fuzuli src/main.c $(OUT_DIR)/libfuzuli.so

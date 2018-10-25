@@ -50,8 +50,8 @@ void runFile(char *filename)
         }
         if (expr != NULL)
         {
+            ExpressionPrint(expr, 0);
             eval(expr, env);
-            //ExpressionPrint(expr);
         }
     }
 }
