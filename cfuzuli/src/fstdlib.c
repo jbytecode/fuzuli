@@ -26,7 +26,6 @@ FuzuliValue* doIdentifierOperation(Expression *expr, Environment *env){
         InternalFunctionPointer p = returnvalue->vvalue;
         return p(expr, env);
     }
-    FuzuliValuePrint(returnvalue);
     return returnvalue;
 }
 
@@ -46,10 +45,9 @@ FuzuliValue *doPlusOperation(Expression *expr, Environment *env)
 {
     FuzuliValue *val1 = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
     FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
-    if(val1->type != val2->type){
-        printf("'%s' - '%s'", val1->tag, val2->tag);
-        ErrorAndTerminate("Variable types are different in plus operation\n", -1);
-    }
+
+    ErrorAndTerminateAfterTypeCheck(val1, val2, expr);
+
     FuzuliValue *result = FuzuliValueCreateDouble(val1->dvalue + val2->dvalue);
     return result;
 }

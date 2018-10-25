@@ -39,19 +39,46 @@ void EnvironmentRegisterVariable(Environment *env, FuzuliValue *value){
 
 
 void EnvironmentRegisterGlobals(Environment *env){
+    /*
+    * Creating Constants
+    */
     FuzuliValue *truevalue = FuzuliValueCreateInteger(1);
     FuzuliValue *falsevalue = FuzuliValueCreateInteger(0);
+    FuzuliValue *pivalue = FuzuliValueCreateDouble(3.14159265);
+
+    /*
+    * Creating pointers for basic internal functions
+    */
     FuzuliValue *productFunctionPtr = FuzuliValueCreatePointer((void *)doProductOperation);
     FuzuliValue *plusFunctionPtr = FuzuliValueCreatePointer((void*)doPlusOperation);
-    
+    FuzuliValue *dumpFunctionPtr = FuzuliValueCreatePointer((void*)doDumpOperation);
+    FuzuliValue *printFunctionPtr = FuzuliValueCreatePointer((void*)doPrintOperation);
+
+    /*
+    * Setting variable names
+    */
     FuzuliValueSetTag(truevalue, "true");
     FuzuliValueSetTag(falsevalue, "false");
+    FuzuliValueSetTag(pivalue, "pi");
+
+    /*
+    * Setting internal function names
+    */
     FuzuliValueSetTag(productFunctionPtr, "*");
     FuzuliValueSetTag(plusFunctionPtr, "+");
+    FuzuliValueSetTag(dumpFunctionPtr, "dump");
+    FuzuliValueSetTag(printFunctionPtr, "print");
 
+    /*
+    * Registering variables and internal functions
+    */
     EnvironmentRegisterVariable(env, truevalue);
     EnvironmentRegisterVariable(env, falsevalue);
+    EnvironmentRegisterVariable(env, pivalue);
+
     EnvironmentRegisterVariable(env, productFunctionPtr);
     EnvironmentRegisterVariable(env, plusFunctionPtr);
+    EnvironmentRegisterVariable(env, dumpFunctionPtr);
+    EnvironmentRegisterVariable(env, printFunctionPtr);
 }
 

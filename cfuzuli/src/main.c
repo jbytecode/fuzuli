@@ -50,7 +50,7 @@ void runFile(char *filename)
         }
         if (expr != NULL)
         {
-            ExpressionPrint(expr, 0);
+            //ExpressionPrint(expr, 0);
             eval(expr, env);
         }
     }
@@ -61,6 +61,7 @@ void runRepl()
     char chars[1024];
     while (1)
     {
+        printf("\nFuzuli> ");
         char *str = fgets(chars, 1024, stdin);
         String *sourcecode = StringNew(&chars[0]);
         LinkedList *list = LexerExtractTokens(sourcecode);
