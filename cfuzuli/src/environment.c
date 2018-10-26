@@ -23,6 +23,7 @@ void EnvironmentRegisterVariable(Environment *env, FuzuliValue *value){
     FuzuliValue *fvalue;
     unsigned int copied = 0;
     unsigned len = LinkedListLength(env->FuzuliValues);
+    if(value->tag != NULL){
     for (unsigned int i = 0; i < len; i++){
         FuzuliValue *tempvalue = (FuzuliValue*)LinkedListGet(env->FuzuliValues, i);
         if(strcmp(tempvalue->tag, value->tag) == 0){
@@ -30,6 +31,7 @@ void EnvironmentRegisterVariable(Environment *env, FuzuliValue *value){
             copied = 1;
             break;
         }
+    }
     }
     if(copied == 0){
         LinkedListAdd(env->FuzuliValues, value);
@@ -53,6 +55,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValue *plusFunctionPtr = FuzuliValueCreatePointer((void*)doPlusOperation);
     FuzuliValue *dumpFunctionPtr = FuzuliValueCreatePointer((void*)doDumpOperation);
     FuzuliValue *printFunctionPtr = FuzuliValueCreatePointer((void*)doPrintOperation);
+    FuzuliValue *letFunctionPtr = FuzuliValueCreatePointer((void*)doLetOperation);
 
     /*
     * Setting variable names
@@ -68,6 +71,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValueSetTag(plusFunctionPtr, "+");
     FuzuliValueSetTag(dumpFunctionPtr, "dump");
     FuzuliValueSetTag(printFunctionPtr, "print");
+    FuzuliValueSetTag(letFunctionPtr, "let");
 
     /*
     * Registering variables and internal functions
@@ -80,5 +84,6 @@ void EnvironmentRegisterGlobals(Environment *env){
     EnvironmentRegisterVariable(env, plusFunctionPtr);
     EnvironmentRegisterVariable(env, dumpFunctionPtr);
     EnvironmentRegisterVariable(env, printFunctionPtr);
+    EnvironmentRegisterVariable(env, letFunctionPtr);
 }
 

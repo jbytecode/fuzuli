@@ -45,10 +45,10 @@ FuzuliValue *doPlusOperation(Expression *expr, Environment *env)
 {
     FuzuliValue *val1 = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
     FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
-
     ErrorAndTerminateAfterTypeCheck(val1, val2, expr);
-
     FuzuliValue *result = FuzuliValueCreateDouble(val1->dvalue + val2->dvalue);
+    FuzuliValueFree(val1);
+    FuzuliValueFree(val2);  
     return result;
 }
 
@@ -56,7 +56,10 @@ FuzuliValue *doProductOperation(Expression *expr, Environment *env)
 {
     FuzuliValue *val1 = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
     FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
+    ErrorAndTerminateAfterTypeCheck(val1, val2, expr);
     FuzuliValue *result = FuzuliValueCreateDouble(val1->dvalue * val2->dvalue);
+    FuzuliValueFree(val1);
+    FuzuliValueFree(val2);  
     return result;
 }
 
@@ -69,6 +72,7 @@ FuzuliValue *doPrintOperation(Expression *expr, Environment *env)
         Expression *exprsub = (Expression *)LinkedListGet(expr->arguments, i);
         value = eval(exprsub, env);
         FuzuliValuePrint(value);
+        FuzuliValueFree(value);
     }
     return value;
 }
@@ -82,7 +86,23 @@ FuzuliValue *doDumpOperation(Expression *expr, Environment *env)
         printf("%s: ", val->tag);
         FuzuliValuePrint(val);
         printf("\t");
+        // There is no evaluation operation. Not freed.
     }
     printf("\n");
     return FuzuliValueCreateInteger(len);
+}
+
+FuzuliValue *doLetOperation(Expression *expr, Environment *env){
+    Expression *ident = (Expression *)LinkedListGet(expr->arguments, 0);
+    
+    FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
+    FuzuliValue *newval = FuzuliValueDuplicate(val2);
+
+    newval->tag = (char*)malloc(strlen(ident->tag));
+    strcpy(newval->tag, ident->tag);
+    
+    EnvironmentRegisterVariable(env, newval);
+    newval->links++;
+    FuzuliValueFree(val2);
+    return(newval);
 }

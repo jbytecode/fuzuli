@@ -23,6 +23,8 @@ FuzuliValue* doPlusOperation(Expression *expr, Environment *env);
 FuzuliValue* doProductOperation(Expression *expr, Environment *env);
 FuzuliValue* doPrintOperation(Expression *expr, Environment *env);
 FuzuliValue* doDumpOperation(Expression *expr, Environment *env);
+FuzuliValue* doLetOperation(Expression *expr, Environment *env);
+
 
 #ifdef __cplusplus
 }

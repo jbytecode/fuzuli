@@ -25,7 +25,8 @@ typedef struct {
 		double dvalue;
 		void *vvalue;		
 	};
-	char *tag;	
+	char *tag;
+	int links;	
 }FuzuliValue;
 
 
@@ -40,8 +41,10 @@ FuzuliValue* FuzuliValueCreateUnsignedInteger(unsigned int i);
 FuzuliValue* FuzuliValueCreateLong(long l);
 FuzuliValue* FuzuliValueCreatePointer(void *v);
 FuzuliValue* FuzuliValueCreateNull();
+FuzuliValue* FuzuliValueDuplicate(FuzuliValue *value);
 void FuzuliValuePrint(FuzuliValue *value);
 void FuzuliValuePrintDebugged(FuzuliValue *value);
 void FuzuliValueSetTag(FuzuliValue *val, char *tag);
 void FuzuliValueCopyContent(FuzuliValue *destination, FuzuliValue *source);
+void FuzuliValueFree(FuzuliValue *value);
 #endif

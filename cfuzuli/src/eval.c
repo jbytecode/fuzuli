@@ -16,13 +16,17 @@ FuzuliValue* eval(Expression *expr, Environment *env){
     }
     unsigned int type = expr->type;
     LinkedList *args = expr->arguments;
-    
+    FuzuliValue *returnValue;
+
     if(expr->type == EXPR_IDENTIFIER){
-        return doIdentifierOperation(expr, env);
+        returnValue = doIdentifierOperation(expr, env);
+        return returnValue;
     }else if(expr->type == EXPR_NUMBER_CONSTANT){
-        return doNumericConstantOperation(expr, env);
+        returnValue = doNumericConstantOperation(expr, env);
+        return returnValue;
     }else if(expr->type == EXPR_STRING){
-        return doStringConstantOperation(expr, env);
+        returnValue = doStringConstantOperation(expr, env);
+        return returnValue;
     }
     return FuzuliValueCreateString("Undefined operation");
 }
