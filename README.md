@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jbytecode/rcaller.svg?branch=master)](https://travis-ci.org/jbytecode/fuzuli)
+
 # fuzuli (a general purpose interpreter)
 http://stdioe.blogspot.com/search/label/fuzuli
 
