@@ -1,9 +1,17 @@
 (let passed "PASSED")
 (let a 10)
+(let b 20)
 
 (while (= a 10)
-	(println passed)
 	(let a 20)
 )
 
 (println passed)
+
+(while (= a 20)
+	(if (= b 20) (break))
+)
+
+
+(println passed)
+

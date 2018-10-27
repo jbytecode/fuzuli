@@ -163,13 +163,13 @@ FuzuliValue* doWhileOperation(Expression *expr, Environment *env){
         if(result != NULL){
             free(result);
         }
-        result = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
-        if(result->tag != NULL){
-            if(strcmp(result->tag, "break")){
-                break;
-            }
+        Expression *subexpr = (Expression *)LinkedListGet(expr->arguments, 1);
+        if(strcmp(subexpr->tag, "break")){
+            break;
         }
+        result = eval(subexpr, env);
         free(condition);
     }
     return result;
 }
+

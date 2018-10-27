@@ -1,0 +1,11 @@
+(let passed "PASSED")
+
+(let a true)
+(let b 50)
+
+(while (= a true)
+	(if (= b 50) (break))
+)
+
+(println passed)
+

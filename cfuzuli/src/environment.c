@@ -98,5 +98,6 @@ void EnvironmentRegisterGlobals(Environment *env){
     EnvironmentRegisterVariable(env, equalsFunctionPtr);
     EnvironmentRegisterVariable(env, ifFunctionPtr);
     EnvironmentRegisterVariable(env, whileFunctionPtr);
+
 }
 
