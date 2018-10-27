@@ -102,6 +102,9 @@ int main(int argc, char **argv)
     if (argc == 1)
     {
         puts("Fuzuli C edition 0.0.1");
+        puts("Arguments:");
+        puts("fuzuli --repl: starts the read-eval-print-loop");
+        puts("fuzuli filename: loads and executes the script file");
     }
     if (argc == 2)
     {

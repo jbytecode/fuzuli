@@ -69,6 +69,16 @@ Token* LexerGetNextToken(LexerState *state) {
         result = StringNew("");
         currentChar = LexerConsumeChar(state);
         while(currentChar != '"'){
+            if(currentChar == '\\'){
+                char nextChar = LexerConsumeChar(state);
+                if(nextChar == 'n'){
+                    currentChar = '\n';
+                }else if (nextChar == 'r'){
+                    currentChar = '\r';
+                }else if (nextChar == 't'){
+                    currentChar = '\t';
+                }
+            }
             StringAppendChar(result, currentChar);
             currentChar = LexerConsumeChar(state);
             if(state->currentPosition > state->lastPosition){

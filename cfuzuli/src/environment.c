@@ -55,6 +55,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValue *plusFunctionPtr = FuzuliValueCreatePointer((void*)doPlusOperation);
     FuzuliValue *dumpFunctionPtr = FuzuliValueCreatePointer((void*)doDumpOperation);
     FuzuliValue *printFunctionPtr = FuzuliValueCreatePointer((void*)doPrintOperation);
+    FuzuliValue *printlnFunctionPtr = FuzuliValueCreatePointer((void*)doPrintlnOperation);
     FuzuliValue *letFunctionPtr = FuzuliValueCreatePointer((void*)doLetOperation);
     FuzuliValue *equalsFunctionPtr = FuzuliValueCreatePointer((void*)doEqualsOperation);
     FuzuliValue *ifFunctionPtr = FuzuliValueCreatePointer((void*)doIfOperation);
@@ -73,6 +74,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValueSetTag(plusFunctionPtr, "+");
     FuzuliValueSetTag(dumpFunctionPtr, "dump");
     FuzuliValueSetTag(printFunctionPtr, "print");
+    FuzuliValueSetTag(printlnFunctionPtr, "println");
     FuzuliValueSetTag(letFunctionPtr, "let");
     FuzuliValueSetTag(equalsFunctionPtr, "=");
     FuzuliValueSetTag(ifFunctionPtr, "if");
@@ -88,6 +90,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     EnvironmentRegisterVariable(env, plusFunctionPtr);
     EnvironmentRegisterVariable(env, dumpFunctionPtr);
     EnvironmentRegisterVariable(env, printFunctionPtr);
+    EnvironmentRegisterVariable(env, printlnFunctionPtr);
     EnvironmentRegisterVariable(env, letFunctionPtr);
     EnvironmentRegisterVariable(env, equalsFunctionPtr);
     EnvironmentRegisterVariable(env, ifFunctionPtr);

@@ -77,6 +77,13 @@ FuzuliValue *doPrintOperation(Expression *expr, Environment *env)
     return value;
 }
 
+FuzuliValue *doPrintlnOperation(Expression *expr, Environment *env)
+{
+    FuzuliValue *value = doPrintOperation(expr, env);
+    printf("\n");
+    return value;
+}
+
 FuzuliValue *doDumpOperation(Expression *expr, Environment *env)
 {
     LinkedList *list = env->FuzuliValues;

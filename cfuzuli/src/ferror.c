@@ -5,8 +5,8 @@
 #include "fuzulitypes.h"
 
 void ErrorAndTerminate(const char *errmessage,  int errorcode){
-    printf("*** Termination due to error: '%s'\n", errmessage);
-    printf("*** Exiting with error code %d\n", errorcode);
+    printf("\n\n*** Termination due to error: '%s'\n", errmessage);
+    printf("*** Exiting with error code %d\n\n", errorcode);
     exit(errorcode);    
 }
 

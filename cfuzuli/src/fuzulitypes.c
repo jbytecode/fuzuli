@@ -239,5 +239,4 @@ void FuzuliValuePrint(FuzuliValue *value)
             printf("Tagges as: %s\n", value->tag);
         }
     }
-    printf(" ");
 }

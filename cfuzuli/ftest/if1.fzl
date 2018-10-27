@@ -3,7 +3,13 @@
 
 (let a 100)
 (let bb 100)
-(if (= a bb) (print passed) (print error))
+(if (= a bb) (println passed) (println error))
 
-(if (= a 100) (if (= bb 100) (print passed) (print error) ) (print error) )
+(if (= a 100) 
+	(if (= bb 100) 
+		(println passed) 
+		(println error) 
+	) 
+	(println error) 
+)
 

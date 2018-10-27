@@ -22,6 +22,7 @@ FuzuliValue* doStringConstantOperation(Expression *expr, Environment *env);
 FuzuliValue* doPlusOperation(Expression *expr, Environment *env);
 FuzuliValue* doProductOperation(Expression *expr, Environment *env);
 FuzuliValue* doPrintOperation(Expression *expr, Environment *env);
+FuzuliValue *doPrintlnOperation(Expression *expr, Environment *env);
 FuzuliValue* doDumpOperation(Expression *expr, Environment *env);
 FuzuliValue* doLetOperation(Expression *expr, Environment *env);
 FuzuliValue* doEqualsOperation(Expression *expr, Environment *env);
