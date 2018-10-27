@@ -61,6 +61,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValue *ifFunctionPtr = FuzuliValueCreatePointer((void*)doIfOperation);
     FuzuliValue *whileFunctionPtr = FuzuliValueCreatePointer((void*)doWhileOperation);
     FuzuliValue *typeofFunctionPtr = FuzuliValueCreatePointer((void*)doTypeofOperation);
+    FuzuliValue *listFunctionPtr = FuzuliValueCreatePointer((void*)doListOperation);
     
 
     /*
@@ -83,7 +84,8 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValueSetTag(ifFunctionPtr, "if");
     FuzuliValueSetTag(whileFunctionPtr, "while");
     FuzuliValueSetTag(typeofFunctionPtr, "typeof");
-    
+    FuzuliValueSetTag(listFunctionPtr, "list");
+
     /*
     * Registering variables and internal functions
     */
@@ -101,6 +103,6 @@ void EnvironmentRegisterGlobals(Environment *env){
     EnvironmentRegisterVariable(env, ifFunctionPtr);
     EnvironmentRegisterVariable(env, whileFunctionPtr);
     EnvironmentRegisterVariable(env, typeofFunctionPtr);
-
+    EnvironmentRegisterVariable(env, listFunctionPtr);
 }
 

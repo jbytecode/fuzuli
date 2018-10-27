@@ -2,6 +2,7 @@
 #define FUZULI_TYPES_H
 
 #include "string.h"
+#include "linkedlist.h"
 
 typedef enum {
 	FTYPE_UINT, 
@@ -11,7 +12,8 @@ typedef enum {
 	FTYPE_LONG, 
 	FTYPE_DOUBLE, 
 	FTYPE_POINTER,
-	FTYPE_NULL
+	FTYPE_NULL,
+	FTYPE_LIST
 } FuzuliType; 
 
 typedef struct {
@@ -41,6 +43,7 @@ FuzuliValue* FuzuliValueCreateUnsignedInteger(unsigned int i);
 FuzuliValue* FuzuliValueCreateLong(long l);
 FuzuliValue* FuzuliValueCreatePointer(void *v);
 FuzuliValue* FuzuliValueCreateNull();
+FuzuliValue* FuzuliValueCreateList();
 FuzuliValue* FuzuliValueDuplicate(FuzuliValue *value);
 void FuzuliValuePrint(FuzuliValue *value);
 void FuzuliValuePrintDebugged(FuzuliValue *value);
@@ -48,4 +51,5 @@ void FuzuliValueSetTag(FuzuliValue *val, char *tag);
 void FuzuliValueCopyContent(FuzuliValue *destination, FuzuliValue *source);
 void FuzuliValueFree(FuzuliValue *value);
 unsigned int FuzuliValueEquals(FuzuliValue *val1, FuzuliValue *val2);
+
 #endif

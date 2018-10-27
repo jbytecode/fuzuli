@@ -84,6 +84,13 @@ FuzuliValue *FuzuliValueCreateFloat(float f)
     return (value);
 }
 
+FuzuliValue* FuzuliValueCreateList(){
+    FuzuliValue *value = (FuzuliValue *)malloc(sizeof(FuzuliValue));
+    value->type = FTYPE_LIST;
+    value->tag = NULL;
+    return value;
+}
+
 void FuzuliValueSetTag(FuzuliValue *val, char *tag)
 {
     val->tag = (char *)malloc(strlen(tag));
@@ -166,6 +173,7 @@ unsigned int FuzuliValueEquals(FuzuliValue *val1, FuzuliValue *val2)
         break;
     default:
         ErrorAndTerminate("Variable type not found in equality check", -1);
+        return -1;
     }
 }
 
@@ -231,6 +239,9 @@ void FuzuliValuePrint(FuzuliValue *value)
         break;
     case FTYPE_NULL:
         printf("NULL");
+        break;
+    case FTYPE_LIST:
+        printf("[List object]");
         break;
     default:
         printf("FuzulivaluePrint: type '%u' not found in evaluator.\n", value->type);

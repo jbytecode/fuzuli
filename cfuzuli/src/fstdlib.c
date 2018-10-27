@@ -229,3 +229,16 @@ FuzuliValue *doTypeofOperation(Expression *expr, Environment *env)
             return FuzuliValueCreateString("unknown");
     }
 }
+
+
+FuzuliValue* doListOperation(Expression *expr, Environment *env){
+    FuzuliValue *returnValue = FuzuliValueCreateList();
+    LinkedList *data = LinkedListNew();
+    unsigned int elemCount = LinkedListLength(expr->arguments);
+    for (unsigned int i = 0; i < elemCount; i++){
+        FuzuliValue *Elem = eval((Expression*)LinkedListGet(expr->arguments, i), env);
+        LinkedListAdd(data, Elem);
+    }
+    returnValue->vvalue = data;
+    return returnValue;
+}
