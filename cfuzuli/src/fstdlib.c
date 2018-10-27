@@ -150,3 +150,26 @@ FuzuliValue* doIfOperation(Expression *expr, Environment *env){
     }
     return result;
 }
+
+
+FuzuliValue* doWhileOperation(Expression *expr, Environment *env){
+    FuzuliValue *condition; 
+    FuzuliValue *result = NULL;
+    while(1){
+        condition = eval((Expression *) LinkedListGet(expr->arguments, 0), env);
+        if(condition->ivalue == 0){
+            break;
+        }
+        if(result != NULL){
+            free(result);
+        }
+        result = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
+        if(result->tag != NULL){
+            if(strcmp(result->tag, "break")){
+                break;
+            }
+        }
+        free(condition);
+    }
+    return result;
+}

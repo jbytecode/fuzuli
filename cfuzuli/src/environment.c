@@ -59,6 +59,8 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValue *letFunctionPtr = FuzuliValueCreatePointer((void*)doLetOperation);
     FuzuliValue *equalsFunctionPtr = FuzuliValueCreatePointer((void*)doEqualsOperation);
     FuzuliValue *ifFunctionPtr = FuzuliValueCreatePointer((void*)doIfOperation);
+    FuzuliValue *whileFunctionPtr = FuzuliValueCreatePointer((void*)doWhileOperation);
+    
 
     /*
     * Setting variable names
@@ -78,6 +80,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValueSetTag(letFunctionPtr, "let");
     FuzuliValueSetTag(equalsFunctionPtr, "=");
     FuzuliValueSetTag(ifFunctionPtr, "if");
+    FuzuliValueSetTag(whileFunctionPtr, "while");
     
     /*
     * Registering variables and internal functions
@@ -94,5 +97,6 @@ void EnvironmentRegisterGlobals(Environment *env){
     EnvironmentRegisterVariable(env, letFunctionPtr);
     EnvironmentRegisterVariable(env, equalsFunctionPtr);
     EnvironmentRegisterVariable(env, ifFunctionPtr);
+    EnvironmentRegisterVariable(env, whileFunctionPtr);
 }
 

@@ -1,7 +1,7 @@
 (let passed "PASSED")
-(print passed)
+(println passed)
 
 (let a passed)
-(print passed)
+(println passed)
 
 
