@@ -47,4 +47,5 @@ void FuzuliValuePrintDebugged(FuzuliValue *value);
 void FuzuliValueSetTag(FuzuliValue *val, char *tag);
 void FuzuliValueCopyContent(FuzuliValue *destination, FuzuliValue *source);
 void FuzuliValueFree(FuzuliValue *value);
+unsigned int FuzuliValueEquals(FuzuliValue *val1, FuzuliValue *val2);
 #endif

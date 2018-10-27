@@ -67,6 +67,8 @@ test:	main test_string test_linkedlist
 	@echo $(shell ./$(OUT_DIR)/linkedlisttest)
 	@echo "Fuzuli source tests: "
 	@echo "Let test: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/lettest.fzl)
+	@echo "equalints test: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/equalints.fzl)
+	
 
 test_string:	main
 	$(CC) -o $(OUT_DIR)/stringtest test/stringtest.c $(OUT_DIR)/libfuzuli.so

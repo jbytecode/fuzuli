@@ -106,3 +106,13 @@ FuzuliValue *doLetOperation(Expression *expr, Environment *env){
     FuzuliValueFree(val2);
     return(newval);
 }
+
+FuzuliValue* doEqualsOperation(Expression *expr, Environment *env){
+    FuzuliValue *val1 = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
+    FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
+    ErrorAndTerminateAfterTypeCheck(val1, val2, expr);
+    FuzuliValue *result = FuzuliValueCreateInteger(FuzuliValueEquals(val1, val2));
+    FuzuliValueFree(val1);
+    FuzuliValueFree(val2);  
+    return result;
+}

@@ -82,10 +82,8 @@ Token* LexerGetNextToken(LexerState *state) {
         }
         LexerPutbackChar(state);
         tok = TokenNew(TOKEN_NUMBER_CONSTANT, result->chars);
-    }else if (currentChar == '+'){
-        tok = TokenNew(TOKEN_IDENTIFIER, "+");
-    }else if (currentChar == '*'){
-        tok = TokenNew(TOKEN_IDENTIFIER, "*");
+    }else if (ispunct(currentChar)){
+        tok = TokenNewFromChar(TOKEN_IDENTIFIER, currentChar);
     }else if (currentChar == '\0') {
         result = StringNewFromChar('\0');
         tok = TokenNew(TOKEN_NULLCHARACTER, "\0");

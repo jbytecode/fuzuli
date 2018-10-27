@@ -34,6 +34,7 @@ extern "C" {
     } TokenType; 
 
     Token* TokenNew(unsigned int type, const char *content);
+    Token* TokenNewFromChar(unsigned int type, char content);
     void TokenFree(Token *token);
     
 

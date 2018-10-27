@@ -12,6 +12,17 @@ Token* TokenNew(unsigned int type, const char *content){
     return tok;
 }
 
+Token* TokenNewFromChar(unsigned int type, char content){
+    Token *tok = (Token*) malloc(sizeof(Token));
+    char *ch = (char*) malloc(2);
+    ch[0] = content;
+    ch[1] = '\0';
+    tok->type = type;
+    tok->content = ch;
+    return tok;
+}
+
+
 void TokenFree(Token *token){
     free((void*)token->content);
     free(token);
