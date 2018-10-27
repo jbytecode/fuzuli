@@ -4,9 +4,10 @@
 #include "linkedlist.h"
 #include "fuzulitypes.h"
 #include "token.h"
+#include "fmemory.h"
 
 LinkedList *LinkedListNew() {
-    LinkedList *list = (LinkedList*) malloc(sizeof (LinkedList));
+    LinkedList *list = (LinkedList*) fmalloc(sizeof (LinkedList));
     list->first = NULL;
     return (list);
 }
@@ -15,7 +16,7 @@ void LinkedListAdd(LinkedList *list, void *value) {
     LinkedListElement *parent, *child;
     LinkedListElement *element = list->first;
     if (element == NULL) {
-        element = (LinkedListElement*) malloc(sizeof (LinkedListElement));
+        element = (LinkedListElement*) fmalloc(sizeof (LinkedListElement));
         element->value = value;
         element->next = NULL;
         list->first = element;
@@ -25,7 +26,7 @@ void LinkedListAdd(LinkedList *list, void *value) {
         parent = element;
         child = parent->next;
         if (child == NULL) {
-            child = (LinkedListElement*) malloc(sizeof (LinkedListElement));
+            child = (LinkedListElement*) fmalloc(sizeof (LinkedListElement));
             child->value = value;
             child->next = NULL;
             parent->next = child;
@@ -37,7 +38,7 @@ void LinkedListAdd(LinkedList *list, void *value) {
 }
 
 void LinkedListPrepend(LinkedList *list, void *value){
-    LinkedListElement *newhead = (LinkedListElement*)malloc(sizeof(LinkedListElement));
+    LinkedListElement *newhead = (LinkedListElement*)fmalloc(sizeof(LinkedListElement));
     newhead->value = value;
     newhead->next = list->first;
     list->first = newhead;

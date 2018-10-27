@@ -6,6 +6,7 @@
 #include "expression.h"
 #include "eval.h"
 #include "ferror.h"
+#include "fmemory.h"
 
 FuzuliValue *doIdentifierOperation(Expression *expr, Environment *env)
 {
@@ -121,7 +122,7 @@ FuzuliValue *doLetOperation(Expression *expr, Environment *env)
     FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
     FuzuliValue *newval = FuzuliValueDuplicate(val2);
 
-    newval->tag = (char *)malloc(strlen(ident->tag));
+    newval->tag = (char *)fmalloc(strlen(ident->tag));
     strcpy(newval->tag, ident->tag);
 
     EnvironmentRegisterVariable(env, newval);
@@ -151,13 +152,13 @@ FuzuliValue *doIfOperation(Expression *expr, Environment *env)
         if (condition->ivalue == 1)
         {
             FuzuliValue *yes = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
-            free(condition);
+            ffree(condition);
             return yes;
         }
         else
         {
             FuzuliValue *no = eval((Expression *)LinkedListGet(expr->arguments, 2), env);
-            free(condition);
+            ffree(condition);
             return no;
         }
     }
@@ -166,7 +167,7 @@ FuzuliValue *doIfOperation(Expression *expr, Environment *env)
         if (condition->ivalue == 1)
         {
             FuzuliValue *yes = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
-            free(condition);
+            ffree(condition);
             return yes;
         }
     }
@@ -190,7 +191,7 @@ FuzuliValue *doWhileOperation(Expression *expr, Environment *env)
         }
         if (result != NULL)
         {
-            free(result);
+            ffree(result);
         }
         Expression *subexpr = (Expression *)LinkedListGet(expr->arguments, 1);
         if (strcmp(subexpr->tag, "break"))
@@ -198,7 +199,7 @@ FuzuliValue *doWhileOperation(Expression *expr, Environment *env)
             break;
         }
         result = eval(subexpr, env);
-        free(condition);
+        ffree(condition);
     }
     return result;
 }
@@ -281,4 +282,13 @@ FuzuliValue* doPrependOperation(Expression *expr, Environment *env){
     LinkedList *data = (LinkedList*)listElement->vvalue;
     LinkedListPrepend(data, newValElement);
     return newValElement;
+}
+
+FuzuliValue* doMemoryOperation(Expression *expr, Environment *env){
+    unsigned int allocated = FuzuliMemoryGetAllocated();
+    unsigned int freed = FuzuliMemoryGetFreed();
+    printf("Total allocated: %u\n", allocated);
+    printf("Total freed: %u\n", freed);
+    printf("Total hold: %u\n", allocated - freed);
+    return NULL;   
 }

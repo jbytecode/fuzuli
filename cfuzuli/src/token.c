@@ -1,10 +1,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "token.h"
+#include "fmemory.h"
 
 Token* TokenNew(unsigned int type, const char *content){
-    Token *tok = (Token*) malloc(sizeof(Token));
-    char *ch = (char*) malloc(strlen(content) + 1);
+    Token *tok = (Token*) fmalloc(sizeof(Token));
+    char *ch = (char*) fmalloc(strlen(content) + 1);
     strcpy(ch, content);
     ch[strlen(content) + 1] = '\0';
     tok->type = type;
@@ -13,8 +14,8 @@ Token* TokenNew(unsigned int type, const char *content){
 }
 
 Token* TokenNewFromChar(unsigned int type, char content){
-    Token *tok = (Token*) malloc(sizeof(Token));
-    char *ch = (char*) malloc(2);
+    Token *tok = (Token*) fmalloc(sizeof(Token));
+    char *ch = (char*) fmalloc(2);
     ch[0] = content;
     ch[1] = '\0';
     tok->type = type;
@@ -24,7 +25,7 @@ Token* TokenNewFromChar(unsigned int type, char content){
 
 
 void TokenFree(Token *token){
-    free((void*)token->content);
-    free(token);
+    ffree((void*)token->content);
+    ffree(token);
 }
     

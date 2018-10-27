@@ -3,9 +3,10 @@
 #include "constants.h"
 #include "environment.h"
 #include "fstdlib.h"
+#include "fmemory.h"
 
 Environment *EnvironmentNew(Environment *parent){
-    Environment *env = (Environment*)malloc(sizeof(Environment));
+    Environment *env = (Environment*)fmalloc(sizeof(Environment));
     env->parent = (struct Environment*) parent;
     env->FuzuliValues = LinkedListNew();
     return env;
@@ -66,6 +67,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValue *nthFunctionPtr = FuzuliValueCreatePointer((void*)doNthOperation);
     FuzuliValue *appendFunctionPtr = FuzuliValueCreatePointer((void*)doAppendOperation);
     FuzuliValue *prependFunctionPtr = FuzuliValueCreatePointer((void*)doPrependOperation);
+    FuzuliValue *memoryFunctionPtr = FuzuliValueCreatePointer((void*)doMemoryOperation);
     
 
     /*
@@ -93,6 +95,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValueSetTag(nthFunctionPtr, "nth");
     FuzuliValueSetTag(appendFunctionPtr, "append");
     FuzuliValueSetTag(prependFunctionPtr, "prepend");
+    FuzuliValueSetTag(memoryFunctionPtr, "memory");
 
     /*
     * Registering variables and internal functions
@@ -116,5 +119,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     EnvironmentRegisterVariable(env, nthFunctionPtr);
     EnvironmentRegisterVariable(env, appendFunctionPtr);
     EnvironmentRegisterVariable(env, prependFunctionPtr);
+    EnvironmentRegisterVariable(env, memoryFunctionPtr);
+    
 }
 

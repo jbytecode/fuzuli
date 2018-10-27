@@ -4,10 +4,11 @@
 #include "fuzulitypes.h"
 #include "ferror.h"
 #include "linkedlist.h"
+#include "fmemory.h"
 
 FuzuliValue *FuzuliValueCreateNull()
 {
-    FuzuliValue *value = (FuzuliValue *)malloc(sizeof(FuzuliValue));
+    FuzuliValue *value = (FuzuliValue *)fmalloc(sizeof(FuzuliValue));
     value->type = FTYPE_NULL;
     value->svalue = StringNew("NULL");
     value->links = 0;
@@ -17,7 +18,7 @@ FuzuliValue *FuzuliValueCreateNull()
 
 FuzuliValue *FuzuliValueCreateString(const char *c)
 {
-    FuzuliValue *value = (FuzuliValue *)malloc(sizeof(FuzuliValue));
+    FuzuliValue *value = (FuzuliValue *)fmalloc(sizeof(FuzuliValue));
     value->type = FTYPE_STRING;
     value->svalue = StringNew(c);
     value->links = 0;
@@ -27,7 +28,7 @@ FuzuliValue *FuzuliValueCreateString(const char *c)
 
 FuzuliValue *FuzuliValueCreateInteger(int i)
 {
-    FuzuliValue *value = (FuzuliValue *)malloc(sizeof(FuzuliValue));
+    FuzuliValue *value = (FuzuliValue *)fmalloc(sizeof(FuzuliValue));
     value->type = FTYPE_INT;
     value->ivalue = i;
     value->links = 0;
@@ -37,7 +38,7 @@ FuzuliValue *FuzuliValueCreateInteger(int i)
 
 FuzuliValue *FuzuliValueCreateDouble(double d)
 {
-    FuzuliValue *value = (FuzuliValue *)malloc(sizeof(FuzuliValue));
+    FuzuliValue *value = (FuzuliValue *)fmalloc(sizeof(FuzuliValue));
     value->type = FTYPE_DOUBLE;
     value->dvalue = d;
     value->links = 0;
@@ -47,7 +48,7 @@ FuzuliValue *FuzuliValueCreateDouble(double d)
 
 FuzuliValue *FuzuliValueCreateUnsignedInteger(unsigned int i)
 {
-    FuzuliValue *value = (FuzuliValue *)malloc(sizeof(FuzuliValue));
+    FuzuliValue *value = (FuzuliValue *)fmalloc(sizeof(FuzuliValue));
     value->type = FTYPE_UINT;
     value->uvalue = i;
     value->links = 0;
@@ -57,7 +58,7 @@ FuzuliValue *FuzuliValueCreateUnsignedInteger(unsigned int i)
 
 FuzuliValue *FuzuliValueCreateLong(long l)
 {
-    FuzuliValue *value = (FuzuliValue *)malloc(sizeof(FuzuliValue));
+    FuzuliValue *value = (FuzuliValue *)fmalloc(sizeof(FuzuliValue));
     value->type = FTYPE_LONG;
     value->lvalue = l;
     value->links = 0;
@@ -67,7 +68,7 @@ FuzuliValue *FuzuliValueCreateLong(long l)
 
 FuzuliValue *FuzuliValueCreatePointer(void *v)
 {
-    FuzuliValue *value = (FuzuliValue *)malloc(sizeof(FuzuliValue));
+    FuzuliValue *value = (FuzuliValue *)fmalloc(sizeof(FuzuliValue));
     value->type = FTYPE_POINTER;
     value->vvalue = v;
     value->links = 0;
@@ -77,7 +78,7 @@ FuzuliValue *FuzuliValueCreatePointer(void *v)
 
 FuzuliValue *FuzuliValueCreateFloat(float f)
 {
-    FuzuliValue *value = (FuzuliValue *)malloc(sizeof(FuzuliValue));
+    FuzuliValue *value = (FuzuliValue *)fmalloc(sizeof(FuzuliValue));
     value->type = FTYPE_FLOAT;
     value->fvalue = f;
     value->links = 0;
@@ -86,7 +87,7 @@ FuzuliValue *FuzuliValueCreateFloat(float f)
 }
 
 FuzuliValue* FuzuliValueCreateList(){
-    FuzuliValue *value = (FuzuliValue *)malloc(sizeof(FuzuliValue));
+    FuzuliValue *value = (FuzuliValue *)fmalloc(sizeof(FuzuliValue));
     value->type = FTYPE_LIST;
     value->tag = NULL;
     return value;
@@ -94,7 +95,7 @@ FuzuliValue* FuzuliValueCreateList(){
 
 void FuzuliValueSetTag(FuzuliValue *val, char *tag)
 {
-    val->tag = (char *)malloc(strlen(tag));
+    val->tag = (char *)fmalloc(strlen(tag));
     strcpy(val->tag, tag);
     if (tag != NULL)
     {
@@ -111,7 +112,7 @@ void FuzuliValueCopyContent(FuzuliValue *destination, FuzuliValue *source)
     destination->dvalue = source->dvalue;
     if (source->tag != NULL)
     {
-        destination->tag = (char *)malloc(strlen(source->tag));
+        destination->tag = (char *)fmalloc(strlen(source->tag));
         strcpy(destination->tag, source->tag);
     }
     destination->type = source->type;
@@ -132,7 +133,7 @@ void FuzuliValueFree(FuzuliValue *value)
     if (value->links == 0)
     {
         //printf("*Deleting fvalue\n");
-        free(value);
+        ffree(value);
     }
     else
     {

@@ -3,9 +3,10 @@
 #include <string.h>
 #include "expression.h"
 #include "linkedlist.h"
+#include "fmemory.h"
 
 Expression *ExpressionNew(unsigned int type){
-    Expression *expr = (Expression*)malloc(sizeof(Expression));
+    Expression *expr = (Expression*)fmalloc(sizeof(Expression));
     expr->type = type;
     LinkedList *list = LinkedListNew();
     expr->arguments = list;
@@ -20,7 +21,7 @@ Expression *ExpressionNewWithTag(unsigned int type, char *tag){
 
 
 void ExpressionSetTag(Expression *expr, char *tag){
-    expr->tag = (char*)malloc(strlen(tag));
+    expr->tag = (char*)fmalloc(strlen(tag));
     strcpy(expr->tag, tag);
 }
 

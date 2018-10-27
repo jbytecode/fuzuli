@@ -3,9 +3,10 @@
 #include "expression.h"
 #include "string.h"
 #include "linkedlist.h"
+#include "fmemory.h"
 
 Expression *string_expression_new(char *value){
-    Expression *expr = (Expression*) malloc(sizeof(Expression));
+    Expression *expr = (Expression*) fmalloc(sizeof(Expression));
     String *stringvalue = StringNew(value);
     FuzuliValue *fvalue = FuzuliValueCreateString(value);
 

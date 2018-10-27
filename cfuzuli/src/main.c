@@ -10,6 +10,7 @@
 #include "parser.h"
 #include "eval.h"
 #include "environment.h"
+#include "fmemory.h"
 
 void printtokenlist(LinkedList *list)
 {
@@ -85,6 +86,8 @@ void runCommand(char *code, Environment *env){
                 //ExpressionPrint(expr);
             }
         }
+        StringClear(sourcecode);
+        ffree(state);
 }
 
 void runRepl()

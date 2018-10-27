@@ -10,6 +10,10 @@ all: main
 clean: 
 	rm -Rf build
 
+
+$(OUT_DIR)/fmemory.o:	src/fmemory.c
+	$(CC) $(FLAGS) -c -o $(OUT_DIR)/fmemory.o src/fmemory.c
+
 $(OUT_DIR)/ferror.o:	src/ferror.c src/ferror.h
 	$(CC) $(FLAGS) -c -o $(OUT_DIR)/ferror.o src/ferror.c
 
@@ -52,11 +56,12 @@ $(OUT_DIR)/lexer.o: src/lexer.c
 $(OUT_DIR)/libfuzuli.so:	$(OUT_DIR)/fstdlib.o $(OUT_DIR)/string.o $(OUT_DIR)/linkedlist.o\
 	$(OUT_DIR)/stringexpression.o $(OUT_DIR)/eval.o\
 	$(OUT_DIR)/fuzulitypes.o $(OUT_DIR)/sourcecode.o $(OUT_DIR)/lexer.o $(OUT_DIR)/token.o\
-	$(OUT_DIR)/parser.o $(OUT_DIR)/expression.o $(OUT_DIR)/environment.o $(OUT_DIR)/ferror.o
+	$(OUT_DIR)/parser.o $(OUT_DIR)/expression.o $(OUT_DIR)/environment.o $(OUT_DIR)/ferror.o\
+	$(OUT_DIR)/fmemory.o
 	$(CC) -shared -o $(OUT_DIR)/libfuzuli.so $(OUT_DIR)/string.o $(OUT_DIR)/linkedlist.o \
 	$(OUT_DIR)/eval.o $(OUT_DIR)/stringexpression.o $(OUT_DIR)/fuzulitypes.o \
 	$(OUT_DIR)/sourcecode.o $(OUT_DIR)/lexer.o $(OUT_DIR)/token.o $(OUT_DIR)/parser.o \
-	$(OUT_DIR)/expression.o $(OUT_DIR)/fstdlib.o $(OUT_DIR)/environment.o $(OUT_DIR)/ferror.o 
+	$(OUT_DIR)/expression.o $(OUT_DIR)/fstdlib.o $(OUT_DIR)/environment.o $(OUT_DIR)/ferror.o $(OUT_DIR)/fmemory.o
  
 main:	$(OUT_DIR)/libfuzuli.so	
 	$(CC) -o $(OUT_DIR)/fuzuli src/main.c $(OUT_DIR)/libfuzuli.so

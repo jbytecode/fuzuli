@@ -5,10 +5,11 @@
 #include "expression.h"
 #include "linkedlist.h"
 #include "token.h"
+#include "fmemory.h"
 
 ParserState *ParserStateNew(unsigned int end)
 {
-    ParserState *state = (ParserState *)malloc(sizeof(ParserState));
+    ParserState *state = (ParserState *)fmalloc(sizeof(ParserState));
     state->end = end;
     state->index = 0;
     return (state);

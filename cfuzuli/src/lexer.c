@@ -8,9 +8,11 @@
 #include "constants.h"
 #include "token.h"
 #include "ferror.h"
+#include "fmemory.h"
+
 
 LexerState *LexerCreateState(unsigned int start, unsigned int current, unsigned int last) {
-    LexerState *state = (LexerState*) (malloc(sizeof (LexerState)));
+    LexerState *state = (LexerState*) (fmalloc(sizeof (LexerState)));
     state->startPosition = start;
     state->currentPosition = current;
     state->lastPosition = last;
