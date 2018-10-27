@@ -61,16 +61,8 @@ void runFile(char *filename)
     //FuzuliValuePrint(returnValue);
 }
 
-void runRepl()
-{
-    Environment *env = EnvironmentNew(NULL);
-    EnvironmentRegisterGlobals(env);
-    char chars[1024];
-    while (1)
-    {
-        printf("\nFuzuli> ");
-        char *str = fgets(chars, 1024, stdin);
-        String *sourcecode = StringNew(&chars[0]);
+void runCommand(char *code, Environment *env){
+        String *sourcecode = StringNew(code);
         LinkedList *list = LexerExtractTokens(sourcecode);
         ParserState *state = ParserStateNew(LinkedListLength(list));
         while (TRUE)
@@ -92,6 +84,20 @@ void runRepl()
                 eval(expr, env);
                 //ExpressionPrint(expr);
             }
+        }
+}
+
+void runRepl()
+{
+    Environment *env = EnvironmentNew(NULL);
+    EnvironmentRegisterGlobals(env);
+    char chars[1024];
+    while (1)
+    {
+        printf("\nFuzuli> ");
+        char *str = fgets(chars, 1024, stdin);
+        if(str[0] != '\n'){
+            runCommand(str, env);
         }
     }
 }

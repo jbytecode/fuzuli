@@ -22,7 +22,7 @@ FuzuliValue *doIdentifierOperation(Expression *expr, Environment *env)
     }
     if (returnvalue->type == FTYPE_NULL)
     {
-        printf("Variable is null in %s\n", expr->tag);
+        printf("Value is null in %s\n", expr->tag);
         exit(-1);
     }
 
@@ -241,4 +241,11 @@ FuzuliValue* doListOperation(Expression *expr, Environment *env){
     }
     returnValue->vvalue = data;
     return returnValue;
+}
+
+FuzuliValue* doLengthOperation(Expression *expr, Environment *env){
+    FuzuliValue *listElement = eval((Expression*)LinkedListGet(expr->arguments, 0), env);
+    LinkedList *data = (LinkedList*)listElement->vvalue;
+    FuzuliValue *returnvalue = FuzuliValueCreateInteger(LinkedListLength(data));
+    return returnvalue;
 }

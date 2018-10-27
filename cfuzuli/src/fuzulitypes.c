@@ -3,6 +3,7 @@
 #include <string.h>
 #include "fuzulitypes.h"
 #include "ferror.h"
+#include "linkedlist.h"
 
 FuzuliValue *FuzuliValueCreateNull()
 {
@@ -177,39 +178,20 @@ unsigned int FuzuliValueEquals(FuzuliValue *val1, FuzuliValue *val2)
     }
 }
 
-void FuzuliValuePrintDebugged(FuzuliValue *value)
-{
-    if (value->tag != NULL)
-    {
-        printf("%s:", value->tag);
+
+
+void FuzuliValueListPrint(FuzuliValue *value){
+    LinkedList *list = (LinkedList*)value->vvalue;
+    unsigned int len = LinkedListLength(list);
+    printf("[");
+    for (unsigned int i = 0; i < len; i++){
+        FuzuliValue *val = (FuzuliValue*)LinkedListGet(list, i);
+        FuzuliValuePrint(val);
+        if(i < len - 1){
+            printf(", ");
+        }
     }
-    switch (value->type)
-    {
-    case FTYPE_DOUBLE:
-        printf("DBL=%f", value->dvalue);
-        break;
-    case FTYPE_FLOAT:
-        printf("FLT=%f", value->fvalue);
-        break;
-    case FTYPE_INT:
-        printf("INT=%d", value->ivalue);
-        break;
-    case FTYPE_STRING:
-        printf("STR=%s", value->svalue->chars);
-        break;
-    case FTYPE_UINT:
-        printf("UINT=%u", value->uvalue);
-        break;
-    case FTYPE_LONG:
-        printf("LONG=%ld", value->lvalue);
-        break;
-    case FTYPE_POINTER:
-        printf("POI=%p", &value->vvalue);
-        break;
-    default:
-        printf("FV=type not found");
-    }
-    printf(" ");
+    printf("]");
 }
 
 void FuzuliValuePrint(FuzuliValue *value)
@@ -241,7 +223,7 @@ void FuzuliValuePrint(FuzuliValue *value)
         printf("NULL");
         break;
     case FTYPE_LIST:
-        printf("[List object]");
+       FuzuliValueListPrint(value);
         break;
     default:
         printf("FuzulivaluePrint: type '%u' not found in evaluator.\n", value->type);

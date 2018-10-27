@@ -7,7 +7,8 @@ typedef enum {
     EXPR_STRING, 
     EXPR_IDENTIFIER, 
     EXPR_NUMBER_CONSTANT,
-    EXPR_END} EXPRESSION_TYPE;
+    EXPR_END
+} EXPRESSION_TYPE;
 
 typedef struct {
     unsigned int type;

@@ -2,7 +2,10 @@
 #define FUZULI_TYPES_H
 
 #include "string.h"
+
+#ifndef LINKED_LIST_H
 #include "linkedlist.h"
+#endif
 
 typedef enum {
 	FTYPE_UINT, 
@@ -46,7 +49,7 @@ FuzuliValue* FuzuliValueCreateNull();
 FuzuliValue* FuzuliValueCreateList();
 FuzuliValue* FuzuliValueDuplicate(FuzuliValue *value);
 void FuzuliValuePrint(FuzuliValue *value);
-void FuzuliValuePrintDebugged(FuzuliValue *value);
+void FuzuliValueListPrint(FuzuliValue *value);
 void FuzuliValueSetTag(FuzuliValue *val, char *tag);
 void FuzuliValueCopyContent(FuzuliValue *destination, FuzuliValue *source);
 void FuzuliValueFree(FuzuliValue *value);

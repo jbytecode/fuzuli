@@ -1,7 +1,6 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
-#include "fuzulitypes.h"
 
 struct _LinkedListElement;
 struct _LinkedList;

@@ -5,6 +5,7 @@
 #include "linkedlist.h"
 #include "string.h"
 #include "constants.h"
+#include "fuzulitypes.h"
 
 
 #ifdef __cplusplus

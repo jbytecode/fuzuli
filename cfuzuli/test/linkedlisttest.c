@@ -2,6 +2,7 @@
 #include <assert.h>
 #include "../src/linkedlist.h"
 #include "../src/constants.h"
+#include "../src/fuzulitypes.h"
 #include "testconstants.h"
 
 void linkedlist_new_test1(){

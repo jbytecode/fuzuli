@@ -1,0 +1,12 @@
+(let passed "PASSED")
+(let error "ERROR")
+
+(let mylist (list 1 2 3 4 5 6 7 8 9 10))
+
+(if (= (length mylist) 10) 
+	(println passed) 	
+	(println error)
+)
+
+
+
