@@ -29,15 +29,15 @@ void printtokenlist(LinkedList *list)
 void runFile(char *filename)
 {
     String *sourcecode;
-    printf("Source code loading\n");
+    //printf("Source code loading\n");
     sourcecode = sourcecode_load_from_file(filename);
-    printf("Lexing\n");
+    //printf("Lexing\n");
     LinkedList *list = LexerExtractTokens(sourcecode);
     ParserState *state = ParserStateNew(LinkedListLength(list));
     Environment *env = EnvironmentNew(NULL);
     EnvironmentRegisterGlobals(env);
     FuzuliValue *returnValue;
-    printf("Running\n");
+    //printf("Running\n");
     while (TRUE)
     {
         Expression *expr = getNextExpression(list, state);
@@ -58,7 +58,7 @@ void runFile(char *filename)
             returnValue = eval(expr, env);
         }
     }
-    FuzuliValuePrint(returnValue);
+    //FuzuliValuePrint(returnValue);
 }
 
 void runRepl()

@@ -1,4 +1,2 @@
-(dump)
-(print (* 2 5))
-(print (+ 10 100))
+(print "Hello world!")
 

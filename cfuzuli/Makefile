@@ -3,7 +3,7 @@ OUT_DIR=build
 FLAGS=-fPIC
 .PHONY: all
 
-$(shell mkdir -p $(OUT_DIR))	
+$(shell mkdir -p $(OUT_DIR))
 
 all: main
 
@@ -59,26 +59,18 @@ libfuzuli.so:	fstdlib.o string.o linkedlist.o stringexpression.o eval.o fuzulity
 main:	libfuzuli.so	
 	$(CC) -o $(OUT_DIR)/fuzuli src/main.c $(OUT_DIR)/libfuzuli.so
 
-test:	main test_string test_linkedlist test_eval
+test:	main test_string test_linkedlist
 	@echo "Performing tests..."
-	@echo "String..."
-	@echo $(shell ./$(OUT_DIR)/stringtest | grep 0)
-	@echo "Linked List..."
-	@echo $(shell ./$(OUT_DIR)/linkedlisttest | grep 0)
-	@echo "Eval..."
-	@echo $(shell ./$(OUT_DIR)/evaltest | grep 0)
-	@echo "Fuzuli source tests"
-	@echo $(shell ./$(OUT_DIR)/fuzuli ./ftest/printtest.fzl | grep 0)
-	@echo "Tests with error listed"
+	@echo $(shell ./$(OUT_DIR)/stringtest)
+	@echo $(shell ./$(OUT_DIR)/linkedlisttest)
+	@echo "Fuzuli source tests: "
+	@echo "Let test: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/lettest.fzl)
 
 test_string:	main
 	$(CC) -o $(OUT_DIR)/stringtest test/stringtest.c $(OUT_DIR)/libfuzuli.so
 
 test_linkedlist:	main
 	$(CC) -o $(OUT_DIR)/linkedlisttest test/linkedlisttest.c $(OUT_DIR)/libfuzuli.so
-
-test_eval: main
-	$(CC) -o $(OUT_DIR)/evaltest test/evaltest.c $(OUT_DIR)/libfuzuli.so
 
 run: main
 	./build/fuzuli ftest/printtest.fzl
