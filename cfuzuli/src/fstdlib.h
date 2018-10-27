@@ -28,6 +28,7 @@ FuzuliValue* doLetOperation(Expression *expr, Environment *env);
 FuzuliValue* doEqualsOperation(Expression *expr, Environment *env);
 FuzuliValue* doIfOperation(Expression *expr, Environment *env);
 FuzuliValue* doWhileOperation(Expression *expr, Environment *env);
+FuzuliValue* doTypeofOperation(Expression *expr, Environment *env);
 
 #ifdef __cplusplus
 }

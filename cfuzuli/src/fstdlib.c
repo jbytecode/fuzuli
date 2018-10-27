@@ -7,37 +7,52 @@
 #include "eval.h"
 #include "ferror.h"
 
-FuzuliValue* doIdentifierOperation(Expression *expr, Environment *env){
-    LinkedList *alls = (LinkedList*) env->FuzuliValues;
+FuzuliValue *doIdentifierOperation(Expression *expr, Environment *env)
+{
+    LinkedList *alls = (LinkedList *)env->FuzuliValues;
     unsigned int len = LinkedListLength(alls);
     FuzuliValue *returnvalue = FuzuliValueCreateNull();
-    for (unsigned int i = 0; i < len; i++){
-        FuzuliValue *val = (FuzuliValue*) LinkedListGet(alls, i);
-        if(strcmp(val->tag, expr->tag) == 0){
+    for (unsigned int i = 0; i < len; i++)
+    {
+        FuzuliValue *val = (FuzuliValue *)LinkedListGet(alls, i);
+        if (strcmp(val->tag, expr->tag) == 0)
+        {
             returnvalue = val;
         }
     }
-    if(returnvalue->type == FTYPE_NULL){
+    if (returnvalue->type == FTYPE_NULL)
+    {
         printf("Variable is null in %s\n", expr->tag);
         exit(-1);
     }
 
-    if(returnvalue->type == FTYPE_POINTER){
+    if (returnvalue->type == FTYPE_POINTER)
+    {
         InternalFunctionPointer p = returnvalue->vvalue;
         return p(expr, env);
     }
     return returnvalue;
 }
 
-FuzuliValue* doStringConstantOperation(Expression *expr, Environment *env){
+FuzuliValue *doStringConstantOperation(Expression *expr, Environment *env)
+{
     FuzuliValue *val = FuzuliValueCreateString(expr->tag);
     return val;
 }
 
 FuzuliValue *doNumericConstantOperation(Expression *expr, Environment *env)
 {
-    double d = atof(expr->tag);
-    FuzuliValue *val = FuzuliValueCreateDouble(d);
+    FuzuliValue *val;
+    if (strstr(expr->tag, ".") != NULL)
+    {
+        double d = atof(expr->tag);
+        val = FuzuliValueCreateDouble(d);
+    }
+    else
+    {
+        int i = atoi(expr->tag);
+        val = FuzuliValueCreateInteger(i);
+    }
     return val;
 }
 
@@ -48,7 +63,7 @@ FuzuliValue *doPlusOperation(Expression *expr, Environment *env)
     ErrorAndTerminateAfterTypeCheck(val1, val2, expr);
     FuzuliValue *result = FuzuliValueCreateDouble(val1->dvalue + val2->dvalue);
     FuzuliValueFree(val1);
-    FuzuliValueFree(val2);  
+    FuzuliValueFree(val2);
     return result;
 }
 
@@ -59,7 +74,7 @@ FuzuliValue *doProductOperation(Expression *expr, Environment *env)
     ErrorAndTerminateAfterTypeCheck(val1, val2, expr);
     FuzuliValue *result = FuzuliValueCreateDouble(val1->dvalue * val2->dvalue);
     FuzuliValueFree(val1);
-    FuzuliValueFree(val2);  
+    FuzuliValueFree(val2);
     return result;
 }
 
@@ -88,8 +103,9 @@ FuzuliValue *doDumpOperation(Expression *expr, Environment *env)
 {
     LinkedList *list = env->FuzuliValues;
     unsigned int len = LinkedListLength(list);
-    for (unsigned int i = 0; i < len; i++){
-        FuzuliValue *val = (FuzuliValue*)LinkedListGet(list, i);
+    for (unsigned int i = 0; i < len; i++)
+    {
+        FuzuliValue *val = (FuzuliValue *)LinkedListGet(list, i);
         printf("%s: ", val->tag);
         FuzuliValuePrint(val);
         printf("\t");
@@ -99,72 +115,87 @@ FuzuliValue *doDumpOperation(Expression *expr, Environment *env)
     return FuzuliValueCreateInteger(len);
 }
 
-FuzuliValue *doLetOperation(Expression *expr, Environment *env){
+FuzuliValue *doLetOperation(Expression *expr, Environment *env)
+{
     Expression *ident = (Expression *)LinkedListGet(expr->arguments, 0);
-    
+
     FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
     FuzuliValue *newval = FuzuliValueDuplicate(val2);
 
-    newval->tag = (char*)malloc(strlen(ident->tag));
+    newval->tag = (char *)malloc(strlen(ident->tag));
     strcpy(newval->tag, ident->tag);
-    
+
     EnvironmentRegisterVariable(env, newval);
     newval->links++;
     FuzuliValueFree(val2);
-    return(newval);
+    return (newval);
 }
 
-FuzuliValue* doEqualsOperation(Expression *expr, Environment *env){
+FuzuliValue *doEqualsOperation(Expression *expr, Environment *env)
+{
     FuzuliValue *val1 = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
     FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
     ErrorAndTerminateAfterTypeCheck(val1, val2, expr);
     FuzuliValue *result = FuzuliValueCreateInteger(FuzuliValueEquals(val1, val2));
     FuzuliValueFree(val1);
-    FuzuliValueFree(val2);  
+    FuzuliValueFree(val2);
     return result;
 }
 
-
-FuzuliValue* doIfOperation(Expression *expr, Environment *env){
+FuzuliValue *doIfOperation(Expression *expr, Environment *env)
+{
     FuzuliValue *condition = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
     FuzuliValue *result;
     unsigned int argumentLength = LinkedListLength(expr->arguments);
-    if(argumentLength == 3){
-        if(condition->ivalue == 1){
+    if (argumentLength == 3)
+    {
+        if (condition->ivalue == 1)
+        {
             FuzuliValue *yes = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
             free(condition);
             return yes;
-        }else{
+        }
+        else
+        {
             FuzuliValue *no = eval((Expression *)LinkedListGet(expr->arguments, 2), env);
             free(condition);
             return no;
         }
-    }else if(argumentLength == 2){
-        if(condition->ivalue == 1){
+    }
+    else if (argumentLength == 2)
+    {
+        if (condition->ivalue == 1)
+        {
             FuzuliValue *yes = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
             free(condition);
             return yes;
         }
-    }else{
+    }
+    else
+    {
         ErrorAndTerminateExpression("If expression must have 1 or 2 arguments", -1, expr);
     }
     return result;
 }
 
-
-FuzuliValue* doWhileOperation(Expression *expr, Environment *env){
-    FuzuliValue *condition; 
+FuzuliValue *doWhileOperation(Expression *expr, Environment *env)
+{
+    FuzuliValue *condition;
     FuzuliValue *result = NULL;
-    while(1){
-        condition = eval((Expression *) LinkedListGet(expr->arguments, 0), env);
-        if(condition->ivalue == 0){
+    while (1)
+    {
+        condition = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
+        if (condition->ivalue == 0)
+        {
             break;
         }
-        if(result != NULL){
+        if (result != NULL)
+        {
             free(result);
         }
         Expression *subexpr = (Expression *)LinkedListGet(expr->arguments, 1);
-        if(strcmp(subexpr->tag, "break")){
+        if (strcmp(subexpr->tag, "break"))
+        {
             break;
         }
         result = eval(subexpr, env);
@@ -173,3 +204,28 @@ FuzuliValue* doWhileOperation(Expression *expr, Environment *env){
     return result;
 }
 
+FuzuliValue *doTypeofOperation(Expression *expr, Environment *env)
+{
+    FuzuliValue *val = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
+    switch (val->type)
+    {
+    case FTYPE_DOUBLE:
+        return FuzuliValueCreateString("double");
+    case FTYPE_FLOAT:
+        return FuzuliValueCreateString("float");
+    case FTYPE_INT:
+        return FuzuliValueCreateString("integer");
+    case FTYPE_LONG:
+        return FuzuliValueCreateString("long");
+    case FTYPE_NULL:
+        return FuzuliValueCreateString("null");
+    case FTYPE_POINTER:
+        return FuzuliValueCreateString("pointer");
+    case FTYPE_STRING:
+        return FuzuliValueCreateString("string");
+    case FTYPE_UINT:
+        return FuzuliValueCreateString("unsigned integer");
+    default:
+            return FuzuliValueCreateString("unknown");
+    }
+}
