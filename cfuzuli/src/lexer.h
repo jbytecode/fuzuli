@@ -14,6 +14,7 @@ extern "C" {
         unsigned int startPosition;
         unsigned int currentPosition;
         unsigned int lastPosition;
+        unsigned int lineNumber;
         char *sourcecode;
     }LexerState;
 

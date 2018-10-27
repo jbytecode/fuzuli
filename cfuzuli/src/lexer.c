@@ -7,12 +7,14 @@
 #include "lexer.h"
 #include "constants.h"
 #include "token.h"
+#include "ferror.h"
 
 LexerState *LexerCreateState(unsigned int start, unsigned int current, unsigned int last) {
     LexerState *state = (LexerState*) (malloc(sizeof (LexerState)));
     state->startPosition = start;
     state->currentPosition = current;
     state->lastPosition = last;
+    state->lineNumber = 0;
     return (state);
 }
 
@@ -69,9 +71,17 @@ Token* LexerGetNextToken(LexerState *state) {
         while(currentChar != '"'){
             StringAppendChar(result, currentChar);
             currentChar = LexerConsumeChar(state);
+            if(state->currentPosition > state->lastPosition){
+                char message[1024];
+                sprintf(message, "Incomplete string constant at line %u.", state->lineNumber + 1);
+                ErrorAndTerminate(message, -1);
+            }
         }
         tok = TokenNew(TOKEN_STRING, result->chars);
     }else if(isspace(currentChar)){
+        if(currentChar == '\n'){
+            state->lineNumber++;
+        }
         return LexerGetNextToken(state);
     }else if(isdigit(currentChar)){
         result = StringNewFromChar(currentChar);

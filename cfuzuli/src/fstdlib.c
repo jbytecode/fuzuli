@@ -116,3 +116,30 @@ FuzuliValue* doEqualsOperation(Expression *expr, Environment *env){
     FuzuliValueFree(val2);  
     return result;
 }
+
+
+FuzuliValue* doIfOperation(Expression *expr, Environment *env){
+    FuzuliValue *condition = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
+    FuzuliValue *result;
+    unsigned int argumentLength = LinkedListLength(expr->arguments);
+    if(argumentLength == 3){
+        if(condition->ivalue == 1){
+            FuzuliValue *yes = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
+            free(condition);
+            return yes;
+        }else{
+            FuzuliValue *no = eval((Expression *)LinkedListGet(expr->arguments, 2), env);
+            free(condition);
+            return no;
+        }
+    }else if(argumentLength == 2){
+        if(condition->ivalue == 1){
+            FuzuliValue *yes = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
+            free(condition);
+            return yes;
+        }
+    }else{
+        ErrorAndTerminateExpression("If expression must have 1 or 2 arguments", -1, expr);
+    }
+    return result;
+}

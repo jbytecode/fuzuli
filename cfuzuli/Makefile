@@ -68,6 +68,8 @@ test:	main test_string test_linkedlist
 	@echo "Fuzuli source tests: "
 	@echo "Let test: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/lettest.fzl)
 	@echo "equalints test: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/equalints.fzl)
+	@echo "if1 test: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/if1.fzl)
+	
 	
 
 test_string:	main

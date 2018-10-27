@@ -159,7 +159,7 @@ unsigned int FuzuliValueEquals(FuzuliValue *val1, FuzuliValue *val2)
         return (val1->vvalue == val2->vvalue);
         break;
     case FTYPE_STRING:
-        return(val1->svalue == val2->svalue);
+        return(StringEquals(val1->svalue, val2->svalue));
         break;
     case FTYPE_UINT:
         return(val1->uvalue == val2->uvalue);

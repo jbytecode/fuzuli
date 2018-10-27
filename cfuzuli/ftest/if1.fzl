@@ -1,0 +1,9 @@
+(let passed "PASSED")
+(let error "ERROR")
+
+(let a 100)
+(let bb 100)
+(if (= a bb) (print passed) (print error))
+
+(if (= a 100) (if (= bb 100) (print passed) (print error) ) (print error) )
+
