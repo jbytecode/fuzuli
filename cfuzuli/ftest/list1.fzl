@@ -2,11 +2,32 @@
 (let error "ERROR")
 
 (let mylist (list 1 2 3 4 5 6 7 8 9 10))
-
 (if (= (length mylist) 10) 
 	(println passed) 	
 	(println error)
 )
 
 
+(append mylist 11)
+(if (= (length mylist) 11) 
+	(println passed) 	
+	(println error)
+)
 
+(prepend mylist 0)
+(if (= (length mylist) 12) 
+	(println passed) 	
+	(println error)
+)
+
+
+(if (= (nth mylist 0) 0) 
+	(println passed) 	
+	(println error)
+)
+
+
+(if (= (nth mylist 11) 11) 
+	(println passed) 	
+	(println error)
+)

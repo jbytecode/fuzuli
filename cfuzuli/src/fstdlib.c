@@ -118,7 +118,6 @@ FuzuliValue *doDumpOperation(Expression *expr, Environment *env)
 FuzuliValue *doLetOperation(Expression *expr, Environment *env)
 {
     Expression *ident = (Expression *)LinkedListGet(expr->arguments, 0);
-
     FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
     FuzuliValue *newval = FuzuliValueDuplicate(val2);
 
@@ -248,4 +247,38 @@ FuzuliValue* doLengthOperation(Expression *expr, Environment *env){
     LinkedList *data = (LinkedList*)listElement->vvalue;
     FuzuliValue *returnvalue = FuzuliValueCreateInteger(LinkedListLength(data));
     return returnvalue;
+}
+
+FuzuliValue* doNthOperation(Expression *expr, Environment *env){
+    Expression *listExpr = (Expression*)LinkedListGet(expr->arguments, 0);
+    FuzuliValue *listElement = eval(listExpr, env);
+    FuzuliValue *indiceElement = eval((Expression*)LinkedListGet(expr->arguments, 1), env);
+    LinkedList *data = (LinkedList*)listElement->vvalue;
+    unsigned int len = LinkedListLength(data);
+    if(indiceElement->ivalue > len){
+        printf("In: \n");
+        ExpressionPrint(expr, 0);
+        ErrorAndTerminate("Index out of bounds", -1);
+    }
+    FuzuliValue *returnvalue = LinkedListGet(data, (unsigned int)indiceElement->ivalue);
+    return returnvalue;
+}
+
+
+FuzuliValue* doAppendOperation(Expression *expr, Environment *env){
+    Expression *listExpr = (Expression*)LinkedListGet(expr->arguments, 0);
+    FuzuliValue *listElement = eval(listExpr, env);
+    FuzuliValue *newValElement = eval((Expression*)LinkedListGet(expr->arguments, 1), env);
+    LinkedList *data = (LinkedList*)listElement->vvalue;
+    LinkedListAdd(data, newValElement);
+    return newValElement;
+}
+
+FuzuliValue* doPrependOperation(Expression *expr, Environment *env){
+    Expression *listExpr = (Expression*)LinkedListGet(expr->arguments, 0);
+    FuzuliValue *listElement = eval(listExpr, env);
+    FuzuliValue *newValElement = eval((Expression*)LinkedListGet(expr->arguments, 1), env);
+    LinkedList *data = (LinkedList*)listElement->vvalue;
+    LinkedListPrepend(data, newValElement);
+    return newValElement;
 }

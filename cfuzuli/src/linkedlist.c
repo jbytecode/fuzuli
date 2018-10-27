@@ -36,6 +36,13 @@ void LinkedListAdd(LinkedList *list, void *value) {
     return;
 }
 
+void LinkedListPrepend(LinkedList *list, void *value){
+    LinkedListElement *newhead = (LinkedListElement*)malloc(sizeof(LinkedListElement));
+    newhead->value = value;
+    newhead->next = list->first;
+    list->first = newhead;
+}
+
 unsigned int LinkedListLength(LinkedList *list) {
     unsigned int size = 0;
     LinkedListElement *element = list->first;

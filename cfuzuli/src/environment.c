@@ -63,6 +63,9 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValue *typeofFunctionPtr = FuzuliValueCreatePointer((void*)doTypeofOperation);
     FuzuliValue *listFunctionPtr = FuzuliValueCreatePointer((void*)doListOperation);
     FuzuliValue *lengthFunctionPtr = FuzuliValueCreatePointer((void*)doLengthOperation);
+    FuzuliValue *nthFunctionPtr = FuzuliValueCreatePointer((void*)doNthOperation);
+    FuzuliValue *appendFunctionPtr = FuzuliValueCreatePointer((void*)doAppendOperation);
+    FuzuliValue *prependFunctionPtr = FuzuliValueCreatePointer((void*)doPrependOperation);
     
 
     /*
@@ -87,6 +90,9 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValueSetTag(typeofFunctionPtr, "typeof");
     FuzuliValueSetTag(listFunctionPtr, "list");
     FuzuliValueSetTag(lengthFunctionPtr, "length");
+    FuzuliValueSetTag(nthFunctionPtr, "nth");
+    FuzuliValueSetTag(appendFunctionPtr, "append");
+    FuzuliValueSetTag(prependFunctionPtr, "prepend");
 
     /*
     * Registering variables and internal functions
@@ -107,5 +113,8 @@ void EnvironmentRegisterGlobals(Environment *env){
     EnvironmentRegisterVariable(env, typeofFunctionPtr);
     EnvironmentRegisterVariable(env, listFunctionPtr);
     EnvironmentRegisterVariable(env, lengthFunctionPtr);
+    EnvironmentRegisterVariable(env, nthFunctionPtr);
+    EnvironmentRegisterVariable(env, appendFunctionPtr);
+    EnvironmentRegisterVariable(env, prependFunctionPtr);
 }
 

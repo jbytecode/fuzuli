@@ -41,12 +41,33 @@ void linkedlist_get_double_test1(){
 	printf("%s\n",passed);
 }
 
+void linkedlist_prepend_double_test1(){
+	LinkedList *list = LinkedListNew();
+	LinkedListAdd(list, FuzuliValueCreateDouble(10.0));
+	LinkedListAdd(list, FuzuliValueCreateDouble(20.0));
+	LinkedListAdd(list, FuzuliValueCreateDouble(30.0));
+	
+	LinkedListPrepend(list, FuzuliValueCreateDouble(40.0));
+	FuzuliValue *val = LinkedListGet(list, 0);
+	assert(val->dvalue == 40);
+
+	LinkedListPrepend(list, FuzuliValueCreateDouble(50.0));
+	FuzuliValue *val2 = LinkedListGet(list, 0);
+	assert(val2->dvalue == 50);
+
+	assert(LinkedListLength(list) == 5);
+
+	printf("%s\n",passed);
+}
+
+
 int main(int argc, char **argv){
 	puts("LinkedList test: ");
 	linkedlist_new_test1();
 	linkedlist_add_double_test1();	
 	linkedlist_add_doubles_test1();	
 	linkedlist_get_double_test1();	
+	linkedlist_prepend_double_test1();
 	return 0;
 }
 

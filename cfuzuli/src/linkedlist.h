@@ -21,5 +21,5 @@ LinkedList *LinkedListNew();
 unsigned int LinkedListLength(LinkedList *list);
 void* LinkedListGet(LinkedList *list, unsigned int index);
 void LinkedListAdd(LinkedList *list, void *value);
-
+void LinkedListPrepend(LinkedList *list, void *value);
 #endif

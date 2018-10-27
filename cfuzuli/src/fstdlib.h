@@ -31,6 +31,9 @@ FuzuliValue* doWhileOperation(Expression *expr, Environment *env);
 FuzuliValue* doTypeofOperation(Expression *expr, Environment *env);
 FuzuliValue* doListOperation(Expression *expr, Environment *env);
 FuzuliValue* doLengthOperation(Expression *expr, Environment *env);
+FuzuliValue* doNthOperation(Expression *expr, Environment *env);
+FuzuliValue* doAppendOperation(Expression *expr, Environment *env);
+FuzuliValue* doPrependOperation(Expression *expr, Environment *env);
 
 #ifdef __cplusplus
 }
