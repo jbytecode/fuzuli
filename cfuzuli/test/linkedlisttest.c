@@ -60,6 +60,24 @@ void linkedlist_prepend_double_test1(){
 	printf("%s\n",passed);
 }
 
+void linkedlist_remove_double_test1(){
+	LinkedList *list = LinkedListNew();
+	LinkedListAdd(list, FuzuliValueCreateDouble(10.0));
+	LinkedListAdd(list, FuzuliValueCreateDouble(20.0));
+	LinkedListAdd(list, FuzuliValueCreateDouble(30.0));
+	LinkedListAdd(list, FuzuliValueCreateDouble(40.0));
+	LinkedListAdd(list, FuzuliValueCreateDouble(50.0));
+	LinkedListAdd(list, FuzuliValueCreateDouble(60.0));
+	LinkedListAdd(list, FuzuliValueCreateDouble(70.0));
+	
+	LinkedListRemove(list, 2);
+	assert(LinkedListLength(list) == 6);
+
+	FuzuliValue *val1 = LinkedListGet(list, 2);
+	assert(val1->dvalue == 40.0);
+	printf("%s\n",passed);
+}
+
 
 int main(int argc, char **argv){
 	puts("LinkedList test: ");
@@ -68,6 +86,7 @@ int main(int argc, char **argv){
 	linkedlist_add_doubles_test1();	
 	linkedlist_get_double_test1();	
 	linkedlist_prepend_double_test1();
+	linkedlist_remove_double_test1();
 	return 0;
 }
 

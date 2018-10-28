@@ -71,3 +71,46 @@ void* LinkedListGet(LinkedList *list, unsigned int index) {
     return (element->value);
 }
 
+LinkedListElement* LinkedListGetCore(LinkedList *list, unsigned int index) {
+    unsigned int i = 0;
+    LinkedListElement *element = list->first;
+    while (i != index) {
+        element = element->next;
+        i++;
+    }
+    return (element);
+}
+
+
+void LinkedListRemove(LinkedList *list, unsigned int index){
+    unsigned int len = LinkedListLength(list);
+    LinkedListElement *previousElement;
+    LinkedListElement *nextElement;
+    LinkedListElement *element;
+    if(index >= len){
+        return;
+    }
+    if(len == 1){
+        list->first = NULL;
+    }
+    if(index == 0){
+        nextElement = LinkedListGetCore(list, index + 1);
+        list->first = nextElement;
+    }
+    if(index == (len - 1)){
+        previousElement = LinkedListGetCore(list, index - 1);
+        previousElement->next = NULL;
+    }
+    if(index > 0 && index < (len - 1)){
+        previousElement = LinkedListGetCore(list, index - 1);
+        nextElement = LinkedListGetCore(list, index + 1);
+        element = LinkedListGetCore(list, index);
+        
+        previousElement->next = nextElement;
+        
+        previousElement = LinkedListGetCore(list, index - 1);
+        nextElement = LinkedListGetCore(list, index + 1);
+        element = LinkedListGetCore(list, index);
+        
+    }
+}

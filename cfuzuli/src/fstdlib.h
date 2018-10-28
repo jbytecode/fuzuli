@@ -35,6 +35,7 @@ FuzuliValue* doNthOperation(Expression *expr, Environment *env);
 FuzuliValue* doAppendOperation(Expression *expr, Environment *env);
 FuzuliValue* doPrependOperation(Expression *expr, Environment *env);
 FuzuliValue* doMemoryOperation(Expression *expr, Environment *env);
+FuzuliValue* doRmOperation(Expression *expr, Environment *env);
 
 #ifdef __cplusplus
 }

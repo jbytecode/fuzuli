@@ -292,3 +292,19 @@ FuzuliValue* doMemoryOperation(Expression *expr, Environment *env){
     printf("Total hold: %u\n", allocated - freed);
     return NULL;   
 }
+
+FuzuliValue* doRmOperation(Expression *expr, Environment *env){
+    LinkedList *list = env->FuzuliValues;
+    unsigned int len = LinkedListLength(list);
+    FuzuliValue *variableToDelete = eval((Expression*)LinkedListGet(expr->arguments, 0), env);
+    for (unsigned int i = 0; i < len; i++)
+    {
+        FuzuliValue *val = (FuzuliValue *)LinkedListGet(list, i);
+        if(strcmp(val->tag, variableToDelete->tag) == 0){
+            ffree(variableToDelete);
+            LinkedListRemove(list, i);
+            break;
+        }
+    }
+    return FuzuliValueCreateNull();
+}
