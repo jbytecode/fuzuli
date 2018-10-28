@@ -8,14 +8,16 @@ static FuzuliMemoryUsage memoryUsageStats;
 
 
 void* fmalloc (unsigned int size){
-    memoryUsageStats.totalAllocated += size;
+    memoryUsageStats.totalAllocated += 1;
     return malloc(size);
 }
 
 void ffree (void *pointer){
-    memoryUsageStats.totalFreed += sizeof(pointer);
-    free(pointer);
-    pointer = NULL;
+    if(pointer){
+        memoryUsageStats.totalFreed += 1;
+        free(pointer);
+        pointer = NULL;
+    }
 }
 
 unsigned int FuzuliMemoryGetAllocated(){

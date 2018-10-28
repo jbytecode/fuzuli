@@ -129,5 +129,11 @@ void EnvironmentRegisterGlobals(Environment *env){
     EnvironmentRegisterVariable(env, rmFunctionPtr);
     EnvironmentRegisterVariable(env, isnullFunctionPtr);
     EnvironmentRegisterVariable(env, rangeFunctionPtr);
+
+    LinkedList *list = env->FuzuliValues;
+    unsigned int len = LinkedListLength(list);
+    for (unsigned int i = 0; i < len; i++){
+        ((FuzuliValue*)LinkedListGet(list, i))->protected = 1;
+    }
 }
 

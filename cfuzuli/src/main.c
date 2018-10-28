@@ -30,15 +30,12 @@ void printtokenlist(LinkedList *list)
 void runFile(char *filename)
 {
     String *sourcecode;
-    //printf("Source code loading\n");
     sourcecode = sourcecode_load_from_file(filename);
-    //printf("Lexing\n");
     LinkedList *list = LexerExtractTokens(sourcecode);
     ParserState *state = ParserStateNew(LinkedListLength(list));
     Environment *env = EnvironmentNew(NULL);
     EnvironmentRegisterGlobals(env);
     FuzuliValue *returnValue;
-    //printf("Running\n");
     while (TRUE)
     {
         Expression *expr = getNextExpression(list, state);
@@ -57,6 +54,9 @@ void runFile(char *filename)
         {
             //ExpressionPrint(expr, 0);
             returnValue = eval(expr, env);
+            if(returnValue != NULL && returnValue->links == 0 && returnValue->protected == 0){
+                FuzuliValueFree(returnValue);
+            }
         }
     }
     //FuzuliValuePrint(returnValue);
@@ -66,6 +66,8 @@ void runCommand(char *code, Environment *env){
         String *sourcecode = StringNew(code);
         LinkedList *list = LexerExtractTokens(sourcecode);
         ParserState *state = ParserStateNew(LinkedListLength(list));
+        StringClear(sourcecode);
+        FuzuliValue *returnValue;
         while (TRUE)
         {
             Expression *expr = getNextExpression(list, state);
@@ -82,11 +84,21 @@ void runCommand(char *code, Environment *env){
             }
             if (expr != NULL)
             {
-                eval(expr, env);
-                //ExpressionPrint(expr);
+                returnValue = eval(expr, env);
+                if(returnValue != NULL && returnValue->type != FTYPE_NULL){
+                    FuzuliValuePrint(returnValue);
+                }
+                printf("\n* return value is %s in type %d with links %d\n", returnValue->tag, 
+                    returnValue->type, returnValue->links);
+                printf("Memory alloced: %d freed: %d holding: %d\n", 
+                        FuzuliMemoryGetAllocated(), FuzuliMemoryGetFreed(),
+                        FuzuliMemoryGetAllocated() - FuzuliMemoryGetFreed());
+                if(returnValue->links >0){
+                    FuzuliValueFree(returnValue);
+                    ffree(expr->tag);
+                }
             }
         }
-        StringClear(sourcecode);
         ffree(state);
 }
 

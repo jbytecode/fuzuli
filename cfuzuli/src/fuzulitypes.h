@@ -32,6 +32,7 @@ typedef struct {
 	};
 	char *tag;
 	int links;	
+	char protected;
 }FuzuliValue;
 
 

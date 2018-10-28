@@ -13,6 +13,7 @@ FuzuliValue *FuzuliValueCreateNull()
     value->svalue = StringNew("NULL");
     value->links = 0;
     value->tag = NULL;
+    value->protected = 0;
     return (value);
 }
 
@@ -23,6 +24,7 @@ FuzuliValue *FuzuliValueCreateString(const char *c)
     value->svalue = StringNew(c);
     value->links = 0;
     value->tag = NULL;
+    value->protected = 0;
     return (value);
 }
 
@@ -33,6 +35,7 @@ FuzuliValue *FuzuliValueCreateInteger(int i)
     value->ivalue = i;
     value->links = 0;
     value->tag = NULL;
+    value->protected = 0;
     return (value);
 }
 
@@ -43,6 +46,7 @@ FuzuliValue *FuzuliValueCreateDouble(double d)
     value->dvalue = d;
     value->links = 0;
     value->tag = NULL;
+    value->protected = 0;
     return (value);
 }
 
@@ -53,6 +57,7 @@ FuzuliValue *FuzuliValueCreateUnsignedInteger(unsigned int i)
     value->uvalue = i;
     value->links = 0;
     value->tag = NULL;
+    value->protected = 0;
     return (value);
 }
 
@@ -63,6 +68,7 @@ FuzuliValue *FuzuliValueCreateLong(long l)
     value->lvalue = l;
     value->links = 0;
     value->tag = NULL;
+    value->protected = 0;
     return (value);
 }
 
@@ -73,6 +79,7 @@ FuzuliValue *FuzuliValueCreatePointer(void *v)
     value->vvalue = v;
     value->links = 0;
     value->tag = NULL;
+    value->protected = 0;
     return (value);
 }
 
@@ -83,6 +90,7 @@ FuzuliValue *FuzuliValueCreateFloat(float f)
     value->fvalue = f;
     value->links = 0;
     value->tag = NULL;
+    value->protected = 0;
     return (value);
 }
 
@@ -90,6 +98,7 @@ FuzuliValue* FuzuliValueCreateList(){
     FuzuliValue *value = (FuzuliValue *)fmalloc(sizeof(FuzuliValue));
     value->type = FTYPE_LIST;
     value->tag = NULL;
+    value->protected = 0;
     return value;
 }
 
@@ -116,7 +125,8 @@ void FuzuliValueCopyContent(FuzuliValue *destination, FuzuliValue *source)
         strcpy(destination->tag, source->tag);
     }
     destination->type = source->type;
-    destination->links = 0;
+    destination->links = source->links;
+    destination->protected = 0;
 }
 
 FuzuliValue *FuzuliValueDuplicate(FuzuliValue *value)
@@ -125,11 +135,18 @@ FuzuliValue *FuzuliValueDuplicate(FuzuliValue *value)
     newf->dvalue = value->dvalue;
     newf->svalue = value->svalue;
     newf->type = value->type;
+    newf->protected = value->protected;
     return (newf);
 }
 
 void FuzuliValueFree(FuzuliValue *value)
 {
+    if(value == NULL){
+        return;
+    }
+    if(value->protected != 0){
+        return;
+    }
     if (value->links == 0)
     {
         //printf("*Deleting fvalue\n");
@@ -146,7 +163,8 @@ void FuzuliValueFree(FuzuliValue *value)
                 }
                 ffree(value);
             }else if(value->type == FTYPE_STRING){
-                //StringClear(value->svalue);
+                //printf("*** freeing %s\n", value->svalue->chars);
+                StringClear(value->svalue);
                 ffree(value);
             }else if(value->type == FTYPE_LIST){
                 if(value->vvalue != NULL){

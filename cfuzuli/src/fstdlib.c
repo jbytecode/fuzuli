@@ -89,7 +89,7 @@ FuzuliValue *doPrintOperation(Expression *expr, Environment *env)
         FuzuliValuePrint(value);
         FuzuliValueFree(value);
     }
-    return value;
+    return FuzuliValueCreateNull();
 }
 
 FuzuliValue *doPrintlnOperation(Expression *expr, Environment *env)
@@ -109,6 +109,7 @@ FuzuliValue *doDumpOperation(Expression *expr, Environment *env)
         printf("%s: ", val->tag);
         FuzuliValuePrint(val);
         printf("\t");
+        FuzuliValueFree(val);
         // There is no evaluation operation. Not freed.
     }
     printf("\n");
@@ -150,13 +151,13 @@ FuzuliValue *doIfOperation(Expression *expr, Environment *env)
         if (condition->ivalue == 1)
         {
             FuzuliValue *yes = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
-            ffree(condition);
+            FuzuliValueFree(condition);
             return yes;
         }
         else
         {
             FuzuliValue *no = eval((Expression *)LinkedListGet(expr->arguments, 2), env);
-            ffree(condition);
+            FuzuliValueFree(condition);
             return no;
         }
     }
@@ -165,7 +166,7 @@ FuzuliValue *doIfOperation(Expression *expr, Environment *env)
         if (condition->ivalue == 1)
         {
             FuzuliValue *yes = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
-            ffree(condition);
+            FuzuliValueFree(condition);
             return yes;
         }
     }
@@ -189,15 +190,16 @@ FuzuliValue *doWhileOperation(Expression *expr, Environment *env)
         }
         if (result != NULL)
         {
-            ffree(result);
+             FuzuliValueFree(result);
         }
         Expression *subexpr = (Expression *)LinkedListGet(expr->arguments, 1);
         if (strcmp(subexpr->tag, "break"))
         {
+            FuzuliValueFree(condition);
             break;
         }
         result = eval(subexpr, env);
-        ffree(condition);
+        FuzuliValueFree(condition);
     }
     return result;
 }
@@ -260,6 +262,9 @@ FuzuliValue* doNthOperation(Expression *expr, Environment *env){
         ErrorAndTerminate("Index out of bounds", -1);
     }
     FuzuliValue *returnvalue = LinkedListGet(data, (unsigned int)indiceElement->ivalue);
+
+    FuzuliValueFree(listElement);
+    FuzuliValueFree(indiceElement);
     return returnvalue;
 }
 
@@ -270,6 +275,8 @@ FuzuliValue* doAppendOperation(Expression *expr, Environment *env){
     FuzuliValue *newValElement = eval((Expression*)LinkedListGet(expr->arguments, 1), env);
     LinkedList *data = (LinkedList*)listElement->vvalue;
     LinkedListAdd(data, newValElement);
+
+    FuzuliValueFree(listElement);
     return newValElement;
 }
 
@@ -279,6 +286,8 @@ FuzuliValue* doPrependOperation(Expression *expr, Environment *env){
     FuzuliValue *newValElement = eval((Expression*)LinkedListGet(expr->arguments, 1), env);
     LinkedList *data = (LinkedList*)listElement->vvalue;
     LinkedListPrepend(data, newValElement);
+
+    FuzuliValueFree(listElement);
     return newValElement;
 }
 
@@ -288,7 +297,7 @@ FuzuliValue* doMemoryOperation(Expression *expr, Environment *env){
     printf("Total allocated: %u\n", allocated);
     printf("Total freed: %u\n", freed);
     printf("Total hold: %u\n", allocated - freed);
-    return NULL;   
+    return FuzuliValueCreateNull();   
 }
 
 FuzuliValue* doRmOperation(Expression *expr, Environment *env){
@@ -298,7 +307,7 @@ FuzuliValue* doRmOperation(Expression *expr, Environment *env){
     for (unsigned int i = 0; i < len; i++)
     {
         FuzuliValue *val = (FuzuliValue *)LinkedListGet(list, i);
-        if(strcmp(val->tag, variableToDelete->tag) == 0){
+        if((variableToDelete->protected == 0) && strcmp(val->tag, variableToDelete->tag) == 0){
             variableToDelete->links = 0;
             FuzuliValueFree(variableToDelete);
             LinkedListRemove(list, i);
@@ -315,8 +324,10 @@ FuzuliValue* doIsNullOperation(Expression *expr, Environment *env){
     if(variableToDetermine == NULL){
         return FuzuliValueCreateInteger(1);
     }else if(variableToDetermine->type == FTYPE_NULL){
+        FuzuliValueFree(variableToDetermine);
         return FuzuliValueCreateInteger(1);
     }else{
+        FuzuliValueFree(variableToDetermine);
         return FuzuliValueCreateInteger(0);
     }
 }
@@ -333,5 +344,8 @@ FuzuliValue* doRangeOperatorOperation(Expression *expr, Environment *env){
     }
     FuzuliValue *returnValue = FuzuliValueCreateList();
     returnValue->vvalue = newlist;
+
+    FuzuliValueFree(min);
+    FuzuliValueFree(max);
     return returnValue;
 }
