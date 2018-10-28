@@ -69,6 +69,8 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValue *prependFunctionPtr = FuzuliValueCreatePointer((void*)doPrependOperation);
     FuzuliValue *memoryFunctionPtr = FuzuliValueCreatePointer((void*)doMemoryOperation);
     FuzuliValue *rmFunctionPtr = FuzuliValueCreatePointer((void*)doRmOperation);
+    FuzuliValue *isnullFunctionPtr = FuzuliValueCreatePointer((void*)doIsNullOperation);
+    FuzuliValue *rangeFunctionPtr = FuzuliValueCreatePointer((void*)doRangeOperatorOperation);
     
 
     /*
@@ -98,6 +100,8 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValueSetTag(prependFunctionPtr, "prepend");
     FuzuliValueSetTag(memoryFunctionPtr, "memory");
     FuzuliValueSetTag(rmFunctionPtr, "rm");
+    FuzuliValueSetTag(isnullFunctionPtr, "isnull");
+    FuzuliValueSetTag(rangeFunctionPtr, ":");
 
     /*
     * Registering variables and internal functions
@@ -123,5 +127,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     EnvironmentRegisterVariable(env, prependFunctionPtr);
     EnvironmentRegisterVariable(env, memoryFunctionPtr);
     EnvironmentRegisterVariable(env, rmFunctionPtr);
+    EnvironmentRegisterVariable(env, isnullFunctionPtr);
+    EnvironmentRegisterVariable(env, rangeFunctionPtr);
 }
 

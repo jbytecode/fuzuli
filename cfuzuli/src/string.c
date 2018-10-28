@@ -100,5 +100,3 @@ String* StringSubstr(String *s, unsigned int startinclusive, unsigned int stopex
     String* newstr = StringNew(newchars);
     return (newstr);
 }
-
-

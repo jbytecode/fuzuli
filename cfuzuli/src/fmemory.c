@@ -15,6 +15,7 @@ void* fmalloc (unsigned int size){
 void ffree (void *pointer){
     memoryUsageStats.totalFreed += sizeof(pointer);
     free(pointer);
+    pointer = NULL;
 }
 
 unsigned int FuzuliMemoryGetAllocated(){

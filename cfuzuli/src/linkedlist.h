@@ -13,6 +13,8 @@ typedef struct _LinkedListElement{
 
 typedef struct _LinkedList {
     struct _LinkedListElement *first;
+    struct _LinkedListElement *last;
+    unsigned int length;
 } LinkedList;
 
 
@@ -24,5 +26,5 @@ LinkedListElement* LinkedListGetCore(LinkedList *list, unsigned int index);
 void LinkedListAdd(LinkedList *list, void *value);
 void LinkedListPrepend(LinkedList *list, void *value);
 void LinkedListRemove(LinkedList *list, unsigned int index);
-
+void LinkedListFreeWithFuzuliValueType(LinkedList *list);
 #endif

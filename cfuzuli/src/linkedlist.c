@@ -9,6 +9,8 @@
 LinkedList *LinkedListNew() {
     LinkedList *list = (LinkedList*) fmalloc(sizeof (LinkedList));
     list->first = NULL;
+    list->last = NULL;
+    list->length = 0;
     return (list);
 }
 
@@ -20,8 +22,11 @@ void LinkedListAdd(LinkedList *list, void *value) {
         element->value = value;
         element->next = NULL;
         list->first = element;
+        list->last = element;
+        list->length++;
         return;
     }
+    /*
     while (1) {
         parent = element;
         child = parent->next;
@@ -34,6 +39,13 @@ void LinkedListAdd(LinkedList *list, void *value) {
         }
         element = child;
     }
+    */
+    child = (LinkedListElement*) fmalloc(sizeof (LinkedListElement));
+    child->value = value;
+    child->next = NULL;
+    list->length++;
+    list->last->next = child;
+    list->last = child;        
     return;
 }
 
@@ -42,9 +54,12 @@ void LinkedListPrepend(LinkedList *list, void *value){
     newhead->value = value;
     newhead->next = list->first;
     list->first = newhead;
+    list->length++;
 }
 
 unsigned int LinkedListLength(LinkedList *list) {
+    return list->length;
+    /*
     unsigned int size = 0;
     LinkedListElement *element = list->first;
     if (element == NULL) {
@@ -59,6 +74,7 @@ unsigned int LinkedListLength(LinkedList *list) {
         size++;
     }
     return (size);
+    */
 }
 
 void* LinkedListGet(LinkedList *list, unsigned int index) {
@@ -92,14 +108,17 @@ void LinkedListRemove(LinkedList *list, unsigned int index){
     }
     if(len == 1){
         list->first = NULL;
+        list->length--;
     }
     if(index == 0){
         nextElement = LinkedListGetCore(list, index + 1);
         list->first = nextElement;
+        list->length--;
     }
     if(index == (len - 1)){
         previousElement = LinkedListGetCore(list, index - 1);
         previousElement->next = NULL;
+        list->length--;
     }
     if(index > 0 && index < (len - 1)){
         previousElement = LinkedListGetCore(list, index - 1);
@@ -111,6 +130,23 @@ void LinkedListRemove(LinkedList *list, unsigned int index){
         previousElement = LinkedListGetCore(list, index - 1);
         nextElement = LinkedListGetCore(list, index + 1);
         element = LinkedListGetCore(list, index);
-        
+        list->length--;
     }
+}
+
+
+void LinkedListFreeWithFuzuliValueType(LinkedList *list){
+    unsigned int len = LinkedListLength(list);
+    LinkedListElement *element = LinkedListGetCore(list, 0);
+    for (unsigned int i = 0; i < len; i++){
+        FuzuliValue *val = (FuzuliValue*)element->value;
+        if(val != NULL){
+            val->links = 0;
+            FuzuliValueFree(val);
+        }
+        LinkedListElement *oldelelement = element;
+        element = element->next;
+        ffree(oldelelement);
+    }    
+    ffree(list);
 }

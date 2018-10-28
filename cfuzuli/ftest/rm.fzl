@@ -1,0 +1,13 @@
+(let passed "PASSED")
+(let error "ERROR")
+
+(let mylist (list 1 2 3 4 5))
+
+(rm mylist)
+
+(if (isnull mylist)
+	(println passed)
+	(println error)
+)
+
+

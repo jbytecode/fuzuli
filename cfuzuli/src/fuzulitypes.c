@@ -133,7 +133,28 @@ void FuzuliValueFree(FuzuliValue *value)
     if (value->links == 0)
     {
         //printf("*Deleting fvalue\n");
-        ffree(value);
+        if(value->type == FTYPE_DOUBLE 
+            || value->type == FTYPE_INT
+            || value->type == FTYPE_FLOAT
+            || value->type == FTYPE_LONG
+            || value->type == FTYPE_NULL
+            || value->type == FTYPE_UINT){
+                ffree(value);
+            }else if(value->type == FTYPE_POINTER){
+                if(value->vvalue != NULL){
+                    ffree(value->vvalue);
+                }
+                ffree(value);
+            }else if(value->type == FTYPE_STRING){
+                //StringClear(value->svalue);
+                ffree(value);
+            }else if(value->type == FTYPE_LIST){
+                if(value->vvalue != NULL){
+                    LinkedListFreeWithFuzuliValueType((LinkedList*)value->vvalue);
+                }
+            }else{
+                ffree(value);
+            }
     }
     else
     {

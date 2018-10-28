@@ -23,8 +23,7 @@ FuzuliValue *doIdentifierOperation(Expression *expr, Environment *env)
     }
     if (returnvalue->type == FTYPE_NULL)
     {
-        printf("Value is null in %s\n", expr->tag);
-        exit(-1);
+        return returnvalue;
     }
 
     if (returnvalue->type == FTYPE_POINTER)
@@ -127,7 +126,6 @@ FuzuliValue *doLetOperation(Expression *expr, Environment *env)
 
     EnvironmentRegisterVariable(env, newval);
     newval->links++;
-    FuzuliValueFree(val2);
     return (newval);
 }
 
@@ -301,10 +299,39 @@ FuzuliValue* doRmOperation(Expression *expr, Environment *env){
     {
         FuzuliValue *val = (FuzuliValue *)LinkedListGet(list, i);
         if(strcmp(val->tag, variableToDelete->tag) == 0){
-            ffree(variableToDelete);
+            variableToDelete->links = 0;
+            FuzuliValueFree(variableToDelete);
             LinkedListRemove(list, i);
             break;
         }
     }
     return FuzuliValueCreateNull();
+}
+
+FuzuliValue* doIsNullOperation(Expression *expr, Environment *env){
+    LinkedList *list = env->FuzuliValues;
+    unsigned int len = LinkedListLength(list);
+    FuzuliValue *variableToDetermine = eval((Expression*)LinkedListGet(expr->arguments, 0), env);
+    if(variableToDetermine == NULL){
+        return FuzuliValueCreateInteger(1);
+    }else if(variableToDetermine->type == FTYPE_NULL){
+        return FuzuliValueCreateInteger(1);
+    }else{
+        return FuzuliValueCreateInteger(0);
+    }
+}
+
+
+FuzuliValue* doRangeOperatorOperation(Expression *expr, Environment *env){
+    FuzuliValue *min = eval((Expression*)LinkedListGet(expr->arguments, 0), env);
+    FuzuliValue *max = eval((Expression*)LinkedListGet(expr->arguments, 1), env);
+    int imin = min->ivalue;
+    int imax = max->ivalue;
+    LinkedList *newlist = LinkedListNew();
+    for (int i = imin; i <= imax; i++){
+        LinkedListAdd(newlist, FuzuliValueCreateInteger(i));
+    }
+    FuzuliValue *returnValue = FuzuliValueCreateList();
+    returnValue->vvalue = newlist;
+    return returnValue;
 }
