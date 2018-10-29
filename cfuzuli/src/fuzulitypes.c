@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "constants.h"
 #include "fuzulitypes.h"
 #include "ferror.h"
 #include "linkedlist.h"
@@ -223,6 +224,7 @@ unsigned int FuzuliValueEquals(FuzuliValue *val1, FuzuliValue *val2)
 void FuzuliValueListPrint(FuzuliValue *value){
     LinkedList *list = (LinkedList*)value->vvalue;
     unsigned int len = LinkedListLength(list);
+    unsigned int origlen = len;
     printf("[");
     for (unsigned int i = 0; i < len; i++){
         FuzuliValue *val = (FuzuliValue*)LinkedListGet(list, i);
@@ -232,6 +234,10 @@ void FuzuliValueListPrint(FuzuliValue *value){
         }
     }
     printf("]");
+    if(len > MAX_PRINT){
+        printf("\n *List length is larger than MAX_PRINT = %d, output is truncated.\n", MAX_PRINT);
+        len = MAX_PRINT;
+    }
 }
 
 void FuzuliValuePrint(FuzuliValue *value)

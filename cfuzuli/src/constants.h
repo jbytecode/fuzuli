@@ -7,4 +7,6 @@
 #define TRUE 1
 #define FALSE 0
 
+#define MAX_PRINT 1000
+
 #endif
