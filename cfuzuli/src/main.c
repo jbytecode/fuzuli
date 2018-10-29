@@ -27,7 +27,7 @@ void printtokenlist(LinkedList *list)
     }
 }
 
-void runFile(char *filename)
+void runFile(char *filename, int argc, char **argv)
 {
     String *sourcecode;
     sourcecode = sourcecode_load_from_file(filename);
@@ -35,6 +35,7 @@ void runFile(char *filename)
     ParserState *state = ParserStateNew(LinkedListLength(list));
     Environment *env = EnvironmentNew(NULL);
     EnvironmentRegisterGlobals(env);
+    EnvironmentRegisterCommandLineArguments(env, argc, argv);
     FuzuliValue *returnValue;
     while (TRUE)
     {
@@ -102,10 +103,11 @@ void runCommand(char *code, Environment *env){
         ffree(state);
 }
 
-void runRepl()
+void runRepl(int argc, char **argv)
 {
     Environment *env = EnvironmentNew(NULL);
     EnvironmentRegisterGlobals(env);
+    EnvironmentRegisterCommandLineArguments(env, argc, argv);
     char chars[1024];
     while (1)
     {
@@ -131,11 +133,11 @@ int main(int argc, char **argv)
     {
         if (strcmp(argv[1], "--repl") == 0)
         {
-            runRepl();
+            runRepl(argc, argv);
         }
         else
         {
-            runFile(argv[1]);
+            runFile(argv[1], argc, argv);
         }
     }
     return (0);

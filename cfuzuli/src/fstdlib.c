@@ -265,7 +265,7 @@ FuzuliValue* doNthOperation(Expression *expr, Environment *env){
 
     FuzuliValueFree(listElement);
     FuzuliValueFree(indiceElement);
-    return returnvalue;
+    return FuzuliValueDuplicate(returnvalue);
 }
 
 

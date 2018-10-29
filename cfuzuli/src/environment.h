@@ -19,6 +19,7 @@ typedef struct {
 }Environment;
 
 Environment *EnvironmentNew(Environment *parent);
+void EnvironmentRegisterCommandLineArguments(Environment *env, int argc, char **argv);
 int EnvironmentIsGlobal(Environment *env);
 void EnvironmentRegisterVariable(Environment *env, FuzuliValue *value);
 void EnvironmentRegisterGlobals(Environment *env);

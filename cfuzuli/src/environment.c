@@ -12,6 +12,18 @@ Environment *EnvironmentNew(Environment *parent){
     return env;
 }
 
+void EnvironmentRegisterCommandLineArguments(Environment *env, int argc, char **argv){
+    LinkedList *list = LinkedListNew();
+    FuzuliValue *fval = FuzuliValueCreateList();
+    for (unsigned int i = 0; i < argc; i++){
+        FuzuliValue *elem = FuzuliValueCreateString(argv[i]);
+        LinkedListAdd(list, elem);
+    }
+    fval->vvalue = list;
+    FuzuliValueSetTag(fval, "args");
+    EnvironmentRegisterVariable(env, fval);
+}
+
 int EnvironmentIsGlobal(Environment *env){
     if(env->parent == NULL){
         return TRUE;
