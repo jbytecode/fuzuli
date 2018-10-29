@@ -24,6 +24,7 @@ void ErrorAndTerminateExpression(const char *errmessage,  int errorcode, Express
 
 void ErrorAndTerminateAfterTypeCheck(FuzuliValue *val1, FuzuliValue *val2, Expression *expr){
     if(val1->type != val2->type){
+        printf("** Elements are in types of %u and %u\n", val1->type, val2->type);
         ErrorAndTerminateExpression("Variable types are different", -1, expr);
     }
 }

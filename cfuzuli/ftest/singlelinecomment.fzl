@@ -1,0 +1,6 @@
+# This is the single line comment
+# Since these lines are not executed
+# only a single PASSED keyword is 
+# printed for tests.
+(print "PASSED")
+

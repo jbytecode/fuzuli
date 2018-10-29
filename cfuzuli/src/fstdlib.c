@@ -277,7 +277,7 @@ FuzuliValue* doAppendOperation(Expression *expr, Environment *env){
     LinkedListAdd(data, newValElement);
 
     FuzuliValueFree(listElement);
-    return newValElement;
+    return FuzuliValueCreateNull();
 }
 
 FuzuliValue* doPrependOperation(Expression *expr, Environment *env){
@@ -288,7 +288,7 @@ FuzuliValue* doPrependOperation(Expression *expr, Environment *env){
     LinkedListPrepend(data, newValElement);
 
     FuzuliValueFree(listElement);
-    return newValElement;
+    return FuzuliValueCreateNull();
 }
 
 FuzuliValue* doMemoryOperation(Expression *expr, Environment *env){

@@ -104,6 +104,15 @@ Token* LexerGetNextToken(LexerState *state) {
         }
         LexerPutbackChar(state);
         tok = TokenNew(TOKEN_NUMBER_CONSTANT, result->chars);
+    }else if(currentChar == '#'){
+        while(1){
+            if(currentChar == '\n'){
+                break;
+            }
+            state->currentPosition++;
+            currentChar = LexerConsumeChar(state);
+        }
+        return LexerGetNextToken(state);
     }else if (ispunct(currentChar)){
         tok = TokenNewFromChar(TOKEN_IDENTIFIER, currentChar);
     }else if (currentChar == '\0') {

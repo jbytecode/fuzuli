@@ -71,6 +71,7 @@ test:	main test_string test_linkedlist
 	@echo $(shell ./$(OUT_DIR)/stringtest)
 	@echo $(shell ./$(OUT_DIR)/linkedlisttest)
 	@echo "Fuzuli source tests: "
+	@echo "Single line comment: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/singlelinecomment.fzl)
 	@echo "Let test: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/lettest.fzl)
 	@echo "equalints test: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/equalints.fzl)
 	@echo "if1 test: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/if1.fzl)
