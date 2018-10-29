@@ -71,6 +71,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValue *rmFunctionPtr = FuzuliValueCreatePointer((void*)doRmOperation);
     FuzuliValue *isnullFunctionPtr = FuzuliValueCreatePointer((void*)doIsNullOperation);
     FuzuliValue *rangeFunctionPtr = FuzuliValueCreatePointer((void*)doRangeOperatorOperation);
+    FuzuliValue *paramsFunctionPtr = FuzuliValueCreatePointer((void*)doParamsOperation);
     
 
     /*
@@ -102,6 +103,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValueSetTag(rmFunctionPtr, "rm");
     FuzuliValueSetTag(isnullFunctionPtr, "isnull");
     FuzuliValueSetTag(rangeFunctionPtr, ":");
+    FuzuliValueSetTag(paramsFunctionPtr, "params");
 
     /*
     * Registering variables and internal functions
@@ -129,6 +131,8 @@ void EnvironmentRegisterGlobals(Environment *env){
     EnvironmentRegisterVariable(env, rmFunctionPtr);
     EnvironmentRegisterVariable(env, isnullFunctionPtr);
     EnvironmentRegisterVariable(env, rangeFunctionPtr);
+    EnvironmentRegisterVariable(env, paramsFunctionPtr);
+    
 
     LinkedList *list = env->FuzuliValues;
     unsigned int len = LinkedListLength(list);

@@ -349,3 +349,18 @@ FuzuliValue* doRangeOperatorOperation(Expression *expr, Environment *env){
     FuzuliValueFree(max);
     return returnValue;
 }
+
+
+FuzuliValue* doParamsOperation(Expression *expr, Environment *env){
+    LinkedList *list = LinkedListNew();
+    unsigned int numArgs = LinkedListLength(expr->arguments);
+    for (unsigned int i = 0; i < numArgs; i++){
+        Expression *arg = (Expression*)LinkedListGet(expr->arguments, i);
+        printf("Extract: %s\n", arg->tag);
+        FuzuliValue *fval = FuzuliValueCreateString(arg->tag);
+        LinkedListAdd(list, fval);
+    }
+    FuzuliValue *returnVal = FuzuliValueCreateList();
+    returnVal->vvalue = list;
+    return returnVal;
+}
