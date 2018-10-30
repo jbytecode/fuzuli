@@ -23,6 +23,10 @@ $(OUT_DIR)/fstdlib.o:	src/fstdlib.c
 $(OUT_DIR)/fstdarithmatic.o:	src/fstdarithmatic.c
 	$(CC) $(FLAGS) -c -o $(OUT_DIR)/fstdarithmatic.o src/fstdarithmatic.c
 
+$(OUT_DIR)/fstdstring.o:	src/fstdstring.c
+	$(CC) $(FLAGS) -c -o $(OUT_DIR)/fstdstring.o src/fstdstring.c
+
+
 $(OUT_DIR)/environment.o:	src/environment.c
 	$(CC) $(FLAGS) -c -o $(OUT_DIR)/environment.o src/environment.c
 
@@ -60,13 +64,13 @@ $(OUT_DIR)/libfuzuli.so:	$(OUT_DIR)/fstdlib.o $(OUT_DIR)/string.o $(OUT_DIR)/lin
 	$(OUT_DIR)/stringexpression.o $(OUT_DIR)/eval.o\
 	$(OUT_DIR)/fuzulitypes.o $(OUT_DIR)/sourcecode.o $(OUT_DIR)/lexer.o $(OUT_DIR)/token.o\
 	$(OUT_DIR)/parser.o $(OUT_DIR)/expression.o $(OUT_DIR)/environment.o $(OUT_DIR)/ferror.o\
-	$(OUT_DIR)/fmemory.o $(OUT_DIR)/fstdarithmatic.o
+	$(OUT_DIR)/fmemory.o $(OUT_DIR)/fstdarithmatic.o $(OUT_DIR)/fstdstring.o
 	
 	$(CC) -shared -o $(OUT_DIR)/libfuzuli.so $(OUT_DIR)/string.o $(OUT_DIR)/linkedlist.o \
 	$(OUT_DIR)/eval.o $(OUT_DIR)/stringexpression.o $(OUT_DIR)/fuzulitypes.o \
 	$(OUT_DIR)/sourcecode.o $(OUT_DIR)/lexer.o $(OUT_DIR)/token.o $(OUT_DIR)/parser.o \
 	$(OUT_DIR)/expression.o $(OUT_DIR)/fstdlib.o $(OUT_DIR)/environment.o \
-	$(OUT_DIR)/ferror.o $(OUT_DIR)/fmemory.o $(OUT_DIR)/fstdarithmatic.o
+	$(OUT_DIR)/ferror.o $(OUT_DIR)/fmemory.o $(OUT_DIR)/fstdarithmatic.o $(OUT_DIR)/fstdstring.o
  
 main:	$(OUT_DIR)/libfuzuli.so	
 	$(CC) -o $(OUT_DIR)/fuzuli src/main.c $(OUT_DIR)/libfuzuli.so

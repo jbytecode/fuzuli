@@ -12,6 +12,7 @@ extern "C" {
 
 // Other standart library files
 #include "fstdaritmatic.h"
+#include "fstdstring.h"
 
 
 /*

@@ -5,6 +5,7 @@
 #include "environment.h"
 #include "fstdlib.h"
 #include "fstdaritmatic.h"
+#include "fstdstring.h"
 #include "fmemory.h"
 
 Environment *EnvironmentNew(Environment *parent){
@@ -89,7 +90,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValue *rangeFunctionPtr = FuzuliValueCreatePointer((void*)doRangeOperatorOperation);
     FuzuliValue *paramsFunctionPtr = FuzuliValueCreatePointer((void*)doParamsOperation);
     FuzuliValue *incFunctionPtr = FuzuliValueCreatePointer((void*)doIncOperation);
-    
+    FuzuliValue *strcmpFunctionPtr = FuzuliValueCreatePointer((void*)doStrcmpOperation);
 
     /*
     * Setting variable names
@@ -124,6 +125,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValueSetTag(rangeFunctionPtr, ":");
     FuzuliValueSetTag(paramsFunctionPtr, "params");
     FuzuliValueSetTag(incFunctionPtr, "inc");
+    FuzuliValueSetTag(strcmpFunctionPtr, "strcmp");
 
     /*
     * Registering variables and internal functions
@@ -155,6 +157,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     EnvironmentRegisterVariable(env, rangeFunctionPtr);
     EnvironmentRegisterVariable(env, paramsFunctionPtr);
     EnvironmentRegisterVariable(env, incFunctionPtr);
+    EnvironmentRegisterVariable(env, strcmpFunctionPtr);
     
 
     LinkedList *list = env->FuzuliValues;
