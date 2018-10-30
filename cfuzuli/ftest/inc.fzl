@@ -1,0 +1,30 @@
+(let passed "PASSED")
+(let error "ERROR")
+
+
+(let a 1)
+
+(let a (+ a 1))
+
+
+(let a (+ a 1))
+
+
+(let a (+ a 1))
+
+
+(let a (+ a 1))
+(let a (+ a 1))
+(let a (+ a 1))
+
+
+
+(if (= a 7) 
+	(print passed)
+	(print error)
+)
+
+
+
+
+

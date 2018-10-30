@@ -18,7 +18,7 @@ FuzuliValue *doIdentifierOperation(Expression *expr, Environment *env)
         FuzuliValue *val = (FuzuliValue *)LinkedListGet(alls, i);
         if (strcmp(val->tag, expr->tag) == 0)
         {
-            returnvalue = val;
+            returnvalue = FuzuliValueDuplicate(val);
         }
     }
     if (returnvalue->type == FTYPE_NULL)
@@ -52,7 +52,7 @@ FuzuliValue *doNumericConstantOperation(Expression *expr, Environment *env)
     {
         int i = atoi(expr->tag);
         val = FuzuliValueCreateInteger(i);
-    }
+    }    
     return val;
 }
 
@@ -61,7 +61,7 @@ FuzuliValue *doPlusOperation(Expression *expr, Environment *env)
     FuzuliValue *val1 = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
     FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
     ErrorAndTerminateAfterTypeCheck(val1, val2, expr);
-    FuzuliValue *result = FuzuliValueCreateDouble(val1->dvalue + val2->dvalue);
+    FuzuliValue *result = FuzuliValueSumNumeric(val1, val2);
     FuzuliValueFree(val1);
     FuzuliValueFree(val2);
     return result;
@@ -87,7 +87,6 @@ FuzuliValue *doPrintOperation(Expression *expr, Environment *env)
         Expression *exprsub = (Expression *)LinkedListGet(expr->arguments, i);
         value = eval(exprsub, env);
         FuzuliValuePrint(value);
-        FuzuliValueFree(value);
     }
     return FuzuliValueCreateNull();
 }
@@ -109,7 +108,6 @@ FuzuliValue *doDumpOperation(Expression *expr, Environment *env)
         printf("%s: ", val->tag);
         FuzuliValuePrint(val);
         printf("\t");
-        FuzuliValueFree(val);
         // There is no evaluation operation. Not freed.
     }
     printf("\n");
@@ -124,9 +122,8 @@ FuzuliValue *doLetOperation(Expression *expr, Environment *env)
 
     newval->tag = (char *)fmalloc(strlen(ident->tag));
     strcpy(newval->tag, ident->tag);
-
     EnvironmentRegisterVariable(env, newval);
-    newval->links++;
+    newval->links = 1;
     return (newval);
 }
 
@@ -174,7 +171,7 @@ FuzuliValue *doIfOperation(Expression *expr, Environment *env)
     {
         ErrorAndTerminateExpression("If expression must have 1 or 2 arguments", -1, expr);
     }
-    return result;
+    return FuzuliValueCreateNull();
 }
 
 FuzuliValue *doWhileOperation(Expression *expr, Environment *env)

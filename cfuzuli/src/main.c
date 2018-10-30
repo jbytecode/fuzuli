@@ -55,9 +55,9 @@ void runFile(char *filename, int argc, char **argv)
         {
             //ExpressionPrint(expr, 0);
             returnValue = eval(expr, env);
-            if(returnValue != NULL && returnValue->links == 0 && returnValue->protected == 0){
-                FuzuliValueFree(returnValue);
-            }
+            //if(returnValue != NULL && returnValue->links == 0 && returnValue->protected == 0){
+            //    FuzuliValueFree(returnValue);
+            //}
         }
     }
     //FuzuliValuePrint(returnValue);
@@ -89,11 +89,13 @@ void runCommand(char *code, Environment *env){
                 if(returnValue != NULL && returnValue->type != FTYPE_NULL){
                     FuzuliValuePrint(returnValue);
                 }
+                /*
                 printf("\n* return value is %s in type %d with links %d\n", returnValue->tag, 
                     returnValue->type, returnValue->links);
                 printf("Memory alloced: %d freed: %d holding: %d\n", 
                         FuzuliMemoryGetAllocated(), FuzuliMemoryGetFreed(),
                         FuzuliMemoryGetAllocated() - FuzuliMemoryGetFreed());
+                        */
                 if(returnValue->links >0){
                     FuzuliValueFree(returnValue);
                     ffree(expr->tag);

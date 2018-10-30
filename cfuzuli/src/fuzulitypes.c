@@ -95,7 +95,8 @@ FuzuliValue *FuzuliValueCreateFloat(float f)
     return (value);
 }
 
-FuzuliValue* FuzuliValueCreateList(){
+FuzuliValue *FuzuliValueCreateList()
+{
     FuzuliValue *value = (FuzuliValue *)fmalloc(sizeof(FuzuliValue));
     value->type = FTYPE_LIST;
     value->tag = NULL;
@@ -105,6 +106,10 @@ FuzuliValue* FuzuliValueCreateList(){
 
 void FuzuliValueSetTag(FuzuliValue *val, char *tag)
 {
+    if(!tag){
+        val->tag = NULL;
+        return;
+    }
     val->tag = (char *)fmalloc(strlen(tag));
     strcpy(val->tag, tag);
     if (tag != NULL)
@@ -133,51 +138,85 @@ void FuzuliValueCopyContent(FuzuliValue *destination, FuzuliValue *source)
 FuzuliValue *FuzuliValueDuplicate(FuzuliValue *value)
 {
     FuzuliValue *newf = FuzuliValueCreateNull();
-    newf->dvalue = value->dvalue;
-    newf->svalue = value->svalue;
+    switch(value->type){
+        case FTYPE_DOUBLE: 
+            newf->dvalue = value->dvalue;
+            break;
+        case FTYPE_FLOAT:
+            newf->fvalue = value->fvalue;
+            break;
+        case FTYPE_INT: 
+            newf->ivalue = value->ivalue;
+            break;
+        case FTYPE_LONG: 
+            newf->lvalue = value->lvalue;
+            break;
+        case FTYPE_POINTER: 
+            newf->vvalue = value->vvalue;
+            break;
+        case FTYPE_STRING:
+            newf->svalue = value->svalue;
+            break;
+        case FTYPE_LIST: 
+            newf->vvalue = value->vvalue;
+            break;
+        case FTYPE_UINT:
+            newf->uvalue = value->uvalue;
+            break;
+        case FTYPE_NULL:
+            FuzuliValueSetTag(newf, value->tag);
+            break;
+    }
     newf->type = value->type;
-    newf->protected = value->protected;
+    newf->links = value->links;
+    newf->protected = 0;
+    FuzuliValueSetTag(newf, value->tag);
     return (newf);
 }
 
 void FuzuliValueFree(FuzuliValue *value)
 {
-    if(value == NULL){
-        return;
-    }
-    if(value->protected != 0){
-        return;
-    }
-    if (value->links == 0)
+    if (value == NULL)
     {
-        //printf("*Deleting fvalue\n");
-        if(value->type == FTYPE_DOUBLE 
-            || value->type == FTYPE_INT
-            || value->type == FTYPE_FLOAT
-            || value->type == FTYPE_LONG
-            || value->type == FTYPE_NULL
-            || value->type == FTYPE_UINT){
-                ffree(value);
-            }else if(value->type == FTYPE_POINTER){
-                if(value->vvalue != NULL){
-                    ffree(value->vvalue);
-                }
-                ffree(value);
-            }else if(value->type == FTYPE_STRING){
-                //printf("*** freeing %s\n", value->svalue->chars);
-                StringClear(value->svalue);
-                ffree(value);
-            }else if(value->type == FTYPE_LIST){
-                if(value->vvalue != NULL){
-                    LinkedListFreeWithFuzuliValueType((LinkedList*)value->vvalue);
-                }
-            }else{
-                ffree(value);
-            }
+        return;
+    }
+    if (value->protected != 0)
+    {
+        return;
+    }
+    if (value->links != 0)
+    {
+        return;
+    }
+    //printf("*Deleting fvalue\n");
+    if (value->type == FTYPE_DOUBLE || value->type == FTYPE_INT || value->type == FTYPE_FLOAT || value->type == FTYPE_LONG || value->type == FTYPE_NULL || value->type == FTYPE_UINT)
+    {
+        ffree(value);
+    }
+    else if (value->type == FTYPE_POINTER)
+    {
+        if (value->vvalue != NULL)
+        {
+            ffree(value->vvalue);
+        }
+        ffree(value);
+    }
+    else if (value->type == FTYPE_STRING)
+    {
+        //printf("*** freeing %s\n", value->svalue->chars);
+        StringClear(value->svalue);
+        ffree(value);
+    }
+    else if (value->type == FTYPE_LIST)
+    {
+        if (value->vvalue != NULL)
+        {
+            LinkedListFreeWithFuzuliValueType((LinkedList *)value->vvalue);
+        }
     }
     else
     {
-        //printf("*will not delete linked value");
+        ffree(value);
     }
 }
 
@@ -208,10 +247,10 @@ unsigned int FuzuliValueEquals(FuzuliValue *val1, FuzuliValue *val2)
         return (val1->vvalue == val2->vvalue);
         break;
     case FTYPE_STRING:
-        return(StringEquals(val1->svalue, val2->svalue));
+        return (StringEquals(val1->svalue, val2->svalue));
         break;
     case FTYPE_UINT:
-        return(val1->uvalue == val2->uvalue);
+        return (val1->uvalue == val2->uvalue);
         break;
     default:
         ErrorAndTerminate("Variable type not found in equality check", -1);
@@ -219,22 +258,24 @@ unsigned int FuzuliValueEquals(FuzuliValue *val1, FuzuliValue *val2)
     }
 }
 
-
-
-void FuzuliValueListPrint(FuzuliValue *value){
-    LinkedList *list = (LinkedList*)value->vvalue;
+void FuzuliValueListPrint(FuzuliValue *value)
+{
+    LinkedList *list = (LinkedList *)value->vvalue;
     unsigned int len = LinkedListLength(list);
     unsigned int origlen = len;
     printf("[");
-    for (unsigned int i = 0; i < len; i++){
-        FuzuliValue *val = (FuzuliValue*)LinkedListGet(list, i);
+    for (unsigned int i = 0; i < len; i++)
+    {
+        FuzuliValue *val = (FuzuliValue *)LinkedListGet(list, i);
         FuzuliValuePrint(val);
-        if(i < len - 1){
+        if (i < len - 1)
+        {
             printf(", ");
         }
     }
     printf("]");
-    if(len > MAX_PRINT){
+    if (len > MAX_PRINT)
+    {
         printf("\n *List length is larger than MAX_PRINT = %d, output is truncated.\n", MAX_PRINT);
         len = MAX_PRINT;
     }
@@ -269,7 +310,7 @@ void FuzuliValuePrint(FuzuliValue *value)
         printf("NULL");
         break;
     case FTYPE_LIST:
-       FuzuliValueListPrint(value);
+        FuzuliValueListPrint(value);
         break;
     default:
         printf("FuzulivaluePrint: type '%u' not found in evaluator.\n", value->type);
@@ -278,4 +319,35 @@ void FuzuliValuePrint(FuzuliValue *value)
             printf("Tagges as: %s\n", value->tag);
         }
     }
+}
+
+FuzuliValue *FuzuliValueSumNumeric(FuzuliValue *val1, FuzuliValue *val2)
+{
+    switch (val1->type)
+    {
+    case FTYPE_DOUBLE:
+        return FuzuliValueCreateDouble(val1->dvalue + val2->dvalue);
+        break;
+    case FTYPE_FLOAT:
+        return FuzuliValueCreateFloat(val1->fvalue + val2->fvalue);
+        break;
+    case FTYPE_INT:
+        return FuzuliValueCreateInteger(val1->ivalue + val2->ivalue);
+        break;
+    case FTYPE_LONG:
+        return FuzuliValueCreateLong(val1->lvalue + val2->lvalue);
+        break;
+    case FTYPE_UINT:
+        return FuzuliValueCreateUnsignedInteger(val1->uvalue + val2->uvalue);
+        break;
+    default:
+        printf("In FuzuliValueSumNumeric, values \n");
+        FuzuliValuePrint(val1);
+        printf("\nand\n");
+        FuzuliValuePrint(val2);
+        printf("have different types.\n");
+        ErrorAndTerminate("Type differences.", -1);
+        break;
+    }
+    return FuzuliValueCreateNull();
 }
