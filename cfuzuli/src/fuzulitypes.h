@@ -50,6 +50,7 @@ FuzuliValue* FuzuliValueCreateNull();
 FuzuliValue* FuzuliValueCreateList();
 FuzuliValue* FuzuliValueDuplicate(FuzuliValue *value);
 FuzuliValue* FuzuliValueSumNumeric(FuzuliValue *val1, FuzuliValue *val2);
+void FuzuliValueIncNumeric(FuzuliValue *value);
 double FuzuliValueGetNumericValue(FuzuliValue *val1);
 void FuzuliValuePrint(FuzuliValue *value);
 void FuzuliValueListPrint(FuzuliValue *value);

@@ -108,7 +108,7 @@ void LinkedListRemove(LinkedList *list, unsigned int index){
     }
     if(len == 1){
         list->first = NULL;
-        list->length--;
+        list->length = 0;
     }
     if(index == 0){
         nextElement = LinkedListGetCore(list, index + 1);
@@ -119,6 +119,7 @@ void LinkedListRemove(LinkedList *list, unsigned int index){
         previousElement = LinkedListGetCore(list, index - 1);
         previousElement->next = NULL;
         list->length--;
+        list->last = previousElement;
     }
     if(index > 0 && index < (len - 1)){
         previousElement = LinkedListGetCore(list, index - 1);

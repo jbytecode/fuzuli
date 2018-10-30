@@ -78,6 +78,25 @@ void linkedlist_remove_double_test1(){
 	printf("%s\n",passed);
 }
 
+void linkedlist_remove_add_again1(){
+	LinkedList *list = LinkedListNew();
+	LinkedListAdd(list, FuzuliValueCreateDouble(10.0));
+	LinkedListAdd(list, FuzuliValueCreateDouble(20.0));
+	LinkedListAdd(list, FuzuliValueCreateDouble(30.0));
+	LinkedListAdd(list, FuzuliValueCreateDouble(40.0));
+	LinkedListAdd(list, FuzuliValueCreateDouble(50.0));
+	LinkedListAdd(list, FuzuliValueCreateDouble(60.0));
+	LinkedListAdd(list, FuzuliValueCreateDouble(70.0));	
+	
+	LinkedListRemove(list, 6);
+	
+	LinkedListAdd(list, FuzuliValueCreateDouble(100.0));
+	FuzuliValue *val = LinkedListGet(list, 6);
+	assert (val->dvalue == 100.0);
+
+	printf("%s\n",passed);
+}
+
 
 int main(int argc, char **argv){
 	puts("LinkedList test: ");
@@ -87,6 +106,7 @@ int main(int argc, char **argv){
 	linkedlist_get_double_test1();	
 	linkedlist_prepend_double_test1();
 	linkedlist_remove_double_test1();
+	linkedlist_remove_add_again1();
 	return 0;
 }
 

@@ -120,11 +120,14 @@ FuzuliValue *doLetOperation(Expression *expr, Environment *env)
     FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
     FuzuliValue *newval = FuzuliValueDuplicate(val2);
 
+    
     newval->tag = (char *)fmalloc(strlen(ident->tag));
     strcpy(newval->tag, ident->tag);
+
     EnvironmentRegisterVariable(env, newval);
+
     newval->links = 1;
-    return (newval);
+    return FuzuliValueCreateNull();
 }
 
 FuzuliValue *doEqualsOperation(Expression *expr, Environment *env)
@@ -360,4 +363,13 @@ FuzuliValue* doParamsOperation(Expression *expr, Environment *env){
     FuzuliValue *returnVal = FuzuliValueCreateList();
     returnVal->vvalue = list;
     return returnVal;
+}
+
+FuzuliValue* doIncOperation(Expression *expr, Environment *env){
+    FuzuliValue *arg = (FuzuliValue*)eval(LinkedListGet(expr->arguments, 0), env);
+    Expression *subexpr = (Expression*)LinkedListGet(expr->arguments, 0);
+    FuzuliValueIncNumeric(arg);
+    FuzuliValueSetTag(arg, subexpr->tag);
+    EnvironmentRegisterVariable(env, arg);
+    return arg;
 }

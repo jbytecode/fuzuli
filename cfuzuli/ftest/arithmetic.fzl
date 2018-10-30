@@ -1,0 +1,32 @@
+(let passed "PASSED")
+(let error "ERROR")
+
+# test 1 - sum
+(if (= (+ 10 20) 30)
+	(println passed)
+	(println error)
+)
+
+# test 2 - sub
+(if (= (- 100 90) 10)
+	(println passed)
+	(println error)
+)
+
+# test 3 - prod
+(if (= (* 100 90) 9000)
+	(println passed)
+	(println error)
+)
+
+# test 4 - divide
+(let result (+ 100.0 50.0))
+(println "result: ")
+(print result)
+(println "result written")
+(if (= (/ 100.0 50.0) 2.0)
+	(println passed)
+	(println error)
+)
+
+

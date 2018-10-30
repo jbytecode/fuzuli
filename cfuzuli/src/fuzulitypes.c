@@ -11,7 +11,7 @@ FuzuliValue *FuzuliValueCreateNull()
 {
     FuzuliValue *value = (FuzuliValue *)fmalloc(sizeof(FuzuliValue));
     value->type = FTYPE_NULL;
-    value->svalue = StringNew("NULL");
+    //value->svalue = StringNew("NULL");
     value->links = 0;
     value->tag = NULL;
     value->protected = 0;
@@ -170,6 +170,7 @@ FuzuliValue *FuzuliValueDuplicate(FuzuliValue *value)
     newf->type = value->type;
     newf->links = value->links;
     newf->protected = 0;
+    //newf->tag = NULL;
     FuzuliValueSetTag(newf, value->tag);
     return (newf);
 }
@@ -314,6 +315,34 @@ void FuzuliValuePrint(FuzuliValue *value)
         break;
     default:
         printf("FuzulivaluePrint: type '%u' not found in evaluator.\n", value->type);
+        if (value->tag != NULL)
+        {
+            printf("Tagges as: %s\n", value->tag);
+        }
+    }
+}
+
+
+void FuzuliValueIncNumeric(FuzuliValue *value){
+    switch (value->type)
+    {
+    case FTYPE_DOUBLE:
+       value->dvalue++;
+        break;
+    case FTYPE_FLOAT:
+        value->fvalue++;
+        break;
+    case FTYPE_INT:
+        value->ivalue++;
+        break;
+    case FTYPE_UINT:
+        value->uvalue++;
+        break;
+    case FTYPE_LONG:
+        value->lvalue++;
+        break;
+    default:
+        printf("FuzuliValueInc: type '%u' is not numeric.\n", value->type);
         if (value->tag != NULL)
         {
             printf("Tagges as: %s\n", value->tag);

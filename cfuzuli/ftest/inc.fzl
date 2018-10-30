@@ -20,11 +20,18 @@
 
 
 (if (= a 7) 
-	(print passed)
-	(print error)
+	(println passed)
+	(println error)
 )
 
 
+(inc a)
+(inc a)
+(inc a)
 
 
 
+(if (= a 10) 
+	(println passed)
+	(println error)
+)
