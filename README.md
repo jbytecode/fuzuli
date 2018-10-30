@@ -11,7 +11,8 @@ Since it is not a real Lisp clone, the syntax is highly barrowed from Lisp:
 (print "Hello world!")
 ```
 
-* The current implementation is running on the Java Virtual Machine (JVM)
+* The current implementation is running on the Java Virtual Machine (JVM) 
+(Edit: cfuzuli, a C implementation is in progress)
 
 ```bash
 $ java -jar dist/JFuzuli.jar 
