@@ -66,10 +66,11 @@ $(OUT_DIR)/libfuzuli.so:	$(OUT_DIR)/fstdlib.o $(OUT_DIR)/string.o $(OUT_DIR)/lin
 main:	$(OUT_DIR)/libfuzuli.so	
 	$(CC) -o $(OUT_DIR)/fuzuli src/main.c $(OUT_DIR)/libfuzuli.so
 
-test:	main test_string test_linkedlist
+test:	main test_string test_linkedlist test_fuzulitypes
 	@echo "Performing tests..."
 	@echo $(shell ./$(OUT_DIR)/stringtest)
 	@echo $(shell ./$(OUT_DIR)/linkedlisttest)
+	@echo $(shell ./$(OUT_DIR)/fuzulitypestest)
 	@echo "Fuzuli source tests: "
 	@echo "Single line comment: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/singlelinecomment.fzl)
 	@echo "Let test: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/lettest.fzl)
@@ -84,6 +85,10 @@ test:	main test_string test_linkedlist
 
 test_string:	main
 	$(CC) -o $(OUT_DIR)/stringtest test/stringtest.c $(OUT_DIR)/libfuzuli.so
+
+test_fuzulitypes:	main
+	$(CC) -o $(OUT_DIR)/fuzulitypestest test/fuzulitypestest.c $(OUT_DIR)/libfuzuli.so
+
 
 test_linkedlist:	main
 	$(CC) -o $(OUT_DIR)/linkedlisttest test/linkedlisttest.c $(OUT_DIR)/libfuzuli.so

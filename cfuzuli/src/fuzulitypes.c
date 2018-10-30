@@ -351,3 +351,32 @@ FuzuliValue *FuzuliValueSumNumeric(FuzuliValue *val1, FuzuliValue *val2)
     }
     return FuzuliValueCreateNull();
 }
+
+
+double FuzuliValueGetNumericValue(FuzuliValue *val){
+    switch (val->type)
+    {
+    case FTYPE_DOUBLE:
+        return val->dvalue;
+        break;
+    case FTYPE_FLOAT:
+        return (double)val->fvalue;
+        break;
+    case FTYPE_INT:
+        return (double)val->ivalue;
+        break;
+    case FTYPE_LONG:
+        return (double)val->lvalue;
+        break;
+    case FTYPE_UINT:
+        return (double)val->uvalue;
+        break;
+    default:
+        printf("In FuzuliValueGetNumericValue,  \n");
+        FuzuliValuePrint(val);
+        printf("cannot convert to double.\n");
+        ErrorAndTerminate("Type is not proper.", -1);
+        break;
+    }
+    return -1;
+}
