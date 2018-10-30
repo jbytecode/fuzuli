@@ -10,6 +10,10 @@ extern "C" {
 #include "expression.h"
 #include "environment.h"
 
+// Other standart library files
+#include "fstdaritmatic.h"
+
+
 /*
 General function pointer template
 for evaluators
@@ -19,13 +23,10 @@ typedef FuzuliValue* (*InternalFunctionPointer)(Expression *expr, Environment *e
 FuzuliValue* doNumericConstantOperation(Expression *expr, Environment *env);
 FuzuliValue* doIdentifierOperation(Expression *expr, Environment *env);
 FuzuliValue* doStringConstantOperation(Expression *expr, Environment *env);
-FuzuliValue* doPlusOperation(Expression *expr, Environment *env);
-FuzuliValue* doProductOperation(Expression *expr, Environment *env);
 FuzuliValue* doPrintOperation(Expression *expr, Environment *env);
 FuzuliValue *doPrintlnOperation(Expression *expr, Environment *env);
 FuzuliValue* doDumpOperation(Expression *expr, Environment *env);
 FuzuliValue* doLetOperation(Expression *expr, Environment *env);
-FuzuliValue* doEqualsOperation(Expression *expr, Environment *env);
 FuzuliValue* doIfOperation(Expression *expr, Environment *env);
 FuzuliValue* doWhileOperation(Expression *expr, Environment *env);
 FuzuliValue* doTypeofOperation(Expression *expr, Environment *env);

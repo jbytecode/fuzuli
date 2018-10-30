@@ -106,7 +106,8 @@ FuzuliValue *FuzuliValueCreateList()
 
 void FuzuliValueSetTag(FuzuliValue *val, char *tag)
 {
-    if(!tag){
+    if (!tag)
+    {
         val->tag = NULL;
         return;
     }
@@ -138,34 +139,35 @@ void FuzuliValueCopyContent(FuzuliValue *destination, FuzuliValue *source)
 FuzuliValue *FuzuliValueDuplicate(FuzuliValue *value)
 {
     FuzuliValue *newf = FuzuliValueCreateNull();
-    switch(value->type){
-        case FTYPE_DOUBLE: 
-            newf->dvalue = value->dvalue;
-            break;
-        case FTYPE_FLOAT:
-            newf->fvalue = value->fvalue;
-            break;
-        case FTYPE_INT: 
-            newf->ivalue = value->ivalue;
-            break;
-        case FTYPE_LONG: 
-            newf->lvalue = value->lvalue;
-            break;
-        case FTYPE_POINTER: 
-            newf->vvalue = value->vvalue;
-            break;
-        case FTYPE_STRING:
-            newf->svalue = value->svalue;
-            break;
-        case FTYPE_LIST: 
-            newf->vvalue = value->vvalue;
-            break;
-        case FTYPE_UINT:
-            newf->uvalue = value->uvalue;
-            break;
-        case FTYPE_NULL:
-            FuzuliValueSetTag(newf, value->tag);
-            break;
+    switch (value->type)
+    {
+    case FTYPE_DOUBLE:
+        newf->dvalue = value->dvalue;
+        break;
+    case FTYPE_FLOAT:
+        newf->fvalue = value->fvalue;
+        break;
+    case FTYPE_INT:
+        newf->ivalue = value->ivalue;
+        break;
+    case FTYPE_LONG:
+        newf->lvalue = value->lvalue;
+        break;
+    case FTYPE_POINTER:
+        newf->vvalue = value->vvalue;
+        break;
+    case FTYPE_STRING:
+        newf->svalue = value->svalue;
+        break;
+    case FTYPE_LIST:
+        newf->vvalue = value->vvalue;
+        break;
+    case FTYPE_UINT:
+        newf->uvalue = value->uvalue;
+        break;
+    case FTYPE_NULL:
+        FuzuliValueSetTag(newf, value->tag);
+        break;
     }
     newf->type = value->type;
     newf->links = value->links;
@@ -322,12 +324,12 @@ void FuzuliValuePrint(FuzuliValue *value)
     }
 }
 
-
-void FuzuliValueIncNumeric(FuzuliValue *value){
+void FuzuliValueIncNumeric(FuzuliValue *value)
+{
     switch (value->type)
     {
     case FTYPE_DOUBLE:
-       value->dvalue++;
+        value->dvalue++;
         break;
     case FTYPE_FLOAT:
         value->fvalue++;
@@ -381,8 +383,101 @@ FuzuliValue *FuzuliValueSumNumeric(FuzuliValue *val1, FuzuliValue *val2)
     return FuzuliValueCreateNull();
 }
 
+FuzuliValue *FuzuliValueProdNumeric(FuzuliValue *val1, FuzuliValue *val2)
+{
+    switch (val1->type)
+    {
+    case FTYPE_DOUBLE:
+        return FuzuliValueCreateDouble(val1->dvalue * val2->dvalue);
+        break;
+    case FTYPE_FLOAT:
+        return FuzuliValueCreateFloat(val1->fvalue * val2->fvalue);
+        break;
+    case FTYPE_INT:
+        return FuzuliValueCreateInteger(val1->ivalue * val2->ivalue);
+        break;
+    case FTYPE_LONG:
+        return FuzuliValueCreateLong(val1->lvalue * val2->lvalue);
+        break;
+    case FTYPE_UINT:
+        return FuzuliValueCreateUnsignedInteger(val1->uvalue * val2->uvalue);
+        break;
+    default:
+        printf("In FuzuliValueProdNumeric, values \n");
+        FuzuliValuePrint(val1);
+        printf("\nand\n");
+        FuzuliValuePrint(val2);
+        printf("have different types.\n");
+        ErrorAndTerminate("Type differences.", -1);
+        break;
+    }
+    return FuzuliValueCreateNull();
+}
 
-double FuzuliValueGetNumericValue(FuzuliValue *val){
+FuzuliValue *FuzuliValueDivideNumeric(FuzuliValue *val1, FuzuliValue *val2)
+{
+    switch (val1->type)
+    {
+    case FTYPE_DOUBLE:
+        return FuzuliValueCreateDouble(val1->dvalue / val2->dvalue);
+        break;
+    case FTYPE_FLOAT:
+        return FuzuliValueCreateFloat(val1->fvalue / val2->fvalue);
+        break;
+    case FTYPE_INT:
+        return FuzuliValueCreateInteger(val1->ivalue / val2->ivalue);
+        break;
+    case FTYPE_LONG:
+        return FuzuliValueCreateLong(val1->lvalue / val2->lvalue);
+        break;
+    case FTYPE_UINT:
+        return FuzuliValueCreateUnsignedInteger(val1->uvalue / val2->uvalue);
+        break;
+    default:
+        printf("In FuzuliValueDivideNumeric, values \n");
+        FuzuliValuePrint(val1);
+        printf("\nand\n");
+        FuzuliValuePrint(val2);
+        printf("have different types.\n");
+        ErrorAndTerminate("Type differences.", -1);
+        break;
+    }
+    return FuzuliValueCreateNull();
+}
+
+FuzuliValue *FuzuliValueSubtractNumeric(FuzuliValue *val1, FuzuliValue *val2)
+{
+    switch (val1->type)
+    {
+    case FTYPE_DOUBLE:
+        return FuzuliValueCreateDouble(val1->dvalue - val2->dvalue);
+        break;
+    case FTYPE_FLOAT:
+        return FuzuliValueCreateFloat(val1->fvalue - val2->fvalue);
+        break;
+    case FTYPE_INT:
+        return FuzuliValueCreateInteger(val1->ivalue - val2->ivalue);
+        break;
+    case FTYPE_LONG:
+        return FuzuliValueCreateLong(val1->lvalue - val2->lvalue);
+        break;
+    case FTYPE_UINT:
+        return FuzuliValueCreateUnsignedInteger(val1->uvalue - val2->uvalue);
+        break;
+    default:
+        printf("In FuzuliValueSubtractNumeric, values \n");
+        FuzuliValuePrint(val1);
+        printf("\nand\n");
+        FuzuliValuePrint(val2);
+        printf("have different types.\n");
+        ErrorAndTerminate("Type differences.", -1);
+        break;
+    }
+    return FuzuliValueCreateNull();
+}
+
+double FuzuliValueGetNumericValue(FuzuliValue *val)
+{
     switch (val->type)
     {
     case FTYPE_DOUBLE:

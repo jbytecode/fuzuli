@@ -4,6 +4,7 @@
 #include "constants.h"
 #include "environment.h"
 #include "fstdlib.h"
+#include "fstdaritmatic.h"
 #include "fmemory.h"
 
 Environment *EnvironmentNew(Environment *parent){
@@ -67,6 +68,8 @@ void EnvironmentRegisterGlobals(Environment *env){
     */
     FuzuliValue *productFunctionPtr = FuzuliValueCreatePointer((void *)doProductOperation);
     FuzuliValue *plusFunctionPtr = FuzuliValueCreatePointer((void*)doPlusOperation);
+    FuzuliValue *subtractFunctionPtr = FuzuliValueCreatePointer((void*)doSubstractOperation);
+    FuzuliValue *divideFunctionPtr = FuzuliValueCreatePointer((void*)doDivideOperation);
     FuzuliValue *dumpFunctionPtr = FuzuliValueCreatePointer((void*)doDumpOperation);
     FuzuliValue *printFunctionPtr = FuzuliValueCreatePointer((void*)doPrintOperation);
     FuzuliValue *printlnFunctionPtr = FuzuliValueCreatePointer((void*)doPrintlnOperation);
@@ -100,6 +103,8 @@ void EnvironmentRegisterGlobals(Environment *env){
     */
     FuzuliValueSetTag(productFunctionPtr, "*");
     FuzuliValueSetTag(plusFunctionPtr, "+");
+    FuzuliValueSetTag(subtractFunctionPtr, "-");
+    FuzuliValueSetTag(divideFunctionPtr, "/");
     FuzuliValueSetTag(dumpFunctionPtr, "dump");
     FuzuliValueSetTag(printFunctionPtr, "print");
     FuzuliValueSetTag(printlnFunctionPtr, "println");
@@ -129,6 +134,8 @@ void EnvironmentRegisterGlobals(Environment *env){
 
     EnvironmentRegisterVariable(env, productFunctionPtr);
     EnvironmentRegisterVariable(env, plusFunctionPtr);
+    EnvironmentRegisterVariable(env, subtractFunctionPtr);
+    EnvironmentRegisterVariable(env, divideFunctionPtr);
     EnvironmentRegisterVariable(env, dumpFunctionPtr);
     EnvironmentRegisterVariable(env, printFunctionPtr);
     EnvironmentRegisterVariable(env, printlnFunctionPtr);

@@ -8,6 +8,7 @@
 #include "ferror.h"
 #include "fmemory.h"
 
+
 FuzuliValue *doIdentifierOperation(Expression *expr, Environment *env)
 {
     LinkedList *alls = (LinkedList *)env->FuzuliValues;
@@ -56,27 +57,7 @@ FuzuliValue *doNumericConstantOperation(Expression *expr, Environment *env)
     return val;
 }
 
-FuzuliValue *doPlusOperation(Expression *expr, Environment *env)
-{
-    FuzuliValue *val1 = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
-    FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
-    ErrorAndTerminateAfterTypeCheck(val1, val2, expr);
-    FuzuliValue *result = FuzuliValueSumNumeric(val1, val2);
-    FuzuliValueFree(val1);
-    FuzuliValueFree(val2);
-    return result;
-}
 
-FuzuliValue *doProductOperation(Expression *expr, Environment *env)
-{
-    FuzuliValue *val1 = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
-    FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
-    ErrorAndTerminateAfterTypeCheck(val1, val2, expr);
-    FuzuliValue *result = FuzuliValueCreateDouble(val1->dvalue * val2->dvalue);
-    FuzuliValueFree(val1);
-    FuzuliValueFree(val2);
-    return result;
-}
 
 FuzuliValue *doPrintOperation(Expression *expr, Environment *env)
 {
@@ -128,17 +109,6 @@ FuzuliValue *doLetOperation(Expression *expr, Environment *env)
 
     newval->links = 1;
     return FuzuliValueCreateNull();
-}
-
-FuzuliValue *doEqualsOperation(Expression *expr, Environment *env)
-{
-    FuzuliValue *val1 = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
-    FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
-    ErrorAndTerminateAfterTypeCheck(val1, val2, expr);
-    FuzuliValue *result = FuzuliValueCreateInteger(FuzuliValueEquals(val1, val2));
-    FuzuliValueFree(val1);
-    FuzuliValueFree(val2);
-    return result;
 }
 
 FuzuliValue *doIfOperation(Expression *expr, Environment *env)
