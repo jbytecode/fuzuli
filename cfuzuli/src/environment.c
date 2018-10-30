@@ -91,6 +91,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValue *paramsFunctionPtr = FuzuliValueCreatePointer((void*)doParamsOperation);
     FuzuliValue *incFunctionPtr = FuzuliValueCreatePointer((void*)doIncOperation);
     FuzuliValue *strcmpFunctionPtr = FuzuliValueCreatePointer((void*)doStrcmpOperation);
+    FuzuliValue *strlenFunctionPtr = FuzuliValueCreatePointer((void*)doStrlenOperation);
 
     /*
     * Setting variable names
@@ -126,6 +127,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     FuzuliValueSetTag(paramsFunctionPtr, "params");
     FuzuliValueSetTag(incFunctionPtr, "inc");
     FuzuliValueSetTag(strcmpFunctionPtr, "strcmp");
+    FuzuliValueSetTag(strlenFunctionPtr, "strlen");
 
     /*
     * Registering variables and internal functions
@@ -158,6 +160,7 @@ void EnvironmentRegisterGlobals(Environment *env){
     EnvironmentRegisterVariable(env, paramsFunctionPtr);
     EnvironmentRegisterVariable(env, incFunctionPtr);
     EnvironmentRegisterVariable(env, strcmpFunctionPtr);
+    EnvironmentRegisterVariable(env, strlenFunctionPtr);
     
 
     LinkedList *list = env->FuzuliValues;

@@ -59,10 +59,7 @@ FuzuliValue *doEqualsOperation(Expression *expr, Environment *env)
 {
     FuzuliValue *val1 = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
     FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
-    FuzuliValue *result = 
-            FuzuliValueCreateInteger(
-                val1->dvalue == val2->dvalue
-            );
+    FuzuliValue *result = FuzuliValueCreateInteger(FuzuliValueEquals(val1, val2));
     FuzuliValueFree(val1);
     FuzuliValueFree(val2);
     return result;

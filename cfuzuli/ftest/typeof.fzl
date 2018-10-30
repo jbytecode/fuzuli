@@ -5,6 +5,11 @@
 (let doubleVal 3.14)
 (let strVal "str")
 
-(if (= (strcmp (typeof intVal) "integer") 0) (println passed) (println error))
+
+(if (= (strcmp (typeof intVal) "integer") 0) 
+	(println passed) 
+	(println error)
+)
+
 (if (= (strcmp (typeof doubleVal) "double") 0) (println passed) (println error))
 (if (= (strcmp (typeof strVal) "string") 0) (println passed) (println error))

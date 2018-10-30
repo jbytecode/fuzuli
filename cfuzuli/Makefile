@@ -91,6 +91,7 @@ test:	main test_string test_linkedlist test_fuzulitypes
 	@echo "rm & isnull test: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/rm.fzl)	
 	@echo "inc test: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/inc.fzl)	
 	@echo "arithmetic test: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/arithmetic.fzl)	
+	@echo "string test: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/string.fzl)	
 	
 
 test_string:	main
