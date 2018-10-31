@@ -113,3 +113,29 @@ FuzuliValue* doBiggerOrEqualsAOperation(Expression *expr, Environment *env){
 }
 
 
+FuzuliValue* doNotOperation(Expression *expr, Environment *env){
+    FuzuliValue *val1 = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
+    int numvalue = (int)FuzuliValueGetNumericValue(val1);
+    FuzuliValue *result;
+    if(numvalue == 0){
+        result = FuzuliValueCreateInteger(1);
+    }else{
+        result = FuzuliValueCreateInteger(0);
+    }
+    FuzuliValueFree(val1);
+    return result;
+}
+
+FuzuliValue* doNotEqualsOperation(Expression *expr, Environment *env){
+    FuzuliValue *val1 = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
+    FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
+    FuzuliValue *result = FuzuliValueCreateInteger(FuzuliValueEquals(val1, val2));
+    if(result->ivalue == 0){
+        result->ivalue = 1;
+    }else{
+        result->ivalue = 0;
+    }
+    FuzuliValueFree(val1);
+    FuzuliValueFree(val2);
+    return result;
+}

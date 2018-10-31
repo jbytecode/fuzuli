@@ -44,6 +44,15 @@ char LexerConsumeChar(LexerState *state) {
     return result;
 }
 
+char LexerLookNextChar(LexerState *state) {
+    if (state->currentPosition  > state->lastPosition) {
+        return '\0';
+    }
+    char result = state->sourcecode[state->currentPosition];
+    return result;
+}
+
+
 void LexerPutbackChar(LexerState *state) {
     state->currentPosition--;
     if (state->currentPosition < state->startPosition) {
@@ -104,6 +113,13 @@ Token* LexerGetNextToken(LexerState *state) {
         }
         LexerPutbackChar(state);
         tok = TokenNew(TOKEN_NUMBER_CONSTANT, result->chars);
+    }else if(currentChar == '!'){
+        char next = LexerLookNextChar(state);
+        if(next == '='){
+            currentChar = LexerConsumeChar(state);
+            tok = TokenNew(TOKEN_IDENTIFIER, "!=");
+            currentChar = LexerConsumeChar(state);
+        }
     }else if(currentChar == '#'){
         while(1){
             if(currentChar == '\n' || currentChar == '\r'){
@@ -114,7 +130,17 @@ Token* LexerGetNextToken(LexerState *state) {
         }
         return LexerGetNextToken(state);
     }else if (ispunct(currentChar)){
-        tok = TokenNewFromChar(TOKEN_IDENTIFIER, currentChar);
+        char next = LexerLookNextChar(state);
+        if(ispunct(next)){
+            char compount[3];
+            compount[0] = currentChar;
+            compount[1] = next;
+            compount[2] = '\0';
+            tok = TokenNew(TOKEN_IDENTIFIER, (const char*)&compount);
+            currentChar = LexerConsumeChar(state);
+        }else{
+            tok = TokenNewFromChar(TOKEN_IDENTIFIER, currentChar);
+        }
     }else if (currentChar == '\0') {
         result = StringNewFromChar('\0');
         tok = TokenNew(TOKEN_NULLCHARACTER, "\0");

@@ -14,5 +14,6 @@ FuzuliValue* doLessOperation(Expression *expr, Environment *env);
 FuzuliValue* doBiggerOperation(Expression *expr, Environment *env);
 FuzuliValue* doLessOrEqualsOperation(Expression *expr, Environment *env);
 FuzuliValue* doBiggerOrEqualsAOperation(Expression *expr, Environment *env);
-
+FuzuliValue* doNotOperation(Expression *expr, Environment *env);
+FuzuliValue* doNotEqualsOperation(Expression *expr, Environment *env);
 #endif

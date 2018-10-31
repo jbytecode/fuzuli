@@ -155,7 +155,7 @@ FuzuliValue *doWhileOperation(Expression *expr, Environment *env)
     while (1)
     {
         condition = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
-        if (condition->ivalue == 0)
+        if (FuzuliValueGetNumericValue(condition) == 0)
         {
             break;
         }

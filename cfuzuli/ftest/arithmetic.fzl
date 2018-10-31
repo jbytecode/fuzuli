@@ -42,3 +42,36 @@
 	(println error)
 )
 
+# test 7 - not
+(let a true)
+(if (= (not a) false)
+	(println passed)
+	(println error)
+)
+
+# test 8 - not equals
+(let a 12)
+(let b 13)
+(if (!= a b)
+	(println passed)
+	(println error)
+)
+
+
+# test 9 - less or equal
+(let c 20)
+(let d 20)
+(if (<= c d)
+	(println passed)
+	(println error)
+)
+
+# test 10 - bigger or equal
+(let c 20)
+(let d 20)
+(if (>= c d)
+	(println passed)
+	(println error)
+)
+
+

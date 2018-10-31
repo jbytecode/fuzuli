@@ -23,6 +23,7 @@ extern "C" {
     LinkedList *LexerExtractTokens(String* sourcecode);
     char LexerConsumeChar(LexerState *state);
     void LexerPutbackChar(LexerState *state);
+    char LexerLookNextChar(LexerState *state);
     Token* LexerGetNextToken(LexerState *state);
     LinkedList *LexerExtractTokens(String *sourcecode);
 
