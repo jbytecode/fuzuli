@@ -89,6 +89,11 @@ void EnvironmentRegisterGlobals(Environment *env)
     EnvironmentRegisterInternalFunction(env, doProductOperation, "*");
     EnvironmentRegisterInternalFunction(env, doSubstractOperation, "-");
     EnvironmentRegisterInternalFunction(env, doDivideOperation, "/");
+    EnvironmentRegisterInternalFunction(env, doLessOperation, "<");
+    EnvironmentRegisterInternalFunction(env, doBiggerOperation, ">");
+    EnvironmentRegisterInternalFunction(env, doLessOrEqualsOperation, "<=");
+    EnvironmentRegisterInternalFunction(env, doBiggerOrEqualsAOperation, ">=");
+    
     EnvironmentRegisterInternalFunction(env, doDumpOperation, "dump");
     EnvironmentRegisterInternalFunction(env, doPrintOperation, "print");
     EnvironmentRegisterInternalFunction(env, doPrintlnOperation, "println");

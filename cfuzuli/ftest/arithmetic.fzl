@@ -13,7 +13,7 @@
 	(println error)
 )
 
-
+# test 3 - product
 (if (= (* 100 90) 9000)
 	(println passed)
 	(println error)
@@ -27,4 +27,18 @@
 	(println error)
 )
 
+
+# test 5 - less
+(let result 100.0)
+(if (< result 1000)
+	(println passed)
+	(println error)
+)
+
+# test 6 - bigger
+(let result 100)
+(if (> result 10)
+	(println passed)
+	(println error)
+)
 

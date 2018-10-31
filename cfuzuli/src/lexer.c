@@ -106,10 +106,10 @@ Token* LexerGetNextToken(LexerState *state) {
         tok = TokenNew(TOKEN_NUMBER_CONSTANT, result->chars);
     }else if(currentChar == '#'){
         while(1){
-            if(currentChar == '\n'){
+            if(currentChar == '\n' || currentChar == '\r'){
+                state->lineNumber++;
                 break;
             }
-            state->currentPosition++;
             currentChar = LexerConsumeChar(state);
         }
         return LexerGetNextToken(state);

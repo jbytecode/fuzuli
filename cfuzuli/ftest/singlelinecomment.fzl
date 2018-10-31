@@ -2,5 +2,11 @@
 # Since these lines are not executed
 # only a single PASSED keyword is 
 # printed for tests.
-(print "PASSED")
+(println "PASSED")
+# other comment
+(println "PASSED")
+# one more comment
+# with mutliple lines
+(println "PASSED")
+
 

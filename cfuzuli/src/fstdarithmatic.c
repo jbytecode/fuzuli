@@ -65,5 +65,51 @@ FuzuliValue *doEqualsOperation(Expression *expr, Environment *env)
     return result;
 }
 
+FuzuliValue* doLessOperation(Expression *expr, Environment *env){
+    FuzuliValue *val1 = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
+    FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
+    FuzuliValue *result = FuzuliValueCreateInteger(
+            (int)(FuzuliValueGetNumericValue(val1) < (int)FuzuliValueGetNumericValue(val2))
+    );
+    FuzuliValueFree(val1);
+    FuzuliValueFree(val2);
+    return result;
+}
+
+
+FuzuliValue* doBiggerOperation(Expression *expr, Environment *env){
+FuzuliValue *val1 = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
+    FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
+    FuzuliValue *result = FuzuliValueCreateInteger(
+            (int)(FuzuliValueGetNumericValue(val1) > FuzuliValueGetNumericValue(val2))
+    );
+    FuzuliValueFree(val1);
+    FuzuliValueFree(val2);
+    return result;
+}
+
+
+FuzuliValue* doLessOrEqualsOperation(Expression *expr, Environment *env){
+    FuzuliValue *val1 = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
+    FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
+    FuzuliValue *result = FuzuliValueCreateInteger(
+            (int)(FuzuliValueGetNumericValue(val1) <= FuzuliValueGetNumericValue(val2))
+    );
+    FuzuliValueFree(val1);
+    FuzuliValueFree(val2);
+    return result;
+}
+
+
+FuzuliValue* doBiggerOrEqualsAOperation(Expression *expr, Environment *env){
+    FuzuliValue *val1 = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
+    FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
+    FuzuliValue *result = FuzuliValueCreateInteger(
+            (int)(FuzuliValueGetNumericValue(val1) >= FuzuliValueGetNumericValue(val2))
+    );
+    FuzuliValueFree(val1);
+    FuzuliValueFree(val2);
+    return result;
+}
 
 

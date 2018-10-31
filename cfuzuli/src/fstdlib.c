@@ -92,6 +92,7 @@ FuzuliValue *doDumpOperation(Expression *expr, Environment *env)
         // There is no evaluation operation. Not freed.
     }
     printf("\n");
+    fflush(stdin);
     return FuzuliValueCreateInteger(len);
 }
 
