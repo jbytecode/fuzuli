@@ -19,4 +19,16 @@
 (println passed)
 
 
+# test 3 - break in larget body
+(while (a < 50)
+	(inc a)
+	(if (= a 45) (break))
+)
+
+(if (= a 45)
+	(println passed)
+	(println error)
+)
+
+
 

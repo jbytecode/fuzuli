@@ -160,6 +160,9 @@ FuzuliValue *doWhileOperation(Expression *expr, Environment *env)
 {
     FuzuliValue *condition;
     FuzuliValue *result = NULL;
+    unsigned int bodylen = LinkedListLength(expr->arguments);
+    int breakDetected = 0;
+
     while (1)
     {
         condition = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
@@ -171,13 +174,19 @@ FuzuliValue *doWhileOperation(Expression *expr, Environment *env)
         {
              FuzuliValueFree(result);
         }
-        result = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
-        if (result->tag && strcmp(result->tag, "break") == 0)
-        {
-            FuzuliValueFree(condition);
-            break;
+        for (int i = 1; i < bodylen; i++){
+            result = eval((Expression *)LinkedListGet(expr->arguments, i), env);
+            if (result->tag && strcmp(result->tag, "break") == 0)
+            {
+                FuzuliValueFree(condition);
+                breakDetected = 1;
+                break;
+            }
         }
         FuzuliValueFree(condition);
+        if(breakDetected){
+            break;
+        }
     }
     return result;
 }
