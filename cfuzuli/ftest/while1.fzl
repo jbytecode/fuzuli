@@ -2,16 +2,21 @@
 (let a 10)
 (let b 20)
 
-(while (= a 10)
-	(let a 20)
+# test 1 - inc in while test
+(while (< a 20)
+	(inc a)
+)
+(if (= a 20) 
+	(println passed)
+	(println error)
 )
 
-(println passed)
 
-(while (= a 20)
-	(if (= b 20) (break))
+# test 2 - break
+(while (a < 50)
+	(if (= a 20) (break))
 )
-
-
 (println passed)
+
+
 

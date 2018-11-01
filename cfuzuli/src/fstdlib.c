@@ -116,10 +116,12 @@ FuzuliValue *doIfOperation(Expression *expr, Environment *env)
 {
     FuzuliValue *condition = eval((Expression *)LinkedListGet(expr->arguments, 0), env);
     FuzuliValue *result;
+    double numericCondition = FuzuliValueGetNumericValue(condition);
+
     unsigned int argumentLength = LinkedListLength(expr->arguments);
     if (argumentLength == 3)
     {
-        if (condition->ivalue == 1)
+        if (numericCondition == 1.0)
         {
             FuzuliValue *yes = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
             FuzuliValueFree(condition);
@@ -134,7 +136,7 @@ FuzuliValue *doIfOperation(Expression *expr, Environment *env)
     }
     else if (argumentLength == 2)
     {
-        if (condition->ivalue == 1)
+        if (numericCondition == 1.0)
         {
             FuzuliValue *yes = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
             FuzuliValueFree(condition);
@@ -146,6 +148,12 @@ FuzuliValue *doIfOperation(Expression *expr, Environment *env)
         ErrorAndTerminateExpression("If expression must have 1 or 2 arguments", -1, expr);
     }
     return FuzuliValueCreateNull();
+}
+
+FuzuliValue *doBreakOperation(Expression *expr, Environment *env){
+    FuzuliValue *val = FuzuliValueCreateDouble(0.0);
+    FuzuliValueSetTag(val, "break");
+    return val;
 }
 
 FuzuliValue *doWhileOperation(Expression *expr, Environment *env)
@@ -163,13 +171,12 @@ FuzuliValue *doWhileOperation(Expression *expr, Environment *env)
         {
              FuzuliValueFree(result);
         }
-        Expression *subexpr = (Expression *)LinkedListGet(expr->arguments, 1);
-        if (strcmp(subexpr->tag, "break"))
+        result = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
+        if (result->tag && strcmp(result->tag, "break") == 0)
         {
             FuzuliValueFree(condition);
             break;
         }
-        result = eval(subexpr, env);
         FuzuliValueFree(condition);
     }
     return result;

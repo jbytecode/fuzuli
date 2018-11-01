@@ -103,6 +103,7 @@ void EnvironmentRegisterGlobals(Environment *env)
     EnvironmentRegisterInternalFunction(env, doLetOperation, "let");
     EnvironmentRegisterInternalFunction(env, doIfOperation, "if");
     EnvironmentRegisterInternalFunction(env, doWhileOperation, "while");
+    EnvironmentRegisterInternalFunction(env, doBreakOperation, "break");
     EnvironmentRegisterInternalFunction(env, doTypeofOperation, "typeof");
     EnvironmentRegisterInternalFunction(env, doListOperation, "list");
     EnvironmentRegisterInternalFunction(env, doPrintOperation, "print");
