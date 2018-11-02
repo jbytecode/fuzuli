@@ -64,11 +64,13 @@ String* StringConcat(String *s1, String *s2) {
 
 void StringAppendChar(String *s, char c) {
     unsigned int len = StringLength(s);
-    char *newchars = (char*) fmalloc(sizeof (char) * (len + 2));
-    strcpy(newchars, s->chars);
-    newchars[len] = c;
-    ffree(s->chars);
-    s->chars = newchars;
+    //char *newchars = (char*) fmalloc(sizeof (char) * (len + 2));
+    //strcpy(newchars, s->chars);
+    //newchars[len] = c;
+    s->chars = realloc(s->chars, len + 2);
+    s->chars[len] = c;
+    //ffree(s->chars);
+    //s->chars = newchars;
     s->length = len + 1;
     s->chars[len + 1] = '\0';
 }
