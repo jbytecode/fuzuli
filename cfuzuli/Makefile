@@ -1,6 +1,6 @@
-CC=clang
+CC=gcc
 OUT_DIR=build
-FLAGS=-fPIC
+FLAGS=-fPIC -std=c99
 .PHONY: all
 
 $(shell mkdir -p $(OUT_DIR))
@@ -45,6 +45,9 @@ $(OUT_DIR)/fuzulitypes.o:	src/fuzulitypes.c
 $(OUT_DIR)/linkedlist.o: src/linkedlist.h src/linkedlist.c
 	$(CC) $(FLAGS) -c -o $(OUT_DIR)/linkedlist.o src/linkedlist.c
 
+$(OUT_DIR)/arraylist.o: src/arraylist.h src/arraylist.c
+	$(CC) $(FLAGS) -c -o $(OUT_DIR)/arraylist.o src/arraylist.c
+
 $(OUT_DIR)/string.o: src/string.c src/string.h
 	$(CC) $(FLAGS) -c -o $(OUT_DIR)/string.o src/string.c
 
@@ -61,12 +64,13 @@ $(OUT_DIR)/lexer.o: src/lexer.c
 	$(CC) $(FLAGS) -c -o $(OUT_DIR)/lexer.o src/lexer.c
 	
 $(OUT_DIR)/libfuzuli.so:	$(OUT_DIR)/fstdlib.o $(OUT_DIR)/string.o $(OUT_DIR)/linkedlist.o\
-	$(OUT_DIR)/stringexpression.o $(OUT_DIR)/eval.o\
+	$(OUT_DIR)/arraylist.o $(OUT_DIR)/stringexpression.o $(OUT_DIR)/eval.o\
 	$(OUT_DIR)/fuzulitypes.o $(OUT_DIR)/sourcecode.o $(OUT_DIR)/lexer.o $(OUT_DIR)/token.o\
 	$(OUT_DIR)/parser.o $(OUT_DIR)/expression.o $(OUT_DIR)/environment.o $(OUT_DIR)/ferror.o\
 	$(OUT_DIR)/fmemory.o $(OUT_DIR)/fstdarithmatic.o $(OUT_DIR)/fstdstring.o
 	
 	$(CC) -shared -o $(OUT_DIR)/libfuzuli.so $(OUT_DIR)/string.o $(OUT_DIR)/linkedlist.o \
+	$(OUT_DIR)/arraylist.o \
 	$(OUT_DIR)/eval.o $(OUT_DIR)/stringexpression.o $(OUT_DIR)/fuzulitypes.o \
 	$(OUT_DIR)/sourcecode.o $(OUT_DIR)/lexer.o $(OUT_DIR)/token.o $(OUT_DIR)/parser.o \
 	$(OUT_DIR)/expression.o $(OUT_DIR)/fstdlib.o $(OUT_DIR)/environment.o \
@@ -75,11 +79,12 @@ $(OUT_DIR)/libfuzuli.so:	$(OUT_DIR)/fstdlib.o $(OUT_DIR)/string.o $(OUT_DIR)/lin
 main:	$(OUT_DIR)/libfuzuli.so	
 	$(CC) -o $(OUT_DIR)/fuzuli src/main.c $(OUT_DIR)/libfuzuli.so
 
-test:	main test_string test_linkedlist test_fuzulitypes
+test:	main test_string test_linkedlist test_fuzulitypes test_arraylist
 	@echo "Performing tests...\n________________________"
 	@echo $(shell ./$(OUT_DIR)/stringtest)
 	@echo $(shell ./$(OUT_DIR)/linkedlisttest)
 	@echo $(shell ./$(OUT_DIR)/fuzulitypestest)
+	@echo $(shell ./$(OUT_DIR)/arraylisttest)
 	@echo "Fuzuli source tests: \n___________________________"
 	@echo "Single line comment: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/singlelinecomment.fzl)
 	@echo "Let test: " $(shell ./$(OUT_DIR)/fuzuli ./ftest/lettest.fzl)
@@ -99,6 +104,9 @@ test_string:	main
 
 test_fuzulitypes:	main
 	$(CC) -o $(OUT_DIR)/fuzulitypestest test/fuzulitypestest.c $(OUT_DIR)/libfuzuli.so
+
+test_arraylist:	main
+	$(CC) -o $(OUT_DIR)/arraylisttest test/arraylisttest.c $(OUT_DIR)/libfuzuli.so
 
 
 test_linkedlist:	main
