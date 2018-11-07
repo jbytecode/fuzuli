@@ -367,6 +367,10 @@ FuzuliValue *doBlockOperation(Expression *expr, Environment *env){
     FuzuliValue *result;
     for (unsigned int i = 0; i < len; i++){
         result = eval((Expression*)LinkedListGet(expr->arguments, i), env);
+        if (result->tag && strcmp(result->tag, "break") == 0)
+            {
+                break;
+            }
     }
     return result;
 }
