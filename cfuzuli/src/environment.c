@@ -117,6 +117,8 @@ void EnvironmentRegisterGlobals(Environment *env)
     EnvironmentRegisterInternalFunction(env, doRangeOperatorOperation, ":");
     EnvironmentRegisterInternalFunction(env, doParamsOperation, "params");
     EnvironmentRegisterInternalFunction(env, doIncOperation, "inc");
+    EnvironmentRegisterInternalFunction(env, doBlockOperation, "block");
+    
     EnvironmentRegisterInternalFunction(env, doStrcmpOperation, "strcmp");
     EnvironmentRegisterInternalFunction(env, doStrlenOperation, "strlen");
 

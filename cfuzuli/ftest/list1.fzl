@@ -45,7 +45,8 @@
 	(println passed)
 	(println error)
 )
-(if (= 8 (nth (nth mylist 2 1)))
+# test 7 
+(if (= 8 (nth (nth mylist 2) 1))
 	(println passed)
 	(println error)
 )

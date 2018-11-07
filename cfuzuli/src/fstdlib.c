@@ -224,6 +224,7 @@ FuzuliValue* doListOperation(Expression *expr, Environment *env){
     unsigned int elemCount = LinkedListLength(expr->arguments);
     for (unsigned int i = 0; i < elemCount; i++){
         FuzuliValue *Elem = eval((Expression*)LinkedListGet(expr->arguments, i), env);
+        Elem->links = 1;
         LinkedListAdd(data, Elem);
     }
     returnValue->vvalue = data;
@@ -250,7 +251,7 @@ FuzuliValue* doNthOperation(Expression *expr, Environment *env){
     }
     FuzuliValue *returnvalue = LinkedListGet(data, (unsigned int)indiceElement->ivalue);
 
-    //FuzuliValueFree(listElement);
+    FuzuliValueFree(listElement);
     FuzuliValueFree(indiceElement);
     return FuzuliValueDuplicate(returnvalue);
 }
@@ -359,4 +360,13 @@ FuzuliValue* doIncOperation(Expression *expr, Environment *env){
     FuzuliValueSetTag(arg, subexpr->tag);
     EnvironmentRegisterVariable(env, arg);
     return arg;
+}
+
+FuzuliValue *doBlockOperation(Expression *expr, Environment *env){
+    unsigned int len = LinkedListLength(expr->arguments);
+    FuzuliValue *result;
+    for (unsigned int i = 0; i < len; i++){
+        result = eval((Expression*)LinkedListGet(expr->arguments, i), env);
+    }
+    return result;
 }

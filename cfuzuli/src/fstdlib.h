@@ -43,7 +43,7 @@ FuzuliValue* doIsNullOperation(Expression *expr, Environment *env);
 FuzuliValue* doRangeOperatorOperation(Expression *expr, Environment *env);
 FuzuliValue* doParamsOperation(Expression *expr, Environment *env);
 FuzuliValue* doIncOperation(Expression *expr, Environment *env);
-
+FuzuliValue *doBlockOperation(Expression *expr, Environment *env);
 
 #ifdef __cplusplus
 }
