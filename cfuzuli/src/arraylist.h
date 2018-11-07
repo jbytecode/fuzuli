@@ -11,7 +11,8 @@ typedef struct ARRAYLIST {
 
 ArrayList *ArrayListNew(unsigned int initialSize);
 void ArrayListFree(ArrayList *arrlist);
-void *ArrayListAdd(ArrayList *arraylist, void *element);
+void ArrayListAdd(ArrayList *arraylist, void *element);
+void ArrayListPrepend(ArrayList *arraylist, void *element);
 void *ArrayListGet(ArrayList *arraylist, unsigned int index);
 unsigned int ArrayListSize(ArrayList *arrlist);
 

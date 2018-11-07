@@ -14,7 +14,7 @@ void ArrayListFree(ArrayList *arrlist){
 }
 
 
-void *ArrayListAdd(ArrayList *arraylist, void *element){
+void ArrayListAdd(ArrayList *arraylist, void *element){
   if(arraylist->currentSize == arraylist->maximumSize){
     arraylist->elements = realloc(arraylist->elements, arraylist->maximumSize * 2 * sizeof(void*));
     arraylist->maximumSize *= 2;
@@ -23,6 +23,19 @@ void *ArrayListAdd(ArrayList *arraylist, void *element){
   arraylist->currentSize++;
 }
 
+
+void ArrayListPrepend(ArrayList *arraylist, void *element){
+	if(arraylist->currentSize == arraylist->maximumSize){
+		arraylist->elements = realloc(arraylist->elements, arraylist->maximumSize * 2 * sizeof(void*));
+		arraylist->maximumSize *= 2;
+	}
+	unsigned int lastindex = arraylist->currentSize;
+	for (unsigned int i = lastindex; i >= 1; i--){
+		arraylist->elements[i] = arraylist->elements[i-1];
+	}
+	arraylist->elements[0] = element;
+	arraylist->currentSize++;
+}
 
 void *ArrayListGet(ArrayList *arraylist, unsigned int index){
   return arraylist->elements[index];

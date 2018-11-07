@@ -37,3 +37,18 @@
 	(println passed) 	
 	(println error)
 )
+
+
+# test 6 -    2-Dimensional lists
+(let mylist (list (list 1 2 3) (list 4 5 6) (list 7 8 9)))
+(if (= 3 (nth (nth mylist 0) 2))
+	(println passed)
+	(println error)
+)
+(if (= 8 (nth (nth mylist 2 1)))
+	(println passed)
+	(println error)
+)
+
+
+

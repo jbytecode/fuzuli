@@ -250,7 +250,7 @@ FuzuliValue* doNthOperation(Expression *expr, Environment *env){
     }
     FuzuliValue *returnvalue = LinkedListGet(data, (unsigned int)indiceElement->ivalue);
 
-    FuzuliValueFree(listElement);
+    //FuzuliValueFree(listElement);
     FuzuliValueFree(indiceElement);
     return FuzuliValueDuplicate(returnvalue);
 }
