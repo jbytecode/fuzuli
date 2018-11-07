@@ -1,6 +1,6 @@
 CC=gcc
 OUT_DIR=build
-FLAGS=-fPIC
+FLAGS=-fPIC -std=c99
 .PHONY: all
 
 $(shell mkdir -p $(OUT_DIR))
