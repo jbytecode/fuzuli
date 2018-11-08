@@ -10,6 +10,5 @@
 	(println passed) 
 	(println error)
 )
-
 (if (= (strcmp (typeof doubleVal) "double") 0) (println passed) (println error))
 (if (= (strcmp (typeof strVal) "string") 0) (println passed) (println error))
