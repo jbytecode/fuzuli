@@ -7,6 +7,7 @@
 #include "fstdaritmatic.h"
 #include "fstdstring.h"
 #include "fmemory.h"
+#include "ferror.h"
 
 Environment *EnvironmentNew(Environment *parent)
 {
@@ -65,6 +66,35 @@ void EnvironmentRegisterVariable(Environment *env, FuzuliValue *value)
     if (copied == 0)
     {
         LinkedListAdd(env->FuzuliValues, value);
+    }
+}
+
+
+void EnvironmentUpdateVariable(Environment *env, FuzuliValue *value)
+{
+    FuzuliValue *fvalue;
+    unsigned int copied = 0;
+    unsigned len = LinkedListLength(env->FuzuliValues);
+    if (value->tag != NULL)
+    {
+        LinkedListElement *llelement = env->FuzuliValues->first;
+        for (unsigned int i = 0; i < len; i++)
+        {
+            FuzuliValue *tempvalue = (FuzuliValue *)llelement->value;
+            if (strcmp(tempvalue->tag, value->tag) == 0)
+            {
+                FuzuliValueCopyContent(tempvalue, value);
+                copied = 1;
+                break;
+            }
+            llelement = llelement->next;
+        }
+    }
+    if (copied == 0)
+    {
+        printf("\n** In value: \n");
+        FuzuliValuePrint(value);
+        ErrorAndTerminate("Cannot find variable to modify", -1);
     }
 }
 

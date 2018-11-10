@@ -20,6 +20,7 @@ FuzuliValue *doIdentifierOperation(Expression *expr, Environment *env)
         FuzuliValue *val = (FuzuliValue *)llelement->value;
         if (strcmp(val->tag, expr->tag) == 0)
         {
+            FuzuliValueFree(returnvalue);
             returnvalue = FuzuliValueDuplicate(val);
         }
         llelement = llelement->next;
@@ -106,14 +107,13 @@ FuzuliValue *doLetOperation(Expression *expr, Environment *env)
     FuzuliValue *val2 = eval((Expression *)LinkedListGet(expr->arguments, 1), env);
     FuzuliValue *newval = FuzuliValueDuplicate(val2);
 
-    
     newval->tag = (char *)fmalloc(strlen(ident->tag));
     strcpy(newval->tag, ident->tag);
 
     EnvironmentRegisterVariable(env, newval);
 
     newval->links = 1;
-    return FuzuliValueCreateNull();
+    return val2;
 }
 
 FuzuliValue *doIfOperation(Expression *expr, Environment *env)
@@ -173,22 +173,23 @@ FuzuliValue *doWhileOperation(Expression *expr, Environment *env)
         condition = eval(conditionexprs, env);
         if (FuzuliValueGetNumericValue(condition) == 0)
         {
+            //FuzuliValueFree(condition);
             break;
         }
         if (result != NULL)
         {
-             FuzuliValueFree(result);
+             //FuzuliValueFree(result);
         }
         for (int i = 1; i < bodylen; i++){
             result = eval((Expression *)LinkedListGet(expr->arguments, i), env);
             if (result->tag && strcmp(result->tag, "break") == 0)
             {
-                FuzuliValueFree(condition);
                 breakDetected = 1;
                 break;
             }
+            //FuzuliValueFree(result);
         }
-        FuzuliValueFree(condition);
+        //FuzuliValueForceFree(condition);
         if(breakDetected){
             break;
         }
@@ -366,12 +367,15 @@ FuzuliValue* doIncOperation(Expression *expr, Environment *env){
     Expression *subexpr = (Expression*)llelement->value;
     FuzuliValueIncNumeric(arg);
     FuzuliValueSetTag(arg, subexpr->tag);
-    EnvironmentRegisterVariable(env, arg);
+    EnvironmentUpdateVariable(env, arg);
     return arg;
 }
 
 FuzuliValue *doBlockOperation(Expression *expr, Environment *env){
     unsigned int len = LinkedListLength(expr->arguments);
+    if(len < 1){
+        return FuzuliValueCreateNull();
+    }
     FuzuliValue *result;
     for (unsigned int i = 0; i < len; i++){
         result = eval((Expression*)LinkedListGet(expr->arguments, i), env);
@@ -379,6 +383,7 @@ FuzuliValue *doBlockOperation(Expression *expr, Environment *env){
             {
                 break;
             }
+        FuzuliValueFree(result);
     }
     return result;
 }

@@ -71,8 +71,8 @@ FuzuliValue* doLessOperation(Expression *expr, Environment *env){
     FuzuliValue *result = FuzuliValueCreateInteger(
             (int)(FuzuliValueGetNumericValue(val1) < (int)FuzuliValueGetNumericValue(val2))
     );
-    FuzuliValueFree(val1);
-    FuzuliValueFree(val2);
+    FuzuliValueForceFree(val1);
+    FuzuliValueForceFree(val2);
     return result;
 }
 

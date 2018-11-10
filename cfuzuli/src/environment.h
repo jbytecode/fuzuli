@@ -23,6 +23,7 @@ void EnvironmentRegisterCommandLineArguments(Environment *env, int argc, char **
 void EnvironmentRegisterInternalFunction(Environment *env, void *function, char *tag);
 int EnvironmentIsGlobal(Environment *env);
 void EnvironmentRegisterVariable(Environment *env, FuzuliValue *value);
+void EnvironmentUpdateVariable(Environment *env, FuzuliValue *value);
 void EnvironmentRegisterGlobals(Environment *env);
 
 #ifdef __cplusplus

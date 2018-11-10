@@ -177,6 +177,12 @@ FuzuliValue *FuzuliValueDuplicate(FuzuliValue *value)
     return (newf);
 }
 
+void FuzuliValueForceFree(FuzuliValue *value){
+    value->links = 0;
+    value->protected = 0;
+    FuzuliValueFree(value);
+}
+
 void FuzuliValueFree(FuzuliValue *value)
 {
     if (value == NULL)
