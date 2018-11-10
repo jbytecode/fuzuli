@@ -49,15 +49,17 @@ void EnvironmentRegisterVariable(Environment *env, FuzuliValue *value)
     unsigned len = LinkedListLength(env->FuzuliValues);
     if (value->tag != NULL)
     {
+        LinkedListElement *llelement = env->FuzuliValues->first;
         for (unsigned int i = 0; i < len; i++)
         {
-            FuzuliValue *tempvalue = (FuzuliValue *)LinkedListGet(env->FuzuliValues, i);
+            FuzuliValue *tempvalue = (FuzuliValue *)llelement->value;
             if (strcmp(tempvalue->tag, value->tag) == 0)
             {
                 FuzuliValueCopyContent(tempvalue, value);
                 copied = 1;
                 break;
             }
+            llelement = llelement->next;
         }
     }
     if (copied == 0)
@@ -138,8 +140,11 @@ void EnvironmentRegisterGlobals(Environment *env)
 
     LinkedList *list = env->FuzuliValues;
     unsigned int len = LinkedListLength(list);
+
+    LinkedListElement *llelement = list->first;
     for (unsigned int i = 0; i < len; i++)
     {
-        ((FuzuliValue *)LinkedListGet(list, i))->protected = 1;
+        ((FuzuliValue *)llelement->value)->protected = 1;
+        llelement = llelement->next;
     }
 }
