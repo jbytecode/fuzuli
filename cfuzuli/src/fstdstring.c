@@ -20,8 +20,18 @@ FuzuliValue *doStrcmpOperation(Expression *expr, Environment *env){
 FuzuliValue *doStrlenOperation(Expression *expr, Environment *env){
     FuzuliValue *val1 = (FuzuliValue*)eval((Expression*)LinkedListGet(expr->arguments, 0), env);
     FuzuliValue *result = FuzuliValueCreateInteger(strlen(val1->svalue->chars));
-
     FuzuliValueFree(val1);
-
     return result;
 }
+
+FuzuliValue *doCharAtOperation(Expression *expr, Environment *env){
+    FuzuliValue *str = (FuzuliValue*)eval((Expression*)LinkedListGet(expr->arguments, 0), env);
+    FuzuliValue *index = (FuzuliValue*)eval((Expression*)LinkedListGet(expr->arguments, 1), env);
+    
+    FuzuliValue *result = FuzuliValueCreateString("A");
+    result->svalue->chars[0] = str->svalue->chars[index->ivalue];
+    FuzuliValueFree(str);
+    FuzuliValueFree(index);
+    return result;
+}
+

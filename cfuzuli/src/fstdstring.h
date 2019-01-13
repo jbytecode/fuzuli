@@ -8,6 +8,6 @@
 
 FuzuliValue *doStrcmpOperation(Expression *expr, Environment *env);
 FuzuliValue *doStrlenOperation(Expression *expr, Environment *env);
-
+FuzuliValue *doCharAtOperation(Expression *expr, Environment *env);
 
 #endif

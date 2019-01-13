@@ -147,12 +147,16 @@ void EnvironmentRegisterGlobals(Environment *env)
     EnvironmentRegisterInternalFunction(env, doRmOperation, "rm");
     EnvironmentRegisterInternalFunction(env, doIsNullOperation, "isnull");
     EnvironmentRegisterInternalFunction(env, doRangeOperatorOperation, ":");
+    EnvironmentRegisterInternalFunction(env, doSeqOperation, "seq");
+    
     EnvironmentRegisterInternalFunction(env, doParamsOperation, "params");
     EnvironmentRegisterInternalFunction(env, doIncOperation, "inc");
     EnvironmentRegisterInternalFunction(env, doBlockOperation, "block");
     
     EnvironmentRegisterInternalFunction(env, doStrcmpOperation, "strcmp");
     EnvironmentRegisterInternalFunction(env, doStrlenOperation, "strlen");
+    EnvironmentRegisterInternalFunction(env, doCharAtOperation, "charAt");
+    
 
     /*
     * Setting variable names

@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "cfuzuli"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"eval.h": "c",
+			"fuzulitypes.h": "c"
+		}
+	}
+}

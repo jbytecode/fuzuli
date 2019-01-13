@@ -115,7 +115,7 @@ void runRepl(int argc, char **argv)
     {
         printf("\nFuzuli> ");
         char *str = fgets(chars, 1024, stdin);
-        if(str[0] != '\n'){
+        if(str[0] == '(' && str[0] != '\n'){
             runCommand(str, env);
         }
     }

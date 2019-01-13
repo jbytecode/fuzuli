@@ -347,6 +347,28 @@ FuzuliValue* doRangeOperatorOperation(Expression *expr, Environment *env){
 }
 
 
+FuzuliValue* doSeqOperation(Expression *expr, Environment *env){
+    FuzuliValue *min = eval((Expression*)LinkedListGet(expr->arguments, 0), env);
+    FuzuliValue *max = eval((Expression*)LinkedListGet(expr->arguments, 1), env);
+    FuzuliValue *step = eval((Expression*)LinkedListGet(expr->arguments, 2), env);
+    
+    int dmin = min->dvalue;
+    int dmax = max->dvalue;
+    double dstep = step->dvalue;
+    LinkedList *newlist = LinkedListNew();
+    for (double i = dmin; i <= dmax; i+=dstep){
+        LinkedListAdd(newlist, FuzuliValueCreateDouble(i));
+    }
+    FuzuliValue *returnValue = FuzuliValueCreateList();
+    returnValue->vvalue = newlist;
+
+    FuzuliValueFree(min);
+    FuzuliValueFree(max);
+    FuzuliValueFree(step);
+    return returnValue;
+}
+
+
 FuzuliValue* doParamsOperation(Expression *expr, Environment *env){
     LinkedList *list = LinkedListNew();
     unsigned int numArgs = LinkedListLength(expr->arguments);
