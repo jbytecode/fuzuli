@@ -163,7 +163,12 @@ public class Parser {
 				Expression list = getExpression();
 				consumeToken();
 				return new ApplyExpression(func, list);
-			} else {
+			} else if (currentToken.content.equals("javastatic")) {
+				Expression name = getExpression();
+				Expression params = getExpression();
+				consumeToken();
+				return new JavaStaticExpression(name, params);
+			}else {
 				Token prev = getPreviousToken();
 				if (prev.content.equals("(")) {
 					List<Expression> params = getExpressionList();

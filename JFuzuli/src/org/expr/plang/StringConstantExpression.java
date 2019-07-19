@@ -17,5 +17,9 @@ public class StringConstantExpression extends Expression {
 	public String toString() {
 		return this.content;
 	}
+	
+	public String getContent() {
+		return this.content;
+	}
 
 }
