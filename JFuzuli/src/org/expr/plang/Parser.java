@@ -152,7 +152,7 @@ public class Parser {
 				return new RestExpression(param);
 			} else if (currentToken.content.equals("len")) {
 				Expression param = getExpression();
-				consumeToken();
+				consumeToken(); 
 				return new LenExpression(param);
 			} else if (currentToken.content.equals("assert")) {
 				Expression param = getExpression();

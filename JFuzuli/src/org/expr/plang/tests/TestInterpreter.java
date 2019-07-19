@@ -76,4 +76,18 @@ class TestInterpreter {
 		Integer result = (Integer)env.getObject("result");
 		assertEquals(1000, result);
 	}
+	
+	
+	@Test
+	void testJavaStatic() throws Exception {
+		Environment env = new Environment();
+		InputStream is = this.getClass().getResourceAsStream("javastatic.fzl");
+		Interpreter.interpreteFromInputStream(is, env);
+		Number result1 = (Number)env.getObject("result1");
+		Number result2 = (Number)env.getObject("result2");
+		Long result3 = (Long)env.getObject("result3");
+		assertEquals(6.0, result1);
+		assertEquals(10.0, result2);
+		assertEquals(1, result3);
+	}
 }
