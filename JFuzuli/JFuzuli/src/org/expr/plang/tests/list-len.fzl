@@ -1,7 +1,0 @@
-(let n 1000)
-
-(let mylist (: 1 n))
-
-(let result (len mylist))
-
-
