@@ -2,4 +2,9 @@
 
 (let result2 (javastatic 'java.lang.Math.abs' (list (- 0 10)))
 
-(let result3 (javastatic 'java.lang.Math.round' (list 0.789))
+(let result3 (javastatic 'java.lang.Math.round' (list 0.789)))
+
+(let result4 (javastatic 'java.lang.Math.pow' (list 5 2)))
+
+(let result5 (javastatic 'java.lang.String.valueOf' (list 3)))
+

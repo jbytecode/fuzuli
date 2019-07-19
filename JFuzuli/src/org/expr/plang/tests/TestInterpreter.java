@@ -86,8 +86,12 @@ class TestInterpreter {
 		Number result1 = (Number)env.getObject("result1");
 		Number result2 = (Number)env.getObject("result2");
 		Long result3 = (Long)env.getObject("result3");
+		Double result4 = (Double)env.getObject("result4");
+		String result5 = (String)env.getObject("result5");
 		assertEquals(6.0, result1);
 		assertEquals(10.0, result2);
 		assertEquals(1, result3);
+		assertEquals(25.0, result4);
+		assertEquals("3", result5);
 	}
 }
