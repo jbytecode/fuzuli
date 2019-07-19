@@ -1,6 +1,0 @@
-(let passed "PASSED")
-(let error "ERROR")
-
-(let a 10)
-(let b 10)
-(if (= a b) (print passed) (print error))

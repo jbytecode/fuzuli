@@ -1,6 +1,0 @@
-arithmetic
-nestedloops
-nestedfor
-factorial
-fibonacci
-ackermann
