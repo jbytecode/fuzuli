@@ -1,5 +1,0 @@
-(require "utils.nfl")
-
-(let f (compile "msgbox.fzl"))
-(print "Compiled: " f "\n")
-
