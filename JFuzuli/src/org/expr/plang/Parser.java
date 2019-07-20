@@ -168,6 +168,34 @@ public class Parser {
 				Expression params = getExpression();
 				consumeToken();
 				return new JavaStaticExpression(name, params);
+			}else if (currentToken.content.equals("byte")) {
+				Expression param = getExpression();
+				consumeToken();
+				return TypeCastExpression.ByteCastExpression(param);
+			}else if (currentToken.content.equals("int")) {
+				Expression param = getExpression();
+				consumeToken();
+				return TypeCastExpression.IntegerCastExpression(param);
+			}else if (currentToken.content.equals("float")) {
+				Expression param = getExpression();
+				consumeToken();
+				return TypeCastExpression.FloatCastExpression(param);
+			}else if (currentToken.content.equals("double")) {
+				Expression param = getExpression();
+				consumeToken();
+				return TypeCastExpression.DoubleCastExpression(param);
+			}else if (currentToken.content.equals("short")) {
+				Expression param = getExpression();
+				consumeToken();
+				return TypeCastExpression.ShortCastExpression(param);
+			}else if (currentToken.content.equals("long")) {
+				Expression param = getExpression();
+				consumeToken();
+				return TypeCastExpression.LongCastExpression(param);
+			}else if (currentToken.content.equals("char")) {
+				Expression param = getExpression();
+				consumeToken();
+				return TypeCastExpression.CharCastExpression(param);
 			}else {
 				Token prev = getPreviousToken();
 				if (prev.content.equals("(")) {

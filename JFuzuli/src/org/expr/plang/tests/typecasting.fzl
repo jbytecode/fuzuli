@@ -1,0 +1,13 @@
+(let result1 (byte 10))
+
+(let result2 (int 10))
+
+(let result3 (float 10))
+
+(let result4 (double 10))
+
+(let result5 (short 10))
+
+(let result6 (long 10))
+
+(let result7 (char 10))

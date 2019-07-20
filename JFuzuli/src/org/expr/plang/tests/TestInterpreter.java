@@ -94,4 +94,27 @@ class TestInterpreter {
 		assertEquals(25.0, result4);
 		assertEquals("3", result5);
 	}
+	
+	@Test
+	void testTypeCasting() throws Exception {
+		Environment env = new Environment();
+		InputStream is = this.getClass().getResourceAsStream("typecasting.fzl");
+		Interpreter.interpreteFromInputStream(is, env);
+		Object result1 = env.getObject("result1");
+		Object result2 = env.getObject("result2");
+		Object result3 = env.getObject("result3");
+		Object result4 = env.getObject("result4");
+		Object result5 = env.getObject("result5");
+		Object result6 = env.getObject("result6");
+		Object result7 = env.getObject("result7");
+		
+		
+		assertEquals(java.lang.Byte.class, result1.getClass());
+		assertEquals(java.lang.Integer.class, result2.getClass());
+		assertEquals(java.lang.Float.class, result3.getClass());
+		assertEquals(java.lang.Double.class, result4.getClass());
+		assertEquals(java.lang.Short.class, result5.getClass());
+		assertEquals(java.lang.Long.class, result6.getClass());
+		assertEquals(java.lang.Character.class, result7.getClass());
+	}
 }
