@@ -35,6 +35,7 @@ public class Interpreter {
 					break;
 				}
 				s.append(line);
+				s.append("\n");
 			}
 			reader.close();
 		}catch(Exception e) {
@@ -55,6 +56,7 @@ public class Interpreter {
 					break;
 				}
 				s.append(line);
+				s.append("\n");
 			}
 			reader.close();
 		}catch(Exception e) {

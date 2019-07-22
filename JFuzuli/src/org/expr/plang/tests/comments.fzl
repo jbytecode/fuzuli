@@ -1,0 +1,13 @@
+# This is a comment.
+(let result1 10)
+
+# This is the other comment
+# With two lines
+(let result2 20)
+
+
+# This is the last comment
+# with 3 lines
+# and this is the last line
+(let result3 30)
+

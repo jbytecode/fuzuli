@@ -68,7 +68,7 @@ public class Lexer {
 		StringBuilder s = new StringBuilder ();
 		while(true) {
 			char c = consumeChar();
-			if(isDigit(c) || isLetter(c) || c == '_') {
+			if(isDigit(c) || isLetter(c) || c == '_' || c == '-') {
 				s.append(c);
 			}else {
 				putBackChar();
@@ -89,6 +89,17 @@ public class Lexer {
 			s.append(currentChar);
 		}
 		return new Token(s.toString(), Token.TOKEN_STRING);
+	}
+	
+	public void consumeComment() {
+		putBackChar();
+		while(true) {
+			char currentChar = consumeChar();			
+			if(currentChar == '\n' || currentChar == '\r' || currentChar < 0) {
+				putBackChar();
+				break;
+			}
+		}
 	}
 	
 	public Token consumeToken() {
@@ -126,6 +137,9 @@ public class Lexer {
 			return new Token(">", Token.TOKEN_EQUAL);
 		}else if(currentChar == ':'){
 			return new Token(":", Token.TOKEN_TWOPOINTS);
+		}else if(currentChar == '#'){
+			consumeComment();
+			return consumeToken();
 		}else {
 			throw new RuntimeException("Cannot consume token for " + currentChar);
 		}

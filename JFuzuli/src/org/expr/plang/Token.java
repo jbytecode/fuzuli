@@ -15,7 +15,7 @@ public class Token {
 	public final static int TOKEN_LESS = 12;
 	public final static int TOKEN_GREATER = 13;
 	public final static int TOKEN_TWOPOINTS = 14;
-	
+	public final static int TOKEN_SHARP = 15;
 	
 	
 	public String content;

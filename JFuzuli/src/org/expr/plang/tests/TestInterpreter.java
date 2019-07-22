@@ -117,4 +117,17 @@ class TestInterpreter {
 		assertEquals(java.lang.Long.class, result6.getClass());
 		assertEquals(java.lang.Character.class, result7.getClass());
 	}
+	
+	@Test
+	void testComments() throws Exception {
+		Environment env = new Environment();
+		InputStream is = this.getClass().getResourceAsStream("comments.fzl");
+		Interpreter.interpreteFromInputStream(is, env);
+		Object result1 = env.getObject("result1");
+		Object result2 = env.getObject("result2");
+		Object result3 = env.getObject("result3");
+		assertEquals(10, result1);
+		assertEquals(20, result2);
+		assertEquals(30, result3);
+	}
 }
