@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<item key="org.eclipse.jdt.ui.last.selected.execution.enviroment" value="JavaSE-12"/>
+	<item key="org.eclipse.jdt.ui.last.external.project" value="/home/hako/code/java/fuzuli/JFuzuli"/>
 	<section name="JavaElementSearchActions">
 	</section>
 	<section name="completion_proposal_size">
