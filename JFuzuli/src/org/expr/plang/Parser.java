@@ -196,6 +196,11 @@ public class Parser {
 				Expression param = getExpression();
 				consumeToken();
 				return TypeCastExpression.CharCastExpression(param);
+			}else if (currentToken.content.equals("nth")) {
+				Expression list = getExpression();
+				Expression n = getExpression();
+				consumeToken();
+				return new NthExpression(list, n);
 			}else {
 				Token prev = getPreviousToken();
 				if (prev.content.equals("(")) {

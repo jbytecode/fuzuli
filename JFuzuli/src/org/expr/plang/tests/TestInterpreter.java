@@ -130,4 +130,34 @@ class TestInterpreter {
 		assertEquals(20, result2);
 		assertEquals(30, result3);
 	}
+	
+	@Test
+	void TestHeadTail() throws Exception {
+		Environment env = new Environment();
+		InputStream is = this.getClass().getResourceAsStream("headrest.fzl");
+		Interpreter.interpreteFromInputStream(is, env);
+		Object result1 = env.getObject("result1");
+		Object result2 = env.getObject("result2");
+		assertEquals(1, result1);
+		
+		List<Integer> list = (List<Integer>)result2;
+		assertEquals (2, list.get(0));
+		assertEquals (3, list.get(1));
+		assertEquals (4, list.get(2));
+		assertEquals (5, list.get(3));
+	}
+	
+	@Test
+	void testNthExpression() throws Exception{
+		Environment env = new Environment();
+		InputStream is = this.getClass().getResourceAsStream("nth.fzl");
+		Interpreter.interpreteFromInputStream(is, env);
+		Object result1 = env.getObject("result1");
+		Object result2 = env.getObject("result2");
+		Object result3 = env.getObject("result3");
+		
+		assertEquals(10, result1);
+		assertEquals(20, result2);
+		assertEquals(30, result3);
+	}
 }
