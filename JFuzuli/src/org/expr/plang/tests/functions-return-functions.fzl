@@ -1,4 +1,4 @@
-(let higher 
+(def higher 
 	(function (list x)
 		(function (list y)
 			(* x y)
@@ -7,6 +7,6 @@
 )
 
 
-(let times2 (higher 2))
-(let result (times2 50))
+(def times2 (higher 2))
+(def result (times2 50))
 

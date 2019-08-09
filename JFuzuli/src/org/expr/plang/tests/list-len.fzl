@@ -1,7 +1,7 @@
-(let n 1000)
+(def n 1000)
 
-(let mylist (: 1 n))
+(def mylist (: 1 n))
 
-(let result (len mylist))
+(def result (len mylist))
 
 

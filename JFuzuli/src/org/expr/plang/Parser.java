@@ -117,11 +117,11 @@ public class Parser {
 				return new BooleanConstantExpression(true);
 			} else if (currentToken.content.equals("false")) {
 				return new BooleanConstantExpression(false);
-			} else if (currentToken.content.equals("let")) {
+			} else if (currentToken.content.equals("def")) {
 				left = getExpression();
 				right = getExpression();
 				consumeToken();
-				return new LetExpression(left, right);
+				return new DefExpression(left, right);
 			} else if (currentToken.content.equals("ifelse")) {
 				Expression condition = getExpression();
 				Expression ifTrue = getExpression();

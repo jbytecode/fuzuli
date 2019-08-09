@@ -1,8 +1,8 @@
-(let mylist (list 10 20 30))
+(def mylist (list 10 20 30))
 
 
-(let result1 (nth mylist 0))
-(let result2 (nth mylist 1))
-(let result3 (nth mylist 2))
+(def result1 (nth mylist 0))
+(def result2 (nth mylist 1))
+(def result3 (nth mylist 2))
 
 

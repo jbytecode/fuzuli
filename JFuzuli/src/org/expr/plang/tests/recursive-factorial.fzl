@@ -1,4 +1,4 @@
-(let factorial 
+(def factorial 
 	(function (list x)
 		(cond 
 			(list (= x 1) 1)
@@ -7,6 +7,6 @@
 	)
 )
 
-(let result1 (factorial 5))
-(let result2 (factorial 6))
+(def result1 (factorial 5))
+(def result2 (factorial 6))
 

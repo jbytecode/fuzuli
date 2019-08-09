@@ -1,10 +1,10 @@
 package org.expr.plang;
 
-public class LetExpression extends Expression {
+public class DefExpression extends Expression {
 
 	private Expression left, right;
 	
-	public LetExpression(Expression left, Expression right) {
+	public DefExpression(Expression left, Expression right) {
 		this.left = left;
 		this.right = right;
 	}
