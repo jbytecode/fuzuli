@@ -1,4 +1,4 @@
-package org.expr.plang.tests;
+package tests.org.expr.plang.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,9 +19,9 @@ class TestInterpreter {
 		Integer result1 = (Integer)env.getObject("result1");
 		Integer result2 = (Integer)env.getObject("result2");
 		Integer result3 = (Integer)env.getObject("result3");
-		assertEquals(10, result1);
-		assertEquals(10, result2);
-		assertEquals(0, result3);
+		assertEquals(10, result1.intValue());
+		assertEquals(10, result2.intValue());
+		assertEquals(0, result3.intValue());
 	}
 	
 	@Test
@@ -31,7 +31,7 @@ class TestInterpreter {
 		Interpreter.interpreteFromInputStream(is, env);
 		List<Integer> result = (List<Integer>) env.getObject("result");
 		for (int i = 0; i < result.size(); i++) {
-			assertEquals((i + 1) * (i + 1), result.get(i));
+			assertEquals((i + 1) * (i + 1), result.get(i).intValue());
 		}
 	}
 	
@@ -42,8 +42,8 @@ class TestInterpreter {
 		Interpreter.interpreteFromInputStream(is, env);
 		Integer result1 = (Integer)env.getObject("result1");
 		Integer result2 = (Integer)env.getObject("result2");
-		assertEquals(120, result1);
-		assertEquals(720, result2);
+		assertEquals(120, result1.intValue());
+		assertEquals(720, result2.intValue());
 	}
 	
 	
@@ -54,7 +54,7 @@ class TestInterpreter {
 		Interpreter.interpreteFromInputStream(is, env);
 		List<Integer> result = (List<Integer>) env.getObject("result");
 		for (int i = 0; i < result.size(); i++) {
-			assertEquals((i + 1) * (i + 1), result.get(i));
+			assertEquals((i + 1) * (i + 1), result.get(i).intValue());
 		}
 	}
 	
@@ -65,7 +65,7 @@ class TestInterpreter {
 		InputStream is = this.getClass().getResourceAsStream("functions-return-functions.fzl");
 		Interpreter.interpreteFromInputStream(is, env);
 		Integer result = (Integer)env.getObject("result");
-		assertEquals(100, result);
+		assertEquals(100, result.intValue());
 	}
 
 	@Test
@@ -74,7 +74,7 @@ class TestInterpreter {
 		InputStream is = this.getClass().getResourceAsStream("list-len.fzl");
 		Interpreter.interpreteFromInputStream(is, env);
 		Integer result = (Integer)env.getObject("result");
-		assertEquals(1000, result);
+		assertEquals(1000, result.intValue());
 	}
 	
 	
@@ -90,8 +90,8 @@ class TestInterpreter {
 		String result5 = (String)env.getObject("result5");
 		assertEquals(6.0, result1);
 		assertEquals(10.0, result2);
-		assertEquals(1, result3);
-		assertEquals(25.0, result4);
+		assertEquals(1, result3.longValue());
+		assertEquals(25.0, result4.doubleValue());
 		assertEquals("3", result5);
 	}
 	
@@ -141,10 +141,10 @@ class TestInterpreter {
 		assertEquals(1, result1);
 		
 		List<Integer> list = (List<Integer>)result2;
-		assertEquals (2, list.get(0));
-		assertEquals (3, list.get(1));
-		assertEquals (4, list.get(2));
-		assertEquals (5, list.get(3));
+		assertEquals (2, list.get(0).intValue());
+		assertEquals (3, list.get(1).intValue());
+		assertEquals (4, list.get(2).intValue());
+		assertEquals (5, list.get(3).intValue());
 	}
 	
 	@Test
@@ -159,5 +159,16 @@ class TestInterpreter {
 		assertEquals(10, result1);
 		assertEquals(20, result2);
 		assertEquals(30, result3);
+	}
+	
+	@Test
+	void testLambda() throws Exception{
+		Environment env = new Environment();
+		InputStream is = this.getClass().getResourceAsStream("lambda.fzl");
+		Interpreter.interpreteFromInputStream(is, env);
+		List<Integer> result = (List<Integer>) env.getObject("result");
+		for (int i = 0; i < result.size(); i++) {
+			assertEquals((i + 1) * (i + 1), result.get(i).intValue());
+		}
 	}
 }
