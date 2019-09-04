@@ -159,6 +159,11 @@ public class Parser {
                                  Expression paramElement = getExpression();
 				consumeToken(); 
 				return new AppendExpression(paramList, paramElement);
+			}  else if (currentToken.content.equals("prepend")) {
+				Expression paramList = getExpression();
+                                 Expression paramElement = getExpression();
+				consumeToken(); 
+				return new PrependExpression(paramList, paramElement);
 			} else if (currentToken.content.equals("assert")) {
 				Expression param = getExpression();
 				consumeToken();

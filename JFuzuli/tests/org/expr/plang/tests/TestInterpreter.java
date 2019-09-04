@@ -191,4 +191,18 @@ public class TestInterpreter {
 		assertEquals (3, list.get(2).intValue());
 		assertEquals (10, list.get(3).intValue());
 	}
+        
+        @Test
+	public void TestPrepend() throws Exception {
+		Environment env = new Environment();
+		InputStream is = this.getClass().getResourceAsStream("prepend.fzl");
+		Interpreter.interpreteFromInputStream(is, env);
+		Object result1 = env.getObject("result");
+		
+		List<Integer> list = (List<Integer>)result1;
+		assertEquals (10, list.get(0).intValue());
+		assertEquals (1, list.get(1).intValue());
+		assertEquals (2, list.get(2).intValue());
+		assertEquals (3, list.get(3).intValue());
+	}
 }
