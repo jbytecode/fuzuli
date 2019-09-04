@@ -154,6 +154,11 @@ public class Parser {
 				Expression param = getExpression();
 				consumeToken(); 
 				return new LenExpression(param);
+			} else if (currentToken.content.equals("append")) {
+				Expression paramList = getExpression();
+                                 Expression paramElement = getExpression();
+				consumeToken(); 
+				return new AppendExpression(paramList, paramElement);
 			} else if (currentToken.content.equals("assert")) {
 				Expression param = getExpression();
 				consumeToken();

@@ -1,31 +1,36 @@
-package tests.org.expr.plang.tests;
+package org.expr.plang.tests;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.InputStream;
 import java.util.List;
 
 import org.expr.plang.Environment;
 import org.expr.plang.Interpreter;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import static junit.framework.Assert.*;
 
-class TestInterpreter {
+public class TestInterpreter {
+    
+    public TestInterpreter(){
+        
+    }
 
 	@Test
-	void testInterprete1() throws Exception {
+	public void testInterprete1Test() throws Exception {
 		Environment env = new Environment();
 		InputStream is = this.getClass().getResourceAsStream("custom-abs.fzl");
 		Interpreter.interpreteFromInputStream(is, env);
 		Integer result1 = (Integer)env.getObject("result1");
 		Integer result2 = (Integer)env.getObject("result2");
-		Integer result3 = (Integer)env.getObject("result3");
+		Integer result3 = (Integer)env.getObject("result3"); 
+               
 		assertEquals(10, result1.intValue());
 		assertEquals(10, result2.intValue());
 		assertEquals(0, result3.intValue());
 	}
 	
 	@Test
-	void testMap() throws Exception {
+	public void testMap() throws Exception {
 		Environment env = new Environment();
 		InputStream is = this.getClass().getResourceAsStream("apply.fzl");
 		Interpreter.interpreteFromInputStream(is, env);
@@ -36,7 +41,7 @@ class TestInterpreter {
 	}
 	
 	@Test
-	void testRecursiveFactorial() throws Exception {
+	public void testRecursiveFactorial() throws Exception {
 		Environment env = new Environment();
 		InputStream is = this.getClass().getResourceAsStream("recursive-factorial.fzl");
 		Interpreter.interpreteFromInputStream(is, env);
@@ -48,7 +53,7 @@ class TestInterpreter {
 	
 	
 	@Test
-	void testFunctionsTakeFunctions() throws Exception {
+	public void testFunctionsTakeFunctions() throws Exception {
 		Environment env = new Environment();
 		InputStream is = this.getClass().getResourceAsStream("functions-take-functions.fzl");
 		Interpreter.interpreteFromInputStream(is, env);
@@ -60,7 +65,7 @@ class TestInterpreter {
 	
 	
 	@Test
-	void testFunctionsReturnFunctions() throws Exception {
+	public void testFunctionsReturnFunctions() throws Exception {
 		Environment env = new Environment();
 		InputStream is = this.getClass().getResourceAsStream("functions-return-functions.fzl");
 		Interpreter.interpreteFromInputStream(is, env);
@@ -69,7 +74,7 @@ class TestInterpreter {
 	}
 
 	@Test
-	void testListLength() throws Exception {
+	public void testListLength() throws Exception {
 		Environment env = new Environment();
 		InputStream is = this.getClass().getResourceAsStream("list-len.fzl");
 		Interpreter.interpreteFromInputStream(is, env);
@@ -79,7 +84,7 @@ class TestInterpreter {
 	
 	
 	@Test
-	void testJavaStatic() throws Exception {
+	public void testJavaStatic() throws Exception {
 		Environment env = new Environment();
 		InputStream is = this.getClass().getResourceAsStream("javastatic.fzl");
 		Interpreter.interpreteFromInputStream(is, env);
@@ -96,7 +101,7 @@ class TestInterpreter {
 	}
 	
 	@Test
-	void testTypeCasting() throws Exception {
+	public void testTypeCasting() throws Exception {
 		Environment env = new Environment();
 		InputStream is = this.getClass().getResourceAsStream("typecasting.fzl");
 		Interpreter.interpreteFromInputStream(is, env);
@@ -119,7 +124,7 @@ class TestInterpreter {
 	}
 	
 	@Test
-	void testComments() throws Exception {
+	public void testComments() throws Exception {
 		Environment env = new Environment();
 		InputStream is = this.getClass().getResourceAsStream("comments.fzl");
 		Interpreter.interpreteFromInputStream(is, env);
@@ -132,7 +137,7 @@ class TestInterpreter {
 	}
 	
 	@Test
-	void TestHeadTail() throws Exception {
+	public void TestHeadTail() throws Exception {
 		Environment env = new Environment();
 		InputStream is = this.getClass().getResourceAsStream("headrest.fzl");
 		Interpreter.interpreteFromInputStream(is, env);
@@ -148,7 +153,7 @@ class TestInterpreter {
 	}
 	
 	@Test
-	void testNthExpression() throws Exception{
+	public void testNthExpression() throws Exception{
 		Environment env = new Environment();
 		InputStream is = this.getClass().getResourceAsStream("nth.fzl");
 		Interpreter.interpreteFromInputStream(is, env);
@@ -162,7 +167,7 @@ class TestInterpreter {
 	}
 	
 	@Test
-	void testLambda() throws Exception{
+	public void testLambda() throws Exception{
 		Environment env = new Environment();
 		InputStream is = this.getClass().getResourceAsStream("lambda.fzl");
 		Interpreter.interpreteFromInputStream(is, env);
@@ -170,5 +175,20 @@ class TestInterpreter {
 		for (int i = 0; i < result.size(); i++) {
 			assertEquals((i + 1) * (i + 1), result.get(i).intValue());
 		}
+	}
+        
+        
+        @Test
+	public void TestAppend() throws Exception {
+		Environment env = new Environment();
+		InputStream is = this.getClass().getResourceAsStream("append.fzl");
+		Interpreter.interpreteFromInputStream(is, env);
+		Object result1 = env.getObject("result");
+		
+		List<Integer> list = (List<Integer>)result1;
+		assertEquals (1, list.get(0).intValue());
+		assertEquals (2, list.get(1).intValue());
+		assertEquals (3, list.get(2).intValue());
+		assertEquals (10, list.get(3).intValue());
 	}
 }
