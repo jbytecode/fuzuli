@@ -1,0 +1,6 @@
+(def mylist (list 1 2 3))
+(def newlist (append mylist 10))
+(def result newlist)
+
+
+

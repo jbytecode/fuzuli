@@ -1,0 +1,12 @@
+(def expr 
+    (expression
+        (+ 5 15)
+    )
+)
+
+(println expr)
+
+
+(def result (eval expr))
+
+

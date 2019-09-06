@@ -211,6 +211,14 @@ public class Parser {
 				Expression n = getExpression();
 				consumeToken();
 				return new NthExpression(list, n);
+			}else if (currentToken.content.equals("expression")) {
+				Expression param = getExpression();
+				consumeToken();
+				return new ExpressionExpression(param);
+			}else if (currentToken.content.equals("eval")) {
+				Expression param = getExpression();
+				consumeToken();
+				return new EvalExpression(param);
 			}else {
 				Token prev = getPreviousToken();
 				if (prev.content.equals("(")) {
