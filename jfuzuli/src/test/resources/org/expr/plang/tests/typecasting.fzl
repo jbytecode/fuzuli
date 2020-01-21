@@ -2,9 +2,9 @@
 
 (def result2 (int 10))
 
-(def result3 (float 10))
+(def result3 (float 10.01))
 
-(def result4 (double 10))
+(def result4 (double 10.01))
 
 (def result5 (short 10))
 

@@ -167,4 +167,73 @@ public class TestJSEmitter {
         Assertions.assertEquals(1000, val1.intValue());
 
     }
+
+    @Test
+    public void testEmitJS10Test() throws Exception {
+        Environment env = new Environment();
+        InputStream is = this.getClass().getResourceAsStream("nth.fzl");
+        String fcode = Interpreter.loadCodeFromInputStream(is);
+        String jscode = Interpreter.emitJS(fcode);
+
+        ScriptEngine engine = runJSProgram(jscode);
+
+        Integer val1 = (Integer) engine.eval("result1");
+        Integer val2 = (Integer) engine.eval("result2");
+        Integer val3 = (Integer) engine.eval("result3");
+
+        Assertions.assertEquals(10, val1.intValue());
+        Assertions.assertEquals(20, val2.intValue());
+        Assertions.assertEquals(30, val3.intValue());
+
+    }
+
+    @Test
+    public void testEmitJS11Test() throws Exception {
+        Environment env = new Environment();
+        InputStream is = this.getClass().getResourceAsStream("prepend.fzl");
+        String fcode = Interpreter.loadCodeFromInputStream(is);
+        String jscode = Interpreter.emitJS(fcode);
+
+        ScriptEngine engine = runJSProgram(jscode);
+
+        Integer val1 = (Integer) engine.eval("newlist[0]");
+        Integer val2 = (Integer) engine.eval("newlist[1]");
+        Integer val3 = (Integer) engine.eval("newlist[2]");
+        Integer val4 = (Integer) engine.eval("newlist[3]");
+
+        Assertions.assertEquals(10, val1.intValue());
+        Assertions.assertEquals(1, val2.intValue());
+        Assertions.assertEquals(2, val3.intValue());
+        Assertions.assertEquals(3, val4.intValue());
+
+    }
+
+    @Test
+    public void testEmitJS12Test() throws Exception {
+        Environment env = new Environment();
+        InputStream is = this.getClass().getResourceAsStream("typecasting.fzl");
+        String fcode = Interpreter.loadCodeFromInputStream(is);
+        String jscode = Interpreter.emitJS(fcode);
+
+        ScriptEngine engine = runJSProgram(jscode);
+
+        System.out.println("****************** " + jscode);
+
+        Integer val1 = (Integer) engine.eval("result1");
+        Integer val2 = (Integer) engine.eval("result2");
+        Double val3 = (Double) engine.eval("result3");
+        Double val4 = (Double) engine.eval("result4");
+        Integer val5 = (Integer) engine.eval("result5");
+        Integer val6 = (Integer) engine.eval("result6");
+        Integer val7 = (Integer) engine.eval("result7");
+
+        Assertions.assertEquals(10, val1.intValue());
+        Assertions.assertEquals(10, val2.intValue());
+        Assertions.assertEquals(10.01, val3.doubleValue());
+        Assertions.assertEquals(10.01, val4.doubleValue());
+        Assertions.assertEquals(10, val5.intValue());
+        Assertions.assertEquals(10, val6.intValue());
+        Assertions.assertEquals(10, val7.intValue());
+    }
+
 }
