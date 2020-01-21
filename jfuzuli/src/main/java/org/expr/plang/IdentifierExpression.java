@@ -22,4 +22,11 @@ public class IdentifierExpression extends Expression {
 		return this.id;
 	}
 
+    @Override
+    public String emitJS() {
+        return this.id;
+    }
+        
+        
+
 }

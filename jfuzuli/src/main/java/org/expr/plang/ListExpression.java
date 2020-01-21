@@ -36,5 +36,21 @@ public class ListExpression extends Expression {
 		s.append("]");
 		return s.toString();
 	}
+
+    @Override
+    public String emitJS() {
+        StringBuilder s = new StringBuilder();
+        s.append("[");
+        for (int i = 0; i < this.exprs.size(); i++){
+            s.append(this.exprs.get(i).emitJS());
+            if(i < this.exprs.size() - 1){
+                s.append(", ");
+            }
+        }
+        s.append("]");
+        return s.toString();
+    }
+        
+        
 	
 }

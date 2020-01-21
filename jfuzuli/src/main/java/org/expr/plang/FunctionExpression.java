@@ -49,6 +49,29 @@ public class FunctionExpression extends Expression {
 		}
 		return body.eval(functionEnvironment);
 	}
+
+    @Override
+    public String emitJS() {
+        ListExpression lparams = (ListExpression)this.params;
+        StringBuilder s = new StringBuilder();
+        s.append("function(");
+        for (int i = 0; i < lparams.exprs.size(); i++){
+            IdentifierExpression id = (IdentifierExpression) lparams.exprs.get(i);
+            s.append(id.getId());
+            if(i < lparams.exprs.size() - 1){
+                s.append(", ");
+            }
+        }
+        s.append(") {");
+        s.append("var fres = " + this.body.emitJS());
+        s.append(";");
+        s.append("return fres;");
+        s.append("}");
+        
+        return s.toString();
+    }
+        
+        
 	
 	
 }

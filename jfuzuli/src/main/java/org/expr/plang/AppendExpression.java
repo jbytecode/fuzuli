@@ -21,4 +21,16 @@ public class AppendExpression extends Expression {
                 return newList;
 	}
 
+    @Override
+    public String emitJS() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(exprList.emitJS());
+        sb.append(".concat(");
+        sb.append(exprElement.emitJS());
+        sb.append(")");
+        return sb.toString();
+    }
+        
+        
+
 }

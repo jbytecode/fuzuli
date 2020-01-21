@@ -18,6 +18,23 @@ public class FunctionCallExpression extends Expression{
 		FunctionExpression fexp = (FunctionExpression)env.getObject(name);
 		return fexp.Call(env, params);
 	}
+
+    @Override
+    public String emitJS() {
+        StringBuilder s = new StringBuilder();
+        s.append(name);
+        s.append("(");
+        for (int i = 0; i < this.params.size(); i++){
+            s.append(this.params.get(i).emitJS());
+            if(i < this.params.size() - 1){
+                s.append(", ");
+            }
+        }
+        s.append(")");
+        return s.toString();
+    }
+        
+        
 	
 	
 }

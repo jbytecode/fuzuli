@@ -17,4 +17,11 @@ public class GreaterThanExpression extends Expression {
 		return compare == 1;
 	}
 
+    @Override
+    public String emitJS() {
+        return left.emitJS() + " > " + right.emitJS();
+    }
+        
+        
+
 }

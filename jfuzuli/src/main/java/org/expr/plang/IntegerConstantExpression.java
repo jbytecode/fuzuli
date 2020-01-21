@@ -18,4 +18,11 @@ public class IntegerConstantExpression extends Expression{
 		return String.valueOf(this.intvalue);
 	}
 
+    @Override
+    public String emitJS() {
+        return String.valueOf(intvalue);
+    }
+        
+        
+
 }

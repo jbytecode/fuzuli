@@ -5,19 +5,24 @@ import java.util.ArrayList;
 
 public class RestExpression extends Expression {
 
-	Expression expr;
-	
-	public RestExpression(Expression expr) {
-		this.expr = expr;
-	}
-	
-	@Override
-	public Object eval(Environment env) {
-		List<Object> list = (List<Object>) this.expr.eval(env);
-		List<Object> result = new ArrayList<>();
-		result.addAll(list);
-		result.remove(0);
-		return result;
-	}
+    Expression expr;
+
+    public RestExpression(Expression expr) {
+        this.expr = expr;
+    }
+
+    @Override
+    public Object eval(Environment env) {
+        List<Object> list = (List<Object>) this.expr.eval(env);
+        List<Object> result = new ArrayList<>();
+        result.addAll(list);
+        result.remove(0);
+        return result;
+    }
+
+    @Override
+    public String emitJS() {
+        return expr.emitJS() + ".slice(1)";
+    }
 
 }

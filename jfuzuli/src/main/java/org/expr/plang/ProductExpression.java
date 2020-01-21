@@ -37,7 +37,14 @@ public class ProductExpression extends Expression{
 	
 	@Override
 	public String toString() {
-		return "Plus(" + left + " + " + right + ")";
+		return "Product(" + left + " + " + right + ")";
 	}
 
+    @Override
+    public String emitJS() {
+        return this.left.emitJS() + " * " + this.right.emitJS();
+    }
+
+        
+        
 }

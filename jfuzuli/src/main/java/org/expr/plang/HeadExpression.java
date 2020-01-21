@@ -16,4 +16,11 @@ public class HeadExpression extends Expression {
 		return list.get(0);
 	}
 
+    @Override
+    public String emitJS() {
+        return expr.emitJS() + "[0]";
+    }
+        
+        
+
 }

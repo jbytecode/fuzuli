@@ -30,4 +30,11 @@ public class ApplyExpression extends Expression{
 		return resultList;
 	}
 
+    @Override
+    public String emitJS() {
+        return vals.emitJS() + ".map(" + func.emitJS() + ")";
+    }
+
+        
+        
 }

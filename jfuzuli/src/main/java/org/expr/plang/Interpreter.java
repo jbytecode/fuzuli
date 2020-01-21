@@ -24,6 +24,15 @@ public class Interpreter {
         });
         return result.getObject();
     }
+    
+    public final static String emitJS(String code){
+        Lexer lexer = new Lexer(code);
+        Parser parser = new Parser(lexer.consomeAllTokens());
+        List<Expression> exprs = parser.parseAll();
+        final StringBuilder jscode = new StringBuilder();
+        exprs.forEach(e -> jscode.append(e.emitJS()));
+        return jscode.toString();
+    }
 
     public final static String loadCodeFromFile(String file) {
         StringBuilder s = new StringBuilder();
