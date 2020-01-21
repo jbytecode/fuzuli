@@ -255,4 +255,25 @@ public class TestJSEmitter {
 
     }
 
+    @Test
+    public void testEmitJS14Test() throws Exception {
+        Environment env = new Environment();
+        InputStream is = this.getClass().getResourceAsStream("math.fzl");
+        String fcode = Interpreter.loadCodeFromInputStream(is);
+        String jscode = Interpreter.emitJS(fcode);
+
+        ScriptEngine engine = runJSProgram(jscode);
+
+        Double val1 = (Double) engine.eval("result1");
+        Integer val2 = (Integer) engine.eval("result2");
+        Integer val3 = (Integer) engine.eval("result3");
+        Integer val4 = (Integer) engine.eval("result4");
+
+        Assertions.assertTrue(val1 <= 1);
+        Assertions.assertTrue(val1 >= 0);
+        Assertions.assertEquals(5, val2.intValue());
+        Assertions.assertEquals(1, val3.intValue());
+        Assertions.assertEquals(1024, val4.intValue());
+
+    }
 }

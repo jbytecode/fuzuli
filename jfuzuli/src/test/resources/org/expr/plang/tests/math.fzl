@@ -1,0 +1,4 @@
+(def result1 (random))
+(def result2 (sqrt 25))
+(def result3 (log (exp 1)))
+(def result4 (pow 2 10))
