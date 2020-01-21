@@ -1,0 +1,21 @@
+(def result1 
+    (ifelse (< 5 10) 'Yes' 'No'))
+
+(def result2 
+    (ifelse (= 5 5) 'Yes' 'No'))
+
+(def result3
+    (ifelse (> 10 5) 'Yes' 'No'))
+
+
+(def result4 
+    (ifelse (> 1 2) 'Yes' 'No'))
+
+
+
+
+
+
+
+
+ 

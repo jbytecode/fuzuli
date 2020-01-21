@@ -217,8 +217,6 @@ public class TestJSEmitter {
 
         ScriptEngine engine = runJSProgram(jscode);
 
-        System.out.println("****************** " + jscode);
-
         Integer val1 = (Integer) engine.eval("result1");
         Integer val2 = (Integer) engine.eval("result2");
         Double val3 = (Double) engine.eval("result3");
@@ -234,6 +232,27 @@ public class TestJSEmitter {
         Assertions.assertEquals(10, val5.intValue());
         Assertions.assertEquals(10, val6.intValue());
         Assertions.assertEquals(10, val7.intValue());
+    }
+
+    @Test
+    public void testEmitJS13Test() throws Exception {
+        Environment env = new Environment();
+        InputStream is = this.getClass().getResourceAsStream("ifelse.fzl");
+        String fcode = Interpreter.loadCodeFromInputStream(is);
+        String jscode = Interpreter.emitJS(fcode);
+
+        ScriptEngine engine = runJSProgram(jscode);
+
+        String val1 = (String) engine.eval("result1");
+        String val2 = (String) engine.eval("result2");
+        String val3 = (String) engine.eval("result3");
+        String val4 = (String) engine.eval("result4");
+
+        Assertions.assertEquals("Yes", val1);
+        Assertions.assertEquals("Yes", val2);
+        Assertions.assertEquals("Yes", val3);
+        Assertions.assertEquals("No", val4);
+
     }
 
 }
