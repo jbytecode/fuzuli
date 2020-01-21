@@ -1,6 +1,0 @@
-(def mylist (list 1 2 3 4 5))
-
-(def result1 (head mylist))
-(def result2 (rest mylist))
-
-

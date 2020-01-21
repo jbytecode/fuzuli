@@ -1,7 +1,0 @@
-(def n 1000)
-
-(def mylist (: 1 n))
-
-(def result (len mylist))
-
-
