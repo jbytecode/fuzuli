@@ -1,0 +1,8 @@
+(def mylist (list 10 20 30))
+
+
+(def result1 (nth mylist 0))
+(def result2 (nth mylist 1))
+(def result3 (nth mylist 2))
+
+

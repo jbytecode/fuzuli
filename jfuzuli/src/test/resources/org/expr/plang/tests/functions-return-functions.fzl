@@ -1,0 +1,12 @@
+(def higher 
+	(function (list x)
+		(function (list y)
+			(* x y)
+		)
+	)
+)
+
+
+(def times2 (higher 2))
+(def result (times2 50))
+
