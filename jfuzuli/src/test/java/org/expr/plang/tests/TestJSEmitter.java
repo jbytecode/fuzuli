@@ -104,8 +104,7 @@ public class TestJSEmitter {
         Integer val1 = (Integer) engine.eval("result");
         Assertions.assertEquals(100, val1.intValue());
     }
-    
-    
+
     @Test
     public void testEmitJS6Test() throws Exception {
         Environment env = new Environment();
@@ -114,15 +113,14 @@ public class TestJSEmitter {
         String jscode = Interpreter.emitJS(fcode);
 
         ScriptEngine engine = runJSProgram(jscode);
-        
+
         for (var i = 0; i < 6; i++) {
             Integer val = (Integer) engine.eval("result[" + i + "]");
             Assertions.assertEquals((i + 1) * (i + 1), val.intValue());
         }
     }
-    
-    
-     @Test
+
+    @Test
     public void testEmitJS7Test() throws Exception {
         Environment env = new Environment();
         InputStream is = this.getClass().getResourceAsStream("headrest.fzl");
@@ -130,14 +128,43 @@ public class TestJSEmitter {
         String jscode = Interpreter.emitJS(fcode);
 
         ScriptEngine engine = runJSProgram(jscode);
-        
+
         Integer val1 = (Integer) engine.eval("result1");
         Assertions.assertEquals(1, val1.intValue());
-        
-         for (var i = 0; i < 4; i++) {
+
+        for (var i = 0; i < 4; i++) {
             Integer val = (Integer) engine.eval("result2[" + i + "]");
             Assertions.assertEquals(i + 2, val.intValue());
         }
-        
+
+    }
+
+    @Test
+    public void testEmitJS8Test() throws Exception {
+        Environment env = new Environment();
+        InputStream is = this.getClass().getResourceAsStream("lambda.fzl");
+        String fcode = Interpreter.loadCodeFromInputStream(is);
+        String jscode = Interpreter.emitJS(fcode);
+
+        ScriptEngine engine = runJSProgram(jscode);
+
+        for (var i = 0; i < 10; i++) {
+            Integer val = (Integer) engine.eval("result[" + i + "]");
+            Assertions.assertEquals((i + 1) * (i + 1), val.intValue());
+        }
+    }
+
+    @Test
+    public void testEmitJS9Test() throws Exception {
+        Environment env = new Environment();
+        InputStream is = this.getClass().getResourceAsStream("list-len.fzl");
+        String fcode = Interpreter.loadCodeFromInputStream(is);
+        String jscode = Interpreter.emitJS(fcode);
+
+        ScriptEngine engine = runJSProgram(jscode);
+
+        Integer val1 = (Integer) engine.eval("result");
+        Assertions.assertEquals(1000, val1.intValue());
+
     }
 }
