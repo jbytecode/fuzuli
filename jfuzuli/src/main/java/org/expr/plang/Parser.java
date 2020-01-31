@@ -177,6 +177,11 @@ public class Parser {
                 Expression params = getExpression();
                 consumeToken();
                 return new JavaStaticExpression(name, params);
+            } else if (currentToken.content.equals("with")) {
+                left = getExpression();
+                right = getExpression();
+                consumeToken();
+                return new WithExpression(left, right);
             } else if (currentToken.content.equals("byte")) {
                 Expression param = getExpression();
                 consumeToken();

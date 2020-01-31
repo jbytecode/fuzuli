@@ -19,7 +19,7 @@ public class TestJSEmitter {
         ScriptEngineManager manager = new ScriptEngineManager();
         ScriptEngine engine = manager.getEngineByName("ECMAScript");
         engine.eval(code);
-        System.out.println("*** Running jscode: " + code);
+        //System.out.println("*** Running jscode: " + code);
         return engine;
     }
 
@@ -274,6 +274,15 @@ public class TestJSEmitter {
         Assertions.assertEquals(5, val2.intValue());
         Assertions.assertEquals(1, val3.intValue());
         Assertions.assertEquals(1024, val4.intValue());
+    }
 
+    @Test
+    public void testEmitJS15Test() throws Exception {
+        Environment env = new Environment();
+        InputStream is = this.getClass().getResourceAsStream("with.fzl");
+        String fcode = Interpreter.loadCodeFromInputStream(is);
+        String jscode = Interpreter.emitJS(fcode);
+
+        Assertions.assertTrue(jscode.startsWith("var element = document.getElementById('htmlWidget');"));
     }
 }
