@@ -292,8 +292,15 @@ public class TestJSEmitter {
         InputStream is = this.getClass().getResourceAsStream("let.fzl");
         String fcode = Interpreter.loadCodeFromInputStream(is);
         String jscode = Interpreter.emitJS(fcode);
-
-        System.out.println(jscode);
         Assertions.assertTrue(jscode.startsWith("element.width = 100;"));
+    }
+
+    @Test
+    public void testEmitJS17Test() throws Exception {
+        Environment env = new Environment();
+        InputStream is = this.getClass().getResourceAsStream("println.fzl");
+        String fcode = Interpreter.loadCodeFromInputStream(is);
+        String jscode = Interpreter.emitJS(fcode);
+        Assertions.assertTrue(jscode.startsWith("console.log('Hello World!');"));
     }
 }
