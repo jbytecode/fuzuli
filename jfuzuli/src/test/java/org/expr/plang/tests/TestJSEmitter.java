@@ -285,4 +285,15 @@ public class TestJSEmitter {
 
         Assertions.assertTrue(jscode.startsWith("var element = document.getElementById('htmlWidget');"));
     }
+
+    @Test
+    public void testEmitJS16Test() throws Exception {
+        Environment env = new Environment();
+        InputStream is = this.getClass().getResourceAsStream("let.fzl");
+        String fcode = Interpreter.loadCodeFromInputStream(is);
+        String jscode = Interpreter.emitJS(fcode);
+
+        System.out.println(jscode);
+        Assertions.assertTrue(jscode.startsWith("element.width = 100;"));
+    }
 }

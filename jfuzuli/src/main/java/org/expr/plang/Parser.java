@@ -182,6 +182,11 @@ public class Parser {
                 right = getExpression();
                 consumeToken();
                 return new WithExpression(left, right);
+            } else if (currentToken.content.equals("let")) {
+                left = getExpression();
+                right = getExpression();
+                consumeToken();
+                return new LetExpression(left, right);
             } else if (currentToken.content.equals("byte")) {
                 Expression param = getExpression();
                 consumeToken();
