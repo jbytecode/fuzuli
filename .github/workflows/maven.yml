@@ -14,5 +14,4 @@ jobs:
       with:
         java-version: 13
     - name: Build with Maven
-      run: cd jfuzuli
-      run: mvn -B package --file pom.xml
+      run: cd fuzuli; mvn -B package --file pom.xml
