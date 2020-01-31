@@ -1,0 +1,12 @@
+# Calculates factorial of x
+(def factorial 
+	(function (list x)
+		(ifelse (< x 2) 
+			1
+			(* x (factorial (- x 1))))))
+
+
+# The output is 
+# var factorial = function(x) {var fres = x < 2 ? 1 : x * factorial(x - 1);return fres;};
+
+

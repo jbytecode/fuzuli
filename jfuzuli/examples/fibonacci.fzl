@@ -1,0 +1,10 @@
+# Recursive Fibonacci Numbers
+(def fibonacci (function (list x)
+	(ifelse (< x  3)
+		1
+		(+ (fibonacci (- x 1)) (fibonacci (- x 2)))
+	)
+))
+
+# The output is 
+

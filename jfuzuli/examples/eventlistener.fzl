@@ -1,0 +1,11 @@
+# Binds a lambda function to window's mouse move event
+(let (with window onmousemove)
+		(function (list e) (println e)))
+
+# After the transpiling, the result is 
+# window.onmousemove = function(e) {var fres = console.log(e);;return fres;};
+
+
+
+ 
+	
